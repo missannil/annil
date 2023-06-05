@@ -1,0 +1,15 @@
+# Node.js
+**/*.js
+**/node_modules
+.vscode
+*.map
+# .eslintcache  
+!ewm.config.js
+!rollup.config.js
+!.eslintrc.js
+!.prettierrc.js
+!commitlint.config.js
+# !miniprogram_npm/**/*.js
+dist
+project.private.config.json
+!jest.config.js

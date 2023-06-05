@@ -1,0 +1,33 @@
+{
+  "name": "ts-wmp",
+  "version": "0.0.1",
+  "description": "基于typescript开发微信小程序(原生)的插件(typescript-wechat-mini-program)",
+  "main": "index.js",
+  "scripts": {
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "@commitlint/config-conventional": "^17.6.5",
+    "commitlint": "^17.6.5",
+    "husky": "^8.0.3",
+    "missannil-api-typings": "^3.9.1",
+    "typescript": "^5.0.3"
+  },
+  "files": [
+    "LICENSE",
+    "CHANGELOG.md",
+    "README.md",
+    "src/",
+    "dist/",
+    "tsconfig.json"
+  ],
+  "keywords": [
+    "mini",
+    "miniprogram",
+    "wechat",
+    "program",
+    "wmp"
+  ],
+  "author": "",
+  "license": "ISC"
+}

@@ -3,7 +3,7 @@
 **/node_modules
 .vscode
 *.map
-# .eslintcache  
+# .eslintcache
 !ewm.config.js
 !rollup.config.js
 !.eslintrc.js

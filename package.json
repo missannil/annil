@@ -6,7 +6,8 @@
 	"scripts": {
 		"prepare": "husky install",
 		"fmt": "prettier --write .",
-		"tsc": "tsc"
+		"tsc": "tsc",
+		"build":"tsc -p tsconfig.build.json"
 	},
 	"devDependencies": {
 		"@commitlint/config-conventional": "^17.6.5",

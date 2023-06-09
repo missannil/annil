@@ -1,49 +1,49 @@
 module.exports = {
-	printWidth: 100,
+    printWidth: 100,
 
-	useTabs: true,
+    useTabs: false,
 
-	tabWidth: 2,
+    tabWidth: 4,
 
-	semi: true,
+    semi: true,
 
-	singleQuote: true,
+    singleQuote: true,
 
-	quoteProps: 'as-needed',
+    quoteProps: 'as-needed',
 
-	trailingComma: 'none', // 末尾去掉逗号
+    trailingComma: 'none', // 末尾去掉逗号
 
-	bracketSpacing: true, // 大括号内的首尾需要空格
+    bracketSpacing: true, // 大括号内的首尾需要空格
 
-	rangeStart: 0, // 每个文件格式化的范围是文件的全部内容
+    rangeStart: 0, // 每个文件格式化的范围是文件的全部内容
 
-	rangeEnd: Infinity,
+    rangeEnd: Infinity,
 
-	overrides: [
-		{
-			files: '*.wxml',
-			options: {
-				parser: 'html'
-			}
-		},
-		{
-			files: '*.wxss',
-			options: {
-				parser: 'css'
-			}
-		},
-		{
-			files: '*.wxs',
-			options: {
-				parser: 'babel',
-				quoteProps: 'preserve'
-			}
-		}
-	],
+    overrides: [
+        {
+            files: '*.wxml',
+            options: {
+                parser: 'html'
+            }
+        },
+        {
+            files: '*.wxss',
+            options: {
+                parser: 'css'
+            }
+        },
+        {
+            files: '*.wxs',
+            options: {
+                parser: 'babel',
+                quoteProps: 'preserve'
+            }
+        }
+    ],
 
-	proseWrap: 'preserve', // 使用默认的折行标准
+    proseWrap: 'preserve', // 使用默认的折行标准
 
-	htmlWhitespaceSensitivity: 'css', // 根据显示样式决定 html 要不要折行
+    htmlWhitespaceSensitivity: 'css', // 根据显示样式决定 html 要不要折行
 
-	endOfLine: 'lf' // 行尾 lf
+    endOfLine: 'lf' // 行尾 lf
 };

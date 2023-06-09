@@ -1,38 +1,38 @@
 {
-	"compilerOptions": {
-		"lib": ["ES2022", "DOM"],
-		"target": "ES2017",
-		"module": "ES2022",
-		"strict": true, //  alwaysStrict,strictNullChecks,strictBindCallApply,strictFunctionTypes,strictPropertyInitialization,noImplicitAny,noImplicitThis,useUnknownInCatchVariables
-		"strictFunctionTypes": false, //e: Dataset<{ id: string }>会报错。
-		"exactOptionalPropertyTypes": true, //带有?标志的属性类型不在包含undefined
-		"skipLibCheck": true, //跳过声明文件的类型检查(.d.ts),除了你引用的, 默认false(不跳过)。
-		"moduleResolution": "node", //模块解析策略 //5.0 新值 bundler
-		// "noImplicitAny": true, //不允许隐式的any类型
-		"esModuleInterop": true, // 默认false 将 CommonJS/AMD/UMD 模块视为类似于 ES6 模块,但有缺陷。
-		"removeComments": true, //去除注释
-		"noEmit": true,
-		"allowJs": true, //默认false 开启后会保留js文件
-		"diagnostics": true,
-		"watch": true,
-		// // "experimentalDecorators": true,//实验性质的装饰器
-		"noImplicitReturns": true, //隐式函数返回
-		// "resolveJsonModule": true, //import settings from "./settings.json";
-		"forceConsistentCasingInFileNames": true, //区分文件名的大小写
-		"noUnusedLocals": false, // 报告未使用局部变量的错误
-		"noUnusedParameters": false, //报告函数中未使用参数的错误
-		"suppressImplicitAnyIndexErrors": true, //为true关闭隐式索引错误,但很激进,建议使用@ts-ignore
-		"isolatedModules": true, //独立模块(必须有导入或导出) 默认false
-		"preserveValueImports": true, // 引入类型加type
-		"useUnknownInCatchVariables": false, //catch 子句 err为unknown 可以显示指定类型 4.4 --strict
-		// "verbatimModuleSyntax": true,
-		// "importsNotUsedAsValues":"remove",
-		"ignoreDeprecations": "5.0",
-		// "noEmitOnError": true, // 错误情况下不编译 开启会导致wtach下报错
-		"noFallthroughCasesInSwitch": true, //报告switch语句中漏接情况的错误
-		//指定加载包的路径,默认加载所有@types下的包 包含上级目录
-		"allowSyntheticDefaultImports": true, // esModuleInterop 为true时自动true
-		"types": ["./node_modules/hry-types"]
-	},
-	"include": ["./src/core/MainComponent.ts"]
+    "compilerOptions": {
+        "lib": ["ES2022", "DOM"],
+        "target": "ES2017",
+        "module": "ES2022",
+        "strict": true, //  alwaysStrict,strictNullChecks,strictBindCallApply,strictFunctionTypes,strictPropertyInitialization,noImplicitAny,noImplicitThis,useUnknownInCatchVariables
+        "strictFunctionTypes": false, //e: Dataset<{ id: string }>会报错。
+        "exactOptionalPropertyTypes": true, //带有?标志的属性类型不在包含undefined
+        "skipLibCheck": true, //跳过声明文件的类型检查(.d.ts),除了你引用的, 默认false(不跳过)。
+        "moduleResolution": "node", //模块解析策略 //5.0 新值 bundler
+        // "noImplicitAny": true, //不允许隐式的any类型
+        "esModuleInterop": true, // 默认false 将 CommonJS/AMD/UMD 模块视为类似于 ES6 模块,但有缺陷。
+        "removeComments": true, //去除注释
+        "noEmit": true,
+        "allowJs": true, //默认false 开启后会保留js文件
+        "diagnostics": true,
+        "watch": true,
+        // // "experimentalDecorators": true,//实验性质的装饰器
+        "noImplicitReturns": true, //隐式函数返回
+        // "resolveJsonModule": true, //import settings from "./settings.json";
+        "forceConsistentCasingInFileNames": true, //区分文件名的大小写
+        "noUnusedLocals": false, // 报告未使用局部变量的错误
+        "noUnusedParameters": false, //报告函数中未使用参数的错误
+        "suppressImplicitAnyIndexErrors": true, //为true关闭隐式索引错误,但很激进,建议使用@ts-ignore
+        "isolatedModules": true, //独立模块(必须有导入或导出) 默认false
+        "preserveValueImports": true, // 引入类型加type
+        "useUnknownInCatchVariables": false, //catch 子句 err为unknown 可以显示指定类型 4.4 --strict
+        // "verbatimModuleSyntax": true,
+        // "importsNotUsedAsValues":"remove",
+        "ignoreDeprecations": "5.0",
+        // "noEmitOnError": true, // 错误情况下不编译 开启会导致wtach下报错
+        "noFallthroughCasesInSwitch": true, //报告switch语句中漏接情况的错误
+        //指定加载包的路径,默认加载所有@types下的包 包含上级目录
+        "allowSyntheticDefaultImports": true, // esModuleInterop 为true时自动true
+        "types": ["./node_modules/hry-types"]
+    },
+    "include": ["./src/core/MainComponent.ts"]
 }

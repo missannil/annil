@@ -1,12 +1,12 @@
 {
-	"extends": "./tsconfig.json",
-	"compilerOptions": {
-		"noEmit": false,
-		// "diagnostics": true,
-		"watch": false,
-		"outDir": "dist",
-		"sourceMap": true,
-		"declaration": true
-	},
-	"include": ["src"]
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "noEmit": false,
+        // "diagnostics": true,
+        "watch": false,
+        "outDir": "dist",
+        "sourceMap": true,
+        "declaration": true
+    },
+    "include": ["src"]
 }

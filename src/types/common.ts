@@ -20,9 +20,9 @@ export type ShortProperties = SpecificType;
  * @description properties全写
  */
 export type FullProperties<Literal = unknown> = {
-	type: SpecificType<Literal>;
-	value?: Literal;
-	optionalTypes?: SpecificType[];
+    type: SpecificType<Literal>;
+    value?: Literal;
+    optionalTypes?: SpecificType[];
 };
 
 /**
@@ -64,17 +64,17 @@ export type PropertiesConstraint<Literal = unknown> = Record<string, AllProperti
  *
  */
 export type IllegalFieldValidation<
-	O extends object,
-	IllegalKeys extends string = 'type' | 'value' | 'optionalTypes',
-	ResultObj = {
-		[k in keyof O as O[k] extends PureObject
-			? Exclude<keyof O[k], IllegalKeys> extends never
-				? never
-				: k
-			: never]: {
-			[s in Exclude<keyof O[k], IllegalKeys>]: O[k][s] extends Function
-				? '字段非法'
-				: () => '字段非法';
-		};
-	}
+    O extends object,
+    IllegalKeys extends string = 'type' | 'value' | 'optionalTypes',
+    ResultObj = {
+        [k in keyof O as O[k] extends PureObject
+            ? Exclude<keyof O[k], IllegalKeys> extends never
+                ? never
+                : k
+            : never]: {
+            [s in Exclude<keyof O[k], IllegalKeys>]: O[k][s] extends Function
+                ? '字段非法'
+                : () => '字段非法';
+        };
+    }
 > = IfExtends<{}, O, unknown, ResultObj>;

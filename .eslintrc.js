@@ -51,11 +51,11 @@ module.exports = {
 		'no-mixed-spaces-and-tabs': 'off',
 		'@typescript-eslint/ban-ts-comment': 0,
 		'padding-line-between-statements': [
-			'error',
-			// { blankLine: 'always', prev: 'const', next: 'function' },
-			// { blankLine: 'always', prev: '*', next: 'class' },
-			// { blankLine: 'always', prev: 'class', next: '*' },
-			{ blankLine: 'always', prev: '*', next: '*' }
+			'warn',
+			{ blankLine: 'always', prev: 'const', next: 'function' },
+			{ blankLine: 'always', prev: '*', next: 'class' },
+			{ blankLine: 'always', prev: 'class', next: '*' },
+			{ blankLine: 'always', prev: '*', next: 'return' }
 		]
 	}
 };

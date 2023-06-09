@@ -1,4 +1,4 @@
-import { IfEqual, IsEqual } from 'hry-types';
+import { IfEqual, IsEqual } from "hry-types";
 
 export type ExpectEqual<A, B extends IfEqual<A, B, unknown, never>> = true;
 

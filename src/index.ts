@@ -1,3 +1,3 @@
-import type { SpecificType } from './types/common';
+import type { SpecificType } from "./types/PropertiesConstraint";
 
 export type { SpecificType };

@@ -2,7 +2,7 @@
     "name": "ts-wmp",
     "version": "0.1.0",
     "description": "基于typescript开发微信小程序(原生)的插件(typescript-wechat-mini-program)",
-    "main": "index.js",
+    "main": "dist/index.js",
     "scripts": {
         "prepare": "husky install",
         "fmt": "prettier --write .",

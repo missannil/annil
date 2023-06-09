@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.0](https://github.com/missannil/ts-wmp/compare/v0.0.1...v0.1.0) (2023-06-09)
+
+
+### Miscellaneous Chores
+
+* release 0.1 ([01e65fc](https://github.com/missannil/ts-wmp/commit/01e65fc97a58c31b711d57adbcbb7ccfb2b34521))
+
 ## 0.0.1 (2023-06-09)
 
 

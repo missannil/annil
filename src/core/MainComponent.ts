@@ -28,5 +28,3 @@ interface Constructor {
 export const MainComponent: Constructor = function(options): any {
   return options;
 };
-
-const ddd = 123;

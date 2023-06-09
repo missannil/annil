@@ -1,0 +1,12 @@
+{
+  "editor.defaultFormatter": "dprint.dprint",
+  "[jsonc]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "dprint.dprint"
+  },
+  // or specify per language, for example
+  "[typescript]": {
+    "editor.defaultFormatter": "dprint.dprint",
+    "editor.formatOnSave": true
+  }
+}

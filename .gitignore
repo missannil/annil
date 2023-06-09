@@ -1,7 +1,6 @@
 # Node.js
 **/*.js
 **/node_modules
-.vscode
 *.map
 # .eslintcache
 !ewm.config.js

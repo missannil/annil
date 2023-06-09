@@ -24,7 +24,7 @@ jobs:
           #项目类型
           release-type: node
           #包名称
-          package-name: miniprogram-tailwind-preset
+          package-name: ts-wmp
         # 以下为npm发布逻辑
       - uses: actions/checkout@v3
         # if语句为真运行actions。

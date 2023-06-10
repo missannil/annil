@@ -7,7 +7,7 @@
     "prepare": "husky install",
     "lint": "eslint . --fix && npm run fmt",
     "fmt": "dprint fmt",
-    "tsc": "tsc",
+    "test": "tsc",
     "build": "tsc -p tsconfig.build.json"
   },
   "devDependencies": {

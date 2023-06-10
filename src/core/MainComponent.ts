@@ -30,7 +30,7 @@ interface Constructor {
     TData extends DataConstraint = {},
   >(
     options: Options<TProperties, TData>,
-  ): keyof IinjectDataDoc;
+  ): TProperties;
 }
 
 export const MainComponent: Constructor = function(options): any {

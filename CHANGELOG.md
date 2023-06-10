@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0](https://github.com/missannil/ts-wmp/compare/v0.1.2...v0.2.0) (2023-06-10)
+
+
+### Features
+
+* mainprogram ([8951927](https://github.com/missannil/ts-wmp/commit/8951927d97bf9b672d34ae36970e2de4a180f34f))
+
 ## [0.1.2](https://github.com/missannil/ts-wmp/compare/v0.1.1...v0.1.2) (2023-06-09)
 
 

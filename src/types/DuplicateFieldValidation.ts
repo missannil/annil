@@ -1,9 +1,18 @@
-import type { IfExtends } from "hry-types";
+import type { IfExtends } from "../../hry-types/src";
 
 export type DuplicateFieldValidation<
   Original extends object,
-  Compared extends object,
+  ComparedKeys extends string,
   Prompt extends string,
-> = IfExtends<{}, Original, unknown, Record<Extract<keyof Original, keyof Compared>, Prompt>>;
-
-// ⚠️
+  DuplicateKeys extends keyof Original = Extract<keyof Original, ComparedKeys>,
+> = IfExtends<
+  {},
+  Original,
+  unknown,
+  IfExtends<
+    DuplicateKeys,
+    never,
+    unknown,
+    { [k in DuplicateKeys]: Original[k] extends AnyFunction ? `⚠️${Prompt}⚠️` : () => `⚠️${Prompt}⚠️` }
+  >
+>;

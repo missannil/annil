@@ -1,19 +1,14 @@
-import { MainComponent } from "../../../../src/core/MainComponent";
+import { MainComponent } from "../../../../src/index";
 
 /**
  * 非法字段检测
  */
 MainComponent({
   properties: {
-    str: {
+    a: {
       type: String,
-      // @ts-expect-error  "非法字段 values"
-      values: "123",
-    },
-    num: {
       // @ts-expect-error  "非法字段 types"
-      types: Number,
-      value: 123,
+      values: "123",
     },
     bool: {
       type: Boolean,

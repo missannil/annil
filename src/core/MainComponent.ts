@@ -15,7 +15,29 @@ type Options<
     & TProperties
     & IllegalFieldValidation<TProperties, "type" | "value" | "optionalTypes">
     & DuplicateFieldValidation<TProperties, keyof IinjectDataDoc, "与inject重复类型">;
+  /**
+   * 可引入响应式数据(仅支持mobx的 observable)
+   * ```ts
+   * const storde = observable({
+   *   name: "zhao",
+   * });
+   * MainComponent({
+   *   data:{
+   *      responsiveName: () => store.name
+   *   }
+   * })
+   * ```
+   */
   data?: TData;
+  // & ThisType<{
+  //   data:
+  //     & DataDoc
+  //     & Required<PropertiesDoc>
+  //     & ComputedDoc
+  //     & IinjectDataDoc
+  //     & InheritDoc
+
+  // }>;
 };
 
 interface Constructor {

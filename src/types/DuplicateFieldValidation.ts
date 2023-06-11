@@ -1,4 +1,4 @@
-import type { IfExtends } from "../../hry-types/src";
+import type { IfExtends } from "hry-types";
 
 export type DuplicateFieldValidation<
   Original extends object,

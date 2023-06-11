@@ -1,4 +1,4 @@
-import type { PureObject } from "../../hry-types/src";
+import type { PureObject } from "hry-types";
 
 /**
  * @description data字段约束

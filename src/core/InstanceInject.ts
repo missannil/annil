@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 
-import type { IfEquals } from "../../hry-types/src";
+import type { IfEquals } from "hry-types";
 import type { DataConstraint, GetDataKeyTypes } from "../types/Data";
 import type { GetDataDoc } from "../types/GetDataDoc";
 import type { methodConstraint } from "../types/methodConstraint";

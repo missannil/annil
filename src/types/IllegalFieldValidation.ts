@@ -1,4 +1,4 @@
-import type { AnyFunction, IfExtends, PureObject } from "../../hry-types/src";
+import type { AnyFunction, IfExtends, PureObject } from "hry-types";
 
 /**
  * @description 泛型对象的子对象非法字段验证

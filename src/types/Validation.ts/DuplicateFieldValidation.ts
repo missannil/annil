@@ -2,7 +2,7 @@ import type { IfExtends } from "hry-types/src/Any/IfExtends";
 
 export type DuplicateFieldValidation<
   Original extends object,
-  ComparedKeys extends string,
+  ComparedKeys extends PropertyKey,
   Prompt extends string,
   DuplicateKeys extends keyof Original = Extract<keyof Original, ComparedKeys>,
 > = IfExtends<

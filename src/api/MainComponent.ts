@@ -34,7 +34,7 @@ type Options<
     & DuplicateFieldValidation<TComputed, keyof TProperties, "与properties字段重复">
     & DuplicateFieldValidation<TComputed, keyof TData, "与data字段重复">
     & ThisType<{
-      data: PropertiesDoc & DataDoc & ComputedDoc;
+      data: Required<PropertiesDoc> & DataDoc & ComputedDoc;
     }>;
 };
 

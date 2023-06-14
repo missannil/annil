@@ -1,5 +1,7 @@
-import { ValueChecking } from "hry-types";
+import { type AnyObject, ValueChecking } from "hry-types";
+import type { SpecificType } from "../../../../src";
 import { MainComponent } from "../../../../src/api/MainComponent";
+import type { Mock_User } from "../../mockData";
 
 // ----------------computed中的this.data----------------
 /**
@@ -8,6 +10,15 @@ import { MainComponent } from "../../../../src/api/MainComponent";
 MainComponent({
   properties: {
     aaa: String,
+    obj: Object,
+    union_obj: {
+      type: Object as SpecificType<Mock_User>,
+      optionalTypes: [Number],
+    },
+    union_obj1: {
+      type: Number,
+      optionalTypes: [Object as SpecificType<Mock_User>],
+    },
   },
   data: {
     bbb: 123,
@@ -15,6 +26,9 @@ MainComponent({
   computed: {
     yyy() {
       ValueChecking<string>()(this.data.aaa);
+      ValueChecking<AnyObject | null>()(this.data.obj);
+      ValueChecking<Mock_User | number | null>()(this.data.union_obj);
+      ValueChecking<Mock_User | number>()(this.data.union_obj1);
       ValueChecking<number>()(this.data.bbb);
       ValueChecking<"123">()(this.data.zzz);
 

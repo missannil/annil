@@ -5,6 +5,9 @@ import type { InferSpecificType } from "./InferSpecificType";
 import type { PropertiesConstraint, RequiredSingle, RequiredTypes, RequiredUnion } from "./PropertiesConstraint";
 import type { PuerObjectAddNull } from "./PuerObjectAddNull";
 
+/**
+ * type 为对象的必传字段 加入null
+ */
 export type GetRequiredDoc<
   T extends PropertiesConstraint,
   Required = Select<T, RequiredTypes>,
@@ -13,15 +16,7 @@ export type GetRequiredDoc<
     Required[k],
     RequiredSingle,
     PuerObjectAddNull<InferSpecificType<Required[k]>>,
-    IfExtends<
-      unknown,
-      Cast<Required[k], RequiredUnion>["optionalTypes"],
-      PuerObjectAddNull<InferSpecificType<Cast<Required[k], RequiredUnion>["type"]>>,
-      PuerObjectAddNull<
-        InferSpecificType<
-          Cast<Required[k], RequiredUnion>["type"] | Cast<Required[k], RequiredUnion>["optionalTypes"][number]
-        >
-      >
-    >
+    | PuerObjectAddNull<InferSpecificType<Cast<Required[k], RequiredUnion>["type"]>>
+    | InferSpecificType<Cast<Required[k], RequiredUnion>["optionalTypes"][number]>
   >;
 };

@@ -1,4 +1,4 @@
-import { InstanceInject } from "./core/InstanceInject";
-import { MainComponent } from "./core/MainComponent";
-export type { SpecificType } from "./types/PropertiesConstraint";
+import { InstanceInject } from "./api/InstanceInject";
+import { MainComponent } from "./api/MainComponent";
+export type { SpecificType } from "./types/SpecificType";
 export { InstanceInject, MainComponent };

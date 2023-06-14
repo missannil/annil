@@ -16,13 +16,13 @@ type ExpectRequiredDoc = {
   num: number;
   bool: boolean;
   arr: unknown[];
-  obj: AnyObject;
+  obj: AnyObject | null;
   tuple: [string, number, boolean];
   union_str: "male" | "female";
   union_num: 0 | 1 | 2;
   union_bool: boolean;
   union_arr: number[] | string[];
-  union_obj: Mock_User | Mock_Cart;
+  union_obj: Mock_User | Mock_Cart | null;
   union_multiple: string | number | boolean;
   union_multiple_literal: boolean | 0 | 1 | 2 | "male" | "female";
 };

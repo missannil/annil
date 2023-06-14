@@ -15,11 +15,6 @@ MainComponent({
       value: 123,
       optionalTypes: [String],
     },
-    ok2: {
-      type: Number,
-      value: "123",
-      optionalTypes: [String],
-    },
     number: {
       type: Number,
       // @ts-expect-error 类型错误
@@ -28,8 +23,8 @@ MainComponent({
     union: {
       type: Number,
       // @ts-expect-error 类型错误
-      value: "应该写number或boolean类型",
-      optionalTypes: [Boolean],
+      value: "应该写number类型",
+      optionalTypes: [String],
     },
   },
 });

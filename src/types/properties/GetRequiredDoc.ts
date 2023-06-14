@@ -3,6 +3,7 @@ import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { Select } from "hry-types/src/Object/Select";
 import type { InferSpecificType } from "./InferSpecificType";
 import type { PropertiesConstraint, RequiredSingle, RequiredTypes, RequiredUnion } from "./PropertiesConstraint";
+import type { PuerObjectAddNull } from "./PuerObjectAddNull";
 
 export type GetRequiredDoc<
   T extends PropertiesConstraint,
@@ -11,13 +12,15 @@ export type GetRequiredDoc<
   [k in keyof Required]: IfExtends<
     Required[k],
     RequiredSingle,
-    InferSpecificType<Required[k]>,
+    PuerObjectAddNull<InferSpecificType<Required[k]>>,
     IfExtends<
       unknown,
       Cast<Required[k], RequiredUnion>["optionalTypes"],
-      InferSpecificType<Cast<Required[k], RequiredUnion>["type"]>,
-      InferSpecificType<
-        Cast<Required[k], RequiredUnion>["type"] | Cast<Required[k], RequiredUnion>["optionalTypes"][number]
+      PuerObjectAddNull<InferSpecificType<Cast<Required[k], RequiredUnion>["type"]>>,
+      PuerObjectAddNull<
+        InferSpecificType<
+          Cast<Required[k], RequiredUnion>["type"] | Cast<Required[k], RequiredUnion>["optionalTypes"][number]
+        >
       >
     >
   >;

@@ -5,6 +5,7 @@ import type { GetPropertiesDoc } from "../types/properties/GetPropertiesDoc";
 import type { PropertiesConstraint } from "../types/properties/PropertiesConstraint";
 import type { DuplicateFieldValidation } from "../types/Validation.ts/DuplicateFieldValidation";
 import type { IinjectDataDoc } from "./InstanceInject";
+import type { ValueValidator } from "../types/properties/ValueValidator";
 
 type Options<
   TProperties extends object,
@@ -15,7 +16,8 @@ type Options<
    */
   properties?:
     & TProperties
-    & DuplicateFieldValidation<TProperties, keyof IinjectDataDoc, "与inject字段重复">;
+    & DuplicateFieldValidation<TProperties, keyof IinjectDataDoc, "与inject字段重复">
+    & ValueValidator<TProperties>
   data?:
     & TData
     & DuplicateFieldValidation<TData, keyof IinjectDataDoc, "与inject字段重复">

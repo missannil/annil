@@ -1,4 +1,4 @@
-import { InstanceInject } from "../src";
+import { InstanceInject } from "./src";
 
 function injectMethod(data: string) {
   console.log(data);
@@ -23,7 +23,7 @@ InstanceInject.InjectOption = {
   methods,
 };
 // 声明注入类型
-declare module "../src/" {
+declare module "./src/" {
   interface InstanceInject {
     data: typeof data;
     methods: typeof methods;

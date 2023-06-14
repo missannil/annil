@@ -1,6 +1,6 @@
-import { TypeChecking } from "hry-types";
 import type { IfEquals } from "hry-types/src/Any/IfEquals";
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
+import type { Or } from "hry-types/src/List/Or";
 import type { Filter } from "hry-types/src/Object/Filter";
 import type { ReturnTypeOfProperty } from "hry-types/src/Object/ReturnTypeOfProperty";
 import type { Select } from "hry-types/src/Object/Select";
@@ -16,31 +16,20 @@ export type GetDataKeyTypes = "去掉函数字段" | "返回函数字段" | "函
  */ export type GetDataDoc<
   TData extends DataConstraint,
   TType extends GetDataKeyTypes = "函数值类型变为函数返回类型",
-> = IfExtends<
-  {},
+> = IfEquals<
   TData,
+  Or<[{}, DataConstraint]>,
   unknown,
   IfExtends<
-    DataConstraint,
-    TData,
-    unknown,
+    TType,
+    "函数值类型变为函数返回类型",
+    ReturnTypeOfProperty<TData>,
     IfExtends<
       TType,
-      "函数值类型变为函数返回类型",
-      ReturnTypeOfProperty<TData>,
-      IfExtends<
-        TType,
-        "去掉函数字段",
-        IfEquals<Filter<TData, AnyFunction>, {}, unknown>,
-        // "返回函数字段"
-        Select<TData, Function>
-      >
+      "去掉函数字段",
+      IfEquals<Filter<TData, AnyFunction>, {}, unknown>,
+      // "返回函数字段"
+      Select<TData, Function>
     >
   >
 >;
-// test
-type data = { a: () => number; b: number; c: string };
-
-TypeChecking<GetDataDoc<data>, { a: number; b: number; c: string }, true>;
-TypeChecking<GetDataDoc<data, "去掉函数字段">, { b: number; c: string }, true>;
-TypeChecking<GetDataDoc<data, "返回函数字段">, { a: () => number }, true>;

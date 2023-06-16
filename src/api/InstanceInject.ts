@@ -3,12 +3,12 @@
 import type { IfEquals } from "hry-types/src/Any/IfEquals";
 import type { DataConstraint } from "../types/data/DataConstraint";
 import type { GetDataDoc, GetDataKeyTypes } from "../types/data/GetDataDoc";
-import type { methodConstraint } from "../types/methods/methodConstraint";
+import type { MethodsConstraint } from "../types/methods/MethodsConstraint";
 import type { WMComponentOption } from "../types/officialAlias";
 
 export abstract class IInject {
   public options?: WMComponentOption;
-  public methods?: methodConstraint;
+  public methods?: MethodsConstraint;
   public data?: DataConstraint;
 }
 /**
@@ -28,7 +28,7 @@ export class InstanceInject extends IInject {
 /**
  * 获取注入方法实例
  */
-export type IinjectMethodsDoc = IfEquals<InstanceInject["methods"] & {}, methodConstraint, unknown>;
+export type IinjectMethodsDoc = IfEquals<InstanceInject["methods"] & {}, MethodsConstraint, unknown>;
 /**
  * 获取注入data实例
  */

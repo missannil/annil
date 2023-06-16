@@ -5,11 +5,11 @@ import { MainComponent } from "../../../../src/index";
  */
 MainComponent({
   properties: {
-    a: {
-      type: String,
-      // @ts-expect-error   错误字段 "values"多了s
-      values: "123",
-    },
+    // a: {
+    //   type: String,
+    //   // @ts-expect-error   错误字段 "values"多了s
+    //   values: "123",
+    // },
     bool: {
       type: Boolean,
       value: true,

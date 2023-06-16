@@ -6,7 +6,11 @@ import type { GetDataDoc } from "../types/data/GetDataDoc";
 import type { GetPropertiesDoc } from "../types/properties/GetPropertiesDoc";
 import type { PropertiesConstraint } from "../types/properties/PropertiesConstraint";
 import type { ValueValidator } from "../types/properties/ValueValidator";
-import type { DuplicateFieldValidation } from "../types/Validation.ts/DuplicateFieldValidation";
+
+import type {
+  DuplicateFieldValidation,
+  IllegalFieldValidation,
+} from "hry-types/src/Function_generic_value_validation/_api";
 import type { IinjectDataDoc } from "./InstanceInject";
 
 type Options<
@@ -23,6 +27,7 @@ type Options<
   properties?:
     & TProperties
     & DuplicateFieldValidation<TProperties, keyof IinjectDataDoc, "与注入的data字段重复">
+    & IllegalFieldValidation<TProperties, "value" | "type" | "optionalTypes", 1>
     & ValueValidator<TProperties>;
   data?:
     & TData

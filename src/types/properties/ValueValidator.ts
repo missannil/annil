@@ -9,11 +9,8 @@ export type ValueValidator<T, TErrText = () => "⚠️类型错误⚠️"> = IfE
     [k in keyof T]: T[k] extends {
       type: infer R;
       value: infer V;
-      // optionalTypes: (infer L)[];
     } ? V extends InferSpecificType<R> ? unknown
       : { value: TErrText }
-      // : T[k] extends { type: infer R; value: infer V } ? V extends InferSpecificType<R> ? unknown
-      //   : { value: TErrText }
       : unknown;
   }
 >;

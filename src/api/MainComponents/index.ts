@@ -9,6 +9,7 @@ import type { DataConstraint } from "./Data.ts/DataConstraint";
 import type { GetDataDoc } from "./Data.ts/GetDataDoc";
 import type { Events } from "./Events.ts";
 import type { EventsConstraint } from "./Events.ts/EventsConstraint";
+import type { GetMainComponentDoc } from "./GetMainComponentDoc";
 import type { IsPage } from "./IsPage";
 import type { Lifetimes } from "./Lifetimes";
 import type { Methods } from "./Methods";
@@ -40,7 +41,7 @@ type Options<
   & CustomEvents<TCustomEvents, TEvents, TIsPage>
   & Methods<TMethods, TEvents, TCustomEvents>;
 
-interface Constructor {
+type Constructor = {
   <
     Literal extends
       | string
@@ -73,8 +74,16 @@ interface Constructor {
       DataDoc,
       ComputedDoc
     >,
-  ): void;
-}
+  ): GetMainComponentDoc<
+    PropertiesDoc,
+    DataDoc,
+    ComputedDoc,
+    TEvents,
+    TCustomEvents,
+    TMethods,
+    TIsPage
+  >;
+};
 
 export const MainComponent: Constructor = function(options): any {
   return options;

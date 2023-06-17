@@ -1,6 +1,7 @@
 import type { DuplicateFieldValidation } from "hry-types/src/Function_generic_value_validation/DuplicateFieldValidation";
 import type { IllegalFieldValidation } from "hry-types/src/Function_generic_value_validation/IllegalFieldValidation";
-import type { IinjectDataDoc } from "../../InstanceInject";
+
+import { InstanceInject } from "../../InstanceInject";
 import type { PropertiesConstraint } from "./PropertiesConstraint";
 import type { ValueValidator } from "./ValueValidator";
 
@@ -10,7 +11,7 @@ export type Properties<TProperties extends PropertiesConstraint> = {
    */
   properties?:
     & TProperties
-    & DuplicateFieldValidation<TProperties, keyof IinjectDataDoc, "与注入的data字段重复">
+    & DuplicateFieldValidation<TProperties, keyof InstanceInject["data"], "与注入的data字段重复">
     & IllegalFieldValidation<TProperties, "value" | "type" | "optionalTypes", 1>
     & ValueValidator<TProperties>;
 };

@@ -1,4 +1,6 @@
+import type { O } from "hry-types";
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
+import { InstanceInject } from "../..";
 import type { Computed } from "./Computed";
 import type { ComputedConstraint } from "./Computed/ComputedConstraint";
 import type { GetComputedDoc } from "./Computed/GetComputedDoc";
@@ -18,6 +20,7 @@ import type { PageLifetimes } from "./PageLifetimes";
 import type { Properties } from "./Properties";
 import type { GetPropertiesDoc } from "./Properties/GetPropertiesDoc";
 import type { PropertiesConstraint } from "./Properties/PropertiesConstraint";
+import type { Watch } from "./Watch";
 
 type Options<
   TEvents extends EventsConstraint,
@@ -39,7 +42,18 @@ type Options<
   & PageLifetimes<TIsPage, PropertiesDoc>
   & Lifetimes<TIsPage>
   & CustomEvents<TCustomEvents, TEvents, TIsPage>
-  & Methods<TMethods, TEvents, TCustomEvents>;
+  & Methods<TMethods, TEvents, TCustomEvents>
+  & Watch<
+    & ComputedDoc
+    & PropertiesDoc
+    & DataDoc
+    & IfExtends<
+      DataConstraint,
+      InstanceInject["data"] & {},
+      unknown,
+      O.ReturnTypeInObject<GetDataDoc<InstanceInject["data"] & {}, "返回函数字段">>
+    >
+  >;
 
 type Constructor = {
   <

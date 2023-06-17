@@ -1,9 +1,6 @@
-/* eslint-disable @typescript-eslint/explicit-member-accessibility */
-
-import type { IfEquals } from "hry-types/src/Any/IfEquals";
 import type { WMComponentOption } from "../common_types/officialAlias";
 import type { DataConstraint } from "./MainComponents/Data.ts/DataConstraint";
-import type { GetDataDoc, GetDataKeyTypes } from "./MainComponents/Data.ts/GetDataDoc";
+
 import type { MethodsConstraint } from "./MainComponents/Methods/MethodsConstraint";
 
 export abstract class IInject {
@@ -24,19 +21,3 @@ export class InstanceInject extends IInject {
     this._injectOption = options;
   }
 }
-
-/**
- * 获取注入方法实例
- */
-export type IinjectMethodsDoc = IfEquals<InstanceInject["methods"] & {}, MethodsConstraint, unknown>;
-/**
- * 获取注入data实例
- */
-export type IinjectDataDoc<
-  T extends GetDataKeyTypes = "函数值类型变为函数返回类型",
-> = IfEquals<
-  InstanceInject["data"] & {},
-  DataConstraint,
-  unknown,
-  GetDataDoc<InstanceInject["data"] & {}, T>
->;

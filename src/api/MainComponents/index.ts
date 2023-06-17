@@ -13,7 +13,7 @@ import type { IsPage } from "./IsPage";
 import type { Lifetimes } from "./Lifetimes";
 import type { Methods } from "./Methods";
 import type { MethodsConstraint } from "./Methods/MethodsConstraint";
-import type { PageLifetimes } from "./pageLifetimes";
+import type { PageLifetimes } from "./PageLifetimes";
 import type { Properties } from "./Properties";
 import type { GetPropertiesDoc } from "./Properties/GetPropertiesDoc";
 import type { PropertiesConstraint } from "./Properties/PropertiesConstraint";

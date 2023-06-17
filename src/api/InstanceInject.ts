@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 
 import type { IfEquals } from "hry-types/src/Any/IfEquals";
-import type { DataConstraint } from "../types/data/DataConstraint";
-import type { GetDataDoc, GetDataKeyTypes } from "../types/data/GetDataDoc";
-import type { MethodsConstraint } from "../types/methods/MethodsConstraint";
-import type { WMComponentOption } from "../types/officialAlias";
+import type { WMComponentOption } from "../common_types/officialAlias";
+import type { DataConstraint } from "./MainComponents/Data.ts/DataConstraint";
+import type { GetDataDoc, GetDataKeyTypes } from "./MainComponents/Data.ts/GetDataDoc";
+import type { MethodsConstraint } from "./MainComponents/Methods/MethodsConstraint";
 
 export abstract class IInject {
   public options?: WMComponentOption;

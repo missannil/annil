@@ -22,7 +22,7 @@ MainComponent({
       ValueChecking<number>()(oldValue);
       ValueChecking<number>()(newValue);
     },
-    // 提示中有,或者自己写,ts默认为unknown
+    // 计算属性参数类型提示中有,或者自己写,默认为unknown
     c(oldValue: number, newValue: number) {
       ValueChecking<number>()(oldValue);
       ValueChecking<number>()(newValue);

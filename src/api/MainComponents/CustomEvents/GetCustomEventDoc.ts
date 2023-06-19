@@ -1,4 +1,3 @@
-import type { Cast } from "hry-types/src/Any/Cast";
 import type { CustomEventConstraint, FullEvent, ShortEvent } from "./CustomEventConstraint";
 import type { GetFullEventDoc } from "./GetFullEventDoc";
 import type { GetShortEventDoc } from "./GetShortEventDoc";
@@ -17,5 +16,6 @@ import type { GetShortEventDoc } from "./GetShortEventDoc";
  */
 export type GetCustomEventDoc<T extends CustomEventConstraint> = {
   [k in keyof T]: T[k] extends ShortEvent ? GetShortEventDoc<T[k]>
-    : GetFullEventDoc<Cast<T[k], FullEvent>>;
+    : T[k] extends FullEvent ? GetFullEventDoc<T[k]>
+    : never;
 };

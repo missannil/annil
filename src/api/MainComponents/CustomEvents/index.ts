@@ -1,6 +1,6 @@
+import type { V } from "hry-types";
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
-import type { DuplicateFieldValidation } from "hry-types/src/Function_generic_value_validation/DuplicateFieldValidation";
-import type { IllegalFieldValidation } from "hry-types/src/Function_generic_value_validation/IllegalFieldValidation";
+
 import type { InstanceInject } from "../../InstanceInject";
 import type { EventsConstraint } from "../Events.ts/EventsConstraint";
 import type { CustomEventConstraint } from "./CustomEventConstraint";
@@ -30,13 +30,13 @@ export type CustomEvents<TCustomEvents extends CustomEventConstraint, TEvents, T
      */
     customEvents?:
       & TCustomEvents
-      & DuplicateFieldValidation<TCustomEvents, keyof InstanceInject["methods"] & {}, "与注入的methods字段重复">
-      & IllegalFieldValidation<TCustomEvents, "bubbles" | "composed" | "capturePhase", 1, "options">
+      & V.DuplicateFieldValidation<TCustomEvents, keyof InstanceInject["methods"] & {}, "与注入的methods字段重复">
+      & V.IllegalFieldValidation<TCustomEvents, "bubbles" | "composed" | "capturePhase", 1, "options">
       & IfExtends<
         EventsConstraint,
         TEvents,
         unknown,
-        DuplicateFieldValidation<TCustomEvents, keyof TEvents, "与events字段重复">
+        V.DuplicateFieldValidation<TCustomEvents, keyof TEvents, "与events字段重复">
       >;
   },
   unknown

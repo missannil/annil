@@ -15,7 +15,7 @@ export type MainComponentDoc = {
   /**
    * this.data中所有数据 SubComponent Api 使用
    */
-  InstanceData?: PureObject;
+  allData?: PureObject;
   /**
    * methodsDoc  SubComponent Api使用
    */

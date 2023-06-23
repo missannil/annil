@@ -1,40 +1,36 @@
 import type { IfEquals } from "hry-types/src/Any/IfEquals";
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
-import type { Or } from "hry-types/src/List/Or";
 import type { MergeIntersection } from "hry-types/src/Object/MergeIntersection";
-import type { CustomEventConstraint } from "../CustomEvents/CustomEventConstraint";
-import type { GetCustomEventDoc } from "../CustomEvents/GetCustomEventDoc";
-import type { EventsConstraint } from "../Events.ts/EventsConstraint";
 import type { MethodsConstraint } from "../Methods/MethodsConstraint";
 
 /**
  * 获取MainComponent文档类型
  */
 export type GetMainComponentDoc<
-  TPropertiesDoc,
-  TDataDoc,
-  TComputedDoc,
-  TEvents extends EventsConstraint,
-  TCustomEvents extends CustomEventConstraint,
-  TMethods extends MethodsConstraint,
-  TIsPage extends boolean,
+  PropertiesDoc extends AnyObject,
+  DataDoc extends AnyObject,
+  ComputedDoc extends AnyObject,
+  EventsDoc extends AnyObject,
+  CustomEventsDoc extends AnyObject,
+  TMethods extends MethodsConstraint = {},
+  TIsPage extends boolean = false,
 > = MergeIntersection<
   & IfExtends<TIsPage, false, {}, { isPage: true }>
-  & IfExtends<unknown, TPropertiesDoc, unknown, { properties: TPropertiesDoc }>
+  & IfExtends<{}, PropertiesDoc, unknown, { properties: PropertiesDoc }>
   & IfExtends<
-    unknown,
-    TDataDoc & TPropertiesDoc & TComputedDoc,
+    {},
+    DataDoc & PropertiesDoc & ComputedDoc,
     unknown,
     {
-      allData: TDataDoc & Required<TPropertiesDoc> & TComputedDoc;
+      allData: DataDoc & Required<PropertiesDoc> & ComputedDoc;
     }
   >
   & IfExtends<{}, TMethods, unknown, { methods: TMethods }>
-  & IfEquals<TEvents, Or<[EventsConstraint, {}]>, unknown, { events: TEvents }>
+  & IfEquals<{}, EventsDoc, unknown, { events: EventsDoc }>
   & IfExtends<
     {},
-    TCustomEvents,
+    CustomEventsDoc,
     unknown,
-    { customEvents: GetCustomEventDoc<TCustomEvents> }
+    { customEvents: CustomEventsDoc }
   >
 >;

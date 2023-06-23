@@ -11,7 +11,7 @@ export type GetDataKeyTypes = "去掉函数字段" | "返回函数字段" | "函
 /**
  * 获取data字段文档
  * @param T DataConstraint
- * @returns unknown | IDataDoc
+ * @returns AnyObject
  */ export type GetDataDoc<
   TData extends DataConstraint,
   TType extends GetDataKeyTypes = "函数值类型变为函数返回类型",
@@ -24,6 +24,6 @@ export type GetDataKeyTypes = "去掉函数字段" | "返回函数字段" | "函
     "去掉函数字段",
     IfEquals<Filter<TData, AnyFunction>, {}, unknown>,
     // "返回函数字段"
-    Select<TData, Function>
+    Select<TData, AnyFunction>
   >
 >;

@@ -19,6 +19,10 @@ export type GetRequired<
   T extends PropertiesConstraint,
 > = Select<T, RequiredTypes>;
 
+/**
+ * 获取properties的文档类型
+ * @returns AnyObject
+ */
 export type GetPropertiesDoc<
   T extends PropertiesConstraint,
   TType extends "Required" | "Optional" | "all" = "all",

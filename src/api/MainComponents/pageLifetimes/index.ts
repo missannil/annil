@@ -1,6 +1,6 @@
+import type { O } from "hry-types";
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { WMPageLifetime, WMPageLifetimes } from "../../../common_types/officialAlias";
-import type { RemoveNull } from "../../../common_types/RemoveNull";
 
 export type PageLifetimes<TIsPage extends boolean, PropertiesDoc> = IfExtends<
   TIsPage,
@@ -18,7 +18,7 @@ export type PageLifetimes<TIsPage extends boolean, PropertiesDoc> = IfExtends<
       // 替换掉官方的 Parameters<WechatMiniprogram.Page.ILifetime['onLoad']>
       & {
         onLoad?: (
-          properties: RemoveNull<Required<PropertiesDoc>>,
+          properties: O.NonNullable<Required<PropertiesDoc>>,
         ) => void;
       };
   }

@@ -12,6 +12,7 @@ const data = {
 const methods = {
   injectMethod,
 };
+
 InstanceInject.InjectOption = {
   data,
   options: {
@@ -22,6 +23,7 @@ InstanceInject.InjectOption = {
   },
   methods,
 };
+
 // 声明注入类型
 declare module "./src/" {
   interface InstanceInject {

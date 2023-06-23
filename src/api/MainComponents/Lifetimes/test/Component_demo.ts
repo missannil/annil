@@ -1,5 +1,5 @@
 import { MainComponent, type SpecificType } from "../../../..";
-import type { Mock_User } from "../../../../common_types/mockData";
+import type { Mock_User } from "../../Properties/test/GetRequiredDoc.test";
 
 /**
  * 组件时

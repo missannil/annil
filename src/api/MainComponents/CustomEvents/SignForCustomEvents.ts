@@ -1,14 +1,37 @@
-import type { FullEvent } from "./CustomEventConstraint";
+import type { IfEquals } from "hry-types/src/Any/IfEquals";
+import type {
+  BubblesCapturePhaseComposedOptions,
+  CustomEventsOptions,
+  OnlyBubbles,
+  OnlyBubblesComposed,
+  OnlyCapturePhase,
+  OnlyCapturePhaseComposed,
+} from "./CustomEventConstraint";
+// 使用函数返回可在提示中显示类型别名
+export type BubblesSign = () => "bubbles";
+export type CapturePhaseSign = () => "capturePhase";
+export type BubblesComposedSign = () => "bubbles" | "composed";
+export type CapturePhaseComposedSign = () => "capturePhase" | "composed";
+export type BubblesCapturePhaseComposedSign = () => "bubbles" | "capturePhase" | "composed";
 
-declare const Composed: unique symbol;
-
-declare const Bubbles: unique symbol;
-// 使用函数返回可在提示中显示类型别名,IsComposed 和 IsBubbles
-export type IsComposed = () => typeof Composed;
-export type IsBubbles = () => typeof Bubbles;
-// export type IsComposed = typeof Composed;
-// export type IsBubbles = typeof Bubbles;
-
-export type SignForCustomEvents<Options extends FullEvent["options"]> = Options["composed"] extends true ? IsComposed
-  : Options["bubbles"] extends true ? IsBubbles
-  : never;
+export type SignForCustomEvents<Options extends CustomEventsOptions> = IfEquals<
+  Options,
+  OnlyBubbles,
+  BubblesSign,
+  IfEquals<
+    Options,
+    OnlyCapturePhase,
+    CapturePhaseSign,
+    IfEquals<
+      Options,
+      OnlyBubblesComposed,
+      BubblesComposedSign,
+      IfEquals<
+        Options,
+        OnlyCapturePhaseComposed,
+        CapturePhaseComposedSign,
+        IfEquals<Options, BubblesCapturePhaseComposedOptions, BubblesCapturePhaseComposedSign>
+      >
+    >
+  >
+>;

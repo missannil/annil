@@ -47,12 +47,16 @@ module.exports = {
     "@typescript-eslint/no-empty-interface": 2, // 不可以写空接口
     "no-mixed-spaces-and-tabs": "off",
     "@typescript-eslint/ban-ts-comment": 0,
-    "padding-line-between-statements": [
+    "padding-line-between-statements": "off",
+    "@typescript-eslint/padding-line-between-statements": [
       "warn",
-      { blankLine: "always", prev: "const", next: "function" },
+      { blankLine: "always", prev: "const", next: "expression" },
       { blankLine: "always", prev: "*", next: "class" },
       { blankLine: "always", prev: "class", next: "*" },
       { blankLine: "always", prev: "*", next: "return" },
+      { blankLine: "always", prev: "expression", next: "*" },
+      { blankLine: "always", prev: "*", next: ["interface", "type"] },
+      { blankLine: "always", prev: ["interface", "type"], next: "*" },
     ],
   },
 };

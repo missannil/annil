@@ -1,6 +1,6 @@
 import { type AnyObject, ValueChecking } from "hry-types";
 import { MainComponent, type SpecificType } from "../../../..";
-import type { Mock_User } from "../../../../common_types/mockData";
+import type { Mock_User } from "../../Properties/test/GetRequiredDoc.test";
 
 /**
  * 页面时
@@ -19,7 +19,9 @@ MainComponent({
   pageLifetimes: {
     onLoad(props) {
       ValueChecking<string>()(props.str);
+
       ValueChecking<AnyObject>()(props.obj);
+
       ValueChecking<Mock_User>()(props.union);
     },
     onHide() {

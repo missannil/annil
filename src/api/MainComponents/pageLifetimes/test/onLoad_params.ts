@@ -23,8 +23,11 @@ MainComponent({
   pageLifetimes: {
     onLoad(props) {
       ValueChecking<string>()(props.str);
+
       ValueChecking<0 | 1>()(props.num);
+
       ValueChecking<AnyObject | number>()(props.union);
+
       ValueChecking<AnyObject>()(props.optional); // 不带null是对的
     },
   },

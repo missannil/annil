@@ -1,4 +1,5 @@
 export type WMTriggerEventOption = WechatMiniprogram.Component.TriggerEventOption;
+
 export type WMCustomEvent<
   Detail = object,
   Mark extends object = object,
@@ -10,15 +11,18 @@ export type WMCustomEvent<
   CurrentTargetDataset,
   TargetDataset
 >;
+
 export type WMBaseEvent<
   Mark extends object = object,
   CurrentTargetDataset extends object = object,
   TargetDataset extends object = CurrentTargetDataset,
 > = WechatMiniprogram.BaseEvent<Mark, CurrentTargetDataset, TargetDataset>;
+
 /**
  * 事件Dataset类型
  */
 export type Dataset<T extends object> = WMBaseEvent<object, T>;
+
 /**
  * 自定义事件Detail类型
  */

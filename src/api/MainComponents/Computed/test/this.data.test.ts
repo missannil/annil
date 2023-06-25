@@ -2,7 +2,7 @@ import { type AnyObject, ValueChecking } from "hry-types";
 
 import type { SpecificType } from "../../../../common_types/SpecificType";
 import { MainComponent } from "../..";
-import type { Mock_User } from "../../Properties/test/GetRequiredDoc.test";
+import type { Mock_User } from "../../Properties/test/PropertiesConstraint.test";
 
 /**
  * @description this.data类型测试

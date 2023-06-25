@@ -3,7 +3,7 @@ import { type AnyObject, ValueChecking } from "hry-types";
 import type { WMBaseEvent } from "../../../../common_types/officialAlias";
 import type { SpecificType } from "../../../../common_types/SpecificType";
 import { MainComponent } from "../..";
-import type { Mock_Cart, Mock_User } from "../../Properties/test/GetRequiredDoc.test";
+import type { Mock_Cart, Mock_User } from "../../Properties/test/PropertiesConstraint.test";
 
 const allFileds = MainComponent({
   properties: {

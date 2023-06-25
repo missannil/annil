@@ -2,7 +2,6 @@ import type { AnyObject, O, PureObject } from "hry-types";
 import type { As } from "hry-types/src/Any/As";
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { IsNever } from "hry-types/src/Any/IsNever";
-import { InstanceInject } from "../..";
 import type { Computed } from "./Computed";
 import type { ComputedConstraint } from "./Computed/ComputedConstraint";
 import type { GetComputedDoc } from "./Computed/GetComputedDoc";
@@ -52,7 +51,6 @@ type Options<
   & Watch<
     & ComputedDoc
     & Required<O.NonNullable<As<PropertiesDoc, object>>>
-    & O.ReturnTypeInObject<GetDataDoc<InstanceInject["data"] & {}, "返回函数字段">>
     & DataDoc
   >;
 
@@ -72,11 +70,11 @@ type Constructor = {
     TCustomEvents extends TIsPage extends false ? CustomEventConstraint : never = never,
     TMethods extends MethodsConstraint = {},
     TData extends DataConstraint = {},
+    // TComputed必须要有默认值,可使得计算A调用计算B的值
     TComputed extends ComputedConstraint = {},
     EventsDoc extends EventsConstraint = IfExtends<EventsConstraint, TEvents, {}, TEvents>,
     IsPageDoc extends boolean = TIsPage,
     CustomEventsDoc extends PureObject = IsNever<TCustomEvents> extends true ? {} : GetCustomEventDoc<TCustomEvents>,
-    // TComputed必须要有默认值,可使得计算A调用计算B的值
     PropertiesDoc extends PureObject = GetPropertiesDoc<TProperties>,
     DataDoc extends PureObject = GetDataDoc<TData>,
     ComputedDoc extends AnyObject = GetComputedDoc<TComputed>,

@@ -51,6 +51,7 @@ module.exports = {
     "@typescript-eslint/padding-line-between-statements": [
       "warn",
       { blankLine: "always", prev: "const", next: "expression" },
+      { blankLine: "always", prev: "export", next: "*" },
       { blankLine: "always", prev: "*", next: "class" },
       { blankLine: "always", prev: "class", next: "*" },
       { blankLine: "always", prev: "*", next: "return" },

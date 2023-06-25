@@ -5,22 +5,17 @@ import { MainComponent } from "../../../../index";
  */
 MainComponent({
   properties: {
-    // a: {
-    //   type: String,
-    //   // @ts-expect-error   错误字段 "values"多了s
-    //   values: "123",
-    // },
     bool: {
       type: Boolean,
       value: true,
-      // @ts-expect-error   错误字段 optionalType少了s
+      // @ts-expect-error   非法字段 optionalType少了s
       optionalType: [String],
     },
     other: {
       type: Number,
       value: 123,
       optionalTypes: [String],
-      // @ts-expect-error   错误字段
+      // @ts-expect-error   非法字段
       observable: "",
     },
   },

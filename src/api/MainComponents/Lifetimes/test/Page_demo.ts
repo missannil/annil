@@ -1,6 +1,6 @@
 import { type AnyObject, ValueChecking } from "hry-types";
 import { MainComponent, type SpecificType } from "../../../..";
-import type { Mock_User } from "../../Properties/test/GetRequiredDoc.test";
+import type { Mock_User } from "../../Properties/test/PropertiesConstraint.test";
 
 /**
  * 页面时

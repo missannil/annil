@@ -9,9 +9,13 @@ import type {
 } from "./CustomEventConstraint";
 
 export type BubblesSign = () => "bubbles";
+
 export type CapturePhaseSign = () => "capturePhase";
+
 export type BubblesComposedSign = () => "bubbles" | "composed";
+
 export type CapturePhaseComposedSign = () => "capturePhase" | "composed";
+
 export type BubblesCapturePhaseComposedSign = () => "bubbles" | "capturePhase" | "composed";
 
 export type SignForCustomEvents<Options extends CustomEventsOptions> = IfEquals<

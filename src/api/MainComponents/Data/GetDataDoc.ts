@@ -8,6 +8,7 @@ import type { DataConstraint } from "./DataConstraint";
  *  @description DataKeyTypes
  */
 export type DataKeyTypes = "去掉函数字段" | "返回函数字段" | "函数值类型变为函数返回类型";
+
 /**
  * @description 获取data字段文档类型
  * @param T DataConstraint

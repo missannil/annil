@@ -1,9 +1,6 @@
-// ----------------重复字段验证----------------
-
 import { MainComponent } from "../../../..";
-
 /**
- * properties value类型测试
+ * value类型测试
  */
 MainComponent({
   properties: {

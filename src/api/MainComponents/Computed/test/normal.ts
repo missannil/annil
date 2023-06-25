@@ -1,6 +1,6 @@
 import type { SpecificType } from "../../../..";
 import { MainComponent } from "../..";
-import type { Mock_Cart } from "../../Properties/test/GetRequiredDoc.test";
+import type { Mock_Cart } from "../../Properties/test/PropertiesConstraint.test";
 
 /**
  * 可关联properties字段
@@ -22,7 +22,7 @@ MainComponent({
       return this.data.literal;
     },
     CObj() {
-      return this.data.obj?.name || "name is undefined";
+      return this.data.obj?.id || "name is undefined";
     },
   },
 });

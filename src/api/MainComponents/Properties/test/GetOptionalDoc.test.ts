@@ -1,31 +1,14 @@
-import { type AnyObject, type Test, TypeChecking } from "hry-types";
-import type { SpecificType } from "../../../..";
+import { type Test, TypeChecking } from "hry-types";
 import type { GetOptionalDoc } from "../GetOptionalDoc";
-import type { PropertiesConstraint } from "../PropertiesConstraint";
-
-export const optionalFields = {
-  literal_str: {
-    type: String as SpecificType<`${number}:${number}`>,
-    value: "20:8",
-  },
-  literal_num: {
-    type: Number as SpecificType<123 | 456>,
-    value: 123,
-  },
-  unionObj: {
-    type: Object,
-    value: 123,
-    optionalTypes: [Number],
-  },
-} satisfies PropertiesConstraint;
+import { type Mock_User, optional_fields } from "./PropertiesConstraint.test";
 
 export type optionalFieldsExpected = {
-  literal_str?: `${number}:${number}`;
-  literal_num?: 123 | 456;
-  unionObj?: AnyObject | number;
+  optional_str?: string;
+  optional_num?: 123 | 456;
+  optional_obj?: Mock_User | number;
 };
 
-TypeChecking<GetOptionalDoc<typeof optionalFields>, optionalFieldsExpected, Test.Pass>;
+TypeChecking<GetOptionalDoc<typeof optional_fields>, optionalFieldsExpected, Test.Pass>;
 
 type optionalFieldsIsEmpty = {};
 

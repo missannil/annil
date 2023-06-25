@@ -12,9 +12,11 @@ export type RequiredUnion<Literal = unknown> = {
   type: SpecificType<Literal>;
   optionalTypes: SpecificType[];
 };
+
 export type RequiredTypes<Literal = unknown> = RequiredUnion<Literal> | RequiredSingle;
+
 /**
- * @description 可选(传)类型
+ * @description 选传类型
  */
 export type OptionalTypes<Literal = unknown> = {
   type: SpecificType<Literal>;
@@ -25,7 +27,7 @@ export type OptionalTypes<Literal = unknown> = {
 /**
  * @description Properties类型
  */
-export type PropertiesTypes<Literal = unknown> = OptionalTypes<Literal> | RequiredTypes<Literal>;
+type PropertiesTypes<Literal = unknown> = OptionalTypes<Literal> | RequiredTypes<Literal>;
 
 /**
  * @description properties字段约束

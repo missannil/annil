@@ -1,5 +1,4 @@
 import type { AnyObject, V } from "hry-types";
-import { InstanceInject } from "../../InstanceInject";
 import type { CustomEventConstraint } from "./CustomEventConstraint";
 
 /**
@@ -30,7 +29,6 @@ export type CustomEvents<
    */
   customEvents?:
     & TCustomEvents
-    & V.DuplicateFieldValidation<TCustomEvents, keyof InstanceInject["methods"] & {}, "与注入的methods字段重复">
     & V.IllegalFieldValidation<TCustomEvents, "bubbles" | "composed" | "capturePhase", 1, "options">
     & V.DuplicateFieldValidation<TCustomEvents, keyof TEventsDoc, "与events字段重复">;
 };

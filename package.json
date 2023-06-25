@@ -19,6 +19,7 @@
     "hry-types": "^0.10.0",
     "husky": "^8.0.3",
     "missannil-api-typings": "^3.9.1",
+    "mobx": "^6.9.0",
     "prettier": "^2.8.8",
     "typescript": "^5.0.4"
   },

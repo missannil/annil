@@ -1,19 +1,28 @@
+// -----------GetComputedDoc 测试----------------
+
 import { type Test, TypeChecking } from "hry-types";
+import type { ComputedConstraint } from "../ComputedConstraint";
 import type { GetComputedDoc } from "../GetComputedDoc";
 
-// -----------GetComputedDoc泛型测试----------------
-type ComputedDoc = GetComputedDoc<{
-  a: () => number;
-  b: () => string;
-}>;
+// ------测试1------
 
-type Expect = { a: number; b: string };
+// 非空对象字段
+const nonEmptyComputed = {
+  a: () => 1,
+  b: () => "1",
+} satisfies ComputedConstraint;
 
-TypeChecking<ComputedDoc, Expect, Test.Pass>;
+type NonEmptyComputedResult = GetComputedDoc<typeof nonEmptyComputed>;
 
-// computed默认为{}
-type ComputedDocDefault = GetComputedDoc<{}>;
+type NonEmptyComputedExpected = { a: number; b: string };
 
-type Expect1 = {};
+TypeChecking<NonEmptyComputedResult, NonEmptyComputedExpected, Test.Pass>;
 
-TypeChecking<ComputedDocDefault, Expect1, Test.Pass>;
+// 空对象字段
+const emptyComputed = {} satisfies ComputedConstraint;
+
+type EmptyComputedResult = GetComputedDoc<typeof emptyComputed>;
+
+type EmptyComputedExpected = {};
+
+TypeChecking<EmptyComputedResult, EmptyComputedExpected, Test.Pass>;

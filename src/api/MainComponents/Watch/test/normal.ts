@@ -77,9 +77,9 @@ MainComponent({
       ValueChecking<Mock_User>()(oldValue);
     },
     reactiveLiteral(newValue, oldValue) {
-      ValueChecking<"str">()(newValue);
+      ValueChecking<string>()(newValue);
 
-      ValueChecking<"str">()(oldValue);
+      ValueChecking<string>()(oldValue);
     },
     reactiveUser(newValue, oldValue) {
       ValueChecking<Mock_User>()(newValue);

@@ -8,6 +8,4 @@ export type Watch<TWatchData extends AnyObject = {}> = IfExtends<{}, TWatchData,
   watch?: {
     [k in keyof TWatchData]?: (newValue: TWatchData[k], oldValue: TWatchData[k]) => void;
   };
-  // 为了可以单独写计算属性而不报错,会导致超出字段无报错提示!
-  // & Record<string, (newValue: unknown, oldValue: unknown) => void>;
 }>;

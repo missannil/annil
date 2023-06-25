@@ -1,4 +1,4 @@
-import type { AnyObject, O } from "hry-types";
+import type { AnyObject, O, PureObject } from "hry-types";
 import type { As } from "hry-types/src/Any/As";
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { IsNever } from "hry-types/src/Any/IsNever";
@@ -9,11 +9,11 @@ import type { GetComputedDoc } from "./Computed/GetComputedDoc";
 import type { CustomEvents } from "./CustomEvents";
 import type { CustomEventConstraint } from "./CustomEvents/CustomEventConstraint";
 import type { GetCustomEventDoc } from "./CustomEvents/GetCustomEventDoc";
-import type { Data } from "./Data.ts";
-import type { DataConstraint } from "./Data.ts/DataConstraint";
-import type { GetDataDoc } from "./Data.ts/GetDataDoc";
-import type { Events } from "./Events.ts";
-import type { EventsConstraint } from "./Events.ts/EventsConstraint";
+import type { Data } from "./Data";
+import type { DataConstraint } from "./Data/DataConstraint";
+import type { GetDataDoc } from "./Data/GetDataDoc";
+import type { Events } from "./Events";
+import type { EventsConstraint } from "./Events/EventsConstraint";
 import type { GetMainComponentDoc } from "./GetMainComponentDoc";
 import type { IsPage } from "./IsPage";
 import type { Lifetimes } from "./Lifetimes";
@@ -23,7 +23,7 @@ import type { PageLifetimes } from "./PageLifetimes";
 import type { Properties } from "./Properties";
 import type { GetPropertiesDoc } from "./Properties/GetPropertiesDoc";
 import type { PropertiesConstraint } from "./Properties/PropertiesConstraint";
-import type { WatchConstraint } from "./Watch/WatchConstraint";
+import type { Watch } from "./Watch/WatchConstraint";
 
 type Options<
   TEvents extends EventsConstraint,
@@ -39,11 +39,7 @@ type Options<
   PropertiesDoc extends AnyObject,
   DataDoc extends AnyObject,
   ComputedDoc extends AnyObject,
-> // WatchData extends AnyObject =
- = //   & ComputedDoc
-  //   & Required<O.NonNullable<As<PropertiesDoc, object>>>
-  //   & O.ReturnTypeInObject<GetDataDoc<InstanceInject["data"] & {}, "返回函数字段">>
-  //   & DataDoc,
+> =
   & Events<TEvents>
   & Methods<TMethods, EventsDoc, CustomEventsDoc>
   & Properties<TProperties>
@@ -53,7 +49,7 @@ type Options<
   & Computed<TComputed, PropertiesDoc, DataDoc, ComputedDoc>
   & PageLifetimes<IsPageDoc, PropertiesDoc>
   & Lifetimes<IsPageDoc>
-  & WatchConstraint<
+  & Watch<
     & ComputedDoc
     & Required<O.NonNullable<As<PropertiesDoc, object>>>
     & O.ReturnTypeInObject<GetDataDoc<InstanceInject["data"] & {}, "返回函数字段">>
@@ -74,17 +70,16 @@ type Constructor = {
     TIsPage extends boolean = false,
     // TIsPage为false时(组件)才允许写自定义事件(customEvents字段)
     TCustomEvents extends TIsPage extends false ? CustomEventConstraint : never = never,
-    // TCustomEvents extends CustomEventConstraint = {},
     TMethods extends MethodsConstraint = {},
     TData extends DataConstraint = {},
     TComputed extends ComputedConstraint = {},
-    EventsDoc extends {} = IfExtends<EventsConstraint, TEvents, {}, TEvents>,
+    EventsDoc extends EventsConstraint = IfExtends<EventsConstraint, TEvents, {}, TEvents>,
     IsPageDoc extends boolean = TIsPage,
-    CustomEventsDoc extends {} = IsNever<TCustomEvents> extends true ? {} : GetCustomEventDoc<TCustomEvents>,
+    CustomEventsDoc extends PureObject = IsNever<TCustomEvents> extends true ? {} : GetCustomEventDoc<TCustomEvents>,
     // TComputed必须要有默认值,可使得计算A调用计算B的值
-    PropertiesDoc extends {} = GetPropertiesDoc<TProperties>,
-    DataDoc extends {} = GetDataDoc<TData>,
-    ComputedDoc extends {} = GetComputedDoc<TComputed>,
+    PropertiesDoc extends PureObject = GetPropertiesDoc<TProperties>,
+    DataDoc extends PureObject = GetDataDoc<TData>,
+    ComputedDoc extends AnyObject = GetComputedDoc<TComputed>,
   > // 切记 具体类型应定义在这里,而非Options中
   (
     options: Options<

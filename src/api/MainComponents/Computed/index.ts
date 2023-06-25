@@ -3,6 +3,10 @@ import type { MergeIntersection } from "hry-types/src/Object/MergeIntersection";
 import type { InstanceInject } from "../../InstanceInject";
 import type { ComputedConstraint } from "./ComputedConstraint";
 
+/**
+ * @description computed字段输入泛型
+ * @returns TComputed
+ */
 export type Computed<TComputed extends ComputedConstraint, PropertiesDoc, DataDoc, ComputedDoc> = {
   computed?:
     & TComputed

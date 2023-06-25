@@ -16,7 +16,7 @@
     "@typescript-eslint/parser": "^5.59.9",
     "commitlint": "^17.6.5",
     "eslint": "^8.42.0",
-    "hry-types": "^0.9.1",
+    "hry-types": "^0.10.0",
     "husky": "^8.0.3",
     "missannil-api-typings": "^3.9.1",
     "prettier": "^2.8.8",

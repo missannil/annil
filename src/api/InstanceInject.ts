@@ -1,5 +1,5 @@
 import type { WMComponentOption } from "../common_types/officialAlias";
-import type { DataConstraint } from "./MainComponents/Data.ts/DataConstraint";
+import type { DataConstraint } from "./MainComponents/Data/DataConstraint";
 
 import type { MethodsConstraint } from "./MainComponents/Methods/MethodsConstraint";
 

@@ -5,7 +5,7 @@ import { MainComponent } from "../..";
 import type { Mock_User } from "../../Properties/test/GetRequiredDoc.test";
 
 /**
- * compute字段函数中的this.data类型测试
+ * @description this.data类型测试
  */
 MainComponent({
   properties: {
@@ -57,14 +57,17 @@ MainComponent({
   },
 });
 
+/**
+ * @description 两个计算属性不能相互依赖
+ */
 MainComponent({
   computed: {
-    // @ts-expect-error 2个计算属性不能相互依赖
+    // @ts-expect-error 两个计算属性不能相互依赖
     a() {
       // @ts-ignore
       return this.data.b;
     },
-    // @ts-expect-error 2个计算属性不能相互依赖
+    // @ts-expect-error 两个计算属性不能相互依赖
     b() {
       // @ts-ignore
       return this.data.a;

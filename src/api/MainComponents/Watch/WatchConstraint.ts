@@ -3,7 +3,7 @@ import type { NoInfer } from "hry-types/src/Function/_api";
 // type Delay<T, N extends number = 0, L extends unknown[] = []> = L["length"] extends N ? T
 //   : Delay<T, N, [...L, T]>;
 
-export type WatchConstraint<T extends object> = {
+export type Watch<T extends object> = {
   watch?:
     & NoInfer<
       & {

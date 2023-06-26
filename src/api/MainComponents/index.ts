@@ -45,7 +45,7 @@ type Options<
   & IsPage<TIsPage>
   & CustomEvents<TCustomEvents, EventsDoc>
   & Data<TData, PropertiesDoc>
-  & Computed<TComputed, PropertiesDoc, DataDoc, ComputedDoc>
+  & Computed<TComputed, Required<PropertiesDoc> & DataDoc, ComputedDoc>
   & PageLifetimes<IsPageDoc, PropertiesDoc>
   & Lifetimes<IsPageDoc>
   & Watch<

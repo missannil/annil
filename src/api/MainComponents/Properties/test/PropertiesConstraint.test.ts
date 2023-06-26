@@ -52,11 +52,11 @@ export const required_fields = {
 export const optional_fields = {
   optional_str: {
     type: String,
-    value: "选传字符串",
+    value: "选传字符串" as const,
   },
   optional_num: {
     type: Number as SpecificType<123 | 456>,
-    value: 123,
+    value: 123 as const,
   },
   optional_obj: {
     type: Object as SpecificType<Mock_User>,

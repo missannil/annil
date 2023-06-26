@@ -1,4 +1,4 @@
-import type { V } from "hry-types";
+import type { PureObject, V } from "hry-types";
 import type { MergeIntersection } from "hry-types/src/Object/MergeIntersection";
 import type { ComputedConstraint } from "./ComputedConstraint";
 
@@ -6,12 +6,11 @@ import type { ComputedConstraint } from "./ComputedConstraint";
  * @description computed字段输入泛型
  * @returns TComputed
  */
-export type Computed<TComputed extends ComputedConstraint, PropertiesDoc, DataDoc, ComputedDoc> = {
+export type Computed<TComputed extends ComputedConstraint, ThisData extends PureObject, ComputedDoc> = {
   computed?:
     & TComputed
-    & V.DuplicateFieldValidation<TComputed, keyof PropertiesDoc, "与properties字段重复">
-    & V.DuplicateFieldValidation<TComputed, keyof DataDoc, "与data字段重复">
+    & V.DuplicateFieldValidation<TComputed, keyof ThisData>
     & ThisType<{
-      data: MergeIntersection<Required<PropertiesDoc> & DataDoc & ComputedDoc>;
+      data: MergeIntersection<ThisData & ComputedDoc>;
     }>;
 };

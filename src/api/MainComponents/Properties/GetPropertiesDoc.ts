@@ -35,5 +35,3 @@ export type GetPropertiesDoc<
   MergeIntersection<OptionalDoc & RequiredDoc>,
   IfExtends<TType, "Optional", OptionalDoc, RequiredDoc>
 >;
-
-// ---------------------------test--------------------------

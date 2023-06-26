@@ -2,6 +2,8 @@ import { type AnyObject, type Test, TypeChecking } from "hry-types";
 import type { GetRequiredDoc } from "../GetRequiredDoc";
 import { type Mock_Cart, type Mock_User, required_fields } from "./PropertiesConstraint.test";
 
+type RequiredFieldsDoc = GetRequiredDoc<typeof required_fields>;
+
 export type RequiredFieldsExpected = {
   str: string;
   num: number;
@@ -18,10 +20,10 @@ export type RequiredFieldsExpected = {
   union_multiple_literal: boolean | 0 | 1 | 2 | "male" | "female";
 };
 
-TypeChecking<GetRequiredDoc<typeof required_fields>, RequiredFieldsExpected, Test.Pass>;
+TypeChecking<RequiredFieldsDoc, RequiredFieldsExpected, Test.Pass>;
 
-type optionalFieldsIsEmpty = {};
+type RequiredFieldsIsEmpty = GetRequiredDoc<{}>;
 
 type RequiredFieldsIsEmptyExpected = {};
 
-TypeChecking<GetRequiredDoc<optionalFieldsIsEmpty>, RequiredFieldsIsEmptyExpected, Test.Pass>;
+TypeChecking<RequiredFieldsIsEmpty, RequiredFieldsIsEmptyExpected, Test.Pass>;

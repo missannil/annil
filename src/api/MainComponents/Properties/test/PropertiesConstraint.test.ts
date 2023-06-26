@@ -19,6 +19,9 @@ export type Mock_Cart = {
   selectedGoodsList: string[];
 };
 
+/**
+ * properties 必传字段(单一类型)
+ */
 export const required_single = {
   str: String,
   num: Number,
@@ -33,6 +36,9 @@ export const required_single = {
   union_obj: Object as SpecificType<Mock_User | Mock_Cart>,
 } satisfies Record<string, RequiredSingle>;
 
+/**
+ * properties 必传字段(多类型联合)
+ */
 export const required_union = {
   union_multiple: {
     type: String,
@@ -44,11 +50,17 @@ export const required_union = {
   },
 } satisfies Record<string, RequiredUnion>;
 
+/**
+ * 必传字段
+ */
 export const required_fields = {
   ...required_single,
   ...required_union,
 } satisfies Record<string, RequiredTypes>;
 
+/**
+ * properties 选传字段
+ */
 export const optional_fields = {
   optional_str: {
     type: String,
@@ -69,6 +81,9 @@ export const optional_fields = {
   },
 } satisfies Record<string, OptionalTypes>;
 
+/**
+ * properties 字段约束
+ */
 export const mock_properties = {
   ...required_fields,
   ...optional_fields,

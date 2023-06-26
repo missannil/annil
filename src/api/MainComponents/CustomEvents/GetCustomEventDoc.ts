@@ -1,9 +1,10 @@
-import type { CustomEventConstraint, FullEvent, ShortEvent } from "./CustomEventConstraint";
-import type { GetFullEventDoc } from "./GetFullEventDoc";
-import type { GetShortEventDoc } from "./GetShortEventDoc";
+import type { CustomEventConstraint, FullCustomEvents, ShortCustomeEvents } from "./CustomEventConstraint";
+import type { GetFullCustomEventsDoc } from "./GetFullCustomEventsDoc";
+import type { GetShortCustomEventsDoc } from "./GetShortCustomEventsDoc";
 
 /**
- * 把冒泡和穿透的事件去除options字段,添加mark为了减少类型提示中的 “...”,还方便类型推导
+ * 获取自定义事件的文档
+ * 去除options字段,添加Sign
  * demo
  * ```ts
  * customEvents:{
@@ -16,7 +17,7 @@ import type { GetShortEventDoc } from "./GetShortEventDoc";
  * @returns AnyObject
  */
 export type GetCustomEventDoc<T extends CustomEventConstraint> = {
-  [k in keyof T]: T[k] extends ShortEvent ? GetShortEventDoc<T[k]>
-    : T[k] extends FullEvent ? GetFullEventDoc<T[k]>
+  [k in keyof T]: T[k] extends ShortCustomeEvents ? GetShortCustomEventsDoc<T[k]>
+    : T[k] extends FullCustomEvents ? GetFullCustomEventsDoc<T[k]>
     : never;
 };

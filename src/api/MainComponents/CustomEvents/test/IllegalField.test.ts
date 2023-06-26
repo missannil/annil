@@ -3,14 +3,6 @@ import { MainComponent } from "../..";
 /**
  * 非法字段验证
  */
-MainComponent({
-  customEvents: {
-    // @ts-expect-error 约束报错 缺少options字段.应写为 error:String
-    error: {
-      detailType: String,
-    },
-  },
-});
 
 MainComponent({
   customEvents: {

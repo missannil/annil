@@ -1,56 +1,36 @@
 import { type Test, TypeChecking } from "hry-types";
+
+import type { CustomEventConstraint } from "../CustomEventConstraint";
 import type { GetCustomEventDoc } from "../GetCustomEventDoc";
-
-import type { SpecificType } from "../../../..";
+import { mock_fullCustomEvents, mock_shorCustomEvents } from "./CustomEventConstraint.test";
 import {
-  type BubblesCapturePhaseComposedSign,
-  type BubblesComposedSign,
-  type BubblesSign,
-  type CapturePhaseComposedSign,
-  type CapturePhaseSign,
-} from "../SignForCustomEvents";
+  type BubblesCapturePhaseComposedExpected,
+  type BubblesCapturePhaseExpected,
+  type BubblesComposedExpected,
+  type bubblesExpected,
+  type CapturePhaseComposedExpected,
+  type CapturePhaseExpected,
+} from "./GetFullEventDoc.test";
+import { type ListExpected, type NullExpected, type StrExpected, type UnionStrExpected } from "./GetShortEventDoc.test";
 
-type CustomEventDoc = GetCustomEventDoc<{
-  a: StringConstructor;
-  b: [NumberConstructor, SpecificType<"male" | "femal">];
-  c: null;
-  bubbles: {
-    detailType: StringConstructor;
-    options: { bubbles: true };
-  };
-  capturePhase: {
-    detailType: BooleanConstructor;
-    options: { capturePhase: true };
-  };
-  bubblesComposed: {
-    detailType: BooleanConstructor;
-    options: { bubbles: true; composed: true };
-  };
-  capturePhaseComposed: {
-    detailType: BooleanConstructor;
-    options: { capturePhase: true; composed: true };
-  };
-  bubblesCapturePhaseComposed: {
-    detailType: StringConstructor;
-    options: {
-      bubbles: true;
-      capturePhase: true;
-      composed: true;
-    };
-  };
-}>;
+const mock_customEvents = {
+  ...mock_shorCustomEvents,
+  ...mock_fullCustomEvents,
+} satisfies CustomEventConstraint;
 
-TypeChecking<
-  CustomEventDoc,
-  {
-    a: string;
-    b: number | "male" | "femal";
-    c: null;
-    bubbles: string | BubblesSign;
-    capturePhase: boolean | CapturePhaseSign;
-    bubblesComposed: boolean | BubblesComposedSign;
-    capturePhaseComposed: boolean | CapturePhaseComposedSign;
-    bubblesCapturePhaseComposed: string | BubblesCapturePhaseComposedSign;
-  },
-  Test.Pass
->;
+type CustomEventsResult = GetCustomEventDoc<typeof mock_customEvents>;
+
+type CustomEventsExpected = {
+  str: StrExpected;
+  null: NullExpected;
+  unionStr: UnionStrExpected;
+  list: ListExpected;
+  bubbles: bubblesExpected;
+  capturePhase: CapturePhaseExpected;
+  bubbles_capturePhase: BubblesCapturePhaseExpected;
+  bubbles_composed: BubblesComposedExpected;
+  capturePhase_composed: CapturePhaseComposedExpected;
+  bubbles_capturePhase_composed: BubblesCapturePhaseComposedExpected;
+};
+
+TypeChecking<CustomEventsResult, CustomEventsExpected, Test.Pass>;

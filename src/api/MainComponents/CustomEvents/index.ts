@@ -1,4 +1,4 @@
-import type { AnyObject, V } from "hry-types";
+import type { PureObject, V } from "hry-types";
 import type { CustomEventConstraint } from "./CustomEventConstraint";
 
 /**
@@ -7,14 +7,14 @@ import type { CustomEventConstraint } from "./CustomEventConstraint";
  */
 export type CustomEvents<
   TCustomEvents extends CustomEventConstraint,
-  TEventsDoc extends AnyObject,
+  DuplicateFieldCheck extends PureObject,
 > = {
   /**
    * 声明组件自定义事件
    * @example
    * ```ts
    * const customEvents = {
-   *  customEventA: String, // "string"
+   *  customEventA: Number, // "number"
    *  customEventB: [String as SpecificType<"male" | "femal">, Number], // "male" | "femal" | number
    *  customEventC: {
    *    detailType: String,
@@ -30,5 +30,5 @@ export type CustomEvents<
   customEvents?:
     & TCustomEvents
     & V.IllegalFieldValidation<TCustomEvents, "bubbles" | "composed" | "capturePhase", 1, "options">
-    & V.DuplicateFieldValidation<TCustomEvents, keyof TEventsDoc, "与events字段重复">;
+    & V.DuplicateFieldValidation<TCustomEvents, keyof DuplicateFieldCheck, "与events字段重复">;
 };

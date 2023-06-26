@@ -1,16 +1,20 @@
 import type { IfEquals } from "hry-types/src/Any/IfEquals";
+import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type {
   BubblesCapturePhaseComposedOptions,
+  BubblesCapturePhaseOptions,
+  BubblesComposedOptions,
+  BubblesOptions,
+  CapturePhaseComposedOptions,
+  CapturePhaseOptions,
   CustomEventsOptions,
-  OnlyBubbles,
-  OnlyBubblesComposed,
-  OnlyCapturePhase,
-  OnlyCapturePhaseComposed,
 } from "./CustomEventConstraint";
 
 export type BubblesSign = () => "bubbles";
 
 export type CapturePhaseSign = () => "capturePhase";
+
+export type BubblesCapturePhaseSign = () => "bubbles" | "capturePhase";
 
 export type BubblesComposedSign = () => "bubbles" | "composed";
 
@@ -18,23 +22,28 @@ export type CapturePhaseComposedSign = () => "capturePhase" | "composed";
 
 export type BubblesCapturePhaseComposedSign = () => "bubbles" | "capturePhase" | "composed";
 
-export type SignForCustomEvents<Options extends CustomEventsOptions> = IfEquals<
+export type SignForCustomEvents<Options extends CustomEventsOptions> = IfExtends<
+  BubblesOptions,
   Options,
-  OnlyBubbles,
   BubblesSign,
-  IfEquals<
+  IfExtends<
+    CapturePhaseOptions,
     Options,
-    OnlyCapturePhase,
     CapturePhaseSign,
-    IfEquals<
+    IfExtends<
+      BubblesCapturePhaseOptions,
       Options,
-      OnlyBubblesComposed,
-      BubblesComposedSign,
-      IfEquals<
+      BubblesCapturePhaseSign,
+      IfExtends<
+        BubblesComposedOptions,
         Options,
-        OnlyCapturePhaseComposed,
-        CapturePhaseComposedSign,
-        IfEquals<Options, BubblesCapturePhaseComposedOptions, BubblesCapturePhaseComposedSign>
+        BubblesComposedSign,
+        IfExtends<
+          CapturePhaseComposedOptions,
+          Options,
+          CapturePhaseComposedSign,
+          IfEquals<BubblesCapturePhaseComposedOptions, Options, BubblesCapturePhaseComposedSign>
+        >
       >
     >
   >

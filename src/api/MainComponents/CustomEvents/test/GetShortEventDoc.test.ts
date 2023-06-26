@@ -1,33 +1,29 @@
 import { type Test, TypeChecking } from "hry-types";
-import type { SpecificType } from "../../../../common_types/SpecificType";
-import type { GetShortEventDoc } from "../GetShortEventDoc";
+import type { GetShortCustomEventsDoc } from "../GetShortCustomEventsDoc";
+import { mock_shorCustomEvents } from "./CustomEventConstraint.test";
 
 // ------------测试GetShortEventDoc泛型------------
 
-type ShortEventList = [
-  StringConstructor,
-  null,
-  SpecificType<"male" | "female">,
-  [StringConstructor, SpecificType<0 | 1 | 2>],
-  [StringConstructor, SpecificType<0 | 1 | 2>, null],
-];
+type StrResult = GetShortCustomEventsDoc<typeof mock_shorCustomEvents["str"]>;
 
-type test0 = GetShortEventDoc<ShortEventList[0]>;
+export type StrExpected = string;
 
-TypeChecking<test0, string, Test.Pass>;
+TypeChecking<StrResult, StrExpected, Test.Pass>;
 
-type test1 = GetShortEventDoc<ShortEventList[1]>;
+type NullResult = GetShortCustomEventsDoc<typeof mock_shorCustomEvents["null"]>;
 
-TypeChecking<test1, null, Test.Pass>;
+export type NullExpected = null;
 
-type test2 = GetShortEventDoc<ShortEventList[2]>;
+TypeChecking<NullResult, NullExpected, Test.Pass>;
 
-TypeChecking<test2, "male" | "female", Test.Pass>;
+type UnionStrResult = GetShortCustomEventsDoc<typeof mock_shorCustomEvents["unionStr"]>;
 
-type test3 = GetShortEventDoc<ShortEventList[3]>;
+export type UnionStrExpected = "male" | "female";
 
-TypeChecking<test3, string | 0 | 1 | 2, Test.Pass>;
+TypeChecking<UnionStrResult, UnionStrExpected, Test.Pass>;
 
-type test4 = GetShortEventDoc<ShortEventList[4]>;
+type ListResult = GetShortCustomEventsDoc<typeof mock_shorCustomEvents["list"]>;
 
-TypeChecking<test4, string | 0 | 1 | 2 | null, Test.Pass>;
+export type ListExpected = string | 0 | 1 | 2 | null;
+
+TypeChecking<ListResult, ListExpected, Test.Pass>;

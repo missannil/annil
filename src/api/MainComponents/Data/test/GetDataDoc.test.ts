@@ -1,26 +1,75 @@
 import { type Test, TypeChecking } from "hry-types";
 
 import type { Mock_User } from "../../Properties/test/PropertiesConstraint.test";
-import type { DataConstraint } from "../DataConstraint";
 import type { GetDataDoc } from "../GetDataDoc";
-// ----------------GetDataDoc泛型测试----------------
+import { mock_data } from "./DataConstraint.test";
 
-export const mock_data = {
-  reactiveUser: () => ({} as Mock_User),
-  num: 2,
-  str: "str",
-} satisfies DataConstraint;
+/**
+ * GetDataDoc 函数值类型变为函数返回类型
+ */
+type DataDoc_函数值类型变为函数返回类型 = GetDataDoc<typeof mock_data, "函数值类型变为函数返回类型">;
+
+type DataDocExpected = { reactiveUser: Mock_User; num: number; str: string };
 
 TypeChecking<
-  GetDataDoc<typeof mock_data, "函数值类型变为函数返回类型">,
-  { reactiveUser: Mock_User; num: number; str: string },
+  DataDoc_函数值类型变为函数返回类型,
+  DataDocExpected,
+  Test.Pass
+>;
+/**
+ * GetDataDoc 去掉函数字段
+ */
+
+type DataDoc_去掉函数字段 = GetDataDoc<typeof mock_data, "去掉函数字段">;
+
+type DataDocExpected_去掉函数字段 = { num: number; str: string };
+
+TypeChecking<DataDoc_去掉函数字段, DataDocExpected_去掉函数字段, Test.Pass>;
+
+/**
+ * GetDataDoc 返回函数字段
+ */
+type DataDoc_返回函数字段 = GetDataDoc<typeof mock_data, "返回函数字段">;
+
+type DataDocExpected_返回函数字段 = { reactiveUser: () => Mock_User };
+
+TypeChecking<DataDoc_返回函数字段, DataDocExpected_返回函数字段, Test.Pass>;
+
+/**
+ * GetDataDoc 空对象 函数值类型变为函数返回类型
+ */
+type DataDoc_empty_函数值类型变为函数返回类型 = GetDataDoc<{}, "返回函数字段">;
+
+type DataDocExpected_empty_函数值类型变为函数返回类型 = {};
+
+TypeChecking<
+  DataDoc_empty_函数值类型变为函数返回类型,
+  DataDocExpected_empty_函数值类型变为函数返回类型,
   Test.Pass
 >;
 
-TypeChecking<GetDataDoc<typeof mock_data, "去掉函数字段">, { num: number; str: string }, Test.Pass>;
+/**
+ * GetDataDoc 空对象 去掉函数字段
+ */
+type DataDoc_empty_去掉函数字段 = GetDataDoc<{}, "去掉函数字段">;
 
-TypeChecking<GetDataDoc<typeof mock_data, "返回函数字段">, { reactiveUser: () => Mock_User }, Test.Pass>;
+type DataDocExpected_empty_去掉函数字段 = {};
 
-const empty_object = {};
+TypeChecking<
+  DataDoc_empty_去掉函数字段,
+  DataDocExpected_empty_去掉函数字段,
+  Test.Pass
+>;
 
-TypeChecking<GetDataDoc<typeof empty_object>, {}, Test.Pass>;
+/**
+ * GetDataDoc 空对象 返回函数字段
+ */
+type DataDoc_empty_返回函数字段 = GetDataDoc<{}, "返回函数字段">;
+
+type DataDocExpected_empty_返回函数字段 = {};
+
+TypeChecking<
+  DataDoc_empty_返回函数字段,
+  DataDocExpected_empty_返回函数字段,
+  Test.Pass
+>;

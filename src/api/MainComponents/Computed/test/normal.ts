@@ -1,6 +1,7 @@
 import { type AnyObject, ValueChecking } from "hry-types";
 import { MainComponent } from "../..";
-import { mock_data } from "../../Data/test/GetDataDoc.test";
+
+import { mock_data } from "../../Data/test/DataConstraint.test";
 import { type Mock_Cart, mock_properties, type Mock_User } from "../../Properties/test/PropertiesConstraint.test";
 // str: String,
 //   num: Number,

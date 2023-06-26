@@ -21,7 +21,7 @@ type ReturnTypes = "去掉函数字段" | "返回函数字段" | "函数值类�
   A.IfExtends<
     Type,
     "去掉函数字段",
-    A.IfEquals<O.Filter<TData, AnyFunction>, {}, unknown>,
+    A.IfEquals<O.Filter<TData, AnyFunction>, {}, {}>,
     // "返回函数字段"
     O.Select<TData, AnyFunction>
   >

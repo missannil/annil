@@ -101,7 +101,7 @@ type Expect = {
     optional: Mock_Cart | Mock_User;
     unionRequired: string | number;
     // data
-    reactive: number;
+    reactive: 123;
     aaa: string;
     // computed
     CData: number;

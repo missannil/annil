@@ -1,7 +1,8 @@
-import type { NoInfer } from "hry-types/src/Function/_api";
 // NoInfer 起延时作用
 // type Delay<T, N extends number = 0, L extends unknown[] = []> = L["length"] extends N ? T
 //   : Delay<T, N, [...L, T]>;
+
+import type { NoInfer } from "hry-types/src/Generic/NoInfer";
 
 export type Watch<T extends object> = {
   watch?:

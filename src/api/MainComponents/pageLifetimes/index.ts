@@ -18,7 +18,7 @@ export type PageLifetimes<TIsPage extends boolean, PropertiesDoc> = IfExtends<
       // 替换掉官方的 Parameters<WechatMiniprogram.Page.ILifetime['onLoad']>
       & {
         onLoad?: (
-          properties: O.NonNullable<Required<PropertiesDoc>>,
+          properties: O.NonNullableInObject<Required<PropertiesDoc>>,
         ) => void;
       };
   }

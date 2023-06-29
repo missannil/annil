@@ -10,6 +10,5 @@ export type Methods<
 > = {
   methods?:
     & TMethods
-    & V.DuplicateFieldValidation<TMethods, keyof EventsDoc, "与events字段重复">
-    & V.DuplicateFieldValidation<TMethods, keyof TCustomEvents, "与customEvents字段重复">;
+    & V.DuplicateFieldValidator<TMethods, keyof EventsDoc | keyof TCustomEvents, "字段重复">;
 };

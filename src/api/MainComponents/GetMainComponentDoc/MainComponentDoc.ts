@@ -1,4 +1,4 @@
-import type { PureObject } from "hry-types";
+import type { AnyObject } from "hry-types";
 
 /**
  * MainComponent Api 返回类型
@@ -11,11 +11,11 @@ export type MainComponentDoc = {
   /**
    * 最终组件(页面)可传数据字段
    */
-  properties?: PureObject;
+  properties?: AnyObject;
   /**
    * this.data中所有数据 SubComponent Api 使用
    */
-  allData?: PureObject;
+  allData?: AnyObject;
   /**
    * methodsDoc  SubComponent Api使用
    */
@@ -27,5 +27,5 @@ export type MainComponentDoc = {
   /**
    * customEventsDoc DefineComponent Api 使用
    */
-  customEvents?: PureObject;
+  customEvents?: AnyObject;
 };

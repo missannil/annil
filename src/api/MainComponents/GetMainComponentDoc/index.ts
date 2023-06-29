@@ -1,6 +1,6 @@
 import type { IfEquals } from "hry-types/src/Any/IfEquals";
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
-import type { MergeIntersection } from "hry-types/src/Object/MergeIntersection";
+import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
 import type { MethodsConstraint } from "../Methods/MethodsConstraint";
 
 /**
@@ -14,7 +14,7 @@ export type GetMainComponentDoc<
   CustomEventsDoc extends AnyObject,
   TMethods extends MethodsConstraint = {},
   TIsPage extends boolean = false,
-> = MergeIntersection<
+> = ComputeIntersection<
   & IfExtends<TIsPage, false, {}, { isPage: true }>
   & IfExtends<{}, PropertiesDoc, unknown, { properties: PropertiesDoc }>
   & IfExtends<

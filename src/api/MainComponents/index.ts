@@ -1,4 +1,4 @@
-import type { AnyObject, O, PureObject } from "hry-types";
+import type { AnyObject, O } from "hry-types";
 import type { As } from "hry-types/src/Any/As";
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { IsNever } from "hry-types/src/Any/IsNever";
@@ -50,7 +50,7 @@ type Options<
   & Lifetimes<IsPageDoc>
   & Watch<
     & ComputedDoc
-    & Required<O.NonNullable<As<PropertiesDoc, object>>>
+    & Required<O.NonNullableInObject<As<PropertiesDoc, object>>>
     & DataDoc
   >;
 
@@ -74,9 +74,9 @@ type Constructor = {
     TComputed extends ComputedConstraint = {},
     EventsDoc extends EventsConstraint = IfExtends<EventsConstraint, TEvents, {}, TEvents>,
     IsPageDoc extends boolean = TIsPage,
-    CustomEventsDoc extends PureObject = IsNever<TCustomEvents> extends true ? {} : GetCustomEventDoc<TCustomEvents>,
-    PropertiesDoc extends PureObject = GetPropertiesDoc<TProperties>,
-    DataDoc extends PureObject = GetDataDoc<TData>,
+    CustomEventsDoc extends object = IsNever<TCustomEvents> extends true ? {} : GetCustomEventDoc<TCustomEvents>,
+    PropertiesDoc extends object = GetPropertiesDoc<TProperties>,
+    DataDoc extends object = GetDataDoc<TData>,
     ComputedDoc extends AnyObject = GetComputedDoc<TComputed>,
   > // 切记 具体类型应定义在这里,而非Options中
   (

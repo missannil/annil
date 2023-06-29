@@ -1,4 +1,4 @@
-import type { MergeIntersection } from "hry-types/src/Object/MergeIntersection";
+import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
 import type { SpecificType } from "../../../common_types/SpecificType";
 
 type NonListShortCustomeEvents = SpecificType | null;
@@ -22,23 +22,23 @@ type NonCapturePhase = { capturePhase?: never };
 
 // 组合字段options
 // 1. Bubbles
-export type BubblesOptions = MergeIntersection<Bubbles & NonComposed & NonCapturePhase>;
+export type BubblesOptions = ComputeIntersection<Bubbles & NonComposed & NonCapturePhase>;
 
 // 2. CapturePhase
-export type CapturePhaseOptions = MergeIntersection<CapturePhase & NonBubbles & NonComposed>;
+export type CapturePhaseOptions = ComputeIntersection<CapturePhase & NonBubbles & NonComposed>;
 
 // 3. Bubbles and CapturePhase
-export type BubblesCapturePhaseOptions = MergeIntersection<Bubbles & CapturePhase & NonComposed>;
+export type BubblesCapturePhaseOptions = ComputeIntersection<Bubbles & CapturePhase & NonComposed>;
 
 // 4. Bubbles and Composed
-export type BubblesComposedOptions = MergeIntersection<Bubbles & Composed & NonCapturePhase>;
+export type BubblesComposedOptions = ComputeIntersection<Bubbles & Composed & NonCapturePhase>;
 
 // 5. CapturePhase and Composed
 
-export type CapturePhaseComposedOptions = MergeIntersection<CapturePhase & Composed & NonBubbles>;
+export type CapturePhaseComposedOptions = ComputeIntersection<CapturePhase & Composed & NonBubbles>;
 
 // 6. Bubbles and CapturePhase and Composed
-export type BubblesCapturePhaseComposedOptions = MergeIntersection<Bubbles & Composed & CapturePhase>;
+export type BubblesCapturePhaseComposedOptions = ComputeIntersection<Bubbles & Composed & CapturePhase>;
 
 export type CustomEventsOptions =
   | BubblesOptions

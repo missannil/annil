@@ -1,6 +1,7 @@
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { SelectKeys } from "hry-types/src/Object/_api";
-import type { MergeIntersection } from "hry-types/src/Object/MergeIntersection";
+
+import type { O } from "hry-types";
 import type { Select } from "hry-types/src/Object/Select";
 import type { GetOptionalDoc } from "./GetOptionalDoc";
 import type { GetRequiredDoc } from "./GetRequiredDoc";
@@ -32,6 +33,6 @@ export type GetPropertiesDoc<
 > = IfExtends<
   TType,
   "all",
-  MergeIntersection<OptionalDoc & RequiredDoc>,
+  O.ComputeIntersection<OptionalDoc & RequiredDoc>,
   IfExtends<TType, "Optional", OptionalDoc, RequiredDoc>
 >;

@@ -9,6 +9,6 @@ export type Properties<TProperties extends PropertiesConstraint> = {
    */
   properties?:
     & TProperties
-    & V.IllegalFieldValidation<TProperties, "value" | "type" | "optionalTypes", 1>
+    & V.IllegalFieldValidator<TProperties, "value" | "type" | "optionalTypes", 1>
     & ValueValidator<TProperties>;
 };

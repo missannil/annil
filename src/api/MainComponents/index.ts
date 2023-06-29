@@ -1,4 +1,4 @@
-import type { AnyObject, O } from "hry-types";
+import type { O } from "hry-types";
 import type { As } from "hry-types/src/Any/As";
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { IsNever } from "hry-types/src/Any/IsNever";
@@ -22,7 +22,7 @@ import type { PageLifetimes } from "./PageLifetimes";
 import type { Properties } from "./Properties";
 import type { GetPropertiesDoc } from "./Properties/GetPropertiesDoc";
 import type { PropertiesConstraint } from "./Properties/PropertiesConstraint";
-import type { Watch } from "./Watch/WatchConstraint";
+import type { Watch } from "./Watch";
 
 type Options<
   TEvents extends EventsConstraint,
@@ -32,12 +32,12 @@ type Options<
   TProperties extends PropertiesConstraint,
   TData extends DataConstraint,
   TComputed extends ComputedConstraint,
-  EventsDoc extends AnyObject,
+  EventsDoc extends object,
   IsPageDoc extends boolean,
-  CustomEventsDoc extends AnyObject,
-  PropertiesDoc extends AnyObject,
-  DataDoc extends AnyObject,
-  ComputedDoc extends AnyObject,
+  CustomEventsDoc extends object,
+  PropertiesDoc extends object,
+  DataDoc extends object,
+  ComputedDoc extends object,
 > =
   & Events<TEvents>
   & Methods<TMethods, EventsDoc, CustomEventsDoc>
@@ -48,11 +48,12 @@ type Options<
   & Computed<TComputed, Required<PropertiesDoc> & DataDoc, ComputedDoc>
   & PageLifetimes<IsPageDoc, PropertiesDoc>
   & Lifetimes<IsPageDoc>
-  & Watch<
+  & Watch< 
     & ComputedDoc
     & Required<O.NonNullableInObject<As<PropertiesDoc, object>>>
     & DataDoc
-  >;
+  >
+  
 
 type Constructor = {
   <
@@ -77,7 +78,7 @@ type Constructor = {
     CustomEventsDoc extends object = IsNever<TCustomEvents> extends true ? {} : GetCustomEventDoc<TCustomEvents>,
     PropertiesDoc extends object = GetPropertiesDoc<TProperties>,
     DataDoc extends object = GetDataDoc<TData>,
-    ComputedDoc extends AnyObject = GetComputedDoc<TComputed>,
+    ComputedDoc extends object = GetComputedDoc<TComputed>,
   > // 切记 具体类型应定义在这里,而非Options中
   (
     options: Options<

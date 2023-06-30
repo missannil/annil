@@ -53,7 +53,7 @@ export type Instance<
   >
   & TMethods
   & CustomEventMethods<CustomEventsDoc>
-  & { data: IfExtends<{}, AllData, never, AllData> };
+  & { data: O.ComputeIntersection<AllData> };
 
 type Options<
   TEvents extends EventsConstraint,

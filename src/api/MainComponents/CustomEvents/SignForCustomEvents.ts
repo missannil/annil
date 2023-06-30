@@ -22,6 +22,14 @@ export type CapturePhaseComposedSign = () => "capturePhase" | "composed";
 
 export type BubblesCapturePhaseComposedSign = () => "bubbles" | "capturePhase" | "composed";
 
+export type CustomEventsSign =
+  | BubblesSign
+  | CapturePhaseSign
+  | BubblesCapturePhaseSign
+  | BubblesComposedSign
+  | CapturePhaseComposedSign
+  | BubblesCapturePhaseComposedSign;
+
 export type SignForCustomEvents<Options extends CustomEventsOptions> = IfExtends<
   BubblesOptions,
   Options,

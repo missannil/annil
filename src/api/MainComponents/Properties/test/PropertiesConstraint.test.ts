@@ -77,7 +77,6 @@ export const optional_fields = {
       name: "name",
       age: 20,
     },
-    optionalTypes: [Number],
   },
 } satisfies Record<string, OptionalTypes>;
 

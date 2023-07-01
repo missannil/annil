@@ -128,7 +128,7 @@ MainComponent({
     CoptionalObj() {
       const { optional_obj } = this.data;
 
-      ValueChecking<Mock_User | number>()(optional_obj);
+      ValueChecking<Mock_User>()(optional_obj);
 
       return optional_obj;
     },

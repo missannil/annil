@@ -7,7 +7,7 @@ type OptionalFieldsDoc = GetOptionalDoc<typeof optional_fields>;
 export type OptionalFieldsExpected = {
   optional_str?: string;
   optional_num?: 123 | 456;
-  optional_obj?: Mock_User | number;
+  optional_obj?: Mock_User;
 };
 
 TypeChecking<OptionalFieldsDoc, OptionalFieldsExpected, Test.Pass>;

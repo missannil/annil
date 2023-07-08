@@ -1,4 +1,5 @@
-import { type AnyObject, ValueChecking } from "hry-types";
+import type { AnyObject } from "hry-types";
+import { ValueChecking } from "hry-types";
 import type { SpecificType } from "../../../../common_types/SpecificType";
 import { MainComponent } from "../..";
 

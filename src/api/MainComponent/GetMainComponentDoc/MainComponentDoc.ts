@@ -1,5 +1,3 @@
-import type { AnyObject } from "hry-types";
-
 /**
  * MainComponent Api 返回类型
  */
@@ -11,21 +9,21 @@ export type MainComponentDoc = {
   /**
    * 最终组件(页面)可传数据字段
    */
-  properties?: AnyObject;
+  properties?: object;
   /**
    * this.data中所有数据 SubComponent Api 使用
    */
-  allData?: AnyObject;
+  allData?: object;
   /**
    * methodsDoc  SubComponent Api使用
    */
-  methods?: Record<string, AnyFunction>;
+  methods?: Record<string, Function>;
   /**
    * eventsDoc  SubComponent Api使用
    */
-  events?: Record<string, AnyFunction>;
+  events?: Record<string, Function>;
   /**
    * customEventsDoc DefineComponent Api 使用
    */
-  customEvents?: AnyObject;
+  customEvents?: object;
 };

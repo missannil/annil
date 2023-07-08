@@ -1,4 +1,5 @@
-import { type AnyObject, type Test, TypeChecking } from "hry-types";
+import { type Test, TypeChecking } from "hry-types";
+import type { AnyObject } from "hry-types";
 import type { GetRequiredDoc } from "../GetRequiredDoc";
 import { type Mock_Cart, type Mock_User, required_fields } from "./PropertiesConstraint.test";
 

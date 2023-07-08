@@ -1,7 +1,7 @@
 import type { O } from "hry-types";
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { EmptyObject } from "hry-types/src/Misc/EmptyObject";
-import type { Flat } from "hry-types/src/Object/Flat";
+import type { AddSubObjectKey } from "hry-types/src/Object/AddSubObjectKey";
 
 /**
  * 重写实例的setData类型
@@ -13,7 +13,7 @@ export type CustomSetData<TAllData extends object> = {
    * @param callback
    */
   setData(
-    options: IfExtends<unknown, TAllData, EmptyObject, O.ComputeIntersection<Partial<Flat<TAllData>>>>,
+    options: IfExtends<unknown, TAllData, EmptyObject, O.ComputeIntersection<Partial<AddSubObjectKey<TAllData>>>>,
     callback?: () => void,
   ): void;
 };

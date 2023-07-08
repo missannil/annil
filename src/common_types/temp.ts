@@ -33,3 +33,4 @@
 
 // /** */
 // export type Flat<TData extends object> = _SetDataField<TData> & _overWriteObjFields<keyof _SetDataField<TData>, TData>;
+// export type NonArrNonFuncObject = Record<PropertyKey, unknown>;

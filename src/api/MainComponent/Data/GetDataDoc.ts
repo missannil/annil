@@ -9,7 +9,7 @@ type ReturnTypes = "去掉函数字段" | "返回函数字段" | "函数值类�
  * @description 获取data字段文档类型
  * @param T DataConstraint
  * @param TType ReturnTypes
- * @returns AnyObject
+ * @returns NonArrNonFuncObject
  */ export type GetDataDoc<
   TData extends object,
   Type extends ReturnTypes = "函数值类型变为函数返回类型",
@@ -20,8 +20,8 @@ type ReturnTypes = "去掉函数字段" | "返回函数字段" | "函数值类�
   A.IfExtends<
     Type,
     "去掉函数字段",
-    A.IfEquals<O.Filter<TData, AnyFunction>, {}, {}>,
+    A.IfEquals<O.Filter<TData, Function>, {}, {}>,
     // "返回函数字段"
-    O.Select<TData, AnyFunction>
+    O.Select<TData, Function>
   >
 >;

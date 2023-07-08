@@ -14,7 +14,7 @@ import type { GetShortCustomEventsDoc } from "./GetShortCustomEventsDoc";
  * }
  * //result => {a:number,b:string|()=>'bubbles',c:number | ()=>'composed' }
  * ```
- * @returns AnyObject
+ * @returns NonArrNonFuncObject
  */
 export type GetCustomEventDoc<T extends CustomEventConstraint> = {
   [k in keyof T]: T[k] extends ShortCustomeEvents ? GetShortCustomEventsDoc<T[k]>

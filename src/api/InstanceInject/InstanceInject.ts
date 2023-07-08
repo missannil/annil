@@ -1,7 +1,6 @@
-// import type { AnyFunction } from "hry-types";
 import type { WMComponentOption } from "../../common_types/officialAlias";
 
-// export type InjectMethodConstraint = Record<string, AnyFunction>;
+// export type InjectMethodConstraint = Record<string, Function>;
 
 // export type InjectDataConstraint = Record<string, unknown>;
 

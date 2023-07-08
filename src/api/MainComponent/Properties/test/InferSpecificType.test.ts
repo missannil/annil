@@ -1,4 +1,5 @@
 import { type AnyObject, type Test, TypeChecking } from "hry-types";
+
 import type { InferSpecificType } from "../InferSpecificType";
 
 type str = StringConstructor;

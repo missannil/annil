@@ -7,11 +7,11 @@ import type { MethodsConstraint } from "../Methods/MethodsConstraint";
  * 获取MainComponent文档类型
  */
 export type GetMainComponentDoc<
-  PropertiesDoc extends AnyObject,
-  DataDoc extends AnyObject,
-  ComputedDoc extends AnyObject,
-  EventsDoc extends AnyObject,
-  CustomEventsDoc extends AnyObject,
+  PropertiesDoc extends object,
+  DataDoc extends object,
+  ComputedDoc extends object,
+  EventsDoc extends object,
+  CustomEventsDoc extends object,
   TMethods extends MethodsConstraint = {},
   TIsPage extends boolean = false,
 > = ComputeIntersection<
@@ -22,7 +22,7 @@ export type GetMainComponentDoc<
     DataDoc & PropertiesDoc & ComputedDoc,
     unknown,
     {
-      allData: DataDoc & Required<PropertiesDoc> & ComputedDoc;
+      allData: ComputeIntersection<DataDoc & Required<PropertiesDoc> & ComputedDoc>;
     }
   >
   & IfExtends<{}, TMethods, unknown, { methods: TMethods }>

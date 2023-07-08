@@ -22,7 +22,7 @@ export type GetRequired<
 
 /**
  * 获取properties的文档类型
- * @returns AnyObject
+ * @returns NonArrNonFuncObject
  */
 export type GetPropertiesDoc<
   T extends PropertiesConstraint,

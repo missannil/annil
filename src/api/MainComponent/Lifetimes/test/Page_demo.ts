@@ -1,4 +1,5 @@
-import { type AnyObject, ValueChecking } from "hry-types";
+import { ValueChecking } from "hry-types";
+import type { AnyObject } from "hry-types";
 import { MainComponent, type SpecificType } from "../../../..";
 import type { Mock_User } from "../../Properties/test/PropertiesConstraint.test";
 

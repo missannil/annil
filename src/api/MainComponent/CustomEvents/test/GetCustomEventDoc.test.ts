@@ -20,7 +20,7 @@ const mock_customEvents = {
 
 type CustomEventsResult = GetCustomEventDoc<typeof mock_customEvents>;
 
-type CustomEventsExpected = {
+export type CustomEventsExpected = {
   str: StrExpected;
   null: NullExpected;
   unionStr: UnionStrExpected;

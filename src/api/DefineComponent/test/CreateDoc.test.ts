@@ -1,4 +1,4 @@
-import { type Test, TypeChecking } from "hry-types";
+import { type O, type Test, TypeChecking } from "hry-types";
 import { MainComponent } from "../../MainComponent";
 
 import type { SpecificType } from "../../..";
@@ -208,10 +208,9 @@ const Test9 = DefineComponent({
 });
 
 type Test9Expected = {
-  customEvents: {
-    str: string;
-    null: null;
-  };
+  customEvents:
+    & { str: string }
+    & { null: null };
 };
 
 TypeChecking<Test9Expected, typeof Test9, Test.Pass>;
@@ -228,29 +227,69 @@ const Test10 = DefineComponent({
 });
 
 type Test10Expected = {
-  customEvents: {
-    str: string | number;
-  };
+  customEvents:
+    & { str: string }
+    & { str: number };
 };
 
 TypeChecking<Test10Expected, typeof Test10, Test.Pass>;
 
 // 测试 类型实例化过深，且可能无限
-const A = { customEvents: { str: "str" } };
+const A = { customEvents: { str: "str", a: 123 } };
 
-const B = { customEvents: { num: 123 } };
+const B = { customEvents: { num: 123, a: 123 } };
+
+const C = { customEvents: { num: "123", a: 123 } };
 
 const Test11 = DefineComponent({
   name: "test",
-  // 12个实例化可以允许，13个实例化会报错
-  subComponents: [A, B, A, B, A, B, A, B, A, B, A, B],
+  // dprint-ignore
+  subComponents: [
+// 30一行 
+A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C,
+A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C,
+A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C,
+A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C,
+A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C,
+A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C,
+A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C,
+A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C,
+A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C,
+A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C,
+A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C,
+A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C,
+A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C,
+A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C,
+A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C,
+A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C,
+A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C,
+A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C,
+A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C,
+A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C,
+A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C,
+A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C,
+A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C,
+A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C,
+A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C,
+A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C,
+A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C,
+A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C,
+A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C,
+A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C,
+A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C,
+A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C,
+A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C, A, B, C,
+//990
+A, B, C, A, B, C, A, B, C,//999
+  ],
 });
 
 type Test11Expected = {
   customEvents: {
     str: string;
-    num: number;
+    a: number;
+    num: never;
   };
 };
 
-TypeChecking<Test11Expected, typeof Test11, Test.Pass>;
+TypeChecking<Test11Expected, O.ComputeIntersectionDeep<typeof Test11>, Test.Pass>;

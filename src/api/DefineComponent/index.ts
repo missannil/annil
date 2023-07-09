@@ -16,7 +16,7 @@ type Options<
     { name: TName & IfExtends<TName, "", () => "⚠️组件名不可为空⚠️", unknown> }
   >
   & {
-    mainComponent?: TMainComponent;
+    mainComponent: TMainComponent;
     subComponents?: [...TSubComponentTuple];
   };
 
@@ -26,14 +26,15 @@ interface Constructor {
     TMainComponent extends MainComponentDoc = {},
     TName extends string = "",
     TPage extends `/${string}` = "/",
+    Doc = CreateDoc<
+      TMainComponent,
+      TSubComponentTuple,
+      TName,
+      TPage
+    >,
   >(
     options: Options<TSubComponentTuple, TMainComponent, TName, TPage>,
-  ): CreateDoc<
-    TMainComponent,
-    TSubComponentTuple,
-    TName,
-    TPage
-  >;
+  ): {} extends Doc ? never : Doc;
 }
 
 export const DefineComponent: Constructor = function(options): any {

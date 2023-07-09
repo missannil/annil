@@ -193,7 +193,7 @@ const Test8 = DefineComponent({
   subComponents: [],
 });
 
-type Test8Expected = {};
+type Test8Expected = never;
 
 TypeChecking<Test8Expected, typeof Test8, Test.Pass>;
 
@@ -243,6 +243,7 @@ const C = { customEvents: { num: "123", a: 123 } };
 
 const Test11 = DefineComponent({
   name: "test",
+  mainComponent: {},
   // dprint-ignore
   subComponents: [
 // 30一行 
@@ -293,3 +294,25 @@ type Test11Expected = {
 };
 
 TypeChecking<Test11Expected, O.ComputeIntersectionDeep<typeof Test11>, Test.Pass>;
+
+// 测试12 空页面 mainComponent 和 subComponents 都是空的时
+
+const Test12 = DefineComponent({
+  path: "/xxx/xxx/xxx",
+  mainComponent: { isPage: true },
+  subComponents: [],
+});
+
+type Test12Expected = { path: "/xxx/xxx/xxx" };
+
+TypeChecking<Test12Expected, typeof Test12, Test.Pass>;
+
+// 测试13 组件时 mainComponent 和 subComponents 都是空的时
+const Test13 = DefineComponent({
+  name: "test12",
+  mainComponent: {},
+});
+
+type Test13Expected = never;
+
+TypeChecking<Test13Expected, typeof Test13, Test.Pass>;

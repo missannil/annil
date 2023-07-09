@@ -26,7 +26,7 @@ export type CreateDoc<
   SubComponentHasCustomEvents = IsContains<TSubComponentTuple, { customEvents: any }>,
 > = ComputeIntersection<
   // 页面时保留path字段
-  & (TName extends "" ? { path: TPage } : {})
+  & (TName extends "" ? { path: TPage } : unknown)
   // 生成properties字段
   & IfExtends<
     SubComponentHasProperties,

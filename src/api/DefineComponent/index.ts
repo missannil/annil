@@ -26,15 +26,14 @@ interface Constructor {
     TMainComponent extends MainComponentDoc = {},
     TName extends string = "",
     TPage extends `/${string}` = "/",
-    Doc = CreateDoc<
-      TMainComponent,
-      TSubComponentTuple,
-      TName,
-      TPage
-    >,
   >(
     options: Options<TSubComponentTuple, TMainComponent, TName, TPage>,
-  ): {} extends Doc ? never : Doc;
+  ): CreateDoc<
+    TMainComponent,
+    TSubComponentTuple,
+    TName,
+    TPage
+  >;
 }
 
 export const DefineComponent: Constructor = function(options): any {

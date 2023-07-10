@@ -27,7 +27,7 @@ export type OptionalTypes<Literal = unknown> = {
 /**
  * @description Properties类型
  */
-type PropertiesTypes<Literal = unknown> = OptionalTypes<Literal> | RequiredTypes<Literal>;
+export type PropertiesTypes<Literal = unknown> = OptionalTypes<Literal> | RequiredTypes<Literal>;
 
 /**
  * @description properties字段约束

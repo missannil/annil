@@ -193,7 +193,7 @@ const Test8 = DefineComponent({
   subComponents: [],
 });
 
-type Test8Expected = never;
+type Test8Expected = {};
 
 TypeChecking<Test8Expected, typeof Test8, Test.Pass>;
 
@@ -313,6 +313,6 @@ const Test13 = DefineComponent({
   mainComponent: {},
 });
 
-type Test13Expected = never;
+type Test13Expected = {};
 
 TypeChecking<Test13Expected, typeof Test13, Test.Pass>;

@@ -316,3 +316,4 @@ const Test13 = DefineComponent({
 type Test13Expected = {};
 
 TypeChecking<Test13Expected, typeof Test13, Test.Pass>;
+

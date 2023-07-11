@@ -2,9 +2,8 @@
 name: release-please
 on:
     push:
-        pull_request:
-            branches:
-                - main
+        branches:
+          - main
 # 权限
 permissions:
     contents: write

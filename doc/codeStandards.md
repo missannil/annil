@@ -67,4 +67,5 @@ type bar = IfEquals<unknown, unknown, "isUnknown", "NonUnknown">; // "isUnknown"
 3. extends
 
 ```ts
+
 ```

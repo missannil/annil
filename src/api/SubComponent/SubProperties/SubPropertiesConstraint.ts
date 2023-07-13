@@ -18,5 +18,10 @@ export type SubPropertiesConstraint<TCurrentComponentDoc extends ComponentDoc, L
   {},
   TCurrentComponentDoc,
   PropertiesConstraint<Literal>,
-  IfExtends<unknown, TCurrentComponentDoc["properties"], EmptyObject, RestorePropertiesDoc<TCurrentComponentDoc["properties"] & {}>>
+  IfExtends<
+    unknown,
+    TCurrentComponentDoc["properties"],
+    EmptyObject,
+    RestorePropertiesDoc<TCurrentComponentDoc["properties"] & {}>
+  >
 >;

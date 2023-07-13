@@ -19,7 +19,9 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-      - name: Install dependencies
+      - name: Install dprint
+        run: curl -fsSL https://dprint.dev/install.sh | sh
+      - name: lint and format
         run: npm run lint
       - name: Run tests
         run: npm run test

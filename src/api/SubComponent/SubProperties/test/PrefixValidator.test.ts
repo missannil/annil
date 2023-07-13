@@ -21,7 +21,7 @@ SubComponent<{}, any, "aaa">()({
     aaa_str: String,
     // @ts-expect-error ⚠️前缀应为aaa⚠️
     _aaa_num: Number,
-    // @ts-expect-error
+    // @ts-expect-error ⚠️前缀应为aaa⚠️
     err: Boolean,
     // @ts-expect-error
     _xxx_num: Number,

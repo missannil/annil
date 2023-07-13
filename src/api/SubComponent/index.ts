@@ -85,6 +85,7 @@ type Options<
       & V.IllegalFieldValidator<TProperties, "value" | "type" | "optionalTypes", 1>
       & V.DuplicateFieldValidator<TProperties, keyof TMainComponentDoc["allData"], "与主组件字段重复">;
   };
+
 // // 提取TData
 // & {
 //   data?:
@@ -248,6 +249,7 @@ type Options<
 //   >
 // >;
 
+
 type Constructor<
   TMainComponentDoc extends MainComponentDoc = {},
   TComponentDoc extends ComponentDoc = any,
@@ -258,7 +260,7 @@ type Constructor<
     TPrefix,
     `${ExtractDocPrefix<TComponentDoc>}${Capitalize<TPrefix>}`
   >,
-  // 更新文档前缀为CurrentPrefix
+  // 更新文档前缀为CurrentPrefix,TComponentDoc为any时 返回 {}
   CurrentComponentDoc extends ComponentDoc = ReplacePrefix<TComponentDoc, CurrentPrefix>,
 > = {
   <
@@ -391,9 +393,9 @@ export function SubComponent<
   // Doc为空对象时
   {},
   TComponentDoc,
-  (param?: EmptyObject) => {},
+  (options: EmptyObject) => {},
   // Doc不为空对象时
   Constructor<TMainComponentDoc, TComponentDoc, TPrefix>
 > {
-  return {} as any;
+  return (options: any) => options;
 }

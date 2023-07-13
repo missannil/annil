@@ -24,6 +24,6 @@ jobs:
       - name:  test lint
         run: npx eslint .
       - name : test format   
-        run:  dprint init && dprint fmt
+        run:   dprint fmt
       - name: Run tests
         run: npm run test

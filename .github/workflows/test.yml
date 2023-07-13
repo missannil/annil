@@ -22,7 +22,7 @@ jobs:
       - name: Install dprint
         run: curl -fsSL https://dprint.dev/install.sh | sh
       - name:  test lint
-        run: npx eslint .
+        run: npx eslint . --max-warnings=0
       - name : test format   
         run:   npx dprint check
       - name: Run tests

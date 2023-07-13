@@ -59,5 +59,6 @@ module.exports = {
       { blankLine: "always", prev: "*", next: ["interface", "type"] },
       { blankLine: "always", prev: ["interface", "type"], next: "*" },
     ],
+    
   },
 };

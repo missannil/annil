@@ -21,7 +21,9 @@ jobs:
         run: npm install
       - name: Install dprint
         run: curl -fsSL https://dprint.dev/install.sh | sh
-      - name: lint and format
-        run: npm run lint
+      - name:  test lint
+        run: npx eslint .
+      - name : test format   
+        run:  dprint "**/*.{ts,js,cjs,mjs,json,md}"
       - name: Run tests
         run: npm run test

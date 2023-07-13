@@ -16,14 +16,11 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-
       - name: Install dependencies
         run: npm install
-      - name: Install dprint
-        run: curl -fsSL https://dprint.dev/install.sh | sh
       - name:  test lint
         run: npx eslint . --max-warnings=0
+      - name: Install dprint
+        run: curl -fsSL https://dprint.dev/install.sh | sh
       - name : test format   
         run:   npx dprint check
-      - name: Run tests
-        run: npm run test

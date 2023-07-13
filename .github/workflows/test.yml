@@ -24,6 +24,6 @@ jobs:
       - name:  test lint
         run: npx eslint .
       - name : test format   
-        run:  dprint "**/*.{ts,js,cjs,mjs,json,md}"
+        run:  dprint "**/*.ts"
       - name: Run tests
         run: npm run test

@@ -15,7 +15,7 @@ MainComponent({
     aaa() {
       return "与properties字段重复";
     },
-    // @ts-expect-error "与data字段重复"
+
     bbb() {
       return "与data字段重复";
     },

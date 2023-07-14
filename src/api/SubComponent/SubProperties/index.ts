@@ -1,6 +1,6 @@
 import type { V } from "hry-types";
 import type { MainComponentDoc } from "../../../common_types/MainComponentDoc";
-import type { PrefixValidator } from "./PrefixValidator";
+import type { PrefixValidator } from "../../../common_types/PrefixValidator";
 
 export type SubProperties<
   TProperties extends object,

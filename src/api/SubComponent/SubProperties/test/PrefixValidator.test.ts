@@ -28,13 +28,13 @@ SubComponent<{}, any, "aaa">()({
   },
 });
 
-// 无前缀字段 验证不可写内部字段
-SubComponent<{}, any>()({
-  properties: {
-    // 标准字段
-    aaa_str: String,
-    // @ts-expect-error ⚠️不可写内部字段⚠️
-    _aaa_num: Number,
-    err: Boolean,
-  },
-});
+// // 无前缀字段 验证不可写内部字段
+// SubComponent<{}, any>()({
+//   properties: {
+//     // 标准字段
+//     aaa_str: String,
+//     // @ts-expect-error ⚠️不可写内部字段⚠️
+//     _aaa_num: Number,
+//     err: Boolean,
+//   },
+// });

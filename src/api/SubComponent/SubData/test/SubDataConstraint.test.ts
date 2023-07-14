@@ -10,6 +10,8 @@ SubComponent()({
   data: {
     anyFields: 123,
     activeData: () => 123,
+    // 内部字段
+    _xxx: 123,
   },
 });
 

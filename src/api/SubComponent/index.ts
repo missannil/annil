@@ -60,6 +60,7 @@ type Options<
   CurrentPrefix extends string,
   TSubProperties extends object,
   TSubData extends object,
+  SubPropertiesDoc extends object,
 > // PropertiesDoc,
  = // TEvents,
   // TComputed extends ComputedConstraint,
@@ -85,7 +86,7 @@ type Options<
   // ComputedDoc = {} extends TComputed ? unknown : GetComputedDoc<TComputed>,
   // TData extends PureObject,
   & SubProperties<TSubProperties, CurrentPrefix, TMainComponentDoc>
-  & SubData<TSubData>;
+  & SubData<TSubData, CurrentPrefix, keyof (TMainComponentDoc["allData"] & SubPropertiesDoc)>;
 // // 提取TData
 // & {
 //   data?:
@@ -272,7 +273,7 @@ type Constructor<
     // 如果有默认值 会导致无字段提示
     TSubProperties extends SubPropertiesConstraint<CurrentComponentDoc, Literal>,
     TSubData extends SubDataConstraint<CurrentComponentDoc, keyof SubPropertiesDoc>, // 有默认值 无提示
-    SubPropertiesDoc = IfExtends<
+    SubPropertiesDoc extends object = IfExtends<
       SubPropertiesConstraint<CurrentComponentDoc, Literal>,
       TSubProperties,
       {},
@@ -331,7 +332,8 @@ type Constructor<
       // CurrentComponentDoc,
       CurrentPrefix,
       TSubProperties,
-      TSubData
+      TSubData,
+      SubPropertiesDoc
     >, // PropertiesDoc,
     // TData,
     // TEvents,

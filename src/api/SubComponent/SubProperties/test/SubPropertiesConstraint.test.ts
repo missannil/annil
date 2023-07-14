@@ -14,7 +14,7 @@ SubComponent<{}, DocIsAny>()({
 });
 
 // 示例文档类型
-type $xxxDoc = {
+type $DemoDoc = {
   properties: {
     aaa_str: string;
     aaa_num: number;
@@ -26,7 +26,7 @@ type $xxxDoc = {
 };
 
 // test1 有Doc时 不区分可选和必选,都可以配置, 但是必须是Doc中的字段
-SubComponent<{}, $xxxDoc>()({
+SubComponent<{}, $DemoDoc>()({
   properties: {
     // 文档中的必传字段可配置为可选
     aaa_str: {
@@ -40,10 +40,10 @@ SubComponent<{}, $xxxDoc>()({
 });
 
 // 字段类型符合文档中的类型
-SubComponent<{}, $xxxDoc>()({
+SubComponent<{}, $DemoDoc>()({
   properties: {
     aaa_num: Number,
-    // @ts-expect-error
+    // @ts-expect-error 不存在str字段
     aaa_str: Number,
   },
 });

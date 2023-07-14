@@ -39,21 +39,28 @@
 //   >
 // >;
 
-import type { V } from "hry-types";
+import type { As } from "hry-types/src/Any/As";
 import type { IfEquals } from "hry-types/src/Any/IfEquals";
+import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { EmptyObject } from "hry-types/src/Misc/EmptyObject";
 import type { ComponentDoc } from "../../common_types/ComponentDoc";
 import type { ExtractDocPrefix } from "../../common_types/GetComponentPrefix";
 import type { MainComponentDoc } from "../../common_types/MainComponentDoc";
 import type { ReplacePrefix } from "../../common_types/ReplacePrefix";
-import type { PrefixValidator } from "./SubProperties/PrefixValidator";
+import type { GetPropertiesDoc } from "../MainComponent/Properties/GetPropertiesDoc";
+import type { PropertiesConstraint } from "../MainComponent/Properties/PropertiesConstraint";
+import type { SubData } from "./SubData";
+import type { SubDataConstraint } from "./SubData/SubDataConstraint";
+import type { SubProperties } from "./SubProperties";
 import type { SubPropertiesConstraint } from "./SubProperties/SubPropertiesConstraint";
 
 type Options<
   TMainComponentDoc extends MainComponentDoc,
   // TComponentDoc extends ComponentDoc,
   CurrentPrefix extends string,
-  TProperties extends object,
+  TSubProperties extends object,
+  TSubData extends object,
+  SubPropertiesDoc extends object,
 > // PropertiesDoc,
  = // TEvents,
   // TComputed extends ComputedConstraint,
@@ -78,13 +85,8 @@ type Options<
 
   // ComputedDoc = {} extends TComputed ? unknown : GetComputedDoc<TComputed>,
   // TData extends PureObject,
-  {
-    properties?:
-      & TProperties
-      & PrefixValidator<TProperties, CurrentPrefix>
-      & V.IllegalFieldValidator<TProperties, "value" | "type" | "optionalTypes", 1>
-      & V.DuplicateFieldValidator<TProperties, keyof TMainComponentDoc["allData"], "与主组件字段重复">;
-  };
+  & SubProperties<TSubProperties, CurrentPrefix, TMainComponentDoc>
+  & SubData<TSubData, CurrentPrefix, keyof (TMainComponentDoc["allData"] & SubPropertiesDoc)>;
 // // 提取TData
 // & {
 //   data?:
@@ -258,7 +260,7 @@ type Constructor<
     TPrefix,
     `${ExtractDocPrefix<TComponentDoc>}${Capitalize<TPrefix>}`
   >,
-  // 更新文档前缀为CurrentPrefix
+  // 更新文档前缀为CurrentPrefix,TComponentDoc为any时 返回 {}
   CurrentComponentDoc extends ComponentDoc = ReplacePrefix<TComponentDoc, CurrentPrefix>,
 > = {
   <
@@ -269,13 +271,20 @@ type Constructor<
       | Literal[]
       | Record<string, Literal>,
     // 如果有默认值 会导致无字段提示
-    TProperties extends SubPropertiesConstraint<CurrentComponentDoc, Literal>,
+    TSubProperties extends SubPropertiesConstraint<CurrentComponentDoc, Literal>,
+    TSubData extends SubDataConstraint<CurrentComponentDoc, keyof SubPropertiesDoc>, // 有默认值 无提示
+    SubPropertiesDoc extends object = IfExtends<
+      SubPropertiesConstraint<CurrentComponentDoc, Literal>,
+      TSubProperties,
+      {},
+      GetPropertiesDoc<As<TSubProperties, PropertiesConstraint>>
+    >,
   > // TInherit extends SubInheritConstraint<
   //   TMainComponentDoc["allData"],
   //   CurrentComponentDoc,
   //   PropertiesDoc
   // >,
-  // TData extends SubDataConstraint<CurrentComponentDoc, PropertiesDoc & InheritDoc, CurrentPrefix>, // 有默认值 无提示
+
   // TEvents extends SubEventsConstraint<CurrentComponentDoc>,
   // TComputed extends ComputedConstraint = {}, // 必须加默认值 内部二次使用泛型逻辑导致
   // TMethod extends MethodsConstraint = {}, // 为了方便验证加默认值
@@ -322,7 +331,9 @@ type Constructor<
       TMainComponentDoc,
       // CurrentComponentDoc,
       CurrentPrefix,
-      TProperties
+      TSubProperties,
+      TSubData,
+      SubPropertiesDoc
     >, // PropertiesDoc,
     // TData,
     // TEvents,
@@ -333,7 +344,7 @@ type Constructor<
     // DataDoc,
     // InheritDoc
   ): // 重复事件检测和必传properties检测通过创建SubComponentDoc
-  CurrentPrefix;
+  SubPropertiesDoc;
   //   IfExtends<
   //     [RepeatedFieldsOfCustomEvents],
   //     [never],
@@ -391,9 +402,9 @@ export function SubComponent<
   // Doc为空对象时
   {},
   TComponentDoc,
-  (param?: EmptyObject) => {},
+  (options: EmptyObject) => {},
   // Doc不为空对象时
   Constructor<TMainComponentDoc, TComponentDoc, TPrefix>
 > {
-  return {} as any;
+  return (options: any) => options;
 }

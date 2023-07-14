@@ -8,15 +8,20 @@ import type { PropertiesConstraint } from "../../MainComponent/Properties/Proper
 /**
  * @description properties字段约束
  * @returns1
- * TComponentDoc为{}时 返回 PropertiesConstraint<Literal>,
+ * TCurrentComponentDoc 为 {}时(即传入的ComponentDoc为any) 返回 PropertiesConstraint<Literal>,
  * @returns2
- * TComponentDoc["properties"]为unknown时 返回 {}
+ * TComponentDoc["properties"]为unknown时 返回 EmptyObject
  * @returns3
  * TComponentDoc["properties"]不为unknown 返回 RestorePropertiesDoc<TComponentDoc["properties"] & {}>
  */
-export type SubPropertiesConstraint<TComponentDoc extends ComponentDoc, Literal> = IfEquals<
+export type SubPropertiesConstraint<TCurrentComponentDoc extends ComponentDoc, Literal> = IfEquals<
   {},
-  TComponentDoc,
+  TCurrentComponentDoc,
   PropertiesConstraint<Literal>,
-  IfExtends<unknown, TComponentDoc["properties"], EmptyObject, RestorePropertiesDoc<TComponentDoc["properties"] & {}>>
+  IfExtends<
+    unknown,
+    TCurrentComponentDoc["properties"],
+    EmptyObject,
+    RestorePropertiesDoc<TCurrentComponentDoc["properties"] & {}>
+  >
 >;

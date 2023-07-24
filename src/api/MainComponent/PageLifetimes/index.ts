@@ -1,6 +1,6 @@
 import type { O } from "hry-types";
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
-import type { WMPageLifetime, WMPageLifetimes } from "../../../common_types/officialAlias";
+import type { WMPageLifetime, WMPageLifetimes } from "../../../types/officialAlias";
 
 export type PageLifetimes<TIsPage extends boolean, PropertiesDoc> = IfExtends<
   TIsPage,

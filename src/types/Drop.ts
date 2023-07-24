@@ -1,7 +1,7 @@
 import type { Equals } from "hry-types/src/Any/Equals";
 
 /**
- * Remove `N` entries out of `L`
+ * 从' L '中删除' A '项
  * @param L to remove from
  * @param N to remove out
  * @param way (?=`'->'`) from front: '->', from end: '<-'

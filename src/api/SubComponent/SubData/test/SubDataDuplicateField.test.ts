@@ -1,4 +1,4 @@
-import type { MainComponentDoc } from "../../../../common_types/MainComponentDoc";
+import type { MainComponentDoc } from "../../../../types/MainComponentDoc";
 import { SubComponent } from "../..";
 
 const Main = {

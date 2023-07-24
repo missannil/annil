@@ -1,5 +1,5 @@
 import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
-import type { SpecificType } from "../../../common_types/SpecificType";
+import type { SpecificType } from "../../../types/SpecificType";
 
 type NonListShortCustomeEvents = SpecificType | null;
 

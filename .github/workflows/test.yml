@@ -24,3 +24,5 @@ jobs:
         run: curl -fsSL https://dprint.dev/install.sh | sh
       - name : test format   
         run:   npx dprint check
+      - name : test types  
+        run:   npx tsc --noEmit

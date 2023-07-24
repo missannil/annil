@@ -1,4 +1,4 @@
-import type { SubComponentDoc } from "../../common_types/SubComponentDoc";
+import type { SubComponentDoc } from "../../types/SubComponentDoc";
 
 type _GetSubPropertiesDoc<T extends SubComponentDoc[], Result = {}> = T extends [
   infer Head extends SubComponentDoc,

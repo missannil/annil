@@ -1,4 +1,4 @@
-import type { WMBaseEvent } from "../../../common_types/officialAlias";
+import type { WMBaseEvent } from "../../../types/officialAlias";
 
 /**
  *  事件字段约束

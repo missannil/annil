@@ -1,4 +1,4 @@
-import type { SpecificType } from "../../../common_types/SpecificType";
+import type { SpecificType } from "../../../types/SpecificType";
 
 /**
  * @description 必传单一类型

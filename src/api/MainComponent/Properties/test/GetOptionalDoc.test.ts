@@ -1,4 +1,4 @@
-import { type Test, TypeChecking } from "hry-types";
+import { Checking, type Test } from "hry-types";
 import type { GetOptionalDoc } from "../GetOptionalDoc";
 import { type Mock_User, optional_fields } from "./PropertiesConstraint.test";
 
@@ -10,11 +10,11 @@ export type OptionalFieldsExpected = {
   optional_obj?: Mock_User;
 };
 
-TypeChecking<OptionalFieldsDoc, OptionalFieldsExpected, Test.Pass>;
+Checking<OptionalFieldsDoc, OptionalFieldsExpected, Test.Pass>;
 
 // 字段为空时
 type OptionalFieldsIsEmpty = GetOptionalDoc<{}>;
 
 type OptionalFieldsIsEmptyExpected = {};
 
-TypeChecking<GetOptionalDoc<OptionalFieldsIsEmpty>, OptionalFieldsIsEmptyExpected, Test.Pass>;
+Checking<GetOptionalDoc<OptionalFieldsIsEmpty>, OptionalFieldsIsEmptyExpected, Test.Pass>;

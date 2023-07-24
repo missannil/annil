@@ -1,4 +1,4 @@
-import { type Test, TypeChecking } from "hry-types";
+import { Checking, type Test } from "hry-types";
 import type { GetFullCustomEventsDoc } from "../GetFullCustomEventsDoc";
 import type {
   BubblesCapturePhaseComposedSign,
@@ -17,35 +17,35 @@ type bubblesResult = GetFullCustomEventsDoc<typeof mock_fullCustomEvents["bubble
 
 export type bubblesExpected = string | BubblesSign;
 
-TypeChecking<bubblesResult, bubblesExpected, Test.Pass>;
+Checking<bubblesResult, bubblesExpected, Test.Pass>;
 
 // CapturePhase
 type CapturePhaseResult = GetFullCustomEventsDoc<typeof mock_fullCustomEvents["capturePhase"]>;
 
 export type CapturePhaseExpected = CapturePhaseSign | null;
 
-TypeChecking<CapturePhaseResult, CapturePhaseExpected, Test.Pass>;
+Checking<CapturePhaseResult, CapturePhaseExpected, Test.Pass>;
 
 // bubbles_capturePhase
 type BubblesCapturePhaseResult = GetFullCustomEventsDoc<typeof mock_fullCustomEvents["bubbles_capturePhase"]>;
 
 export type BubblesCapturePhaseExpected = string | number | BubblesCapturePhaseSign;
 
-TypeChecking<BubblesCapturePhaseResult, BubblesCapturePhaseExpected, Test.Pass>;
+Checking<BubblesCapturePhaseResult, BubblesCapturePhaseExpected, Test.Pass>;
 
 // bubbles_composed
 type BubblesComposedResult = GetFullCustomEventsDoc<typeof mock_fullCustomEvents["bubbles_composed"]>;
 
 export type BubblesComposedExpected = "male" | "female" | BubblesComposedSign;
 
-TypeChecking<BubblesComposedResult, BubblesComposedExpected, Test.Pass>;
+Checking<BubblesComposedResult, BubblesComposedExpected, Test.Pass>;
 
 // capturePhase_composed
 type CapturePhaseComposedResult = GetFullCustomEventsDoc<typeof mock_fullCustomEvents["capturePhase_composed"]>;
 
 export type CapturePhaseComposedExpected = string | 0 | 1 | 2 | null | CapturePhaseComposedSign;
 
-TypeChecking<CapturePhaseComposedResult, CapturePhaseComposedExpected, Test.Pass>;
+Checking<CapturePhaseComposedResult, CapturePhaseComposedExpected, Test.Pass>;
 
 // bubbles_capturePhase_composed
 type BubblesCapturePhaseComposedResult = GetFullCustomEventsDoc<
@@ -54,4 +54,4 @@ type BubblesCapturePhaseComposedResult = GetFullCustomEventsDoc<
 
 export type BubblesCapturePhaseComposedExpected = boolean | BubblesCapturePhaseComposedSign;
 
-TypeChecking<BubblesCapturePhaseComposedResult, BubblesCapturePhaseComposedExpected, Test.Pass>;
+Checking<BubblesCapturePhaseComposedResult, BubblesCapturePhaseComposedExpected, Test.Pass>;

@@ -1,4 +1,4 @@
-import { ValueChecking } from "hry-types";
+import { Checking, type Test } from "hry-types";
 import { MainComponent } from "../..";
 
 /**
@@ -25,7 +25,7 @@ type OnlyComputedInComponentExpect = {
 /**
  * 验证 OnlyComputedInComponentExpect 和 onlyComputedInComponent 类型是否一致
  */
-ValueChecking<OnlyComputedInComponentExpect>()(onlyComputedInComponent);
+Checking<OnlyComputedInComponentExpect, typeof onlyComputedInComponent, Test.Pass>;
 
 /**
  * 组件中computed字段是空对象时
@@ -40,7 +40,7 @@ type computedIsEmptyObjectInComponentExpect = {};
 /**
  * 验证 computedIsEmptyObjectInComponentExpect 和 computedIsEmptyObjectInComponent 类型是否一致
  */
-ValueChecking<computedIsEmptyObjectInComponentExpect>()(computedIsEmptyObjectInComponent);
+Checking<computedIsEmptyObjectInComponentExpect, typeof computedIsEmptyObjectInComponent, Test.Pass>;
 
 /**
  * MainComponent中isPage字段为true时表示MainComponent为页面模式。
@@ -68,7 +68,7 @@ type OnlyComputedInPageExpect = {
 /**
  * 验证 OnlyComputedInPageExpect 和 onlyComputedInPage 类型是否一致
  */
-ValueChecking<OnlyComputedInPageExpect>()(onlyComputedInPage);
+Checking<OnlyComputedInPageExpect, typeof onlyComputedInPage, Test.Pass>;
 
 /**
  * 页面中computed字段是空对象时
@@ -83,4 +83,4 @@ type ComputedIsEmptyObjectInPageExpect = { isPage: true };
 /**
  * 验证 computedIsEmptyObjectInPageExpect 和 computedIsEmptyObjectInPage 类型是否一致
  */
-ValueChecking<ComputedIsEmptyObjectInPageExpect>()(computedIsEmptyObjectInPage);
+Checking<ComputedIsEmptyObjectInPageExpect, typeof computedIsEmptyObjectInPage, Test.Pass>;

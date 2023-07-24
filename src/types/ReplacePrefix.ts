@@ -1,4 +1,4 @@
-import { type Test, TypeChecking } from "hry-types";
+import { Checking, type Test } from "hry-types";
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { ComponentDoc } from "./ComponentDoc";
 
@@ -31,10 +31,10 @@ type Test1 = ReplacePrefix<{ properties: { xxx_name: string } }, "xxxDaa">;
 
 type Test1Expect = { properties: { xxxDaa_name: string } };
 
-TypeChecking<Test1, Test1Expect, Test.Pass>;
+Checking<Test1, Test1Expect, Test.Pass>;
 
 type Test2 = ReplacePrefix<{ customEvents: { xxx_name: string } }, "xxxDaa">;
 
 type Test2Expect = { customEvents: { xxxDaa_name: string } };
 
-TypeChecking<Test2, Test2Expect, Test.Pass>;
+Checking<Test2, Test2Expect, Test.Pass>;

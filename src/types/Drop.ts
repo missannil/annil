@@ -18,4 +18,4 @@ export type Drop<L extends unknown[], A> = L extends [infer Head, ...infer Rest]
 
 // type TestExpect = [4, 5, 6, 8, 7, 9, 10, 1, 2][number];
 
-// TypeChecking<Test, TestExpect, Test.Pass>;
+// Checking<Test, TestExpect, Test.Pass>;

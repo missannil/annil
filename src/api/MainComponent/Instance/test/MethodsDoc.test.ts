@@ -1,24 +1,24 @@
-import { ValueChecking } from "hry-types";
+import { Checking, type Test } from "hry-types";
 import { MainComponent } from "../..";
 
 MainComponent({
   methods: {
     M1() {
-      ValueChecking<() => "str">()(this.M2);
+      Checking<() => "str", typeof this.M2, Test.Pass>;
 
       return 123;
     },
     M2() {
-      ValueChecking<() => 123>()(this.M1);
+      Checking<() => 123, typeof this.M1, Test.Pass>();
 
       return "str";
     },
   },
   lifetimes: {
     attached() {
-      ValueChecking<() => "str">()(this.M2);
+      Checking<() => "str", typeof this.M2, Test.Pass>;
 
-      ValueChecking<() => 123>()(this.M1);
+      Checking<() => 123, typeof this.M1, Test.Pass>();
     },
   },
 });

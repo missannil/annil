@@ -16,4 +16,4 @@ export type RestorePropTypeOfList<L, R extends unknown[] = []> = L extends [infe
 //   SpecificType<string[]>,
 // ];
 
-// TypeChecking<Test1, Test1Expect, Test.Pass>;
+// Checking<Test1, Test1Expect, Test.Pass>;

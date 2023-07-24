@@ -1,5 +1,4 @@
-import type { AnyObject } from "hry-types";
-import { ValueChecking } from "hry-types";
+import { Checking, type Test } from "hry-types";
 import type { SpecificType } from "../../../../types/SpecificType";
 import { MainComponent } from "../..";
 import type { Mock_Cart, Mock_User } from "../../Properties/test/PropertiesConstraint.test";
@@ -37,7 +36,7 @@ const onlyPropertiesInComponent = MainComponent({
 type OnlyPropertiesInComponentExpect = {
   properties: {
     str: string;
-    obj: AnyObject | null;
+    obj: object | null;
     num: 0 | 1 | 2;
     bool: boolean;
     arr: number[] | string[];
@@ -46,7 +45,7 @@ type OnlyPropertiesInComponentExpect = {
   };
   allData: {
     str: string;
-    obj: AnyObject | null;
+    obj: object | null;
     num: 0 | 1 | 2;
     bool: boolean;
     arr: number[] | string[];
@@ -58,7 +57,7 @@ type OnlyPropertiesInComponentExpect = {
 /**
  * 验证 OnlyPropertiesInComponentExpect 和 onlyPropertiesInComponent 类型是否一致
  */
-ValueChecking<OnlyPropertiesInComponentExpect>()(onlyPropertiesInComponent);
+Checking<OnlyPropertiesInComponentExpect, typeof onlyPropertiesInComponent, Test.Pass>;
 
 /**
  * 组件中properties字段是空对象时
@@ -73,7 +72,7 @@ type ProperitesIsEmptyObjectInComponentExpect = {};
 /**
  *  验证 ProperitesIsEmptyObjectInComponentExpect 和 properitesIsEmptyObjectInComponent 类型是否一致
  */
-ValueChecking<ProperitesIsEmptyObjectInComponentExpect>()(properitesIsEmptyObjectInComponent);
+Checking<ProperitesIsEmptyObjectInComponentExpect, typeof properitesIsEmptyObjectInComponent, Test.Pass>;
 
 /**
  * MainComponent中isPage字段为true时表示MainComponent为页面模式。
@@ -91,7 +90,7 @@ type PropertiesInPageExpact = {
   isPage: true;
   properties: {
     str: string;
-    obj: AnyObject | null;
+    obj: object | null;
     num: 0 | 1 | 2;
     bool: boolean;
     arr: number[] | string[];
@@ -100,7 +99,7 @@ type PropertiesInPageExpact = {
   };
   allData: {
     str: string;
-    obj: AnyObject | null;
+    obj: object | null;
     num: 0 | 1 | 2;
     bool: boolean;
     arr: number[] | string[];
@@ -112,7 +111,7 @@ type PropertiesInPageExpact = {
 /**
  * 验证 PropertiesInPageExpact 和 onlyPropertiesInPage 类型是否一致
  */
-ValueChecking<PropertiesInPageExpact>()(onlyPropertiesInPage);
+Checking<PropertiesInPageExpact, typeof onlyPropertiesInPage, Test.Pass>;
 
 /**
  * 页面中properties字段是空对象时
@@ -131,4 +130,4 @@ type ProperitesIsEmptyInPageExpect = { isPage: true };
  * 验证 ProperitesIsEmptyInPageExpect 和 ProperitesIsEmptyInPage 类型是否一致
  */
 
-ValueChecking<ProperitesIsEmptyInPageExpect>()(ProperitesIsEmptyInPage);
+Checking<ProperitesIsEmptyInPageExpect, typeof ProperitesIsEmptyInPage, Test.Pass>;

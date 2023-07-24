@@ -1,6 +1,6 @@
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
-import type { IsContains } from "hry-types/src/Tuple/_api";
+import type { Has } from "hry-types/src/Tuple/_api";
 import type { MainComponentDoc } from "../../types/MainComponentDoc";
 import type { SubComponentDoc } from "../../types/SubComponentDoc";
 import type { AddPrefixAndNull } from "./AddPrefixAndNull";
@@ -21,9 +21,9 @@ export type CreateDoc<
   TName extends string = "",
   TPage extends `/${string}` = "/",
   // 判断是否有properties字段 为了减少实例化次数
-  SubComponentHasProperties = IsContains<TSubComponentTuple, { properties: any }>,
+  SubComponentHasProperties = Has<TSubComponentTuple, { properties: any }>,
   // 判断是否有customEvents字段 为了减少实例化次数
-  SubComponentHasCustomEvents = IsContains<TSubComponentTuple, { customEvents: any }>,
+  SubComponentHasCustomEvents = Has<TSubComponentTuple, { customEvents: any }>,
 > = ComputeIntersection<
   // 页面时保留path字段
   & (TName extends "" ? { path: TPage } : unknown)

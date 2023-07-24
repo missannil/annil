@@ -1,4 +1,4 @@
-import { type O, type Test, TypeChecking } from "hry-types";
+import { Checking, type O, type Test } from "hry-types";
 import { MainComponent } from "../../MainComponent";
 
 import type { SpecificType } from "../../..";
@@ -38,7 +38,7 @@ type Test1Expected = {
   };
 };
 
-TypeChecking<Test1Expected, typeof Test1, Test.Pass>;
+Checking<Test1Expected, typeof Test1, Test.Pass>;
 
 // DefineComponent的subComponents字段为[]
 const Test2 = DefineComponent({
@@ -53,7 +53,7 @@ type Test2Expected = {
   };
 };
 
-TypeChecking<Test2Expected, typeof Test2, Test.Pass>;
+Checking<Test2Expected, typeof Test2, Test.Pass>;
 
 // DefineComponent的subComponents字段包含properties字段
 const test3 = DefineComponent({
@@ -69,7 +69,7 @@ type Test3Expected = {
   };
 };
 
-TypeChecking<Test3Expected, typeof test3, Test.Pass>;
+Checking<Test3Expected, typeof test3, Test.Pass>;
 
 // 测试页面时,即MainComponent的isPage字段为true
 
@@ -93,7 +93,7 @@ type Test4Expected = {
   };
 };
 
-TypeChecking<Test4Expected, typeof Test4, Test.Pass>;
+Checking<Test4Expected, typeof Test4, Test.Pass>;
 
 // DefineComponent的subComponents字段为[]
 const Test5 = DefineComponent({
@@ -109,7 +109,7 @@ type Test5Expected = {
   };
 };
 
-TypeChecking<Test5Expected, typeof Test5, Test.Pass>;
+Checking<Test5Expected, typeof Test5, Test.Pass>;
 
 // DefineComponent的subComponents字段包含properties字段
 const Test6 = DefineComponent({
@@ -126,7 +126,7 @@ type Test6Expected = {
   };
 };
 
-TypeChecking<Test6Expected, typeof Test6, Test.Pass>;
+Checking<Test6Expected, typeof Test6, Test.Pass>;
 
 // 测试组件时,即MainComponent无isPage字段或isPage字段为false
 
@@ -184,7 +184,7 @@ type Test7Expected = {
   };
 };
 
-TypeChecking<Test7Expected, typeof Test7, Test.Pass>;
+Checking<Test7Expected, typeof Test7, Test.Pass>;
 
 // DefineComponent的subComponents字段为[]
 const Test8 = DefineComponent({
@@ -195,7 +195,7 @@ const Test8 = DefineComponent({
 
 type Test8Expected = {};
 
-TypeChecking<Test8Expected, typeof Test8, Test.Pass>;
+Checking<Test8Expected, typeof Test8, Test.Pass>;
 
 // DefineComponent的subComponents字段包含customEvents字段
 const Test9 = DefineComponent({
@@ -213,7 +213,7 @@ type Test9Expected = {
     & { null: null };
 };
 
-TypeChecking<Test9Expected, typeof Test9, Test.Pass>;
+Checking<Test9Expected, typeof Test9, Test.Pass>;
 
 // 测试subComponents重复字段
 
@@ -232,7 +232,7 @@ type Test10Expected = {
     & { str: number };
 };
 
-TypeChecking<Test10Expected, typeof Test10, Test.Pass>;
+Checking<Test10Expected, typeof Test10, Test.Pass>;
 
 // 测试 类型实例化过深，且可能无限
 const A = { customEvents: { str: "str", a: 123 } };
@@ -293,7 +293,7 @@ type Test11Expected = {
   };
 };
 
-TypeChecking<Test11Expected, O.ComputeIntersectionDeep<typeof Test11>, Test.Pass>;
+Checking<Test11Expected, O.ComputeIntersectionDeep<typeof Test11>, Test.Pass>;
 
 // 测试12 空页面 mainComponent 和 subComponents 都是空的时
 
@@ -305,7 +305,7 @@ const Test12 = DefineComponent({
 
 type Test12Expected = { path: "/xxx/xxx/xxx" };
 
-TypeChecking<Test12Expected, typeof Test12, Test.Pass>;
+Checking<Test12Expected, typeof Test12, Test.Pass>;
 
 // 测试13 组件时 mainComponent 和 subComponents 都是空的时
 const Test13 = DefineComponent({
@@ -315,4 +315,4 @@ const Test13 = DefineComponent({
 
 type Test13Expected = {};
 
-TypeChecking<Test13Expected, typeof Test13, Test.Pass>;
+Checking<Test13Expected, typeof Test13, Test.Pass>;

@@ -4,7 +4,7 @@
 
 import { SubComponent } from "../..";
 
-// 测试1 当TCurrentComponentDoc为{}时(即传入的TComponentDoc为any) 返回 object
+// 测试1 当默认(主类型{},文档为any)类型时 data字段约束为 object
 
 SubComponent()({
   data: {

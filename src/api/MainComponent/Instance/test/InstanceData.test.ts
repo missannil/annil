@@ -1,5 +1,4 @@
-import { ValueChecking } from "hry-types";
-import type { AnyObject } from "hry-types";
+import { Checking, type Test } from "hry-types";
 import { MainComponent } from "../..";
 import { type Mock_Cart, mock_properties, type Mock_User } from "../../Properties/test/PropertiesConstraint.test";
 
@@ -24,65 +23,65 @@ MainComponent({
   methods: {
     M1() {
       // properties fields
-      ValueChecking<string>()(this.data.str);
+      Checking<string, typeof this.data.str, Test.Pass>;
 
-      ValueChecking<number>()(this.data.num);
+      Checking<number, typeof this.data.num, Test.Pass>;
 
-      ValueChecking<boolean>()(this.data.bool);
+      Checking<boolean, typeof this.data.bool, Test.Pass>;
 
-      ValueChecking<unknown[]>()(this.data.arr);
+      Checking<unknown[], typeof this.data.arr, Test.Pass>;
 
-      ValueChecking<AnyObject | null>()(this.data.obj);
+      Checking<object | null, typeof this.data.obj, Test.Pass>;
 
-      ValueChecking<[string, number, boolean]>()(this.data.tuple);
+      Checking<[string, number, boolean], typeof this.data.tuple, Test.Pass>;
 
-      ValueChecking<"male" | "female">()(this.data.union_str);
+      Checking<"male" | "female", typeof this.data.union_str, Test.Pass>;
 
-      ValueChecking<0 | 1 | 2>()(this.data.union_num);
+      Checking<0 | 1 | 2, typeof this.data.union_num, Test.Pass>;
 
-      ValueChecking<false | true>()(this.data.union_bool);
+      Checking<false | true, typeof this.data.union_bool, Test.Pass>;
 
-      ValueChecking<number[] | string[]>()(this.data.union_arr);
+      Checking<number[] | string[], typeof this.data.union_arr, Test.Pass>;
 
-      ValueChecking<Mock_User | Mock_Cart | null>()(this.data.union_obj);
+      Checking<Mock_User | Mock_Cart | null, typeof this.data.union_obj, Test.Pass>;
 
-      ValueChecking<string | number | boolean>()(this.data.union_multiple);
+      Checking<string | number | boolean, typeof this.data.union_multiple, Test.Pass>;
 
-      ValueChecking<boolean | 0 | "male" | "female" | 1 | 2>()(this.data.union_multiple_literal);
+      Checking<boolean | 0 | "male" | "female" | 1 | 2, typeof this.data.union_multiple_literal, Test.Pass>;
 
-      ValueChecking<string>()(this.data.optional_str);
+      Checking<string, typeof this.data.optional_str, Test.Pass>;
 
-      ValueChecking<123 | 456>()(this.data.optional_num);
+      Checking<123 | 456, typeof this.data.optional_num, Test.Pass>;
 
-      ValueChecking<Mock_User>()(this.data.optional_obj);
+      Checking<Mock_User, typeof this.data.optional_obj, Test.Pass>;
 
-      ValueChecking<string | number | boolean>()(this.data.union_multiple);
+      Checking<string | number | boolean, typeof this.data.union_multiple, Test.Pass>;
 
-      ValueChecking<string | number | boolean>()(this.data.union_multiple);
+      Checking<string | number | boolean, typeof this.data.union_multiple, Test.Pass>;
     },
   },
   lifetimes: {
     attached() {
       // data fields
-      ValueChecking<"str">()(this.data.Dstr);
+      Checking<"str", typeof this.data.Dstr, Test.Pass>;
 
-      ValueChecking<number>()(this.data.Dnum);
+      Checking<number, typeof this.data.Dnum, Test.Pass>;
 
-      ValueChecking<boolean>()(this.data.Dbool);
+      Checking<boolean, typeof this.data.Dbool, Test.Pass>;
 
-      ValueChecking<number[]>()(this.data.Darr);
+      Checking<number[], typeof this.data.Darr, Test.Pass>;
 
-      ValueChecking<123>()(this.data.reactive);
+      Checking<123, typeof this.data.reactive, Test.Pass>;
 
-      ValueChecking<{ a: number; b: number }>()(this.data.Dobj);
+      Checking<{ a: number; b: number }, typeof this.data.Dobj, Test.Pass>;
     },
   },
   pageLifetimes: {
     show() {
       // computed fields
-      ValueChecking<string>()(this.data.Cstr);
+      Checking<string, typeof this.data.Cstr, Test.Pass>;
 
-      ValueChecking<number>()(this.data.Cnum);
+      Checking<number, typeof this.data.Cnum, Test.Pass>;
     },
   },
 });

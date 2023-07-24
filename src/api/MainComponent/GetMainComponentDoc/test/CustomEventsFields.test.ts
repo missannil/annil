@@ -1,4 +1,4 @@
-import { ValueChecking } from "hry-types";
+import { Checking, type Test } from "hry-types";
 import type { SpecificType } from "../../../..";
 import { MainComponent } from "../..";
 import type {
@@ -76,7 +76,7 @@ type OnlyCustomEventsInComponentExpect = {
 /**
  * 验证 OnlyCustomEventsInComponentExpect 和 onlyCustomEventsInComponent 类型是否一致
  */
-ValueChecking<OnlyCustomEventsInComponentExpect>()(onlyCustomEventsInComponent);
+Checking<OnlyCustomEventsInComponentExpect, typeof onlyCustomEventsInComponent, Test.Pass>;
 
 /**
  * 组件中customEvents字段是空对象时
@@ -91,7 +91,7 @@ type customEventsIsEmptyObjectInComponentExpect = {};
 /**
  * 验证 customEventsIsEmptyObjectInComponentExpect 和 customEventsIsEmptyObjectInComponent 类型是否一致
  */
-ValueChecking<customEventsIsEmptyObjectInComponentExpect>()(customEventsIsEmptyObjectInComponent);
+Checking<customEventsIsEmptyObjectInComponentExpect, typeof customEventsIsEmptyObjectInComponent, Test.Pass>;
 
 /**
  * 页面中customEvents字段默认约束为never
@@ -111,4 +111,4 @@ type OnlyCustomEventsInPageExpect = {
 /**
  * 验证 OnlyCustomEventsInPageExpect 和 onlyCustomEventsInPage 类型是否一致
  */
-ValueChecking<OnlyCustomEventsInPageExpect>()(onlyCustomEventsInPage);
+Checking<OnlyCustomEventsInPageExpect, typeof onlyCustomEventsInPage, Test.Pass>;

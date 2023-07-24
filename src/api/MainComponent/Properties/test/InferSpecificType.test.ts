@@ -1,4 +1,4 @@
-import { type AnyObject, type Test, TypeChecking } from "hry-types";
+import { Checking, type Test } from "hry-types";
 
 import type { InferSpecificType } from "../InferSpecificType";
 
@@ -16,16 +16,16 @@ type SpecificUnion = () => "a" | "b";
 
 type SpecificUnion1 = () => [string, number, boolean];
 
-TypeChecking<InferSpecificType<str>, string, Test.Pass>;
+Checking<InferSpecificType<str>, string, Test.Pass>;
 
-TypeChecking<InferSpecificType<num>, number, Test.Pass>;
+Checking<InferSpecificType<num>, number, Test.Pass>;
 
-TypeChecking<InferSpecificType<bool>, boolean, Test.Pass>;
+Checking<InferSpecificType<bool>, boolean, Test.Pass>;
 
-TypeChecking<InferSpecificType<arr>, unknown[], Test.Pass>;
+Checking<InferSpecificType<arr>, unknown[], Test.Pass>;
 
-TypeChecking<InferSpecificType<obj>, AnyObject, Test.Pass>;
+Checking<InferSpecificType<obj>, object, Test.Pass>;
 
-TypeChecking<InferSpecificType<SpecificUnion>, "a" | "b", Test.Pass>;
+Checking<InferSpecificType<SpecificUnion>, "a" | "b", Test.Pass>;
 
-TypeChecking<InferSpecificType<SpecificUnion1>, [string, number, boolean], Test.Pass>;
+Checking<InferSpecificType<SpecificUnion1>, [string, number, boolean], Test.Pass>;

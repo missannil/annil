@@ -1,5 +1,4 @@
-import { ValueChecking } from "hry-types";
-import type { AnyObject } from "hry-types";
+import { Checking, type Test } from "hry-types";
 import { MainComponent, type SpecificType } from "../../../..";
 import type { Mock_User } from "../../Properties/test/PropertiesConstraint.test";
 
@@ -19,11 +18,11 @@ MainComponent({
 
   pageLifetimes: {
     onLoad(props) {
-      ValueChecking<string>()(props.str);
+      Checking<string, typeof props.str, Test.Pass>;
 
-      ValueChecking<AnyObject>()(props.obj);
+      Checking<object, typeof props.obj, Test.Pass>;
 
-      ValueChecking<Mock_User>()(props.union);
+      Checking<Mock_User, typeof props.union, Test.Pass>;
     },
     onHide() {
       console.log("onHide");

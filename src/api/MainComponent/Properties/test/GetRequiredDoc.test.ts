@@ -1,5 +1,4 @@
-import { type Test, TypeChecking } from "hry-types";
-import type { AnyObject } from "hry-types";
+import { Checking, type Test } from "hry-types";
 import type { GetRequiredDoc } from "../GetRequiredDoc";
 import { type Mock_Cart, type Mock_User, required_fields } from "./PropertiesConstraint.test";
 
@@ -10,7 +9,7 @@ export type RequiredFieldsExpected = {
   num: number;
   bool: boolean;
   arr: unknown[];
-  obj: AnyObject | null; // 必传对象默认为null
+  obj: object | null; // 必传对象默认为null
   tuple: [string, number, boolean];
   union_str: "male" | "female";
   union_num: 0 | 1 | 2;
@@ -21,10 +20,10 @@ export type RequiredFieldsExpected = {
   union_multiple_literal: boolean | 0 | 1 | 2 | "male" | "female";
 };
 
-TypeChecking<RequiredFieldsDoc, RequiredFieldsExpected, Test.Pass>;
+Checking<RequiredFieldsDoc, RequiredFieldsExpected, Test.Pass>;
 
 type RequiredFieldsIsEmpty = GetRequiredDoc<{}>;
 
 type RequiredFieldsIsEmptyExpected = {};
 
-TypeChecking<RequiredFieldsIsEmpty, RequiredFieldsIsEmptyExpected, Test.Pass>;
+Checking<RequiredFieldsIsEmpty, RequiredFieldsIsEmptyExpected, Test.Pass>;

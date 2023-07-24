@@ -1,4 +1,4 @@
-import { ValueChecking } from "hry-types";
+import { Checking, type Test } from "hry-types";
 import type { WMBaseEvent } from "../../../../types/officialAlias";
 import { MainComponent } from "../..";
 
@@ -23,7 +23,7 @@ type OnlyEventsInComponentExpect = {
 /**
  * 验证 OnlyEventsInComponentExpect 和 onlyEventsInComponent 类型是否一致
  */
-ValueChecking<OnlyEventsInComponentExpect>()(onlyEventsInComponent);
+Checking<OnlyEventsInComponentExpect, typeof onlyEventsInComponent, Test.Pass>;
 
 /**
  * 组件中events字段是空对象时
@@ -38,7 +38,7 @@ type EventsIsEmptyObjectInComponentExpect = {};
 /**
  * 验证 eventsIsEmptyObjectInComponentExpect 和 eventsIsEmptyObjectInComponent 类型是否一致
  */
-ValueChecking<EventsIsEmptyObjectInComponentExpect>()(eventsIsEmptyObjectInComponent);
+Checking<EventsIsEmptyObjectInComponentExpect, typeof eventsIsEmptyObjectInComponent, Test.Pass>;
 
 /**
  * 页面中只有events字段
@@ -65,7 +65,7 @@ type OnlyEventsInPageExpect = {
 /**
  * 验证 OnlyEventsInPageExpect 和 onlyEventsInPage 类型是否一致
  */
-ValueChecking<OnlyEventsInPageExpect>()(onlyEventsInPage);
+Checking<OnlyEventsInPageExpect, typeof onlyEventsInPage, Test.Pass>;
 
 /**
  * 页面中events字段是空对象时
@@ -80,4 +80,4 @@ type EventsIsEmptyObjectInPageExpect = { isPage: true };
 /**
  * 验证 EventsIsEmptyObjectInPageExpect 和 eventsIsEmptyObjectInPage 类型是否一致
  */
-ValueChecking<EventsIsEmptyObjectInPageExpect>()(eventsIsEmptyObjectInPage);
+Checking<EventsIsEmptyObjectInPageExpect, typeof eventsIsEmptyObjectInPage, Test.Pass>;

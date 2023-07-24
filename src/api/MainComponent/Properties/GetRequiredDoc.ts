@@ -1,4 +1,4 @@
-import type { Cast } from "hry-types/src/Any/Cast";
+import type { As } from "hry-types/src/Any/As";
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { Select } from "hry-types/src/Object/Select";
 import type { InferSpecificType } from "./InferSpecificType";
@@ -16,7 +16,7 @@ export type GetRequiredDoc<
     Required[k],
     RequiredSingle,
     PuerObjectAddNull<InferSpecificType<Required[k]>>,
-    | PuerObjectAddNull<InferSpecificType<Cast<Required[k], RequiredUnion>["type"]>>
-    | InferSpecificType<Cast<Required[k], RequiredUnion>["optionalTypes"][number]>
+    | PuerObjectAddNull<InferSpecificType<As<Required[k], RequiredUnion>["type"]>>
+    | InferSpecificType<As<Required[k], RequiredUnion>["optionalTypes"][number]>
   >;
 };

@@ -1,4 +1,4 @@
-import { type Test, TypeChecking } from "hry-types";
+import { Checking, type Test } from "hry-types";
 import type { AddPrefixAndNull } from "../AddPrefixAndNull";
 
 //
@@ -12,7 +12,7 @@ type Test1Expect = {
   test1_c: boolean;
 };
 
-TypeChecking<Test1Result, Test1Expect, Test.Pass>;
+Checking<Test1Result, Test1Expect, Test.Pass>;
 
 type Obj2 = { obj: { a: number }; obj1: { b?: number }; c: boolean; d: string[] };
 
@@ -29,4 +29,4 @@ type Test2Expect = {
   test2_d: string[];
 };
 
-TypeChecking<Test2Result, Test2Expect, Test.Pass>;
+Checking<Test2Result, Test2Expect, Test.Pass>;

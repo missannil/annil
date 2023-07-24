@@ -1,5 +1,5 @@
-import type { AnyObject } from "hry-types";
-import { ValueChecking } from "hry-types";
+import type { Test } from "hry-types";
+import { Checking } from "hry-types";
 import type { SpecificType } from "../../../../types/SpecificType";
 import { MainComponent } from "../..";
 
@@ -23,13 +23,13 @@ MainComponent({
   },
   pageLifetimes: {
     onLoad(props) {
-      ValueChecking<string>()(props.str);
+      Checking<string, typeof props.str, Test.Pass>;
 
-      ValueChecking<0 | 1>()(props.num);
+      Checking<0 | 1, typeof props.num, Test.Pass>;
 
-      ValueChecking<AnyObject | number>()(props.union);
+      Checking<object | number, typeof props.union, Test.Pass>;
 
-      ValueChecking<AnyObject>()(props.optional); // 不带null是对的
+      Checking<object, typeof props.optional, Test.Pass>; // 不带null是对的
     },
   },
 });

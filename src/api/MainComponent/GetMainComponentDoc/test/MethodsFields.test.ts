@@ -1,4 +1,4 @@
-import { ValueChecking } from "hry-types";
+import { Checking, type Test } from "hry-types";
 import { MainComponent } from "../..";
 
 /**
@@ -22,7 +22,7 @@ type OnlyMethodsInComponentExpect = {
 /**
  * 验证 OnlyMethodsInComponentExpect 和 onlyMethodsInComponent 类型是否一致
  */
-ValueChecking<OnlyMethodsInComponentExpect>()(onlyMethodsInComponent);
+Checking<OnlyMethodsInComponentExpect, typeof onlyMethodsInComponent, Test.Pass>;
 
 /**
  * 组件中methods字段是空对象时
@@ -37,7 +37,7 @@ type MethodsIsEmptyObjectInComponentExpect = {};
 /**
  * 验证 methodsIsEmptyObjectInComponentExpect 和 methodsIsEmptyObjectInComponent 类型是否一致
  */
-ValueChecking<MethodsIsEmptyObjectInComponentExpect>()(methodsIsEmptyObjectInComponent);
+Checking<MethodsIsEmptyObjectInComponentExpect, typeof methodsIsEmptyObjectInComponent, Test.Pass>;
 
 /**
  * 页面中只有methods字段
@@ -63,7 +63,7 @@ type OnlyMethodsInPageExpect = {
 /**
  * 验证 OnlyMethodsInPageExpect 和 onlyMethodsInPage 类型是否一致
  */
-ValueChecking<OnlyMethodsInPageExpect>()(onlyMethodsInPage);
+Checking<OnlyMethodsInPageExpect, typeof onlyMethodsInPage, Test.Pass>;
 
 /**
  * 页面中methods字段是空对象时
@@ -78,4 +78,4 @@ type MethodsIsEmptyObjectInPageExpect = { isPage: true };
 /**
  * 验证 MethodsIsEmptyObjectInPageExpect 和 methodsIsEmptyObjectInPage 类型是否一致
  */
-ValueChecking<MethodsIsEmptyObjectInPageExpect>()(methodsIsEmptyObjectInPage);
+Checking<MethodsIsEmptyObjectInPageExpect, typeof methodsIsEmptyObjectInPage, Test.Pass>;

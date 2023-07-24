@@ -1,4 +1,4 @@
-import { ValueChecking } from "hry-types";
+import { Checking, type Test } from "hry-types";
 import type { SpecificType } from "../../../../types/SpecificType";
 import { MainComponent } from "../..";
 
@@ -45,23 +45,23 @@ MainComponent({
   },
   methods: {
     M1() {
-      ValueChecking<(detail: string) => void>()(this.str);
+      Checking<(detail: string) => void, typeof this.str, Test.Pass>;
 
-      ValueChecking<(detail: 1 | 2) => void>()(this.num);
+      Checking<(detail: 1 | 2) => void, typeof this.num, Test.Pass>;
 
-      ValueChecking<(detail: "male" | "femal" | number) => void>()(this.union);
+      Checking<(detail: "male" | "femal" | number) => void, typeof this.union, Test.Pass>;
 
-      ValueChecking<() => void>()(this.null);
+      Checking<() => void, typeof this.null, Test.Pass>;
 
-      ValueChecking<(detail: string) => void>()(this.bubbles);
+      Checking<(detail: string) => void, typeof this.str, Test.Pass>;
 
-      ValueChecking<(detail: number) => void>()(this.capturePhase);
+      Checking<(detail: number) => void, typeof this.capturePhase, Test.Pass>;
 
-      ValueChecking<(detail: number) => void>()(this.bubblesComposed);
+      Checking<(detail: number) => void, typeof this.bubblesComposed, Test.Pass>;
 
-      ValueChecking<(detail: number) => void>()(this.capturePhaseComposed);
+      Checking<(detail: number) => void, typeof this.capturePhaseComposed, Test.Pass>;
 
-      ValueChecking<() => void>()(this.bubblesCapturePhaseComposed);
+      Checking<() => void, typeof this.bubblesCapturePhaseComposed, Test.Pass>;
     },
   },
 });

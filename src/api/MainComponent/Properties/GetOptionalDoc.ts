@@ -1,7 +1,6 @@
-import type { Select } from "hry-types/src/Object/Select";
-
-import type { Cast } from "hry-types/src/Any/Cast";
+import type { As } from "hry-types/src/Any/As";
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
+import type { Select } from "hry-types/src/Object/Select";
 import type { InferSpecificType } from "./InferSpecificType";
 import type { OptionalTypes, PropertiesConstraint } from "./PropertiesConstraint";
 
@@ -9,7 +8,7 @@ type OptionalProperties = Record<string, OptionalTypes>;
 
 export type GetOptionalDoc<
   T extends PropertiesConstraint,
-  Optional extends OptionalProperties = Cast<
+  Optional extends OptionalProperties = As<
     Select<T, OptionalTypes>,
     OptionalProperties
   >,

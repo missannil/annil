@@ -1,4 +1,4 @@
-import { type Test, TypeChecking } from "hry-types";
+import { Checking, type Test } from "hry-types";
 import type { GetSubPropertiesDoc } from "../GetSubPropertiesDoc";
 
 // 测试1 注意:不存在2个对象中properties字段有相同key的情况
@@ -19,7 +19,7 @@ type Test1Expect = {
 };
 
 // 验证测试1结果是否符合预期
-TypeChecking<Test1Result, Test1Expect, Test.Pass>;
+Checking<Test1Result, Test1Expect, Test.Pass>;
 
 // 测试2 2个对象其中一个为空对象
 type O3 = { properties: { a: number; b: string } };
@@ -36,4 +36,4 @@ type Test2Expect = {
 };
 
 // 验证测试2结果是否符合预期
-TypeChecking<Test2Result, Test2Expect, Test.Pass>;
+Checking<Test2Result, Test2Expect, Test.Pass>;

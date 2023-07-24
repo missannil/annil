@@ -1,4 +1,4 @@
-import { ValueChecking } from "hry-types";
+import { Checking, type Test } from "hry-types";
 import type { SpecificType } from "../../../../types/SpecificType";
 import { MainComponent } from "../..";
 import type { Mock_Cart, Mock_User } from "../../Properties/test/PropertiesConstraint.test";
@@ -19,31 +19,49 @@ MainComponent({
       optionalTypes: [String as SpecificType<"male" | "female">, Number as SpecificType<0 | 1 | 2>],
     },
   },
+});
+
+/**
+ * watch properties字段
+ */
+MainComponent({
+  properties: {
+    num: Number,
+    obj: Object as SpecificType<Mock_User | Mock_Cart>,
+    optional: {
+      type: Number,
+      value: 123,
+    },
+    union: {
+      type: Object as SpecificType<Mock_User | Mock_Cart>,
+      optionalTypes: [String as SpecificType<"male" | "female">, Number as SpecificType<0 | 1 | 2>],
+    },
+  },
   watch: {
     num(newValue, oldValue) {
-      ValueChecking<number>()(newValue);
+      Checking<number, typeof newValue, Test.Pass>;
 
-      ValueChecking<number>()(oldValue);
+      Checking<number, typeof oldValue, Test.Pass>;
     },
     obj(newValue, oldValue) {
-      ValueChecking<Mock_User | Mock_Cart>()(newValue);
+      Checking<Mock_User | Mock_Cart, typeof newValue, Test.Pass>;
 
-      ValueChecking<Mock_User | Mock_Cart>()(oldValue);
+      Checking<Mock_User | Mock_Cart, typeof oldValue, Test.Pass>;
     },
     optional(newValue, oldValue) {
-      ValueChecking<number>()(newValue);
+      Checking<number, typeof newValue, Test.Pass>;
 
-      ValueChecking<number>()(oldValue);
+      Checking<number, typeof oldValue, Test.Pass>;
     },
     union(newValue, oldValue) {
-      ValueChecking<0 | 1 | 2 | Mock_User | Mock_Cart | "male" | "female">()(newValue);
+      Checking<0 | 1 | 2 | Mock_User | Mock_Cart | "male" | "female", typeof newValue, Test.Pass>;
 
-      ValueChecking<0 | 1 | 2 | Mock_User | Mock_Cart | "male" | "female">()(oldValue);
+      Checking<0 | 1 | 2 | Mock_User | Mock_Cart | "male" | "female", typeof oldValue, Test.Pass>;
     },
     "obj.**"(newValue, oldValue) {
-      ValueChecking<Mock_User | Mock_Cart>()(newValue);
+      Checking<Mock_User | Mock_Cart, typeof newValue, Test.Pass>;
 
-      ValueChecking<Mock_User | Mock_Cart>()(oldValue);
+      Checking<Mock_User | Mock_Cart, typeof oldValue, Test.Pass>;
     },
   },
 });
@@ -62,40 +80,40 @@ MainComponent({
   },
   watch: {
     num(newValue, oldValue) {
-      ValueChecking<number>()(newValue);
+      Checking<number, typeof newValue, Test.Pass>;
 
-      ValueChecking<number>()(oldValue);
+      Checking<number, typeof oldValue, Test.Pass>;
     },
     obj(newValue, oldValue) {
-      ValueChecking<Mock_User>()(newValue);
+      Checking<Mock_User, typeof newValue, Test.Pass>;
 
-      ValueChecking<Mock_User>()(oldValue);
+      Checking<Mock_User, typeof oldValue, Test.Pass>;
     },
     "obj.**"(newValue, oldValue) {
-      ValueChecking<Mock_User>()(newValue);
+      Checking<Mock_User, typeof newValue, Test.Pass>;
 
-      ValueChecking<Mock_User>()(oldValue);
+      Checking<Mock_User, typeof oldValue, Test.Pass>;
     },
     reactiveLiteral(newValue, oldValue) {
-      ValueChecking<"str">()(newValue);
+      Checking<"str", typeof newValue, Test.Pass>;
 
-      ValueChecking<"str">()(oldValue);
+      Checking<"str", typeof oldValue, Test.Pass>;
     },
     reactiveUser(newValue, oldValue) {
-      ValueChecking<Mock_User>()(newValue);
+      Checking<Mock_User, typeof newValue, Test.Pass>;
 
-      ValueChecking<Mock_User>()(oldValue);
+      Checking<Mock_User, typeof oldValue, Test.Pass>;
     },
     "reactiveUser.**"(newValue, oldValue) {
-      ValueChecking<Mock_User>()(newValue);
+      Checking<Mock_User, typeof newValue, Test.Pass>;
 
-      ValueChecking<Mock_User>()(oldValue);
+      Checking<Mock_User, typeof oldValue, Test.Pass>;
     },
     // @ts-expect-error 改类型会报错
     reactiveNumber(newValue: string, oldValue) {
-      ValueChecking<string>()(newValue);
+      Checking<string, typeof newValue, Test.Pass>;
 
-      ValueChecking<number>()(oldValue);
+      Checking<number, typeof oldValue, Test.Pass>;
     },
   },
 });
@@ -121,19 +139,19 @@ MainComponent({
   watch: {
     // watch computed字段需要手写类型,可悬停鼠标到key查看类型
     CNum(newValue: number, oldValue: number) {
-      ValueChecking<number>()(newValue);
+      Checking<number, typeof newValue, Test.Pass>;
 
-      ValueChecking<number>()(oldValue);
+      Checking<number, typeof oldValue, Test.Pass>;
     },
     // Cobj(newValue: Mock_User, oldValue: Mock_User) {
-    //   ValueChecking<Mock_User>()(newValue);
+    //   Checking<Mock_User>()(newValue);
 
-    //   ValueChecking<Mock_User>()(oldValue);
+    //   Checking<Mock_User>()(oldValue);
     // },
     // "Cobj.**"(newValue: Mock_User, oldValue: Mock_User) {
-    //   ValueChecking<Mock_User>()(newValue);
+    //   Checking<Mock_User>()(newValue);
 
-    //   ValueChecking<Mock_User>()(oldValue);
+    //   Checking<Mock_User>()(oldValue);
     // },
   },
 });
@@ -156,9 +174,9 @@ MainComponent({
   watch: {
     // @ts-expect-error  newValue类型默认为number, 改为string类型会报错
     C1(newValue: string, oldValue: number) {
-      ValueChecking<string>()(newValue);
+      Checking<string, typeof newValue, Test.Pass>;
 
-      ValueChecking<number>()(oldValue);
+      Checking<number, typeof oldValue, Test.Pass>;
     },
   },
 });
@@ -181,19 +199,19 @@ MainComponent({
   },
   watch: {
     num(newValue, oldValue) {
-      ValueChecking<number>()(newValue);
+      Checking<number, typeof newValue, Test.Pass>;
 
-      ValueChecking<number>()(oldValue);
+      Checking<number, typeof oldValue, Test.Pass>;
     },
     str(newValue, oldValue) {
-      ValueChecking<string>()(newValue);
+      Checking<string, typeof newValue, Test.Pass>;
 
-      ValueChecking<string>()(oldValue);
+      Checking<string, typeof oldValue, Test.Pass>;
     },
     Cnum(newValue: number, oldValue: number) {
-      ValueChecking<number>()(newValue);
+      Checking<number, typeof newValue, Test.Pass>;
 
-      ValueChecking<number>()(oldValue);
+      Checking<number, typeof oldValue, Test.Pass>;
     },
     // @ts-expect-error otherFields不在字面量约束中
     otherFields() {
@@ -220,9 +238,9 @@ MainComponent({
   },
   watch: {
     CNum(newValue: number, oldValue: number) {
-      ValueChecking<number>()(newValue);
+      Checking<number, typeof newValue, Test.Pass>;
 
-      ValueChecking<number>()(oldValue);
+      Checking<number, typeof oldValue, Test.Pass>;
     },
   },
 });

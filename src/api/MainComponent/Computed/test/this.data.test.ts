@@ -1,6 +1,5 @@
-import { ValueChecking } from "hry-types";
+import { Checking, type Test } from "hry-types";
 
-import type { AnyObject } from "hry-types";
 import type { SpecificType } from "../../../../types/SpecificType";
 import { MainComponent } from "../..";
 import type { Mock_User } from "../../Properties/test/PropertiesConstraint.test";
@@ -30,28 +29,28 @@ MainComponent({
   },
   computed: {
     yyy() {
-      ValueChecking<string>()(this.data.aaa);
+      Checking<string, typeof this.data.aaa, Test.Pass>;
 
-      ValueChecking<AnyObject | null>()(this.data.obj);
+      Checking<object | null, typeof this.data.obj, Test.Pass>;
 
-      ValueChecking<Mock_User | number | null>()(this.data.union_obj);
+      Checking<Mock_User | number | null, typeof this.data.union_obj, Test.Pass>;
 
-      ValueChecking<Mock_User | number>()(this.data.union_obj1);
+      Checking<Mock_User | number, typeof this.data.union_obj1, Test.Pass>;
 
-      ValueChecking<string>()(this.data.optinal);
+      Checking<string, typeof this.data.optinal, Test.Pass>;
 
-      ValueChecking<number>()(this.data.bbb);
+      Checking<number, typeof this.data.bbb, Test.Pass>;
 
-      ValueChecking<"123">()(this.data.zzz);
+      Checking<"123", typeof this.data.zzz, Test.Pass>;
 
       return this.data.zzz;
     },
     zzz() {
-      ValueChecking<string>()(this.data.aaa);
+      Checking<string, typeof this.data.aaa, Test.Pass>;
 
-      ValueChecking<number>()(this.data.bbb);
+      Checking<number, typeof this.data.bbb, Test.Pass>;
 
-      ValueChecking<"123">()(this.data.yyy);
+      Checking<"123", typeof this.data.yyy, Test.Pass>;
 
       return "123";
     },

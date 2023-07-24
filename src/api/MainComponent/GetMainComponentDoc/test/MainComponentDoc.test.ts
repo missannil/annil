@@ -1,6 +1,5 @@
-import { ValueChecking } from "hry-types";
+import { Checking, type Test } from "hry-types";
 
-import type { AnyObject } from "hry-types";
 import type { WMBaseEvent } from "../../../../types/officialAlias";
 import type { SpecificType } from "../../../../types/SpecificType";
 import { MainComponent } from "../..";
@@ -71,12 +70,12 @@ const allFileds = MainComponent({
   // },
   events: {
     onTap(e) {
-      ValueChecking<WMBaseEvent>()(e);
+      Checking<WMBaseEvent, typeof e, Test.Pass>;
     },
   },
   methods: {
     M1(num: number) {
-      ValueChecking<number>()(num);
+      Checking<number, typeof num, Test.Pass>;
 
       return num + 10;
     },
@@ -86,7 +85,7 @@ const allFileds = MainComponent({
 type Expect = {
   properties: {
     str: string;
-    obj: AnyObject | null;
+    obj: object | null;
     num: 0 | 1 | 2;
     bool: boolean;
     arr: number[] | string[];
@@ -95,7 +94,7 @@ type Expect = {
   };
   allData: {
     str: string;
-    obj: AnyObject | null;
+    obj: object | null;
     num: 0 | 1 | 2;
     bool: boolean;
     arr: number[] | string[];
@@ -124,4 +123,4 @@ type Expect = {
   };
 };
 
-ValueChecking<Expect>()(allFileds);
+Checking<Expect, typeof allFileds, Test.Pass>;

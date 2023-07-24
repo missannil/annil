@@ -1,4 +1,4 @@
-import { type Test, TypeChecking } from "hry-types";
+import { Checking, type Test } from "hry-types";
 
 import type { CustomEventConstraint } from "../CustomEventConstraint";
 import type { GetCustomEventDoc } from "../GetCustomEventDoc";
@@ -33,4 +33,4 @@ export type CustomEventsExpected = {
   bubbles_capturePhase_composed: BubblesCapturePhaseComposedExpected;
 };
 
-TypeChecking<CustomEventsResult, CustomEventsExpected, Test.Pass>;
+Checking<CustomEventsResult, CustomEventsExpected, Test.Pass>;

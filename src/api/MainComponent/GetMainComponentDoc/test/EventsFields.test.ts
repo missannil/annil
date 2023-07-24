@@ -1,5 +1,5 @@
 import { ValueChecking } from "hry-types";
-import type { WMBaseEvent } from "../../../../common_types/officialAlias";
+import type { WMBaseEvent } from "../../../../types/officialAlias";
 import { MainComponent } from "../..";
 
 /**

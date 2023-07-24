@@ -3,7 +3,7 @@ import type { As } from "hry-types/src/Any/As";
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { IsNever } from "hry-types/src/Any/IsNever";
 import type { IReactionDisposer } from "mobx";
-import type { WMInstanceMethods, WMInstanceProperties } from "../../common_types/officialAlias";
+import type { WMInstanceMethods, WMInstanceProperties } from "../../types/officialAlias";
 import type { Computed } from "./Computed";
 import type { ComputedConstraint } from "./Computed/ComputedConstraint";
 import type { GetComputedDoc } from "./Computed/GetComputedDoc";

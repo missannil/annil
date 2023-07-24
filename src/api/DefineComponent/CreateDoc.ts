@@ -1,8 +1,8 @@
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
 import type { IsContains } from "hry-types/src/Tuple/_api";
-import type { MainComponentDoc } from "../../common_types/MainComponentDoc";
-import type { SubComponentDoc } from "../../common_types/SubComponentDoc";
+import type { MainComponentDoc } from "../../types/MainComponentDoc";
+import type { SubComponentDoc } from "../../types/SubComponentDoc";
 import type { AddPrefixAndNull } from "./AddPrefixAndNull";
 // import type { GetSubCustomEventDoc } from "./GetSubCustomEventDoc";
 import type { GetSubCustomEventDoc } from "./GetSubCustomEventDoc";

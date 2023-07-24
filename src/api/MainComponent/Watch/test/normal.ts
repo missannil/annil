@@ -1,5 +1,5 @@
 import { ValueChecking } from "hry-types";
-import type { SpecificType } from "../../../../common_types/SpecificType";
+import type { SpecificType } from "../../../../types/SpecificType";
 import { MainComponent } from "../..";
 import type { Mock_Cart, Mock_User } from "../../Properties/test/PropertiesConstraint.test";
 

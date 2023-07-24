@@ -1,4 +1,4 @@
-import type { SpecificType } from "../../../../common_types/SpecificType";
+import type { SpecificType } from "../../../../types/SpecificType";
 import type {
   OptionalTypes,
   PropertiesConstraint,

@@ -1,5 +1,5 @@
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
-import type { WMCompLifetimes } from "../../../common_types/officialAlias";
+import type { WMCompLifetimes } from "../../../types/officialAlias";
 
 export type Lifetimes<TIsPage extends boolean> = IfExtends<
   TIsPage,

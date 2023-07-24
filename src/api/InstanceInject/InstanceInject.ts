@@ -1,4 +1,4 @@
-import type { WMComponentOption } from "../../common_types/officialAlias";
+import type { WMComponentOption } from "../../types/officialAlias";
 
 // export type InjectMethodConstraint = Record<string, Function>;
 

@@ -1,5 +1,5 @@
 import type { AnyObject } from "hry-types";
-import type { SpecificType } from "../../../common_types/SpecificType";
+import type { SpecificType } from "../../../types/SpecificType";
 /**
  * 从SpecificType类型推断出真实类型
  */

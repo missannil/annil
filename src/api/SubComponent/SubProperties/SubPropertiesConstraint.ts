@@ -1,8 +1,8 @@
 import type { IfEquals } from "hry-types/src/Any/IfEquals";
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { EmptyObject } from "hry-types/src/Misc/EmptyObject";
-import type { ComponentDoc } from "../../../common_types/ComponentDoc";
-import type { RestorePropertiesDoc } from "../../../common_types/RestorePropertiesDoc";
+import type { ComponentDoc } from "../../../types/ComponentDoc";
+import type { RestorePropertiesDoc } from "../../../types/RestorePropertiesDoc";
 import type { PropertiesConstraint } from "../../MainComponent/Properties/PropertiesConstraint";
 
 /**

@@ -1,6 +1,6 @@
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
-import type { MainComponentDoc } from "../../common_types/MainComponentDoc";
-import type { SubComponentDoc } from "../../common_types/SubComponentDoc";
+import type { MainComponentDoc } from "../../types/MainComponentDoc";
+import type { SubComponentDoc } from "../../types/SubComponentDoc";
 import type { CreateDoc } from "./CreateDoc";
 
 type Options<

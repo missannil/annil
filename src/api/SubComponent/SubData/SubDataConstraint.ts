@@ -1,6 +1,6 @@
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { EmptyObject } from "hry-types/src/Misc/EmptyObject";
-import type { ComponentDoc } from "../../../common_types/ComponentDoc";
+import type { ComponentDoc } from "../../../types/ComponentDoc";
 export type ResponseData<T = unknown> = [T] extends [unknown] ? () => T : never;
 
 export type AddResponseData<T extends object> = {

@@ -8,9 +8,9 @@ import type { AddSubObjectKey } from "hry-types/src/Object/AddSubObjectKey";
  */
 export type CustomSetData<TAllData extends object> = {
   /**
-   * @description setData只可以对自身data中的非响应式数据字段进行设置,如需要强行setData其他字段,在options后面加上as any
-   * @param options
-   * @param callback
+   * setData只可以对自身data中的非响应式数据字段进行设置,如需要强行setData其他字段,在options后面加上as any
+   * @param options - object
+   * @param callback - function
    */
   setData(
     options: IfExtends<unknown, TAllData, EmptyObject, O.ComputeIntersection<Partial<AddSubObjectKey<TAllData>>>>,

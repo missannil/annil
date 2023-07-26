@@ -38,9 +38,9 @@
  * _num: "str",
  * });
  * ```
- * @param G 泛型对象
- * @param TPrefix 前缀
- * @param Error 错误提示
+ * @param G - 泛型对象 object
+ * @param TPrefix - 前缀 string
+ * @param Error - 错误提示 string
  * @returns unknown or object
  */
 export type PrefixValidator<

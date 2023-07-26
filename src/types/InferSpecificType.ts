@@ -1,4 +1,4 @@
-import type { SpecificType } from "../../../types/SpecificType";
+import type { SpecificType } from "./SpecificType";
 /**
  * 从SpecificType类型推断出真实类型
  */

@@ -13,7 +13,7 @@
     "removeComments": true, // 去除注释
     "noEmit": true,
     "allowJs": true, // 默认false 开启后会保留js文件
-    // "diagnostics": true,
+    // "diagnostics": true,  //2.65
     // "watch": true,
     // // "experimentalDecorators": true,//实验性质的装饰器
     "noImplicitReturns": true, // 隐式函数返回

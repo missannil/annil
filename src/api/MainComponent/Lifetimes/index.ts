@@ -14,7 +14,7 @@ export type Lifetimes<TIsPage extends boolean> = IfExtends<
         /**
          * 建立组件时
          * 可使用create字段,但为了避免和created混淆用了beforeCreate字段
-         * @param options 配置
+         * @param options - object
          * @returns
          */
         beforeCreate?: (options: any) => void;

@@ -30,10 +30,11 @@ module.exports = {
   // },
   extends: ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
   parser: "@typescript-eslint/parser",
-  plugins: ["@typescript-eslint"],
+  plugins: ["@typescript-eslint", "eslint-plugin-tsdoc"],
 
   rules: {
-    // 0 1 2 对应 off warning error
+    "tsdoc/syntax": "warn",
+    // 0 1 2 对应 off warn error
     // "@typescript-eslint/no-inferrable-types": 2, //禁止对初始化为数字、字符串或布尔值的变量或参数进行显式类型声明
     "@typescript-eslint/explicit-member-accessibility": 2, // 类要显示声明访问权限修饰符 public private  protected
     "@typescript-eslint/no-var-requires": 0, // 不运行使用require的方式引入模块

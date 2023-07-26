@@ -33,6 +33,17 @@ SubComponent<{}, { properties: { aaa_str: string; aaa_num?: number } }>()({
   },
 });
 
+SubComponent<{}, { properties: { aaa_str: string; aaa_num?: number } }>()({
+  properties: {
+    aaa_num: Number,
+  },
+  data: {
+    // @ts-expect-error aaa_num已经在properties中定义
+    aaa_num: 123,
+    aaa_str: () => "123", // ok
+  },
+});
+
 // 测试4 去除properties剩余字段为空对象时 data约束为EmptyObject
 SubComponent<{}, { properties: { aaa_str: string; aaa_num?: number } }>()({
   properties: {

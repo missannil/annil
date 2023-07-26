@@ -4,7 +4,7 @@ import type { ComponentDoc } from "./ComponentDoc";
 
 /**
  * 提取文档前缀名
- * @param TComponentDoc 组件文档
+ * @param TComponentDoc - ComponentDoc
  */
 export type ExtractDocPrefix<TComponentDoc extends ComponentDoc> = keyof IfExtends<
   unknown,

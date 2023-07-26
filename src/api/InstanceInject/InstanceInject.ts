@@ -11,7 +11,7 @@ export abstract class IInject {
 }
 
 /**
- * @description 实例注入接口,加入数据到所有实例中(当前仅支持data,methods,options字段),可在this上获取对应数据 响应式需函数返回方式
+ * 实例注入接口,加入数据到所有实例中(当前仅支持data,methods,options字段),可在this上获取对应数据 响应式需函数返回方式
  * @example
  */
 export class InstanceInject extends IInject {

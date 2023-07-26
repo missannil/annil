@@ -1,6 +1,6 @@
 import { Checking, type Test } from "hry-types";
 
-import type { InferSpecificType } from "../InferSpecificType";
+import type { InferSpecificType } from "./InferSpecificType";
 
 type str = StringConstructor;
 

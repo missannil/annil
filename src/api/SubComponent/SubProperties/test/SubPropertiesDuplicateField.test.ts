@@ -8,7 +8,6 @@ const Main = {
 } satisfies MainComponentDoc;
 
 // 重复字段验证
-
 SubComponent<typeof Main>()({
   properties: {
     num: Number,

@@ -8,7 +8,7 @@ type _ReplacePrefix<O extends object, TPrefix extends string> = {
 
 /**
  * 更改文档前缀
- * @param TComponentDoc ComponentDoc
+ * @param TComponentDoc - ComponentDoc
  * @returns ComponentDoc
  */
 export type ReplacePrefix<TComponentDoc extends ComponentDoc, TPrefix extends string = ""> =

@@ -1,13 +1,20 @@
 import { Checking, type Test } from "hry-types";
 
+import type { MainComponentDoc } from "../../../../types/MainComponentDoc";
 import type { SpecificType } from "../../../../types/SpecificType";
-import { MainComponent } from "../..";
-import type { Mock_User } from "../../Properties/test/PropertiesConstraint.test";
+import type { Mock_User } from "../../../MainComponent/Properties/test/PropertiesConstraint.test";
+import { SubComponent } from "../..";
 
-/**
- * @description this.data类型测试
- */
-MainComponent({
+const Main = {
+  allData: {
+    str: "str",
+    num: 123,
+  },
+} satisfies MainComponentDoc;
+
+// 默认时即  SubComponent`<{},any>`
+
+SubComponent()({
   properties: {
     aaa: String,
     obj: Object,
@@ -57,10 +64,25 @@ MainComponent({
   },
 });
 
-/**
- * @description 两个计算属性不能相互依赖
- */
-MainComponent({
+// 可以引用MainDoc中的data
+
+SubComponent<typeof Main, any>()({
+  computed: {
+    a() {
+      return this.data.str;
+    },
+    b() {
+      return this.data.num;
+    },
+    c() {
+      return this.data.a + this.data.b;
+    },
+  },
+});
+
+// 两个计算属性不能相互依赖
+
+SubComponent()({
   computed: {
     // @ts-expect-error 两个计算属性不能相互依赖
     a() {
@@ -69,6 +91,18 @@ MainComponent({
     },
     // @ts-expect-error 两个计算属性不能相互依赖
     b() {
+      // @ts-ignore
+      return this.data.a;
+    },
+  },
+});
+
+// 计算属性不可以引用自身
+
+SubComponent()({
+  computed: {
+    // @ts-expect-error 引用了自身
+    a() {
       // @ts-ignore
       return this.data.a;
     },

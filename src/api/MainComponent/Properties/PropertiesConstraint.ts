@@ -1,12 +1,12 @@
 import type { SpecificType } from "../../../types/SpecificType";
 
 /**
- * @description 必传单一类型
+ * 必传单一类型
  */
 export type RequiredSingle = SpecificType;
 
 /**
- * @description 必传联合类型
+ * 必传联合类型
  */
 export type RequiredUnion<Literal = unknown> = {
   type: SpecificType<Literal>;
@@ -16,7 +16,7 @@ export type RequiredUnion<Literal = unknown> = {
 export type RequiredTypes<Literal = unknown> = RequiredUnion<Literal> | RequiredSingle;
 
 /**
- * @description 选传类型
+ * 选传类型
  */
 export type OptionalTypes<Literal = unknown> = {
   type: SpecificType<Literal>;
@@ -25,11 +25,11 @@ export type OptionalTypes<Literal = unknown> = {
 };
 
 /**
- * @description Properties类型
+ * Properties类型
  */
 export type PropertiesTypes<Literal = unknown> = OptionalTypes<Literal> | RequiredTypes<Literal>;
 
 /**
- * @description properties字段约束
+ * properties字段约束
  */
 export type PropertiesConstraint<Literal = unknown> = Record<string, PropertiesTypes<Literal>>;

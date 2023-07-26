@@ -9,7 +9,7 @@ import type { OptionalTypes, PropertiesConstraint, RequiredTypes } from "./Prope
 
 /**
  * 获取properties的可选字段
- * @param T PropertiesConstraint
+ * @param T - `PropertiesConstraint`
  * @returns
  */
 export type GetOptional<

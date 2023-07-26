@@ -1,5 +1,5 @@
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
-import type { InferSpecificType } from "./InferSpecificType";
+import type { InferSpecificType } from "../../../types/InferSpecificType";
 
 export type ValueValidator<T, TErrText = () => "⚠️类型错误⚠️"> = IfExtends<
   {},

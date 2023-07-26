@@ -9,7 +9,7 @@ export type AddResponseData<T extends object> = {
 
 /**
  * 子组件Data字段约束
- * @returns 当TCurrentComponentDoc为{}时(即传入的TComponentDoc为any) 返回 object
+ * @returns 当TCurrentComponentDoc为`{}`时(即传入的TComponentDoc为any) 返回 object
  * @returns 当TCurrentComponentDoc["properties"]为unknown时,返回  EmptyObject
  * @returns 当TCurrentComponentDoc["properties"]不为unknown时,返回 去除properties剩余字段和内部字段
  */

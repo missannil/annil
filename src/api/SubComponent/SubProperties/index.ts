@@ -1,6 +1,7 @@
 import type { V } from "hry-types";
 import type { MainComponentDoc } from "../../../types/MainComponentDoc";
 import type { PrefixValidator } from "../../../types/PrefixValidator";
+import type { Validators } from "../../../types/Validators";
 
 export type SubProperties<
   TProperties extends object,
@@ -9,7 +10,9 @@ export type SubProperties<
 > = {
   properties?:
     & TProperties
-    & PrefixValidator<TProperties, CurrentPrefix>
-    & V.IllegalFieldValidator<TProperties, "value" | "type" | "optionalTypes", 1>
-    & V.DuplicateFieldValidator<TProperties, keyof TMainComponentDoc["allData"], "与主组件字段重复">;
+    & Validators<[
+      PrefixValidator<TProperties, CurrentPrefix>,
+      V.DuplicateFieldValidator<TProperties, keyof TMainComponentDoc["allData"], "与主组件字段重复">,
+      V.IllegalFieldValidator<TProperties, "value" | "type" | "optionalTypes", 1>,
+    ]>;
 };

@@ -26,7 +26,7 @@ import { InstanceInject } from "../../..";
 //   },
 // } satisfies InjectMethodConstraint;
 /**
- * @description 注入的配置
+ * 注入的配置
  */
 const options = {
   addGlobalClass: true,

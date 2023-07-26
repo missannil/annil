@@ -2,7 +2,7 @@ import type { V } from "hry-types";
 import type { CustomEventConstraint } from "./CustomEventConstraint";
 
 /**
- * @description 自定义事件字段输入泛型
+ * 自定义事件字段输入泛型
  * @returns TCustomEvents
  */
 export type CustomEvents<

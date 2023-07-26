@@ -1,20 +1,25 @@
+import type { SpecificType } from "../../../../types/SpecificType";
 import { SubComponent } from "../..";
 
-// -----------SubPropertiesConstraint.test------------
-
-// 测试1 文档为any时
-type DocIsAny = any;
-
-// 无前缀约束 任意字段
-SubComponent<{}, DocIsAny>()({
+// 1. 默认泛型<{}, any> properties约束PropertiesConstraint<Literal>,可写任意类型
+SubComponent()({
   properties: {
     str: String,
     num: Number,
   },
 });
 
-// 示例文档类型
-type $DemoDoc = {
+// 2. 文档中无properties字段时,properties约束类型为EmptyObject
+SubComponent<{}, { customEvents: { a: string } }>()({
+  properties: {
+    // @ts-expect-error
+    anyFields: 123,
+  },
+});
+
+// 3. 文档中有properties字段时,properties约束类型为`RestorePropertiesDoc<TComponentDoc["properties"] & {}>`即文档中的properties字段类型的specificType类型
+
+type $TestDoc = {
   properties: {
     aaa_str: string;
     aaa_num: number;
@@ -25,8 +30,17 @@ type $DemoDoc = {
   };
 };
 
-// test1 有Doc时 不区分可选和必选,都可以配置, 但是必须是Doc中的字段
-SubComponent<{}, $DemoDoc>()({
+// 有字段提示,类型错误报错
+SubComponent<{}, $TestDoc>()({
+  properties: {
+    aaa_num: Number,
+    // @ts-expect-error 类型错误
+    aaa_str: Number,
+  },
+});
+
+// 不区分可选和必选,都可以配置,
+SubComponent<{}, $TestDoc>()({
   properties: {
     // 文档中的必传字段可配置为可选
     aaa_str: {
@@ -39,20 +53,60 @@ SubComponent<{}, $DemoDoc>()({
   },
 });
 
-// 字段类型符合文档中的类型
-SubComponent<{}, $DemoDoc>()({
+// 多类型联合时,optionalTypes字段类型为去除type后的剩余类型
+SubComponent<{}, $TestDoc>()({
   properties: {
-    aaa_num: Number,
-    // @ts-expect-error 不存在str字段
-    aaa_str: Number,
+    aaa_Union2: {
+      type: String as SpecificType<"a" | "b">,
+      value: "a",
+      optionalTypes: [Number as SpecificType<1 | 2>],
+    },
   },
 });
 
-// 文档中无properties字段时,字段类型为EmptyObject
-
-SubComponent<{}, { customEvents: { a: string } }>()({
+SubComponent<{}, $TestDoc>()({
   properties: {
-    // @ts-expect-error
-    anyFields: 123,
+    aaa_Union2: {
+      type: String as SpecificType<"a" | "b">,
+      value: "a",
+      optionalTypes: [Boolean],
+    },
+  },
+});
+
+SubComponent<{}, $TestDoc>()({
+  properties: {
+    aaa_Union2: {
+      type: String as SpecificType<"a" | "b">,
+      value: "a",
+      optionalTypes: [Object as SpecificType<{ name: string }>],
+    },
+  },
+});
+
+SubComponent<{}, $TestDoc>()({
+  properties: {
+    aaa_Union2: {
+      type: String as SpecificType<"a" | "b">,
+      value: "a",
+      optionalTypes: [Array as SpecificType<string[]>],
+    },
+  },
+});
+
+SubComponent<{}, $TestDoc>()({
+  properties: {
+    aaa_Union2: {
+      type: String as SpecificType<"a" | "b">,
+      value: "a",
+      optionalTypes: [
+        Array as SpecificType<string[]>,
+        Object as SpecificType<{ name: string }>,
+        Boolean,
+        Number as SpecificType<1 | 2>,
+        // @ts-expect-error 不存在的类型
+        Number as SpecificType<3 | 4>,
+      ],
+    },
   },
 });

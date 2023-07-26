@@ -1,7 +1,7 @@
 import { MainComponent } from "../..";
 
 /**
- *  @description computed字段重复测试
+ *  computed字段重复测试
  */
 MainComponent({
   properties: {

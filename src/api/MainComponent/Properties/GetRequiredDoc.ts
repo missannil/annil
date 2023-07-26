@@ -1,7 +1,7 @@
 import type { As } from "hry-types/src/Any/As";
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { Select } from "hry-types/src/Object/Select";
-import type { InferSpecificType } from "./InferSpecificType";
+import type { InferSpecificType } from "../../../types/InferSpecificType";
 import type { PropertiesConstraint, RequiredSingle, RequiredTypes, RequiredUnion } from "./PropertiesConstraint";
 import type { PuerObjectAddNull } from "./PuerObjectAddNull";
 

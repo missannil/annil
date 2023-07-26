@@ -4,7 +4,7 @@ import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersecti
 import type { ComputedConstraint } from "./ComputedConstraint";
 
 /**
- * @description computed字段输入泛型
+ * computed字段输入泛型
  * @returns TComputed
  */
 export type Computed<TComputed extends ComputedConstraint, ThisData extends object, ComputedDoc> = {

@@ -14,6 +14,10 @@ import type { GetSubComputedDoc } from "./SubComputed/GetSUbComputedDoc";
 import type { SubComponentConstraint } from "./SubComputed/SubComputedConstraint";
 import type { SubData } from "./SubData";
 import type { SubDataConstraint } from "./SubData/SubDataConstraint";
+import type { SubEvents } from "./SubEvents";
+import type { SubEventsConstraint } from "./SubEvents/SubEventsConstraint";
+import type { SubMethods } from "./SubMethods";
+import type { SubMethodsConstraint } from "./SubMethods/SubMethodsConstraint";
 import type { SubProperties } from "./SubProperties";
 import type { SubPropertiesConstraint } from "./SubProperties/SubPropertiesConstraint";
 
@@ -24,6 +28,8 @@ type Options<
   TSubProperties extends object,
   TSubData extends object,
   TSubComputed extends object,
+  TEvents extends object,
+  TSubMethods extends object,
   SubPropertiesDoc extends object,
   SubDataDoc extends object,
   SubComputedDoc extends object,
@@ -36,7 +42,9 @@ type Options<
     TMainComponentDoc["allData"] & Required<SubPropertiesDoc> & SubDataDoc,
     CurrentComponentDoc["properties"] & {},
     SubComputedDoc
-  >;
+  >
+  & SubEvents<TEvents, TMainComponentDoc>
+  & SubMethods<TSubMethods, CurrentPrefix, keyof (TMainComponentDoc["events"] & TMainComponentDoc["methods"])>;
 
 type Constructor<
   TMainComponentDoc extends MainComponentDoc = {},
@@ -60,8 +68,12 @@ type Constructor<
       | Record<string, Literal>,
     // 如果有默认值 会导致无字段提示
     TSubProperties extends SubPropertiesConstraint<CurrentComponentDoc, Literal>,
-    TSubData extends SubDataConstraint<CurrentComponentDoc, keyof SubPropertiesDoc>, // 有默认值 无提示
-    TSubComputed extends SubComponentConstraint<CurrentComponentDoc, keyof (SubPropertiesDoc & SubDataDoc)> = {}, // 必须加默认值 内部二次使用泛型逻辑导致
+    // 有默认值 无提示
+    TSubData extends SubDataConstraint<CurrentComponentDoc, keyof SubPropertiesDoc>,
+    TEvents extends SubEventsConstraint<CurrentComponentDoc>,
+    // 必须加默认值
+    TSubComputed extends SubComponentConstraint<CurrentComponentDoc, keyof (SubPropertiesDoc & SubDataDoc)> = {},
+    TSubMethods extends SubMethodsConstraint = {},
     SubPropertiesDoc extends object = IfExtends<
       SubPropertiesConstraint<CurrentComponentDoc, Literal>,
       TSubProperties,
@@ -83,6 +95,8 @@ type Constructor<
       TSubProperties,
       TSubData,
       TSubComputed,
+      TEvents,
+      TSubMethods,
       SubPropertiesDoc,
       SubDataDoc,
       SubComputedDoc

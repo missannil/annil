@@ -34,11 +34,3 @@ SubComponent<{}, { properties: { aaa_str: string; aaa_num: number } }, "xxx">()(
     _aaaXxx_num: Number,
   },
 });
-
-SubComponent<{}, { properties: { aaa_str: string; aaa_num: number } }, "xxx">()({
-  properties: {
-    aaaXxx_str: String, // ok
-    // @ts-expect-error ⚠️前缀错误
-    _aaaXxx_num: Number,
-  },
-});

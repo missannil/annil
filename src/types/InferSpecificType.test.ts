@@ -24,7 +24,7 @@ Checking<InferSpecificType<bool>, boolean, Test.Pass>;
 
 Checking<InferSpecificType<arr>, unknown[], Test.Pass>;
 
-Checking<InferSpecificType<obj>, object, Test.Pass>;
+Checking<InferSpecificType<obj>, object | null, Test.Pass>;
 
 Checking<InferSpecificType<SpecificUnion>, "a" | "b", Test.Pass>;
 

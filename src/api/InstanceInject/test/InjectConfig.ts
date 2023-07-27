@@ -1,4 +1,4 @@
-import { InstanceInject } from "../../..";
+// import { InstanceInject } from "../../..";
 
 // import { observable } from "mobx";
 // import type { InjectDataConstraint, InjectMethodConstraint } from "../InstanceInject";
@@ -28,18 +28,18 @@ import { InstanceInject } from "../../..";
 /**
  * 注入的配置
  */
-const options = {
-  addGlobalClass: true,
-  multipleSlots: true,
-  pureDataPattern: /^_/,
-  virtualHost: true,
-};
+// const options = {
+//   addGlobalClass: true,
+//   multipleSlots: true,
+//   pureDataPattern: /^_/,
+//   virtualHost: true,
+// };
 
-InstanceInject.InjectOption = {
-  // data,
-  options,
-  // methods,
-};
+// InstanceInject.InjectOption = {
+//   // data,
+//   options,
+//   // methods,
+// };
 
 // 声明注入类型
 // declare module "../../.." {

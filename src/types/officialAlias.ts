@@ -19,18 +19,50 @@ export type WMBaseEvent<
 > = WechatMiniprogram.BaseEvent<Mark, CurrentTargetDataset, TargetDataset>;
 
 /**
- * 事件Dataset类型
+ * 事件触发组件的Dataset类型
  */
-export type Dataset<T extends object> = WMBaseEvent<object, T>;
+export type Dataset<
+  TCurrentTargetDataset extends object,
+  TargetDataset extends object = TCurrentTargetDataset,
+  Detail = {},
+> = WMCustomEvent<Detail, object, TCurrentTargetDataset, TargetDataset>;
+
+/**
+ * 自定义事件Detail类型
+ */
+export type Mark<TMark extends object> = WechatMiniprogram.CustomEvent<
+  {},
+  TMark,
+  {},
+  {}
+>;
 
 /**
  * 自定义事件Detail类型
  */
 export type Detail<T> = WMCustomEvent<T>;
 
+/**
+ * 当前事件组件Dataset
+ */
+export type CurrentTargetDataset<T extends object> = WMCustomEvent<{}, {}, T>;
+
+/**
+ * 触发事件组件Dataset
+ */
+export type TargetDataset<TargetDataset extends object> = WMCustomEvent<{}, {}, {}, TargetDataset>;
+
+export type WMTrivialOption<
+  TData extends WechatMiniprogram.Component.DataOption,
+  TProperty extends WechatMiniprogram.Component.PropertyOption,
+  TMethod extends WechatMiniprogram.Component.MethodOption,
+  TCustomInstanceProperty extends WechatMiniprogram.IAnyObject = {},
+  TIsPage extends boolean = false,
+> = WechatMiniprogram.Component.Options<TData, TProperty, TMethod, TCustomInstanceProperty, TIsPage>;
+
 export type WMNavigateToSuccessCallbackResult = WechatMiniprogram.NavigateToSuccessCallbackResult;
 
-export type WMPageLifetimes = WechatMiniprogram.Component.PageLifetimes;
+export type WMCompPageLifetimes = WechatMiniprogram.Component.PageLifetimes;
 
 export type WMInstanceProperties = WechatMiniprogram.Component.InstanceProperties;
 
@@ -40,6 +72,6 @@ export type WMCompLifetimes = WechatMiniprogram.Component.Lifetimes;
 
 export type WMCompOtherOption = WechatMiniprogram.Component.OtherOption;
 
-export type WMPageLifetime = WechatMiniprogram.Page.ILifetime;
+export type WMPageLifetimes = WechatMiniprogram.Page.ILifetime;
 
 export type WMComponentOption = WechatMiniprogram.Component.ComponentOptions;

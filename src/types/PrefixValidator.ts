@@ -47,8 +47,8 @@ export type PrefixValidator<
   G extends object,
   TPrefix extends string,
   Error extends string = "前缀错误",
-> = [TPrefix] extends [""] ? unknown : {
+> = "" extends TPrefix ? unknown : {
   [
-    k in keyof G as k extends `${TPrefix}${string}` ? never : k
+    k in keyof G as k extends `${TPrefix}_${string}` ? never : k
   ]: G[k] extends Function ? `⚠️${Error}` : () => `⚠️${Error}`;
 };

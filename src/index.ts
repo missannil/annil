@@ -1,5 +1,15 @@
-import { InstanceInject } from "./api/InstanceInject/InstanceInject";
-import { MainComponent } from "./api/MainComponent";
+export type { Vant, Wm } from "./thirdLib";
+
+export type { Dataset, Detail, WMBaseEvent, WMCustomEvent } from "./types/officialCorrelation";
+
+export { navigateTo } from "./api/navigateTo";
+
+export { DefineComponent } from "./api/DefineComponent";
+
+export { RootComponent } from "./api/RootComponent";
+
+export { SubComponent } from "./api/SubComponent";
+
 export type { SpecificType } from "./types/SpecificType";
 
-export { InstanceInject, MainComponent };
+export type { ParamsEqual } from "./types/TwoParamsEqual";

@@ -16,6 +16,8 @@ import type { SubData } from "./SubData";
 import type { SubDataConstraint } from "./SubData/SubDataConstraint";
 import type { SubEvents } from "./SubEvents";
 import type { SubEventsConstraint } from "./SubEvents/SubEventsConstraint";
+import type { SubMethods } from "./SubMethods";
+import type { SubMethodsConstraint } from "./SubMethods/SubMethodsConstraint";
 import type { SubProperties } from "./SubProperties";
 import type { SubPropertiesConstraint } from "./SubProperties/SubPropertiesConstraint";
 
@@ -27,6 +29,7 @@ type Options<
   TSubData extends object,
   TSubComputed extends object,
   TEvents extends object,
+  TSubMethods extends object,
   SubPropertiesDoc extends object,
   SubDataDoc extends object,
   SubComputedDoc extends object,
@@ -40,7 +43,8 @@ type Options<
     CurrentComponentDoc["properties"] & {},
     SubComputedDoc
   >
-  & SubEvents<TEvents, TMainComponentDoc>;
+  & SubEvents<TEvents, TMainComponentDoc>
+  & SubMethods<TSubMethods, CurrentPrefix, keyof (TMainComponentDoc["events"] & TMainComponentDoc["methods"])>;
 
 type Constructor<
   TMainComponentDoc extends MainComponentDoc = {},
@@ -66,10 +70,10 @@ type Constructor<
     TSubProperties extends SubPropertiesConstraint<CurrentComponentDoc, Literal>,
     // 有默认值 无提示
     TSubData extends SubDataConstraint<CurrentComponentDoc, keyof SubPropertiesDoc>,
-    //
     TEvents extends SubEventsConstraint<CurrentComponentDoc>,
     // 必须加默认值
     TSubComputed extends SubComponentConstraint<CurrentComponentDoc, keyof (SubPropertiesDoc & SubDataDoc)> = {},
+    TSubMethods extends SubMethodsConstraint = {},
     SubPropertiesDoc extends object = IfExtends<
       SubPropertiesConstraint<CurrentComponentDoc, Literal>,
       TSubProperties,
@@ -92,6 +96,7 @@ type Constructor<
       TSubData,
       TSubComputed,
       TEvents,
+      TSubMethods,
       SubPropertiesDoc,
       SubDataDoc,
       SubComputedDoc

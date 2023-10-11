@@ -1,6 +1,6 @@
 import { Checking, type Test } from "hry-types";
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
-import type { ComponentDoc } from "./ComponentDoc";
+import type { ComponentDoc } from "../api/DefineComponent/ReturnType/ComponentDoc";
 
 /**
  * 提取文档前缀名
@@ -26,6 +26,7 @@ type Test2Expect = "xxx";
 
 Checking<Test2, Test2Expect, Test.Pass>;
 
+// type lll = never extends `${infer P}_${string}` ? P: ""; // => string bug?
 type Test3 = ExtractDocPrefix<{}>;
 
 type Test3Expect = string;

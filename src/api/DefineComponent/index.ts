@@ -1,43 +1,75 @@
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
-import type { MainComponentDoc } from "../../types/MainComponentDoc";
-import type { SubComponentDoc } from "../../types/SubComponentDoc";
-import type { CreateDoc } from "./CreateDoc";
+import type { WMCompLifetimes, WMCompPageLifetimes, WMPageLifetimes } from "../../types/officialAlias";
+import { configIntegration, rootComponentHandle, subComponentsHandle } from "../../utils/preprocessingOptions";
+import type { RootComponentDoc } from "../RootComponent/RootComponentDoc";
+import type { SubComponentDoc } from "../SubComponent/SubComponentDoc";
+import type { NameOrPageOption as NameOrPathOption } from "./NameOrPage/NameOrPathOption";
+import type { CreateComponentDoc } from "./ReturnType/CreateComponentDoc";
+import type { CreatePageDoc } from "./ReturnType/CreatePageDoc";
+import type { RootComponentOption } from "./RootComponent/RootComponentOption";
+import type { SubComponentsOption } from "./SubComponents/SubComponentsOption";
+
+type Path = `/${string}`;
 
 type Options<
+  TRootComponentDoc extends RootComponentDoc,
   TSubComponentTuple extends SubComponentDoc[],
-  TMainComponent extends MainComponentDoc = {},
-  TName extends string = "",
-  TPage extends `/${string}` = "/",
+  TName extends string,
+  TPath extends Path,
 > =
-  & IfExtends<
-    TMainComponent["isPage"],
-    true,
-    { path: TPage },
-    { name: TName & IfExtends<TName, "", () => "⚠️组件名不可为空⚠️", unknown> }
-  >
-  & {
-    mainComponent: TMainComponent;
-    subComponents?: [...TSubComponentTuple];
-  };
+  & NameOrPathOption<TName, TPath, TRootComponentDoc>
+  & RootComponentOption<TRootComponentDoc>
+  & SubComponentsOption<TSubComponentTuple>;
 
 interface Constructor {
   <
-    TSubComponentTuple extends SubComponentDoc[],
-    TMainComponent extends MainComponentDoc = {},
+    TRootComponentDoc extends RootComponentDoc = {},
+    TSubComponentTuple extends SubComponentDoc[] = [],
     TName extends string = "",
-    TPage extends `/${string}` = "/",
+    TPath extends Path = "/",
   >(
-    options: Options<TSubComponentTuple, TMainComponent, TName, TPage>,
-  ): CreateDoc<
-    TMainComponent,
-    TSubComponentTuple,
+    options: Options<TRootComponentDoc, TSubComponentTuple, TName, TPath>,
+  ): // ReturnType 为  PageDoc or ComponentDoc
+  IfExtends<
+    "",
     TName,
-    TPage
+    // 生成页面文档
+    CreatePageDoc<TRootComponentDoc, TPath, TSubComponentTuple>,
+    // 生成组件文档
+    CreateComponentDoc<TRootComponentDoc, TName, TSubComponentTuple>
   >;
 }
 
+export type FinalOptions = {
+  data: Record<string, unknown>;
+  computed: Record<string, Function>;
+  event: Record<string, Function>;
+  methods: Record<string, Function>;
+  watch: Record<string, Function>;
+  lifetimes: WMCompLifetimes["lifetimes"];
+  pageLifetimes: Partial<WMCompPageLifetimes & { load: Function } & WMPageLifetimes>;
+};
+
 export const DefineComponent: Constructor = function(options): any {
   options;
+
+  const finalOptions: FinalOptions = {
+    data: {},
+    computed: {},
+    event: {},
+    methods: {},
+    watch: {},
+    lifetimes: {},
+    pageLifetimes: {},
+  };
+
+  configIntegration(finalOptions, options, [
+    rootComponentHandle,
+    subComponentsHandle,
+  ]);
+
+  // 合并 subComponents到options
+
   // fieldsHandle(options, [
   //   mainComponentHandle,
   //   mergeInjectOption,
@@ -55,4 +87,16 @@ export const DefineComponent: Constructor = function(options): any {
   // compLoadHijack(options as any, [compInheritCacheHandle]);
   // pageOnLoadHijack(options as any, [PageReceivedDataHandle, pageInheritCacheHandle], [triggerCompLoad]);
   // return Component(options as any);
+};
+
+export type PageOptions = {
+  path: Path;
+  rootComponent: RootComponentDoc & { isPage: true };
+  subComponents: SubComponentDoc[];
+};
+
+export type CompOptions = {
+  name: string;
+  rootComponent: RootComponentDoc & { isPage: undefined };
+  subComponents: SubComponentDoc[];
 };

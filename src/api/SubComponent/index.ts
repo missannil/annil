@@ -1,126 +1,165 @@
-import type { As } from "hry-types/src/Any/As";
-import type { IfEquals } from "hry-types/src/Any/IfEquals";
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { EmptyObject } from "hry-types/src/Misc/EmptyObject";
-import type { ComponentDoc } from "../../types/ComponentDoc";
+import type { RequiredKeys } from "hry-types/src/Object/RequiredKeys";
 import type { ExtractDocPrefix } from "../../types/GetComponentPrefix";
-import type { MainComponentDoc } from "../../types/MainComponentDoc";
 import type { ReplacePrefix } from "../../types/ReplacePrefix";
-import type { GetDataDoc } from "../MainComponent/Data/GetDataDoc";
-import type { GetPropertiesDoc } from "../MainComponent/Properties/GetPropertiesDoc";
-import type { PropertiesConstraint } from "../MainComponent/Properties/PropertiesConstraint";
-import type { SubComputed } from "./SubComputed";
-import type { GetSubComputedDoc } from "./SubComputed/GetSUbComputedDoc";
-import type { SubComponentConstraint } from "./SubComputed/SubComputedConstraint";
-import type { SubData } from "./SubData";
+import type { ComponentDoc } from "../DefineComponent/ReturnType/ComponentDoc";
+import type { GetDataDoc } from "../RootComponent/Data/GetDataDoc";
+
+import type { WMCompLifetimes, WMCompPageLifetimes, WMPageLifetimes } from "../../types/officialAlias";
+import type { RootComponentDoc } from "../RootComponent/RootComponentDoc";
+import type { GetSubComputedDoc } from "./SubComputed/GetSubComputedDoc";
+import type { SubComputedConstraint } from "./SubComputed/SubComputedConstraint";
+import type { SubComputedOption } from "./SubComputed/SubComputedOption";
 import type { SubDataConstraint } from "./SubData/SubDataConstraint";
-import type { SubEvents } from "./SubEvents";
+import type { SubDataOption } from "./SubData/SubDataOption";
 import type { SubEventsConstraint } from "./SubEvents/SubEventsConstraint";
-import type { SubMethods } from "./SubMethods";
+import type { SubEventsOption } from "./SubEvents/SubEventsOptions";
+import type { InheritConstraint } from "./SubInherit/SubInheritConstraint";
+import type { SubInstance } from "./SubInstance/SubInstance";
+import type { SubLifetimesOption } from "./SubLifetimes/SubLifetimesOption";
 import type { SubMethodsConstraint } from "./SubMethods/SubMethodsConstraint";
-import type { SubProperties } from "./SubProperties";
-import type { SubPropertiesConstraint } from "./SubProperties/SubPropertiesConstraint";
+import type { SubMethodsOption } from "./SubMethods/SubMethodsOption";
+import type { SubPageLifetimesOption } from "./SubPageLifetimes/SubPageLifetimesOption";
+import type { CreateSubComponentDoc } from "./SubReturnType/CreateSubComponentDoc";
+import type { SubWatchOption } from "./SubWatch/SubWatchOption";
 
 type Options<
-  TMainComponentDoc extends MainComponentDoc,
-  CurrentComponentDoc extends ComponentDoc,
-  CurrentPrefix extends string,
-  TSubProperties extends object,
+  RootDoc extends RootComponentDoc,
+  IsPage extends boolean,
+  CurrentCompDoc extends ComponentDoc,
+  Prefix extends string,
+  AllRootDataDoc extends object,
+  TInherit extends object,
   TSubData extends object,
-  TSubComputed extends object,
+  TSubComputed extends SubComputedConstraint,
   TEvents extends object,
   TSubMethods extends object,
-  SubPropertiesDoc extends object,
+  InheritDoc extends object,
   SubDataDoc extends object,
-  SubComputedDoc extends object,
+  SubComputedDoc extends SubComputedConstraint,
+  SubEventsDoc extends object,
+  SubMethodsDoc extends object,
 > =
-  & SubProperties<TSubProperties, CurrentPrefix, TMainComponentDoc>
-  & SubData<TSubData, CurrentPrefix, keyof (TMainComponentDoc["allData"] & SubPropertiesDoc)>
-  & SubComputed<
-    TSubComputed,
-    CurrentPrefix,
-    TMainComponentDoc["allData"] & Required<SubPropertiesDoc> & SubDataDoc,
-    CurrentComponentDoc["properties"] & {},
-    SubComputedDoc
+  & { inherit?: TInherit }
+  & SubDataOption<
+    TSubData,
+    Exclude<keyof CurrentCompDoc["properties"], (keyof InheritDoc)>,
+    Prefix
   >
-  & SubEvents<TEvents, TMainComponentDoc>
-  & SubMethods<TSubMethods, CurrentPrefix, keyof (TMainComponentDoc["events"] & TMainComponentDoc["methods"])>;
+  & SubComputedOption<
+    TSubComputed,
+    AllRootDataDoc & SubDataDoc & SubComputedDoc,
+    // 合法的配置
+    Omit<CurrentCompDoc["properties"], (keyof InheritDoc) | (keyof SubDataDoc)>
+  >
+  & SubEventsOption<TEvents, SubEventsDoc, keyof SubEventsConstraint<CurrentCompDoc>>
+  & SubMethodsOption<TSubMethods, Prefix, keyof CurrentCompDoc["customEvents"]>
+  & SubPageLifetimesOption<IsPage, RootDoc["properties"] & {}>
+  & SubLifetimesOption
+  & SubWatchOption<
+    & SubComputedDoc
+    & SubDataDoc
+    & AllRootDataDoc
+  >
+  & ThisType<
+    SubInstance<
+      SubMethodsDoc & RootDoc["methods"],
+      TSubData,
+      AllRootDataDoc & SubDataDoc & SubComputedDoc,
+      RootDoc["customEvents"] & {}
+    >
+  >;
 
-type Constructor<
-  TMainComponentDoc extends MainComponentDoc = {},
-  TComponentDoc extends ComponentDoc = any,
-  TPrefix extends string = "",
-  CurrentPrefix extends string = IfEquals<
-    TComponentDoc,
-    any,
-    TPrefix,
-    `${ExtractDocPrefix<TComponentDoc>}${Capitalize<TPrefix>}`
+type SubComponentConstructor<
+  TRootDoc extends RootComponentDoc,
+  TOriginalCompDoc extends ComponentDoc,
+  // 补充的前缀
+  TSupplementalPrefix extends string = "",
+  IsPage extends boolean = TRootDoc["isPage"] extends true ? true : false,
+  // 重构子组件的前缀
+  CurrentPrefix extends string = `${ExtractDocPrefix<TOriginalCompDoc>}${Capitalize<TSupplementalPrefix>}`,
+  // 更新原始文档的前缀为Prefix
+  CurrentCompDoc extends ComponentDoc = IfExtends<
+    TSupplementalPrefix,
+    "",
+    TOriginalCompDoc,
+    ReplacePrefix<TOriginalCompDoc, CurrentPrefix>
   >,
-  // 更新文档前缀为CurrentPrefix,TComponentDoc为any时 返回 {}
-  CurrentComponentDoc extends ComponentDoc = ReplacePrefix<TComponentDoc, CurrentPrefix>,
+  AllRootDataDoc extends object =
+    & Required<TRootDoc["properties"]>
+    & TRootDoc["data"]
+    & TRootDoc["computed"],
 > = {
   <
-    Literal extends
-      | string
-      | number
-      | boolean
-      | Literal[]
-      | Record<string, Literal>,
-    // 如果有默认值 会导致无字段提示
-    TSubProperties extends SubPropertiesConstraint<CurrentComponentDoc, Literal>,
-    // 有默认值 无提示
-    TSubData extends SubDataConstraint<CurrentComponentDoc, keyof SubPropertiesDoc>,
-    TEvents extends SubEventsConstraint<CurrentComponentDoc>,
-    // 必须加默认值
-    TSubComputed extends SubComponentConstraint<CurrentComponentDoc, keyof (SubPropertiesDoc & SubDataDoc)> = {},
+    TInherit extends InheritConstraint<AllRootDataDoc, CurrentCompDoc>,
+    TSubData extends SubDataConstraint<Omit<Required<CurrentCompDoc["properties"]>, keyof InheritDoc>>,
+    TEvents extends SubEventsConstraint<CurrentCompDoc>,
+    TSubComputed extends SubComputedConstraint<
+      Omit<Required<CurrentCompDoc["properties"]>, keyof InheritDoc | keyof SubDataDoc>
+    > = {},
     TSubMethods extends SubMethodsConstraint = {},
-    SubPropertiesDoc extends object = IfExtends<
-      SubPropertiesConstraint<CurrentComponentDoc, Literal>,
-      TSubProperties,
-      {},
-      GetPropertiesDoc<As<TSubProperties, PropertiesConstraint>>
-    >,
-    SubDataDoc extends object = IfEquals<
+    InheritDoc extends object = IfExtends<InheritConstraint<AllRootDataDoc, CurrentCompDoc>, TInherit, {}, TInherit>,
+    SubDataDoc extends object = IfExtends<
+      SubDataConstraint<Omit<Required<CurrentCompDoc["properties"]>, keyof InheritDoc>>,
       TSubData,
-      SubDataConstraint<CurrentComponentDoc, keyof SubPropertiesDoc>,
       {},
       GetDataDoc<TSubData>
     >,
-    SubComputedDoc extends object = GetSubComputedDoc<TSubComputed>,
+    // 无效的计算
+    // SubComputedDoc extends ComputedConstraint = GetSubComputedDoc<TSubComputed>,
+    SubEventsDoc extends object = IfExtends<
+      SubEventsConstraint<CurrentCompDoc>,
+      TEvents,
+      {},
+      TEvents
+    >,
+    SubMethodsDoc extends object = TSubMethods,
+    // 缺失的必传字段(配置中inhrit,data,computed的字段不包含的必传字段)
+    MissingRequiredField extends PropertyKey = Exclude<
+      RequiredKeys<CurrentCompDoc["properties"] & {}>,
+      keyof (InheritDoc & SubDataDoc & GetSubComputedDoc<TSubComputed>)
+    >,
   >(
     options: Options<
-      TMainComponentDoc,
-      CurrentComponentDoc,
+      TRootDoc,
+      IsPage,
+      CurrentCompDoc,
       CurrentPrefix,
-      TSubProperties,
+      AllRootDataDoc,
+      TInherit,
       TSubData,
       TSubComputed,
       TEvents,
       TSubMethods,
-      SubPropertiesDoc,
+      InheritDoc,
       SubDataDoc,
-      SubComputedDoc
+      GetSubComputedDoc<TSubComputed>,
+      SubEventsDoc,
+      SubMethodsDoc
     >,
-  ): SubComputedDoc;
+  ): CreateSubComponentDoc<TOriginalCompDoc["customEvents"] & {}, SubEventsDoc, MissingRequiredField>;
 };
 
 /**
  * 子组件构建函数
- * @param TMainComponentDoc - 主组件文档类型
- * @param TComponentDoc - 引入的子组件文档类型
- * @returns SubComponentDoc
+ * @returns `(options:) => SubComponentDoc`
  */
 export function SubComponent<
-  TMainComponentDoc extends MainComponentDoc = {},
-  TComponentDoc extends ComponentDoc = any,
-  TPrefix extends string = "",
->(): IfEquals<
-  // Doc为空对象时
-  {},
-  TComponentDoc,
-  (options: EmptyObject) => {},
-  // Doc不为空对象时
-  Constructor<TMainComponentDoc, TComponentDoc, TPrefix>
-> {
-  return (options: any) => options;
+  RootDoc extends RootComponentDoc,
+  CompDoc extends ComponentDoc,
+  Prefix extends string = "",
+>(): IfExtends<EmptyObject, CompDoc, (opt: EmptyObject) => never, SubComponentConstructor<RootDoc, CompDoc, Prefix>> {
+  return ((options: any) => options) as any;
 }
+
+export type SubComponentOptions = {
+  inhrit?: string;
+  data?: Record<string, unknown>;
+  computed?: Record<string, Function>;
+  event?: Record<string, Function>;
+  methods?: Record<string, Function>;
+  watch?: Record<string, Function>;
+  lifetimes?: WMCompLifetimes["lifetimes"];
+  pageLifetimes?: Partial<WMCompPageLifetimes & { load: Function } & WMPageLifetimes>;
+};

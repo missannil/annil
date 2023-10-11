@@ -1,6 +1,6 @@
 {
   "name": "ts-wmp",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "基于typescript开发微信小程序(原生)的插件(typescript-wechat-mini-program)",
   "main": "dist/index.js",
   "scripts": {

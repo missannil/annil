@@ -1,6 +1,6 @@
 import { Checking, type Test } from "hry-types";
 import type { Wm } from "../../../../thirdLib";
-import type { Detail, WMBaseEvent } from "../../../../types/officialAlias";
+import type { Detail, WMBaseEvent } from "../../../../types/officialCorrelation";
 import type { ComponentDoc } from "../../../DefineComponent/ReturnType/ComponentDoc";
 import type {
   Bubbles,

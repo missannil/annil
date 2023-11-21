@@ -1,6 +1,20 @@
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
-import type { WMCompLifetimes, WMCompPageLifetimes, WMPageLifetimes } from "../../types/officialAlias";
-import { configIntegration, rootComponentHandle, subComponentsHandle } from "../../utils/preprocessingOptions";
+import type { Func } from "hry-types/src/Misc/Func";
+import { BBeforeCreate } from "../../behaviors/BbeforeCreated";
+import { BComputedAndWatch } from "../../behaviors/BComputedAndWatch";
+import { BState } from "../../behaviors/BState";
+import type { WMComponent, WMCompPageLifetimes, WMPageLifetimes } from "../../types/officialCorrelation";
+import { isEmptyObject } from "../../utils/isEmptyObject";
+import {
+  addStateConfigToMethods,
+  excludeFields,
+  funcConfigHandle,
+  onLoadHijack,
+  onLoadReceivedDataHandle,
+  rootComponentFieldHandle,
+  subComponentsHandle,
+} from "../../utils/preprocessingOptions";
+import type { LifetimesConstraint } from "../RootComponent/Lifetimes/LifetimesConstraint";
 import type { RootComponentDoc } from "../RootComponent/RootComponentDoc";
 import type { SubComponentDoc } from "../SubComponent/SubComponentDoc";
 import type { NameOrPageOption as NameOrPathOption } from "./NameOrPage/NameOrPathOption";
@@ -9,9 +23,7 @@ import type { CreatePageDoc } from "./ReturnType/CreatePageDoc";
 import type { RootComponentOption } from "./RootComponent/RootComponentOption";
 import type { SubComponentsOption } from "./SubComponents/SubComponentsOption";
 
-type Path = `/${string}`;
-
-type Options<
+type RootOptions<
   TRootComponentDoc extends RootComponentDoc,
   TSubComponentTuple extends SubComponentDoc[],
   TName extends string,
@@ -21,14 +33,14 @@ type Options<
   & RootComponentOption<TRootComponentDoc>
   & SubComponentsOption<TSubComponentTuple>;
 
-interface Constructor {
+interface DefineComponentConstructor {
   <
     TRootComponentDoc extends RootComponentDoc = {},
     TSubComponentTuple extends SubComponentDoc[] = [],
     TName extends string = "",
     TPath extends Path = "/",
   >(
-    options: Options<TRootComponentDoc, TSubComponentTuple, TName, TPath>,
+    options: RootOptions<TRootComponentDoc, TSubComponentTuple, TName, TPath>,
   ): // ReturnType 为  PageDoc or ComponentDoc
   IfExtends<
     "",
@@ -40,53 +52,80 @@ interface Constructor {
   >;
 }
 
-export type FinalOptions = {
-  data: Record<string, unknown>;
-  computed: Record<string, Function>;
-  event: Record<string, Function>;
-  methods: Record<string, Function>;
-  watch: Record<string, Function>;
-  lifetimes: WMCompLifetimes["lifetimes"];
-  pageLifetimes: Partial<WMCompPageLifetimes & { load: Function } & WMPageLifetimes>;
+/**
+ * 临时的函数配置项
+ * 把根组件与子组件中配置类型为函数的相同字段配置收集在一起(数组)
+ */
+export type FuncConfig = {
+  pageLifetimes?: Record<string, Func[]>;
+  lifetimes?: Record<string, Func[]>;
+  watch?: Record<string, Func[]>;
 };
 
-export const DefineComponent: Constructor = function(options): any {
-  options;
+/**
+ * 传入原生Component的配置项
+ */
+export type ComponentOptions = {
+  options?: WMComponent.Options;
+  properties?: object;
+  data?: object;
+  state?: object;
+  computed?: Record<string, Func>;
+  observers?: Record<string, Func>;
+  behaviors?: string[];
+  methods?: Record<string, Func> & { __stateConfig__?: Func };
+  watch?: Record<string, Func>;
+  lifetimes?: LifetimesConstraint;
+  pageLifetimes?: Partial<WMCompPageLifetimes & { load: Func } & WMPageLifetimes>;
+};
 
-  const finalOptions: FinalOptions = {
-    data: {},
-    computed: {},
-    event: {},
-    methods: {},
-    watch: {},
-    lifetimes: {},
-    pageLifetimes: {},
+export type Path = `/${string}`;
+
+export type DefineComponentOptions = {
+  path?: Path;
+  name?: string;
+  rootComponent?: RootComponentDoc;
+  subComponents?: SubComponentDoc[];
+};
+
+export const DefineComponent: DefineComponentConstructor = function(options): any {
+  console.log("------------------------------------------------分割线------------------------------------------------");
+
+  // 最终的配置
+  const componentOptions: ComponentOptions = {
+    options: {
+      // addGlobalClass: true,
+      multipleSlots: true,
+      pureDataPattern: /^_/,
+      virtualHost: true,
+    },
+    // default behaviors
+    behaviors: [BState, BComputedAndWatch],
   };
+  /**
+   * 有些选项配置是函数,且可能分布在根组件和子组件中,tempConfig 用于收集这些配置,最终再一起整合进componentOptions配置。rootComponentHandle和subComponentsHandle都会收集配置，funcConfigHandle整理配置。
+   */
+  const funcConfig: FuncConfig = {};
 
-  configIntegration(finalOptions, options, [
-    rootComponentHandle,
-    subComponentsHandle,
-  ]);
+  if (options.rootComponent && !isEmptyObject(options.rootComponent)) {
+    rootComponentFieldHandle(options.rootComponent, componentOptions, funcConfig);
+  }
 
-  // 合并 subComponents到options
+  if (options.subComponents && !isEmptyObject(options.subComponents)) {
+    subComponentsHandle(componentOptions, options.subComponents, funcConfig);
+  }
+  if (!isEmptyObject(funcConfig)) {
+    funcConfigHandle(componentOptions, options.rootComponent?.isPage, funcConfig);
+  }
+  addStateConfigToMethods(componentOptions);
 
-  // fieldsHandle(options, [
-  //   mainComponentHandle,
-  //   mergeInjectOption,
-  //   deleteNameFiled,
-  //   initInherit,
-  //   customEventsHandle,
-  //   eventsHandle,
-  //   pageLifetimesHandle,
-  //   transformSubComponentsToBehaviors,
-  //   addBehaviors([BinitResponseData, BAddIsSetDataToIns, BComputedAndWatch, beforeCreateAndAttach]),
-  // ]);
+  componentOptions.methods && excludeFields(componentOptions.methods, ["disposer", "applySetData"]);
 
-  // attachedHijack(options as any, [createResponseData, isPageCheck, collectCompLifetime_load, collectInherit]);
-  // detachedHijack(options as any, [destroyResponsive]);
-  // compLoadHijack(options as any, [compInheritCacheHandle]);
-  // pageOnLoadHijack(options as any, [PageReceivedDataHandle, pageInheritCacheHandle], [triggerCompLoad]);
-  // return Component(options as any);
+  componentOptions.behaviors!.push(BBeforeCreate);
+
+  onLoadHijack(componentOptions, [onLoadReceivedDataHandle], []);
+
+  Component(componentOptions as any);
 };
 
 export type PageOptions = {

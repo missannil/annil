@@ -1,11 +1,19 @@
+import type { Func } from "hry-types/src/Misc/Func";
+import type { WMCompPageLifetimes, WMPageLifetimes } from "../../types/officialCorrelation";
+import type { LifetimesConstraint } from "./Lifetimes/LifetimesConstraint";
+
 type _RootComponentDoc = {
-  isPage?: true;
+  isPage?: boolean;
   properties?: object;
   data?: object;
   computed?: object;
   customEvents?: object;
   methods?: object;
   events?: object;
+  state?: object;
+  watch?: Record<string, Func>;
+  lifetimes?: LifetimesConstraint;
+  pageLifetimes?: Partial<WMCompPageLifetimes & { load: Func } & WMPageLifetimes>;
 };
 
 // 验证key是否合法
@@ -19,6 +27,7 @@ type _Validator<O, ErrKeys = Exclude<keyof O, keyof _RootComponentDoc>> = [ErrKe
  * isPage?: true;
  * properties?: object;
  * data?: object;
+ * state?:object;
  * computed?: object;
  * customEvents?: object;
  * methods?: object;

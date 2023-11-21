@@ -1,5 +1,6 @@
+// computed字段的一些特性
 /**
- * 1. 泛型无默认值有字段提示,提升全
+ * 1. 泛型无默认值有字段提示
  */
 function foo<T extends Partial<{ str: string; num: number; bool: boolean }>>(obj: T) {
   obj;
@@ -23,8 +24,8 @@ foo1({
 });
 
 type Options<TComputed, ComputedReturnType> = {
-  computed: TComputed & ThisType<{ data: ComputedReturnType }>;
-};
+  computed: TComputed;
+} & ThisType<{ data: ComputedReturnType }>;
 
 /**
  * 3. 泛型字段为`Record<string, () => void>`时,若要通过this相互间引用,需要加默认值。
@@ -58,7 +59,7 @@ type Obj = {
 };
 
 /**
- * 4. 接上 TComputed约束有具体字段时,返回字面量需要加上const才可以(如num),且没有第二字段提示,且不可以相互this引用。
+ * 4. TComputed约束有具体字段时,不允许相互依赖(且返回字面量需要加上const才可以(如num),且没有第二字段提示)。
  */
 function foo3<
   TComputed extends { [k in keyof Obj]?: () => Obj[k] } = {},
@@ -77,74 +78,99 @@ foo3({
     str() {
       return "b";
     },
+    xxx() {
+      return 123;
+    },
     literalNum() {
       return 123 as const; // 需要加const
     },
-    _aaa_other() { // 任意字段可以引用存在字段。
+    _aaa_other() { // 非约束字段可引用其他字段。
       return this.data.str;
-    },
-    num() {
-      return 123;
     },
   },
 });
 
 foo3({
   computed: {
-    _aaa_other() {
-      return 123;
+    str() {
+      return "123";
     },
-    // @ts-expect-error 存在字段不可以引用其他字段
+    // @ts-ignore num 不允许依赖xxx
     num() {
-      // @ts-expect-error 存在字段不可以引用其他字段
-      return this.data._aaa_other;
+      // @ts-ignore num 不允许依赖xxx
+      return +this.data.str;
     },
   },
 });
 
-// type Validator<TComputed, TObj, > = { [k in keyof TComputed as ReturnType<TComputed[k]> extends TObj[k]?never:k]:()=> TObj[k]};
+// 最终解决方案
+type ComputedConstraint = Record<string, () => any>;
 
-// type Option<TComputed, ComputedReturnType, TObj> = {
-//   computed?:
-//     & TComputed
-//     & ThisType<{ data: ComputedReturnType }>
-//     & Validator< TComputed, TObj>;
-// };
+type Validator1<TComputed extends ComputedConstraint, TObj extends Record<PropertyKey, any>> = {
+  [
+    k in keyof TComputed as k extends keyof TObj ? never : k
+  ]: "多余字段";
+};
 
-// //
-// function foo4<
-//   TComputed extends Record<string, () => any> = {},
-//   // @ts-ignore 忽略ReturnType<TComputed[k]>报错
-//   ComputedReturnType extends object = { [k in keyof TComputed]: ReturnType<TComputed[k]> },
-// >(
-//   obj: Option<TComputed, ComputedReturnType, Obj>,
-// ): ComputedReturnType {
-//   obj;
+type OptionAA<
+  TComputed extends ComputedConstraint,
+  TObj extends Record<string, any>,
+  ComputedReturnType,
+> = {
+  computed?:
+    & TComputed
+    & ValidatorOfReturnType<TComputed, TObj>
+    & Validator1<TComputed, TObj>;
+} & ThisType<{ data: ComputeObj<ComputedReturnType & { aaa: number; bbb: string }> }>;
 
-//   return {} as any;
-// }
+export type ValidatorOfReturnType<TComputed, TCompare extends Record<PropertyKey, unknown>> = {
+  [
+    k in keyof TComputed as TComputed[k] extends (() => TCompare[k]) ? never : k
+  ]: "类型错误";
+};
 
-// const aaa = foo4({
-//   computed: {
-//     num() {
-//       return 123;
-//     },
-//     str() {
-//       return 123;
-//     },
+type getReturnType<T extends Record<string, () => any>> = { [k in keyof T]: ReturnType<T[k]> };
 
-//   },
-// });
+function foo4<
+  TComputed extends ComputedConstraint = {},
+  ComputedReturnType = getReturnType<TComputed>,
+>(
+  obj: OptionAA<TComputed, Obj, ComputedReturnType>,
+): void {
+  obj;
 
-// RootComponent({
-//   properties: {
-//     aaa: {
-//       type: String,
-//       value: 123,
-//     },
-//     bbb: {
-//       type: Number,
-//       value: "123",
-//     },
-//   },
-// });
+  return {} as any;
+}
+
+type ComputeObj<T> = T extends unknown ? { [k in keyof T]: T[k] } : never;
+
+// 正常写法
+foo4({
+  computed: {
+    str() {
+      return this.data.bbb;
+    },
+    num() {
+      return +this.data.str;
+    },
+  },
+});
+
+// 类型错误
+foo4({
+  computed: {
+    // @ts-expect-error 类型错误
+    num() {
+      return "123";
+    },
+  },
+});
+
+foo4({
+  computed: {
+    // @ts-ignore 多余字段
+    xxx() {
+      return 444;
+    },
+  },
+});

@@ -10,7 +10,6 @@ const RootDoc = RootComponent()({
   data: {
     gender: <"male" | "female"> "male", // 联合字面量
     num: 123,
-    reactiveNum: () => 123, // 外部响应式字段
     _innernalFields: 123, // 内部字段无法在wxml中使用
   },
   methods: {
@@ -18,7 +17,7 @@ const RootDoc = RootComponent()({
       // 1. data配置类型为函数时,this.data中变为函数返回类型
       Checking<
         typeof this.data,
-        ReadonlyDeep<{ gender: "male" | "female"; num: number; reactiveNum: 123; _innernalFields: number }>,
+        ReadonlyDeep<{ gender: "male" | "female"; num: number; _innernalFields: number }>,
         Test.Pass
       >;
     },
@@ -28,7 +27,6 @@ const RootDoc = RootComponent()({
 type RootDocExpected = {
   gender: "male" | "female";
   num: number;
-  reactiveNum: 123;
   _innernalFields: number;
 };
 

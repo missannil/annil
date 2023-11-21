@@ -6,9 +6,9 @@ import { RootComponent } from "../../../..";
 RootComponent()({
   lifetimes: {
     // 新增声明周期用于查看实例初始化之前的配置文件
-    beforeCreate(opitons) {
-      opitons;
-    },
+    // beforeCreate(opitons) {
+    //   opitons;
+    // },
     created() {
     },
     attached() {

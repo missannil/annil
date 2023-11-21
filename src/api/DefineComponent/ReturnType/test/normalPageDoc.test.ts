@@ -1,6 +1,6 @@
 import { Checking, type Test } from "hry-types";
 import { RootComponent, type SpecificType } from "../../../..";
-import type { Mock_User } from "../../../RootComponent/Properties/test/normalRequired.test";
+import type { Mock_User } from "../../../RootComponent/Properties/expected/normalRequired";
 import { DefineComponent } from "../..";
 
 const OnlyPropsRootDoc = RootComponent()({
@@ -29,7 +29,7 @@ const compDocOnlyProperties = DefineComponent({
 type CompDocOnlyPropertiesExpected = {
   path: "/pages/index/index";
   properties: {
-    optionalObj?: Mock_User;
+    optionalObj?: Mock_User | null;
     optionalObjOrNull?: Mock_User | null;
     str: string;
     obj: Mock_User; // 去除了 OnlyPropsRootDoc加入的null

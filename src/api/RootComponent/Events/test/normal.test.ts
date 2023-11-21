@@ -7,7 +7,7 @@ import type {
   TargetDataset,
   WMBaseEvent,
   WMCustomEvent,
-} from "../../../../types/officialAlias";
+} from "../../../../types/officialCorrelation";
 import type { ComponentDoc } from "../../../DefineComponent/ReturnType/ComponentDoc";
 import { RootComponent } from "../..";
 import type { Bubbles, Capture } from "../../CustomEvents/CustomEventsTag";

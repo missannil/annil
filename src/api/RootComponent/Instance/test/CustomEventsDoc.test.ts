@@ -1,7 +1,6 @@
 import { Checking, type Test } from "hry-types";
-import type { SpecificType } from "../../../../types/SpecificType";
+import type { SpecificType } from "../../../..";
 import { RootComponent } from "../..";
-
 RootComponent()({
   customEvents: {
     str: String,

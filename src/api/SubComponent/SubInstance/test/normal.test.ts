@@ -1,7 +1,7 @@
 import { Checking, type Test } from "hry-types";
 import type { ReadonlyDeep } from "hry-types/src/Any/_api";
 import type { ComponentDoc } from "../../../DefineComponent/ReturnType/ComponentDoc";
-import type { Mock_User } from "../../../RootComponent/Properties/test/normalRequired.test";
+import type { Mock_User } from "../../../RootComponent/Properties/expected/normalRequired";
 import type { RootComponentDoc } from "../../../RootComponent/RootComponentDoc";
 import { SubComponent } from "../..";
 
@@ -40,6 +40,8 @@ type CompDoc = ComponentDoc<{
 SubComponent<RootDoc, CompDoc>()({
   data: {
     aaa_str: "str",
+  },
+  state: {
     _aaa_SubReactive: () => 123,
   },
   computed: {},

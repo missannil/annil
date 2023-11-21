@@ -34,9 +34,7 @@ RootComponent()({
       value: 123,
     },
     obj: {
-      // @ts-expect-error 类型错误 value 想为null 必须为 `Mock_Cart | null`
       type: Object as SpecificType<Mock_Cart>,
-      // @ts-expect-error 类型错误 value 想为null 必须为 `Mock_Cart | null`
       value: null,
     },
     str_num: {

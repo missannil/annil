@@ -20,8 +20,11 @@ SubComponent<{}, CompDoc>()({
 SubComponent<{}, CompDoc>()({
   data: {
     aaa_str: "123",
-    aaa_num: () => 123,
+
     _aaa_other: 123,
+  },
+  state: {
+    aaa_num: () => 123,
   },
   watch: {
     aaa_str(newValue, oldValue) {

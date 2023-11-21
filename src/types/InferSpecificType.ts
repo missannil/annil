@@ -8,5 +8,5 @@ export type InferSpecificType<T> = T extends StringConstructor ? string
   : T extends BooleanConstructor ? boolean
   : T extends ArrayConstructor ? unknown[]
   : T extends ObjectConstructor ? object | null
-  : T extends SpecificType<infer R> ? R
-  : T;
+  : T extends SpecificType<infer R> ? R extends readonly unknown[] ? R : R extends object ? R | null : R
+  : never;

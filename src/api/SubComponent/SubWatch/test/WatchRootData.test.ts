@@ -2,7 +2,7 @@ import { Checking, type Test } from "hry-types";
 
 import type { ReadonlyDeep } from "hry-types/src/Any/_api";
 import type { ComponentDoc } from "../../../DefineComponent/ReturnType/ComponentDoc";
-import type { Mock_User } from "../../../RootComponent/Properties/test/normalRequired.test";
+import type { Mock_User } from "../../../RootComponent/Properties/expected/normalRequired";
 import { SubComponent } from "../..";
 
 type TestObj = {
@@ -39,10 +39,12 @@ type RootDoc = {
  */
 SubComponent<RootDoc, CompDoc>()({
   data: {
+    aaa_str: "str",
+  },
+  state: {
     aaa_num() {
       return 123;
     },
-    aaa_str: "str",
   },
   watch: {
     // properties 字段

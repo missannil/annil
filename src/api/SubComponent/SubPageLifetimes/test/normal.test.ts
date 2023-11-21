@@ -1,5 +1,5 @@
 import { Checking, type Test } from "hry-types";
-import type { Mock_User } from "../../../RootComponent/Properties/test/normalRequired.test";
+import type { Mock_User } from "../../../RootComponent/Properties/expected/normalRequired";
 import type { RootComponentDoc } from "../../../RootComponent/RootComponentDoc";
 import { SubComponent } from "../..";
 
@@ -65,6 +65,9 @@ SubComponent<RootDocCompPage, CompDoc>()({
     },
     onHide() {
       console.log("onHide");
+    },
+    onResize(options) {
+      console.log("onResize", options);
     },
   },
 });

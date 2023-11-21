@@ -30,7 +30,7 @@ export type OptionalType<Literal = unknown> = {
 /**
  * Properties 字段类型
  */
-type PropertiesTypes<Literal = unknown> = OptionalType<Literal> | RequiredType<Literal>;
+export type PropertiesTypes<Literal = unknown> = OptionalType<Literal> | RequiredType<Literal>;
 
 /**
  * RootComponent API properties 字段约束

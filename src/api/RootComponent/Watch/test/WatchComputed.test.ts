@@ -2,7 +2,7 @@ import { Checking, type Test } from "hry-types";
 import type { ReadonlyDeep } from "hry-types/src/Any/_api";
 import type { SpecificType } from "../../../../types/SpecificType";
 import { RootComponent } from "../..";
-import { type Mock_User } from "../../Properties/test/normalRequired.test";
+import { type Mock_User } from "../../Properties/expected/normalRequired";
 
 /**
  *  1 computed字段时需要手写类型,可悬停鼠标到key查看类型,深度只读

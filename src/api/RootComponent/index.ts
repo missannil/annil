@@ -1,7 +1,8 @@
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { EmptyObject } from "hry-types/src/Misc/EmptyObject";
+import type { Func } from "hry-types/src/Misc/Func";
 import type { ComputeIntersectionDeep } from "hry-types/src/Object/_api";
-import type { WMCompLifetimes, WMCompPageLifetimes } from "../../types/officialAlias";
+import type { WMCompOtherOption } from "../../types/officialCorrelation";
 import type { ComponentDoc } from "../DefineComponent/ReturnType/ComponentDoc";
 import type { ComputedConstraint } from "./Computed/ComputedConstraint";
 import type { ComputedOption } from "./Computed/ComputedOption";
@@ -10,7 +11,6 @@ import type { CustomEventConstraint } from "./CustomEvents/CustomEventConstraint
 import type { CustomEventsOption } from "./CustomEvents/CustomEventsOption";
 import type { GetCustomEventDoc } from "./CustomEvents/GetCustomEventDoc";
 import type { DataOption } from "./Data/DataOption";
-import type { GetDataDoc } from "./Data/GetDataDoc";
 import type { EventsConstraint } from "./Events/EventsConstraint";
 import type { EventsOption } from "./Events/EventsOption";
 import type { RootComponentInstance } from "./Instance/RootComponentInstance";
@@ -22,22 +22,12 @@ import type { PageLifetimesOption } from "./PageLifetimes/PageLifetimesOption";
 import type { GetPropertiesDoc } from "./Properties/GetPropertiesDoc";
 import type { PropertiesConstraint } from "./Properties/PropertiesConstraint";
 import type { PropertiesOption } from "./Properties/PropertiesOption";
+import type { GeTStateDoc } from "./State/GeTStateDoc";
+import type { StateConstraint } from "./State/StateConstraint";
+import type { StateOption } from "./State/StateOption";
 import type { WatchOption } from "./Watch/WatchOption";
 
-export type RootCompOptions = {
-  isPage?: true;
-  properties?: PropertiesConstraint;
-  data?: object;
-  computed?: ComputedConstraint;
-  customEvents?: CustomEventConstraint;
-  events?: EventsConstraint;
-  methods?: MethodsConstraint;
-  watch?: object;
-  lifetimes?: WMCompLifetimes["lifetimes"];
-  pageLifetimes?: Partial<WMCompPageLifetimes>;
-};
-
-type Options<
+type RootComponentOptions<
   TReceivedComponentDoc extends object,
   TEvents extends object,
   TIsPage extends boolean,
@@ -45,11 +35,13 @@ type Options<
   TMethods extends MethodsConstraint,
   TProperties extends PropertiesConstraint,
   TData extends object,
-  TComputed extends Record<string, () => any>,
-  EventsDoc,
+  TState extends StateConstraint,
+  TComputed extends Record<string, Func>,
+  EventsDoc extends object,
   CustomEventsDoc extends object,
   PropertiesDoc extends object,
   DataDoc extends object,
+  StateDoc extends object,
   ComputedDoc extends object,
 > =
   & MethodsOption<TMethods, keyof (EventsDoc & CustomEventsDoc)>
@@ -58,15 +50,27 @@ type Options<
   & CustomEventsOption<TCustomEvents, EventsDoc>
   & EventsOption<TEvents, EventsConstraint<TReceivedComponentDoc>>
   & DataOption<TData, PropertiesDoc>
-  & ComputedOption<TComputed, Required<PropertiesDoc> & DataDoc, ComputedDoc>
+  & StateOption<TState, PropertiesDoc & DataDoc>
+  & ComputedOption<TComputed, Required<PropertiesDoc> & DataDoc & StateDoc, ComputedDoc>
   & PageLifetimesOption<TIsPage, PropertiesDoc>
   & LifetimesOption<TIsPage>
   & WatchOption<
     & ComputedDoc
     & Required<PropertiesDoc>
     & DataDoc
+    & StateDoc
   >
-  & ThisType<RootComponentInstance<TMethods, TData, DataDoc & Required<PropertiesDoc> & ComputedDoc, CustomEventsDoc>>;
+  & Partial<Omit<WMCompOtherOption, "pageLifetimes">>
+  & ThisType<
+    RootComponentInstance<
+      TIsPage,
+      TMethods,
+      DataDoc,
+      DataDoc & Required<PropertiesDoc> & StateDoc & ComputedDoc,
+      CustomEventsDoc,
+      StateDoc
+    >
+  >;
 
 type RootComponentConstructor<TReceivedComponentDoc extends ComponentDoc[] | ComponentDoc> = {
   <
@@ -82,6 +86,7 @@ type RootComponentConstructor<TReceivedComponentDoc extends ComponentDoc[] | Com
     TIsPage extends boolean = false,
     TProperties extends PropertiesConstraint<Literal> = {},
     TData extends object = {},
+    TState extends StateConstraint = {},
     TComputed extends ComputedConstraint = {},
     // 页面时自定义事件无意义
     TCustomEvents extends IfExtends<TIsPage, false, CustomEventConstraint, EmptyObject> = {},
@@ -89,10 +94,11 @@ type RootComponentConstructor<TReceivedComponentDoc extends ComponentDoc[] | Com
     EventsDoc extends object = IfExtends<EventsConstraint<TReceivedComponentDoc>, TEvents, {}, TEvents>,
     CustomEventsDoc extends object = GetCustomEventDoc<TCustomEvents>,
     PropertiesDoc extends object = GetPropertiesDoc<TProperties>,
-    DataDoc extends object = GetDataDoc<TData>,
+    DataDoc extends object = TData,
+    StateDoc extends object = GeTStateDoc<TState>,
     ComputedDoc extends object = GetComputedDoc<TComputed>,
   >(
-    options: Options<
+    options: RootComponentOptions<
       TReceivedComponentDoc,
       TEvents,
       TIsPage,
@@ -100,11 +106,13 @@ type RootComponentConstructor<TReceivedComponentDoc extends ComponentDoc[] | Com
       TMethods,
       TProperties,
       TData,
+      TState,
       TComputed,
       EventsDoc,
       CustomEventsDoc,
       PropertiesDoc,
       DataDoc,
+      StateDoc,
       ComputedDoc
     >,
   ): // 返回类型 RootComponentDoc
@@ -112,6 +120,7 @@ type RootComponentConstructor<TReceivedComponentDoc extends ComponentDoc[] | Com
     & IfExtends<TIsPage, false, {}, { isPage: true }>
     & IfExtends<EmptyObject, PropertiesDoc, {}, { properties: PropertiesDoc }>
     & IfExtends<EmptyObject, DataDoc, {}, { data: DataDoc }>
+    & IfExtends<EmptyObject, StateDoc, {}, { state: StateDoc }>
     & IfExtends<EmptyObject, ComputedDoc, {}, { computed: ComputedDoc }>
     & IfExtends<EmptyObject, TMethods, {}, { methods: TMethods }>
     & IfExtends<EmptyObject, EventsDoc, {}, { events: EventsDoc }>

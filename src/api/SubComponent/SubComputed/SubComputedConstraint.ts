@@ -1,3 +1,1 @@
-export type SubComputedConstraint<T = {}> = {
-  [k in keyof T]?: () => T[k];
-};
+export type SubComputedConstraint = Record<PropertyKey, () => any>;

@@ -2,7 +2,7 @@ import { Checking, type Test } from "hry-types";
 import { RootComponent, type SpecificType } from "../../../..";
 
 import type { RemoveNullOfRequired } from "../../../../types/RemoveNullOfRequired";
-import type { Mock_User } from "../../Properties/test/normalRequired.test";
+import type { Mock_User } from "../../Properties/expected/normalRequired";
 
 /**
  * 组件时
@@ -33,7 +33,7 @@ RootComponent()({
       value: { id: "001", name: "zhao" },
     },
     optionalObject: {
-      type: Object as SpecificType<Mock_User | null>,
+      type: Object as SpecificType<Mock_User>,
       value: null,
     },
   },
@@ -45,7 +45,7 @@ RootComponent()({
         typeof props,
         Required<
           RemoveNullOfRequired<{
-            union?: Mock_User;
+            union?: Mock_User | null;
             optionalObject?: Mock_User | null;
             str: string;
             obj: object | null;

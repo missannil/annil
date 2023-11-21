@@ -3,7 +3,7 @@ import type { ReadonlyDeep } from "hry-types/src/Any/_api";
 import type { Wm } from "../../../../thirdLib";
 import type { CompDocExtends } from "../../../../types/CompDocExtends";
 import type { ComponentDoc } from "../../../DefineComponent/ReturnType/ComponentDoc";
-import type { Mock_User } from "../../../RootComponent/Properties/test/normalRequired.test";
+import type { Mock_User } from "../../../RootComponent/Properties/expected/normalRequired";
 import { SubComponent } from "../..";
 
 type CompDoc = ComponentDoc<{
@@ -14,14 +14,14 @@ type CompDoc = ComponentDoc<{
   };
 }>;
 
-// 1 data字段的key提示为:组件文档字段去除inherit字段后的字段.值类型为:文档对应字段类型或函数返回类型(表示引入的store数据)。或临时字段(内部运算所用字段,无法渲染到页面)key,值类型为unknown
+// 1 data字段的key提示为:组件文档字段去除inherit字段后的字段.值类型为:文档对应字段类型或函数返回类型(表示引入的State数据)。或临时字段(内部运算所用字段,无法渲染到页面)key,值类型为unknown
 SubComponent<{}, CompDoc>()({
   inherit: {
     aaa_obj: "wxml",
   },
   data: {
     aaa_str: "a",
-    aaa_num: () => 123,
+    aaa_num: 123,
     _aaa_template: "internal", // 内部临时数据
   },
 });
@@ -38,9 +38,9 @@ const res = SubComponent<{}, viewExtends>()({
     view_class: "h-full",
     view_hover_class: "none",
     // 拓展的字段
-    view_obj: () => ({} as Mock_User | null),
-    view_str: () => "a",
-    view_ddd: () => 123,
+    view_obj: {} as Mock_User | null,
+    view_str: "a",
+    view_ddd: 123,
   },
 });
 

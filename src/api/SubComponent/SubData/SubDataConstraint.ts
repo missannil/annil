@@ -6,5 +6,5 @@ export type SubDataConstraint<
   O extends object,
 > = {
   // 加入响应式数据类型
-  [k in (keyof O)]?: O[k] | (() => O[k]);
+  [k in (keyof O)]?: O[k];
 };

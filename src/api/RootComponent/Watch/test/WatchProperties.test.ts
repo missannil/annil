@@ -4,13 +4,13 @@ import type { ReadonlyDeep } from "hry-types/src/Any/_api";
 import { RootComponent } from "../..";
 
 import type { SpecificType } from "../../../..";
-import type { OptionalType } from "../../Properties/PropertiesConstraint";
 import {
   type Mock_Cart,
   mock_requiredTypes,
   mock_requiredUnion,
   type Mock_User,
-} from "../../Properties/test/normalRequired.test";
+} from "../../Properties/expected/normalRequired";
+import type { OptionalType } from "../../Properties/PropertiesConstraint";
 const mock_optional = {
   optional_num: {
     type: Number,
@@ -29,7 +29,7 @@ const mock_optional = {
     },
   },
   optional_objOrNull: {
-    type: Object as SpecificType<Mock_User | null>, // 可选类型可定义null
+    type: Object as SpecificType<Mock_User>, // 可选类型可定义null
     value: null,
   },
 } satisfies Record<string, OptionalType>;
@@ -136,7 +136,7 @@ RootComponent()({
     optional_obj(newValue, oldValue) {
       Checking<ReadonlyDeep<Mock_User>, typeof newValue, Test.Pass>;
 
-      Checking<ReadonlyDeep<Mock_User>, typeof oldValue, Test.Pass>;
+      Checking<ReadonlyDeep<Mock_User> | null, typeof oldValue, Test.Pass>;
     },
     // 对象的二段key
     "optional_obj.age"(newValue, oldValue) {

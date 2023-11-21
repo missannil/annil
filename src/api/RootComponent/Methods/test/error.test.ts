@@ -1,7 +1,7 @@
 import { RootComponent } from "../..";
 
 /**
- * 1 重复字段错误
+ * 重复字段错误
  */
 RootComponent()({
   events: {

@@ -1,34 +1,34 @@
-import type { O } from "hry-types";
 import type { ReadonlyDeep } from "hry-types/src/Any/_api";
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
+import type { Func } from "hry-types/src/Misc/Func";
+import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
 import type { IReactionDisposer } from "mobx";
-import type { WMInstanceMethods, WMInstanceProperties } from "../../../types/officialAlias";
-import type { GetDataDoc } from "../Data/GetDataDoc";
+import type { WMInstanceMethods } from "../../../types/officialAlias";
+import type { WMComponentInstance, WMPageInstance } from "../../../types/officialCorrelation";
 import type { CustomEventMethods } from "./CustomEventMethods";
 import type { CustomSetData } from "./CustomSetData";
-
 export type RootComponentInstance<
-  TMethods,
+  TIsPage extends boolean,
+  TMethods extends object,
   TData extends object,
   AllData extends object,
   CustomEventsDoc extends object,
-  ResponsiveData = GetDataDoc<TData, "返回函数字段">,
+  StateDoc extends object,
 > =
   // 官方实例属性is  options  dataset等
-  & WMInstanceProperties
+  & IfExtends<false, TIsPage, WMComponentInstance, WMPageInstance>
   // 官方实例方法去除setData,因其类型宽泛
   & Omit<WMInstanceMethods<{}>, "setData">
   // 加入自定义setData方法
-  & CustomSetData<GetDataDoc<TData, "去掉函数字段">>
-  & IfExtends<
-    {},
-    ResponsiveData,
-    unknown,
-    {
-      __disposer: { [k in keyof ResponsiveData]: IReactionDisposer };
-      _applySetData: (callback?: Function) => void;
-    }
-  >
+  & CustomSetData<TData>
+  & IfExtends<{}, StateDoc, unknown, {
+    disposer?: { [k in keyof StateDoc]: IReactionDisposer };
+    applySetData: Func;
+  }>
   & TMethods
   & CustomEventMethods<CustomEventsDoc>
-  & { data: ReadonlyDeep<O.ComputeIntersection<AllData>> };
+  & { data: ReadonlyDeep<ComputeIntersection<AllData>> };
+
+export type ComponentInstance = RootComponentInstance<false, {}, {}, {}, {}, {}>;
+
+export type PageInstance = RootComponentInstance<true, {}, {}, {}, {}, {}>;

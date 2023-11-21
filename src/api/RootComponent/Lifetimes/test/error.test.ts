@@ -4,7 +4,7 @@ import { RootComponent } from "../..";
  */
 RootComponent()({
   lifetimes: {
-    beforeCreate() {},
+    // beforeCreate() {},
 
     created() {},
 

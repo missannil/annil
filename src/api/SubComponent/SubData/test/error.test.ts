@@ -1,5 +1,5 @@
 import type { ComponentDoc } from "../../../DefineComponent/ReturnType/ComponentDoc";
-import type { Mock_User } from "../../../RootComponent/Properties/test/normalRequired.test";
+import type { Mock_User } from "../../../RootComponent/Properties/expected/normalRequired";
 import { SubComponent } from "../..";
 
 type OnlyCustomCompDoc = ComponentDoc<{
@@ -46,7 +46,7 @@ SubComponent<{}, OnlyPropsCompDoc>()({
   },
   data: {
     aaa_num: 123, // ok
-    aaa_obj: () => null, // ok
+    aaa_obj: null, // ok
     // @ts-expect-error "⚠️ Inherit字段重复 ⚠️"
     aaa_str: "123",
     // @ts-expect-error  "⚠️ 组件文档无需字段 ⚠️"

@@ -1,12 +1,27 @@
 import { Checking, type Test } from "hry-types";
 import type { ReadonlyDeep } from "hry-types/src/Any/_api";
 import type { ComponentDoc } from "../../../DefineComponent/ReturnType/ComponentDoc";
-import type { Mock_User } from "../../../RootComponent/Properties/test/normalRequired.test";
+import type { Mock_User } from "../../../RootComponent/Properties/expected/normalRequired";
 import { SubComponent } from "../..";
 
 type OnlyCustomCompDoc = ComponentDoc<{
   customEvents: { aaa_str: string };
 }>;
+
+type User = { name: string; age: number };
+
+type Root = {
+  properties: {
+    num: number;
+    user?: User | null;
+  };
+  data: {
+    str: string;
+  };
+  computed: {
+    bool: boolean;
+  };
+};
 
 SubComponent<{}, OnlyCustomCompDoc>()({
   // 1 CompDoc的properties为空时,可以写{}
@@ -22,84 +37,34 @@ type OnlyPropsCompDoc = ComponentDoc<{
   };
 }>;
 
-SubComponent<{ properties: { aaa: 123 } }, OnlyPropsCompDoc>()({
+SubComponent<Root, OnlyPropsCompDoc>()({
   inherit: {
-    aaa_num: "aaa",
+    aaa_num: "num",
   },
   data: {
     aaa_str: "a",
   },
-  // 2 可写字段为组件去除inherit和computed的剩余字段,返回类型应为对应的文档类型
+  // 2 可写字段为组件去除inherit和data的剩余字段,返回类型应为对应的文档类型
   computed: {
     aaa_obj() {
-      return { id: "123" };
+      return {} as Mock_User | null;
     },
     aaa_num123() {
-      // ⚠️字面量必须加const,TS的原因
-      return 123 as const;
-    },
-  },
-});
-
-// 3 书写第一个计算字段有提示(默认约束为{}导致)。
-SubComponent<{ properties: { aaa_123: number } }, OnlyPropsCompDoc>()({
-  data: {
-    aaa_str: "a",
-  },
-  // 3.1 输入aaa 提示 3个字段
-  computed: {
-    aaa_num() {
       return 123;
     },
   },
 });
 
-SubComponent<{}, OnlyPropsCompDoc>()({
-  inherit: {
-    aaa_num: "wxml",
-  },
-  // 3.2 输入aaa 提示 2个字段
-  computed: {
-    aaa_obj: () => null,
-    aaa_str() {
-      return "a" as const;
-    },
-  },
-});
-
-SubComponent<{}, OnlyPropsCompDoc>()({
-  inherit: {
-    aaa_num: "wxml",
-  },
-  data: {
-    aaa_str: () => "a",
-  },
-  // 3.3 输入aaa 提示 1个字段
-  computed: {
-    aaa_obj: () => null,
-  },
-});
-
-// 4 ⚠️ 字面量类型需要加const. 未知的原因
-SubComponent<{}, OnlyPropsCompDoc>()({
-  computed: {
-    aaa_str() {
-      return "a" as const; // 不加const报错
-    },
-  },
-});
-
-//
-SubComponent<{}, OnlyPropsCompDoc>()({
+SubComponent<Root, OnlyPropsCompDoc>()({
   computed: {
     aaa_num() {
-      return 123;
+      return 123 as number;
     },
     aaa_num123() {
-      return 123 as const;
+      return 123;
     },
     aaa_str() {
-      return "a" as const; // 不加const报错
+      return "a";
     },
     aaa_obj() {
       this.data;
@@ -108,9 +73,13 @@ SubComponent<{}, OnlyPropsCompDoc>()({
       Checking<
         typeof this.data,
         ReadonlyDeep<{
-          aaa_str: "a";
+          num: number;
+          user: User | null;
+          str: string;
+          bool: boolean;
           aaa_num: number;
           aaa_num123: 123;
+          aaa_str: "a";
           aaa_obj: Mock_User;
         }>,
         Test.Pass
@@ -119,19 +88,46 @@ SubComponent<{}, OnlyPropsCompDoc>()({
       return {} as Mock_User;
     },
   },
-  methods: {
-    aaa_ddd() {
+  lifetimes: {
+    attached() {
       // 5 this.data 深度只读
       Checking<
         typeof this.data,
         ReadonlyDeep<{
-          aaa_str: "a";
+          num: number;
+          user: User | null;
+          str: string;
+          bool: boolean;
           aaa_num: number;
           aaa_num123: 123;
+          aaa_str: "a";
           aaa_obj: Mock_User;
         }>,
         Test.Pass
       >;
+    },
+  },
+});
+
+// 计算属性可互相引用 ！！！但是没有自动提示！！！
+type CompDoc = ComponentDoc<
+  { properties: { aaa_num: number; aaa_user: User | null; aaa_xxx: number; aaa_age: number } }
+>;
+
+SubComponent<Root, CompDoc>()({
+  data: {
+    aaa_xxx: 123,
+  },
+  computed: {
+    aaa_num() {
+      return this.data.aaa_xxx;
+    },
+    aaa_user() {
+      return this.data.user;
+    },
+    aaa_age() {
+      // 输入aaa_num时无提示,但完成后不报错。因为类型的计算在输入完成后才生效。
+      return this.data.aaa_num;
     },
   },
 });

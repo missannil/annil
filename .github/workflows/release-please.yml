@@ -38,6 +38,7 @@ jobs:
             - run: npm i husky -D
               if: ${{ steps.release.outputs.release_created }}
               # 发布包命令
+            - run: npm run build
             - run: npm publish
               env:
                   # 在项目-settings-secrets and variables-actions 下建立Environment secrets,名字为NPM_TOKEN,值为npm下建立的密钥。

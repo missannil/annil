@@ -17,10 +17,6 @@ module.exports = {
     Component: true,
     requirePlugin: true,
     requireMiniProgram: true,
-    // test:true,
-    // expect:true,
-    // describe:true,
-    // beforeAll:true
   },
   /**
    * 由名称:与插件 Prettier ESLint https://marketplace.visualstudio.com/items?itemName=rvest.vs-code-prettier-eslint 冲突

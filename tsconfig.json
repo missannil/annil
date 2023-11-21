@@ -34,5 +34,5 @@
     "allowSyntheticDefaultImports": true, // esModuleInterop 为true时自动true
     "types": ["./node_modules/missannil-api-typings", "./node_modules/hry-types", "./node_modules/mobx", "jest"]
   },
-  "include": ["**/*.ts"]
+  "include": ["**/*.ts", "src/api/SubComponent/NonEmptyDoc/Inherit/test/normal.test.ts"]
 }

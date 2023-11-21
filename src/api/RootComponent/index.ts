@@ -1,6 +1,8 @@
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { EmptyObject } from "hry-types/src/Misc/EmptyObject";
+import type { Func } from "hry-types/src/Misc/Func";
 import type { ComputeIntersectionDeep } from "hry-types/src/Object/_api";
+import type { WMCompOtherOption } from "../../types/officialCorrelation";
 import type { ComponentDoc } from "../DefineComponent/ReturnType/ComponentDoc";
 import type { ComputedConstraint } from "./Computed/ComputedConstraint";
 import type { ComputedOption } from "./Computed/ComputedOption";
@@ -20,9 +22,6 @@ import type { PageLifetimesOption } from "./PageLifetimes/PageLifetimesOption";
 import type { GetPropertiesDoc } from "./Properties/GetPropertiesDoc";
 import type { PropertiesConstraint } from "./Properties/PropertiesConstraint";
 import type { PropertiesOption } from "./Properties/PropertiesOption";
-
-import type { Func } from "hry-types/src/Misc/Func";
-import type { WMCompOtherOption } from "../../types/officialCorrelation";
 import type { GeTStateDoc } from "./State/GeTStateDoc";
 import type { StateConstraint } from "./State/StateConstraint";
 import type { StateOption } from "./State/StateOption";

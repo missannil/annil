@@ -127,3 +127,15 @@ export const DefineComponent: DefineComponentConstructor = function(options): an
 
   Component(componentOptions as any);
 };
+
+export type PageOptions = {
+  path: Path;
+  rootComponent: RootComponentDoc & { isPage: true };
+  subComponents: SubComponentDoc[];
+};
+
+export type CompOptions = {
+  name: string;
+  rootComponent: RootComponentDoc & { isPage: undefined };
+  subComponents: SubComponentDoc[];
+};

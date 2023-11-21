@@ -23,3 +23,19 @@ RootComponent()({
     },
   },
 });
+
+/**
+ * 2. 没有的字段报错
+ */
+RootComponent()({
+  methods: {
+    M1() {
+      1;
+    },
+
+    M2() {
+      // @ts-expect-error 没有的字段
+      this.M3();
+    },
+  },
+});

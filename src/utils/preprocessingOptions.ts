@@ -55,7 +55,7 @@ function funcFieldsCollect(
     const handler = config[key];
     // 收集声明周期函数
     const tempCache: object = funcConfig[type] ||= {};
-    const filedList: Function[] = tempCache[key] ||= [];
+    const filedList: Func[] = tempCache[key] ||= [];
 
     filedList.push(handler);
   }
@@ -141,8 +141,8 @@ export function funcConfigHandle(
 
 export function createdHijack(
   componentOptions: ComponentOptions,
-  before: Function[] = [],
-  after: Function[] = [],
+  before: Func[] = [],
+  after: Func[] = [],
 ) {
   const lifetimes = componentOptions.lifetimes ||= {};
   // const originalOptions = deepClone(options);
@@ -194,8 +194,8 @@ export function addStateConfigToMethods(componentOptions: ComponentOptions) {
 
 export function attachedHijack(
   componentOptions: ComponentOptions,
-  beforeHandleList: Function[] = [],
-  afterHandleList: Function[] = [],
+  beforeHandleList: Func[] = [],
+  afterHandleList: Func[] = [],
 ) {
   componentOptions.lifetimes ??= {};
 
@@ -216,8 +216,8 @@ export function attachedHijack(
 
 export function detachedHijack(
   componentOptions: ComponentOptions,
-  beforeHandleList: Function[] = [],
-  afterHandleList: Function[] = [],
+  beforeHandleList: Func[] = [],
+  afterHandleList: Func[] = [],
 ) {
   componentOptions.lifetimes ??= {};
 
@@ -280,8 +280,8 @@ export function excludeFields(config: object, excludeKeys: string[]) {
  */
 export function onLoadHijack(
   options: ComponentOptions,
-  before: AnyFunction[],
-  after: AnyFunction[] = [],
+  before: Func[],
+  after: Func[] = [],
 ) {
   options.methods ||= {};
 

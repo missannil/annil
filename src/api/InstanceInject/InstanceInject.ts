@@ -1,6 +1,6 @@
 // import type { WMComponentOption } from "../../types/officialAlias";
 
-// // export type InjectMethodConstraint = Record<string, Function>;
+// // export type InjectMethodConstraint = Record<string, Func>;
 
 // // export type InjectDataConstraint = Record<string, unknown>;
 

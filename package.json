@@ -19,7 +19,6 @@
     "commitlint": "^17.6.5",
     "eslint": "^8.50.0",
     "eslint-plugin-tsdoc": "^0.2.17",
-    "hry-types": "^0.16.12",
     "husky": "^8.0.3",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
@@ -45,5 +44,8 @@
     "wmp"
   ],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "hry-types": "^0.16.12"
+  }
 }

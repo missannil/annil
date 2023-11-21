@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.4.0](https://github.com/missannil/ts-wmp/compare/v0.3.0...v0.4.0) (2023-11-21)
+
+
+### Features
+
+* add APi navigateTo ([#28](https://github.com/missannil/ts-wmp/issues/28)) ([c4a4344](https://github.com/missannil/ts-wmp/commit/c4a43445ed5289a6eaa0fe56aab172cb1c29bf99))
+
+
+### Bug Fixes
+
+* 11 ([#11](https://github.com/missannil/ts-wmp/issues/11)) ([415e71f](https://github.com/missannil/ts-wmp/commit/415e71f23ad2b944437fc5533feb2794c0510ed8))
+* 11 ([#13](https://github.com/missannil/ts-wmp/issues/13)) ([81c8a88](https://github.com/missannil/ts-wmp/commit/81c8a886a8feab1fa89e61f07c6e31db2c06a161))
+* subComputed finished ([#24](https://github.com/missannil/ts-wmp/issues/24)) ([b6803ed](https://github.com/missannil/ts-wmp/commit/b6803ed7c39f5d8f2aea1e1c3118870c41df46d0))
+
 ## [0.3.0](https://github.com/missannil/ts-wmp/compare/v0.2.0...v0.3.0) (2023-07-11)
 
 

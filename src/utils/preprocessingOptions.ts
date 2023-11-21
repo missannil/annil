@@ -178,19 +178,19 @@ export function addComputedFieldToMethods(componentOptions: ComponentOptions) {
   // delete componentOptions.computed;
 }
 
-/**
- * 初始化store把store配置加入到methods中,带入到组件实例中
- */
-export function addStoreConfigToMethods(componentOptions: ComponentOptions) {
-  // 把响应式数据配置保留在methods的__storeConfig__字段下带入到组件实例中(不用函数返回方式也可以,但不符合methods字段类型),后续再从原型上删除。
-  componentOptions.methods ||= {};
+// /**
+//  * 初始化store把store配置加入到methods中,带入到组件实例中
+//  */
+// export function addStoreConfigToMethods(componentOptions: ComponentOptions) {
+//   // 把响应式数据配置保留在methods的__storeConfig__字段下带入到组件实例中(不用函数返回方式也可以,但不符合methods字段类型),后续再从原型上删除。
+//   componentOptions.methods ||= {};
 
-  const storeConfig = componentOptions.store;
+//   const storeConfig = componentOptions.store;
 
-  componentOptions.methods.__storeConfig__ = () => storeConfig;
+//   componentOptions.methods.__storeConfig__ = () => storeConfig;
 
-  delete componentOptions.store;
-}
+//   delete componentOptions.store;
+// }
 
 export function attachedHijack(
   componentOptions: ComponentOptions,

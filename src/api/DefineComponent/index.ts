@@ -6,7 +6,6 @@ import { BStore } from "../../behaviors/BStore";
 import type { WMComponent, WMCompPageLifetimes, WMPageLifetimes } from "../../types/officialCorrelation";
 import { isEmptyObject } from "../../utils/isEmptyObject";
 import {
-  addStoreConfigToMethods,
   excludeFields,
   funcConfigHandle,
   onLoadHijack,
@@ -90,7 +89,7 @@ export type DefineComponentOptions = {
 };
 
 export const DefineComponent: DefineComponentConstructor = function(options): any {
-  // console.log("------------------------------------------------分割线------------------------------------------------");
+  console.log("------------------------------------------------分割线------------------------------------------------");
 
   // 最终的配置
   const componentOptions: ComponentOptions = {
@@ -118,7 +117,6 @@ export const DefineComponent: DefineComponentConstructor = function(options): an
   if (!isEmptyObject(funcConfig)) {
     funcConfigHandle(componentOptions, options.rootComponent?.isPage, funcConfig);
   }
-  addStoreConfigToMethods(componentOptions);
 
   componentOptions.methods && excludeFields(componentOptions.methods, ["disposer", "applySetData"]);
 

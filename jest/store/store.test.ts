@@ -1,4 +1,4 @@
-import { load, render, sleep } from "miniprogram-simulate";
+import { load, render } from "miniprogram-simulate";
 import { runInAction } from "mobx";
 import path from "path";
 import type { InstanceInner } from "../../src/behaviors/BComputedAndWatch/types";
@@ -21,32 +21,18 @@ describe("store-test", () => {
     expect(instance.data.aaa_name).toBe("zhao");
   });
 
-  test("store数据变化时自动setData(默认异步的)", async () => {
+  test("store数据变化时自动setData(同步)", () => {
     runInAction(() => {
       user.age++;
-
-      user.name = "lili";
     });
 
-    await sleep(0);
+    runInAction(() => {
+      user.name = "lili";
+    });
 
     expect(instance.data.age).toBe(11);
 
     expect(instance.data.aaa_name).toBe("lili"); // 测试渲染结果
-  });
-
-  test("store数据变化时,可通过实例方法applySetData实现同步自动setData", () => {
-    runInAction(() => {
-      user.age++;
-
-      user.name = "maliang";
-    });
-
-    instance.applySetData();
-
-    expect(instance.data.age).toBe(12);
-
-    expect(instance.data.aaa_name).toBe("maliang"); // 测试渲染结果
   });
 
   test("实例方法disposer可取消对store变化的监控", () => {
@@ -56,11 +42,11 @@ describe("store-test", () => {
     runInAction(() => {
       user.age++;
 
-      user.name = "";
+      user.name = "xxx";
     });
 
-    expect(comp.instance.data.age).toBe(12);
+    expect(comp.instance.data.age).toBe(11);
 
-    expect(comp.instance.data.aaa_name).toBe("maliang");
+    expect(comp.instance.data.aaa_name).toBe("lili");
   });
 });

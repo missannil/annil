@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.5.1](https://github.com/missannil/ts-wmp/compare/v0.5.0...v0.5.1) (2023-11-21)
+
+
+### Bug Fixes
+
+* 1.添加hry-types生成依赖 ([#40](https://github.com/missannil/ts-wmp/issues/40)) ([0b8d680](https://github.com/missannil/ts-wmp/commit/0b8d680b99b4e46528f23f777f5acf4d95cede5e))
+* 页面情况下把options下的 virtualHost 字段删除 ([0b8d680](https://github.com/missannil/ts-wmp/commit/0b8d680b99b4e46528f23f777f5acf4d95cede5e))
+
 ## [0.5.0](https://github.com/missannil/ts-wmp/compare/v0.4.0...v0.5.0) (2023-11-21)
 
 

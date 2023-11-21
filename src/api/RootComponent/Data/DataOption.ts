@@ -8,7 +8,7 @@ export type DataOption<TData extends object, TProperties> = {
    * {
    *   //...
    *   data:{
-   *     reactive_user:() => UserState.user
+   *     reactive_user:() => UserStore.user
    *   }
    * }
    * ```

@@ -5,5 +5,5 @@ export type SubInstance<
   TData extends object,
   AllData extends object,
   AllCustomEventsDoc extends object,
-  SubStateDoc extends object,
-> = RootComponentInstance<false, TAllMethods, TData, AllData, AllCustomEventsDoc, SubStateDoc>;
+  SubStoreDoc extends object,
+> = RootComponentInstance<false, TAllMethods, TData, AllData, AllCustomEventsDoc, SubStoreDoc>;

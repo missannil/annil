@@ -179,17 +179,17 @@ export function addComputedFieldToMethods(componentOptions: ComponentOptions) {
 }
 
 /**
- * 把state配置加入到methods中,带入到组件实例中
+ * 初始化store把store配置加入到methods中,带入到组件实例中
  */
-export function addStateConfigToMethods(componentOptions: ComponentOptions) {
-  // 把响应式数据配置保留在methods的__stateConfig__字段下带入到组件实例中(不用函数返回方式也可以,但不符合methods字段类型),后续再从原型上删除。
+export function addStoreConfigToMethods(componentOptions: ComponentOptions) {
+  // 把响应式数据配置保留在methods的__storeConfig__字段下带入到组件实例中(不用函数返回方式也可以,但不符合methods字段类型),后续再从原型上删除。
   componentOptions.methods ||= {};
 
-  const stateConfig = componentOptions.state;
+  const storeConfig = componentOptions.store;
 
-  componentOptions.methods.__stateConfig__ = () => stateConfig;
+  componentOptions.methods.__storeConfig__ = () => storeConfig;
 
-  delete componentOptions.state;
+  delete componentOptions.store;
 }
 
 export function attachedHijack(
@@ -236,9 +236,9 @@ export function detachedHijack(
   };
 }
 
-export function stateHandle(this: InstanceInner) {
+export function storeHandle(this: InstanceInner) {
   // 取出通过methods带入的responsiveConfig
-  const responsiveConfig = this.__stateConfig__?.();
+  const responsiveConfig = this.__storeConfig__?.();
   if (!responsiveConfig) return;
   for (const key in responsiveConfig) {
     // 占用this的key,未对有可能的键冲突做处理
@@ -260,7 +260,7 @@ export function stateHandle(this: InstanceInner) {
     );
   }
   //  methods属性是加载在实例原型上的
-  Reflect.deleteProperty((this as any).__proto__, "__stateConfig__");
+  Reflect.deleteProperty((this as any).__proto__, "__storeConfig__");
 }
 
 /**

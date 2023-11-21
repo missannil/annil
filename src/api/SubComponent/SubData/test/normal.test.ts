@@ -14,7 +14,7 @@ type CompDoc = ComponentDoc<{
   };
 }>;
 
-// 1 data字段的key提示为:组件文档字段去除inherit字段后的字段.值类型为:文档对应字段类型或函数返回类型(表示引入的State数据)。或临时字段(内部运算所用字段,无法渲染到页面)key,值类型为unknown
+// 1 data字段的key提示为:组件文档字段去除inherit字段后的字段.值类型为:文档对应字段类型或函数返回类型(表示引入的Store数据)。或临时字段(内部运算所用字段,无法渲染到页面)key,值类型为unknown
 SubComponent<{}, CompDoc>()({
   inherit: {
     aaa_obj: "wxml",

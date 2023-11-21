@@ -6,7 +6,7 @@ const user = observable({
 });
 
 RootComponent()({
-  state: {
+  store: {
     userName: () => user.name,
     userAge: () => user.age,
   },

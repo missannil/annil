@@ -22,9 +22,9 @@ import type { PageLifetimesOption } from "./PageLifetimes/PageLifetimesOption";
 import type { GetPropertiesDoc } from "./Properties/GetPropertiesDoc";
 import type { PropertiesConstraint } from "./Properties/PropertiesConstraint";
 import type { PropertiesOption } from "./Properties/PropertiesOption";
-import type { GeTStateDoc } from "./State/GeTStateDoc";
-import type { StateConstraint } from "./State/StateConstraint";
-import type { StateOption } from "./State/StateOption";
+import type { GeTStoreDoc } from "./Store/GeTStoreDoc";
+import type { StoreConstraint } from "./Store/StoreConstraint";
+import type { StoreOption } from "./Store/StoreOption";
 import type { WatchOption } from "./Watch/WatchOption";
 
 type RootComponentOptions<
@@ -35,13 +35,13 @@ type RootComponentOptions<
   TMethods extends MethodsConstraint,
   TProperties extends PropertiesConstraint,
   TData extends object,
-  TState extends StateConstraint,
+  TStore extends StoreConstraint,
   TComputed extends Record<string, Func>,
   EventsDoc extends object,
   CustomEventsDoc extends object,
   PropertiesDoc extends object,
   DataDoc extends object,
-  StateDoc extends object,
+  StoreDoc extends object,
   ComputedDoc extends object,
 > =
   & MethodsOption<TMethods, keyof (EventsDoc & CustomEventsDoc)>
@@ -50,15 +50,15 @@ type RootComponentOptions<
   & CustomEventsOption<TCustomEvents, EventsDoc>
   & EventsOption<TEvents, EventsConstraint<TReceivedComponentDoc>>
   & DataOption<TData, PropertiesDoc>
-  & StateOption<TState, PropertiesDoc & DataDoc>
-  & ComputedOption<TComputed, Required<PropertiesDoc> & DataDoc & StateDoc, ComputedDoc>
+  & StoreOption<TStore, PropertiesDoc & DataDoc>
+  & ComputedOption<TComputed, Required<PropertiesDoc> & DataDoc & StoreDoc, ComputedDoc>
   & PageLifetimesOption<TIsPage, PropertiesDoc>
   & LifetimesOption<TIsPage>
   & WatchOption<
     & ComputedDoc
     & Required<PropertiesDoc>
     & DataDoc
-    & StateDoc
+    & StoreDoc
   >
   & Partial<Omit<WMCompOtherOption, "pageLifetimes">>
   & ThisType<
@@ -66,9 +66,9 @@ type RootComponentOptions<
       TIsPage,
       TMethods,
       DataDoc,
-      DataDoc & Required<PropertiesDoc> & StateDoc & ComputedDoc,
+      DataDoc & Required<PropertiesDoc> & StoreDoc & ComputedDoc,
       CustomEventsDoc,
-      StateDoc
+      StoreDoc
     >
   >;
 
@@ -86,7 +86,7 @@ type RootComponentConstructor<TReceivedComponentDoc extends ComponentDoc[] | Com
     TIsPage extends boolean = false,
     TProperties extends PropertiesConstraint<Literal> = {},
     TData extends object = {},
-    TState extends StateConstraint = {},
+    TStore extends StoreConstraint = {},
     TComputed extends ComputedConstraint = {},
     // 页面时自定义事件无意义
     TCustomEvents extends IfExtends<TIsPage, false, CustomEventConstraint, EmptyObject> = {},
@@ -95,7 +95,7 @@ type RootComponentConstructor<TReceivedComponentDoc extends ComponentDoc[] | Com
     CustomEventsDoc extends object = GetCustomEventDoc<TCustomEvents>,
     PropertiesDoc extends object = GetPropertiesDoc<TProperties>,
     DataDoc extends object = TData,
-    StateDoc extends object = GeTStateDoc<TState>,
+    StoreDoc extends object = GeTStoreDoc<TStore>,
     ComputedDoc extends object = GetComputedDoc<TComputed>,
   >(
     options: RootComponentOptions<
@@ -106,13 +106,13 @@ type RootComponentConstructor<TReceivedComponentDoc extends ComponentDoc[] | Com
       TMethods,
       TProperties,
       TData,
-      TState,
+      TStore,
       TComputed,
       EventsDoc,
       CustomEventsDoc,
       PropertiesDoc,
       DataDoc,
-      StateDoc,
+      StoreDoc,
       ComputedDoc
     >,
   ): // 返回类型 RootComponentDoc
@@ -120,7 +120,7 @@ type RootComponentConstructor<TReceivedComponentDoc extends ComponentDoc[] | Com
     & IfExtends<TIsPage, false, {}, { isPage: true }>
     & IfExtends<EmptyObject, PropertiesDoc, {}, { properties: PropertiesDoc }>
     & IfExtends<EmptyObject, DataDoc, {}, { data: DataDoc }>
-    & IfExtends<EmptyObject, StateDoc, {}, { state: StateDoc }>
+    & IfExtends<EmptyObject, StoreDoc, {}, { store: StoreDoc }>
     & IfExtends<EmptyObject, ComputedDoc, {}, { computed: ComputedDoc }>
     & IfExtends<EmptyObject, TMethods, {}, { methods: TMethods }>
     & IfExtends<EmptyObject, EventsDoc, {}, { events: EventsDoc }>

@@ -3,8 +3,8 @@ import { runInAction } from "mobx";
 import path from "path";
 import type { InstanceInner } from "../../src/behaviors/BComputedAndWatch/types";
 import { user } from "./user";
-describe("state-test", () => {
-  const id = load(path.resolve(__dirname, "state"));
+describe("store-test", () => {
+  const id = load(path.resolve(__dirname, "store"));
   const comp = render(id);
 
   const parent = document.createElement("parent-wrapper");
@@ -15,13 +15,13 @@ describe("state-test", () => {
 
   const instance = comp.instance as unknown as (InstanceInner & { data: InstanceData });
 
-  test("state数据初始化在attached周期", () => {
+  test("store数据初始化在attached周期", () => {
     expect(instance.data.age).toBe(10);
 
     expect(instance.data.aaa_name).toBe("zhao");
   });
 
-  test("state数据变化时自动setData(默认异步的)", async () => {
+  test("store数据变化时自动setData(默认异步的)", async () => {
     runInAction(() => {
       user.age++;
 
@@ -35,7 +35,7 @@ describe("state-test", () => {
     expect(instance.data.aaa_name).toBe("lili"); // 测试渲染结果
   });
 
-  test("state数据变化时,可通过实例方法applySetData实现同步自动setData", () => {
+  test("store数据变化时,可通过实例方法applySetData实现同步自动setData", () => {
     runInAction(() => {
       user.age++;
 
@@ -49,7 +49,7 @@ describe("state-test", () => {
     expect(instance.data.aaa_name).toBe("maliang"); // 测试渲染结果
   });
 
-  test("实例方法disposer可取消对state变化的监控", () => {
+  test("实例方法disposer可取消对store变化的监控", () => {
     for (const key in instance.disposer) {
       instance.disposer[key]();
     }

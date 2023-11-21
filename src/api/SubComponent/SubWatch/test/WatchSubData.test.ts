@@ -23,7 +23,7 @@ SubComponent<{}, CompDoc>()({
 
     _aaa_other: 123,
   },
-  state: {
+  store: {
     aaa_num: () => 123,
   },
   watch: {

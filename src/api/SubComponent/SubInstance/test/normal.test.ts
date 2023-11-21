@@ -41,7 +41,7 @@ SubComponent<RootDoc, CompDoc>()({
   data: {
     aaa_str: "str",
   },
-  state: {
+  store: {
     _aaa_SubReactive: () => 123,
   },
   computed: {},

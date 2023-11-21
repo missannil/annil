@@ -1,10 +1,10 @@
 import type { V } from "hry-types";
 
-export type SubStateOption<TSubState extends object, legalKeys extends PropertyKey, TPrefix extends string> = {
-  state?:
-    & TSubState
+export type SubStoreOption<TSubStore extends object, legalKeys extends PropertyKey, TPrefix extends string> = {
+  store?:
+    & TSubStore
     & V.IllegalFieldValidator<
-      TSubState,
+      TSubStore,
       legalKeys | `_${TPrefix}_${string}`,
       0,
       "",

@@ -2,11 +2,11 @@ import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { Func } from "hry-types/src/Misc/Func";
 import { BBeforeCreate } from "../../behaviors/BbeforeCreated";
 import { BComputedAndWatch } from "../../behaviors/BComputedAndWatch";
-import { BState } from "../../behaviors/BState";
+import { BStore } from "../../behaviors/BStore";
 import type { WMComponent, WMCompPageLifetimes, WMPageLifetimes } from "../../types/officialCorrelation";
 import { isEmptyObject } from "../../utils/isEmptyObject";
 import {
-  addStateConfigToMethods,
+  addStoreConfigToMethods,
   excludeFields,
   funcConfigHandle,
   onLoadHijack,
@@ -66,14 +66,15 @@ export type FuncConfig = {
  * 传入原生Component的配置项
  */
 export type ComponentOptions = {
+  isPage?: boolean;
   options?: WMComponent.Options;
   properties?: object;
   data?: object;
-  state?: object;
+  store?: object;
   computed?: Record<string, Func>;
   observers?: Record<string, Func>;
   behaviors?: string[];
-  methods?: Record<string, Func> & { __stateConfig__?: Func };
+  methods?: Record<string, Func> & { __storeConfig__?: Func };
   watch?: Record<string, Func>;
   lifetimes?: LifetimesConstraint;
   pageLifetimes?: Partial<WMCompPageLifetimes & { load: Func } & WMPageLifetimes>;
@@ -92,7 +93,7 @@ export const DefineComponent: DefineComponentConstructor = function(options): an
   // console.log("------------------------------------------------分割线------------------------------------------------");
 
   // 最终的配置
-  const componentOptions: ComponentOptions & { isPage?: boolean } = {
+  const componentOptions: ComponentOptions = {
     options: {
       // addGlobalClass: true,
       multipleSlots: true,
@@ -100,7 +101,7 @@ export const DefineComponent: DefineComponentConstructor = function(options): an
       virtualHost: true,
     },
     // default behaviors
-    behaviors: [BState, BComputedAndWatch],
+    behaviors: [BStore, BComputedAndWatch],
   };
   /**
    * 有些选项配置是函数,且可能分布在根组件和子组件中,tempConfig 用于收集这些配置,最终再一起整合进componentOptions配置。rootComponentHandle和subComponentsHandle都会收集配置，funcConfigHandle整理配置。
@@ -117,7 +118,7 @@ export const DefineComponent: DefineComponentConstructor = function(options): an
   if (!isEmptyObject(funcConfig)) {
     funcConfigHandle(componentOptions, options.rootComponent?.isPage, funcConfig);
   }
-  addStateConfigToMethods(componentOptions);
+  addStoreConfigToMethods(componentOptions);
 
   componentOptions.methods && excludeFields(componentOptions.methods, ["disposer", "applySetData"]);
 

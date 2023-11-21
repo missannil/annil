@@ -73,7 +73,7 @@ export type ScrollView = CreateComponentDoc<"scrollView", {
     // 自定义下拉刷新被触发
     bindrefresherrefresh: EmptyObject;
     // 自定义下拉刷新被复位
-    bindrefresherreState: EmptyObject;
+    bindrefresherreStore: EmptyObject;
     // 自定义下拉刷新被中止
     bindrefresherabort: EmptyObject;
   };

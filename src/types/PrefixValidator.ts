@@ -1,3 +1,5 @@
+import type { Func } from "hry-types/src/Misc/Func";
+
 /**
  * 验证泛型对象的前缀是否正确
  * @example
@@ -50,5 +52,5 @@ export type PrefixValidator<
 > = "" extends TPrefix ? unknown : {
   [
     k in keyof G as k extends `${TPrefix}_${string}` ? never : k
-  ]: G[k] extends Function ? `⚠️${Error}` : () => `⚠️${Error}`;
+  ]: G[k] extends Func ? `⚠️${Error}` : () => `⚠️${Error}`;
 };

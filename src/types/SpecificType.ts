@@ -13,7 +13,7 @@
  * type PropConstructor<T> =
   | { (): T }
   | { new (...args: never[]): T & object }
-  | { new (...args: string[]): Function }
+  | { new (...args: string[]): Func }
  * ```
  */
 export type SpecificType<T = unknown> = { (): T } | { new(...arg: any[]): T };

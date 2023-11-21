@@ -89,10 +89,10 @@ export type DefineComponentOptions = {
 };
 
 export const DefineComponent: DefineComponentConstructor = function(options): any {
-  console.log("------------------------------------------------分割线------------------------------------------------");
+  // console.log("------------------------------------------------分割线------------------------------------------------");
 
   // 最终的配置
-  const componentOptions: ComponentOptions = {
+  const componentOptions: ComponentOptions & { isPage?: boolean } = {
     options: {
       // addGlobalClass: true,
       multipleSlots: true,
@@ -125,7 +125,10 @@ export const DefineComponent: DefineComponentConstructor = function(options): an
 
   onLoadHijack(componentOptions, [onLoadReceivedDataHandle], []);
 
-  return Component(componentOptions as any);
+  if (componentOptions.isPage) {
+    Reflect.deleteProperty(componentOptions.options!, "virtualHost");
+  }
+  Component(componentOptions as any);
 };
 
 export type PageOptions = {

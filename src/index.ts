@@ -2,14 +2,16 @@ export type { Vant, Wm } from "./thirdLib";
 
 export type { Dataset, Detail, WMBaseEvent, WMCustomEvent } from "./types/officialCorrelation";
 
-export { navigateTo } from "./api/navigateTo";
+import { navigateTo } from "./api/navigateTo";
 
-export { DefineComponent } from "./api/DefineComponent";
+import { DefineComponent } from "./api/DefineComponent";
 
-export { RootComponent } from "./api/RootComponent";
+import { RootComponent } from "./api/RootComponent";
 
-export { SubComponent } from "./api/SubComponent";
+import { SubComponent } from "./api/SubComponent";
 
-export type { SpecificType } from "./types/SpecificType";
+import type { SpecificType } from "./types/SpecificType";
 
-export type { ParamsEqual } from "./types/TwoParamsEqual";
+import type { ParamsEqual } from "./types/TwoParamsEqual";
+
+export { DefineComponent, navigateTo, type ParamsEqual, RootComponent, type SpecificType, SubComponent };

@@ -3,7 +3,6 @@
   "compilerOptions": {
     "noEmit": false,
     // "diagnostics": true,
-    "watch": false,
     "outDir": "dist",
     "sourceMap": true,
     "declaration": true

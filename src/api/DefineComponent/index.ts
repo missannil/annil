@@ -125,7 +125,7 @@ export const DefineComponent: DefineComponentConstructor = function(options): an
 
   onLoadHijack(componentOptions, [onLoadReceivedDataHandle], []);
 
-  Component(componentOptions as any);
+  return Component(componentOptions as any);
 };
 
 export type PageOptions = {

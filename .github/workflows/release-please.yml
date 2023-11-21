@@ -37,7 +37,7 @@ jobs:
               if: ${{ steps.release.outputs.release_created }}
             - run: npm i husky -D
               if: ${{ steps.release.outputs.release_created }}
-            - run: npm i 
+            - run: npm install
               if: ${{ steps.release.outputs.release_created }}
               # 打包
             - run: npm run build

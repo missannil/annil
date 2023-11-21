@@ -1,3 +1,5 @@
+import type { Func } from "hry-types/src/Misc/Func";
+
 export type SubMethodsConstraint = {
-  [x: string]: Function;
+  [x: string]: Func;
 };

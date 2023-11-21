@@ -41,6 +41,7 @@ jobs:
               if: ${{ steps.release.outputs.release_created }}
               # 打包
             - run: npm run build
+              if: ${{ steps.release.outputs.release_created }}
               # 发布
             - run: npm publish
               env:

@@ -1,5 +1,6 @@
 import type { O } from "hry-types";
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
+import type { Func } from "hry-types/src/Misc/Func";
 
 /**
  * 获取data字段文档类型
@@ -17,8 +18,8 @@ export type GetDataDoc<
   IfExtends<
     Type,
     "去掉函数字段",
-    O.Filter<TData, Function>,
+    O.Filter<TData, Func>,
     // "返回函数字段"
-    O.Select<TData, Function>
+    O.Select<TData, Func>
   >
 >;

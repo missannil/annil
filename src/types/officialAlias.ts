@@ -6,6 +6,7 @@ export type WMCustomEvent<
   CurrentTargetDataset extends object = object,
   TargetDataset extends object = CurrentTargetDataset,
 > = WechatMiniprogram.CustomEvent<
+  // @ts-ignore
   Detail,
   Mark,
   CurrentTargetDataset,

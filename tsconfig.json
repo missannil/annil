@@ -32,7 +32,7 @@
     "noFallthroughCasesInSwitch": true, // 报告switch语句中漏接情况的错误
     // 指定加载包的路径,默认加载所有@types下的包 包含上级目录
     "allowSyntheticDefaultImports": true, // esModuleInterop 为true时自动true
-    "types": ["./node_modules/missannil-api-typings", "./node_modules/hry-types", "./node_modules/mobx", "jest"]
+    "types": ["./node_modules/hry-types", "./node_modules/mobx", "jest"]
   },
   "include": ["**/*.ts", "src/api/SubComponent/NonEmptyDoc/Inherit/test/normal.test.ts"]
 }

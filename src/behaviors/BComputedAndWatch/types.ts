@@ -4,7 +4,7 @@ import type { ComputedDependence } from "./initComputed";
 export type InstanceInner = {
   __pendingSetData__?: object | null;
   applySetData: Func;
-  __stateConfig__?: () => Record<string, () => unknown>;
+  __storeConfig__?: () => Record<string, () => unknown>;
   __computedStatus__?: "初始化中" | "待更新" | "更新完毕";
   __computedUpdater__: Func;
   __computedConfig__?: () => Record<string, Func>;

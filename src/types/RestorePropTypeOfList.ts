@@ -1,11 +1,11 @@
 import { Checking, type Test } from "hry-types";
 import type { SpecificType } from "./SpecificType";
 
-export type ReStatePropTypeOfList<L, R extends unknown[] = []> = L extends [infer Head, ...infer Rest]
-  ? ReStatePropTypeOfList<Rest, [...R, SpecificType<Head>]>
+export type ReStorePropTypeOfList<L, R extends unknown[] = []> = L extends [infer Head, ...infer Rest]
+  ? ReStorePropTypeOfList<Rest, [...R, SpecificType<Head>]>
   : R;
 
-type Test1 = ReStatePropTypeOfList<[number, string, { c: boolean }, boolean, string[]]>;
+type Test1 = ReStorePropTypeOfList<[number, string, { c: boolean }, boolean, string[]]>;
 
 type Test1Expect = [
   SpecificType<number>,

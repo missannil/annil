@@ -33,7 +33,7 @@ RootComponent()({
       value: { id: "001", name: "zhao" },
     },
     optionalObject: {
-      type: Object as SpecificType<Mock_User>,
+      type: Object as SpecificType<Mock_User | null>,
       value: null,
     },
   },
@@ -45,10 +45,10 @@ RootComponent()({
         typeof props,
         Required<
           RemoveNullOfRequired<{
-            union?: Mock_User | null;
+            union?: Mock_User;
             optionalObject?: Mock_User | null;
             str: string;
-            obj: object | null;
+            obj: object;
           }>
         >,
         Test.Pass

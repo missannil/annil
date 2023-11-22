@@ -17,7 +17,7 @@ RootComponent()({
     num: 123,
     obj: {} as Mock_User,
   },
-  state: {
+  store: {
     reactiveLiteral: () => obj.gender,
     reactiveNumber: () => ({} as number),
     reactiveUser: () => ({} as Mock_User),

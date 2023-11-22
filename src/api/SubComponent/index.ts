@@ -27,8 +27,8 @@ import type { SubMethodsConstraint } from "./SubMethods/SubMethodsConstraint";
 import type { SubMethodsOption } from "./SubMethods/SubMethodsOption";
 import type { SubPageLifetimesOption } from "./SubPageLifetimes/SubPageLifetimesOption";
 import type { CreateSubComponentDoc } from "./SubReturnType/CreateSubComponentDoc";
-import type { SubStateConstraint } from "./SubState/SubDataConstraint";
-import type { SubStateOption } from "./SubState/SubStateOption";
+import type { SubStoreConstraint } from "./SubStore/SubDataConstraint";
+import type { SubStoreOption } from "./SubStore/SubStoreOption";
 import type { SubWatchOption } from "./SubWatch/SubWatchOption";
 
 type Options<
@@ -39,13 +39,13 @@ type Options<
   AllRootDataDoc extends object,
   TInherit extends object,
   TSubData extends object,
-  TSubState extends object,
+  TSubStore extends object,
   TSubComputed extends SubComputedConstraint,
   TEvents extends object,
   TSubMethods extends object,
   InheritDoc extends object,
   SubDataDoc extends object,
-  SubStateDoc extends object,
+  SubStoreDoc extends object,
   SubComputedDoc extends SubComputedConstraint,
   SubEventsDoc extends object,
   SubMethodsDoc extends object,
@@ -56,16 +56,16 @@ type Options<
     Exclude<keyof CurrentCompDoc["properties"], (keyof InheritDoc)>,
     Prefix
   >
-  & SubStateOption<
-    TSubState,
+  & SubStoreOption<
+    TSubStore,
     Exclude<keyof CurrentCompDoc["properties"], (keyof (InheritDoc & SubDataDoc))>,
     Prefix
   >
   & SubComputedOption<
     TSubComputed,
-    AllRootDataDoc & SubDataDoc & SubDataDoc & SubComputedDoc,
+    // AllRootDataDoc & SubDataDoc & SubDataDoc & SubComputedDoc,
     // 合法的配置
-    Omit<CurrentCompDoc["properties"], (keyof (InheritDoc & SubDataDoc & SubStateDoc))>
+    Omit<CurrentCompDoc["properties"], (keyof (InheritDoc & SubDataDoc & SubStoreDoc))>
   >
   & SubEventsOption<TEvents, SubEventsDoc, keyof SubEventsConstraint<CurrentCompDoc>>
   & SubMethodsOption<TSubMethods, Prefix, keyof CurrentCompDoc["customEvents"]>
@@ -75,16 +75,16 @@ type Options<
     & SubComputedDoc
     & SubDataDoc
     & AllRootDataDoc
-    & SubStateDoc
+    & SubStoreDoc
   >
   & Partial<Omit<WMCompOtherOption, "pageLifetimes">>
   & ThisType<
     SubInstance<
       SubMethodsDoc & RootDoc["methods"],
       TSubData,
-      AllRootDataDoc & SubDataDoc & SubComputedDoc & SubStateDoc,
+      AllRootDataDoc & SubDataDoc & SubComputedDoc & SubStoreDoc,
       RootDoc["customEvents"] & {},
-      SubStateDoc
+      SubStoreDoc
     >
   >;
 
@@ -111,7 +111,7 @@ type SubComponentConstructor<
   <
     TInherit extends InheritConstraint<AllRootDataDoc, CurrentCompDoc>,
     TSubData extends SubDataConstraint<Omit<Required<CurrentCompDoc["properties"]>, keyof InheritDoc>>,
-    TSubState extends SubStateConstraint<Omit<Required<CurrentCompDoc["properties"]>, keyof (InheritDoc & SubDataDoc)>>,
+    TSubStore extends SubStoreConstraint<Omit<Required<CurrentCompDoc["properties"]>, keyof (InheritDoc & SubDataDoc)>>,
     TEvents extends SubEventsConstraint<CurrentCompDoc>,
     TSubComputed extends SubComputedConstraint = {},
     TSubMethods extends SubMethodsConstraint = {},
@@ -122,11 +122,11 @@ type SubComponentConstructor<
       {},
       TSubData
     >,
-    SubStateDoc extends object = IfExtends<
-      SubStateConstraint<Omit<Required<CurrentCompDoc["properties"]>, keyof (InheritDoc & SubDataDoc)>>,
-      TSubState,
+    SubStoreDoc extends object = IfExtends<
+      SubStoreConstraint<Omit<Required<CurrentCompDoc["properties"]>, keyof (InheritDoc & SubDataDoc)>>,
+      TSubStore,
       {},
-      { [k in keyof TSubState]: ReturnType<TSubState[k] & {}> }
+      { [k in keyof TSubStore]: ReturnType<TSubStore[k] & {}> }
     >,
     // 无效的计算
     // SubComputedDoc extends ComputedConstraint = GetSubComputedDoc<TSubComputed>,
@@ -140,7 +140,7 @@ type SubComponentConstructor<
     // 缺失的必传字段(配置中inhrit,data,computed的字段不包含的必传字段)
     MissingRequiredField extends PropertyKey = Exclude<
       RequiredKeys<CurrentCompDoc["properties"] & {}>,
-      keyof (InheritDoc & SubDataDoc & SubStateDoc & GetSubComputedDoc<TSubComputed>)
+      keyof (InheritDoc & SubDataDoc & SubStoreDoc & GetSubComputedDoc<TSubComputed>)
     >,
   >(
     options: Options<
@@ -151,13 +151,13 @@ type SubComponentConstructor<
       AllRootDataDoc,
       TInherit,
       TSubData,
-      TSubState,
+      TSubStore,
       TSubComputed,
       TEvents,
       TSubMethods,
       InheritDoc,
       SubDataDoc,
-      SubStateDoc,
+      SubStoreDoc,
       GetSubComputedDoc<TSubComputed>,
       SubEventsDoc,
       SubMethodsDoc

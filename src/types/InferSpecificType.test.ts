@@ -1,31 +1,18 @@
 import { Checking, type Test } from "hry-types";
 
 import type { InferSpecificType } from "./InferSpecificType";
+import type { SpecificType } from "./SpecificType";
 
-type str = StringConstructor;
+Checking<InferSpecificType<StringConstructor>, string, Test.Pass>;
 
-type num = NumberConstructor;
+Checking<InferSpecificType<NumberConstructor>, number, Test.Pass>;
 
-type bool = BooleanConstructor;
+Checking<InferSpecificType<BooleanConstructor>, boolean, Test.Pass>;
 
-type arr = ArrayConstructor;
+Checking<InferSpecificType<ArrayConstructor>, unknown[], Test.Pass>;
 
-type obj = ObjectConstructor;
+Checking<InferSpecificType<ObjectConstructor>, object, Test.Pass>;
 
-type SpecificUnion = () => "a" | "b";
+Checking<InferSpecificType<SpecificType<"a" | "b">>, "a" | "b", Test.Pass>;
 
-type SpecificUnion1 = () => [string, number, boolean];
-
-Checking<InferSpecificType<str>, string, Test.Pass>;
-
-Checking<InferSpecificType<num>, number, Test.Pass>;
-
-Checking<InferSpecificType<bool>, boolean, Test.Pass>;
-
-Checking<InferSpecificType<arr>, unknown[], Test.Pass>;
-
-Checking<InferSpecificType<obj>, object | null, Test.Pass>;
-
-Checking<InferSpecificType<SpecificUnion>, "a" | "b", Test.Pass>;
-
-Checking<InferSpecificType<SpecificUnion1>, [string, number, boolean], Test.Pass>;
+Checking<InferSpecificType<SpecificType<[string, number, boolean]>>, [string, number, boolean], Test.Pass>;

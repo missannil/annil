@@ -13,7 +13,7 @@ export type RootComponentInstance<
   TData extends object,
   AllData extends object,
   CustomEventsDoc extends object,
-  StateDoc extends object,
+  StoreDoc extends object,
 > =
   // 官方实例属性is  options  dataset等
   & IfExtends<false, TIsPage, WMComponentInstance, WMPageInstance>
@@ -21,8 +21,8 @@ export type RootComponentInstance<
   & Omit<WMInstanceMethods<{}>, "setData">
   // 加入自定义setData方法
   & CustomSetData<TData>
-  & IfExtends<{}, StateDoc, unknown, {
-    disposer?: { [k in keyof StateDoc]: IReactionDisposer };
+  & IfExtends<{}, StoreDoc, unknown, {
+    disposer?: { [k in keyof StoreDoc]: IReactionDisposer };
     applySetData: Func;
   }>
   & TMethods

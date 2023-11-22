@@ -32,22 +32,22 @@ RootComponent()({
   },
 });
 
-const state = observable({
+const store = observable({
   name: "zhao",
   age: 20,
 });
 
 RootComponent()({
-  state: {
-    name: () => state.name,
+  store: {
+    name: () => store.name,
   },
   lifetimes: {
     attached() {
       runInAction(() => {
-        state.name = "liil";
+        store.name = "liil";
       });
 
-      // 有state字段时可以调用applySetData
+      // 有store字段时可以调用applySetData
       this.applySetData();
     },
   },

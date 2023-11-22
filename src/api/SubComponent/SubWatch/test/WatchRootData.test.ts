@@ -41,7 +41,7 @@ SubComponent<RootDoc, CompDoc>()({
   data: {
     aaa_str: "str",
   },
-  state: {
+  store: {
     aaa_num() {
       return 123;
     },

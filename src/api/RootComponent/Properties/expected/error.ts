@@ -33,8 +33,10 @@ RootComponent()({
       // @ts-expect-error 类型错误
       value: 123,
     },
-    obj: {
+    optionalObj: {
+      // @ts-expect-error 可选对象value若写null,需要先定义
       type: Object as SpecificType<Mock_Cart>,
+      // @ts-expect-error 可选对象value若写null,需要先定义
       value: null,
     },
     str_num: {

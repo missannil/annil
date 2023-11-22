@@ -10,7 +10,7 @@ type _RootComponentDoc = {
   customEvents?: object;
   methods?: object;
   events?: object;
-  state?: object;
+  store?: object;
   watch?: Record<string, Func>;
   lifetimes?: LifetimesConstraint;
   pageLifetimes?: Partial<WMCompPageLifetimes & { load: Func } & WMPageLifetimes>;
@@ -27,7 +27,7 @@ type _Validator<O, ErrKeys = Exclude<keyof O, keyof _RootComponentDoc>> = [ErrKe
  * isPage?: true;
  * properties?: object;
  * data?: object;
- * state?:object;
+ * store?:object;
  * computed?: object;
  * customEvents?: object;
  * methods?: object;

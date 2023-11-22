@@ -1,5 +1,6 @@
 import { Checking, type Test } from "hry-types";
 import type { ReadonlyDeep } from "hry-types/src/Any/_api";
+import type { SpecificType } from "../../../../types/SpecificType";
 import { RootComponent } from "../..";
 import type { Mock_User } from "../../Properties/expected/normalRequired";
 
@@ -83,3 +84,16 @@ const EmptyComputedFieldDoc = RootComponent()({
 });
 
 Checking<typeof EmptyComputedFieldDoc, { methods: { M1: () => void } }, Test.Pass>;
+
+RootComponent()({
+  isPage: true,
+  properties: {
+    obj: Object as SpecificType<{ name: string; age: number }>,
+  },
+  computed: {
+    age() {
+      // 页面实例对象不添加Null,因为计算属性初始化在onLoad之后(即properties已传入时,且不会传入Null)
+      return this.data.obj.age;
+    },
+  },
+});

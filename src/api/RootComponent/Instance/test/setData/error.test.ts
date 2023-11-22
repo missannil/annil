@@ -12,7 +12,7 @@ RootComponent()({
     arr: [1, 2, 3],
     obj: { num: 1, str: "str" },
   },
-  state: {
+  store: {
     Snum: () => 123,
   },
   computed: {
@@ -28,7 +28,7 @@ RootComponent()({
       });
 
       this.setData({
-        // @ts-expect-error  不可对State字段setData
+        // @ts-expect-error  不可对Store字段setData
         Snum: 123,
       });
 
@@ -65,10 +65,10 @@ RootComponent()({
 });
 
 RootComponent()({
-  state: {},
+  store: {},
   lifetimes: {
     attached() {
-      // @ts-expect-error 没有state字段时不可以调用applySetData
+      // @ts-expect-error 没有store字段时不可以调用applySetData
       this.applySetData();
     },
   },

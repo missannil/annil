@@ -1,6 +1,6 @@
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
-import type { WMCompPageLifetimes, WMPageLifetimes } from "../../../types/officialCorrelation";
+import type { WMCompPageLifetimes, WMPageLifetimes } from "../../../types/OfficialTypeAlias";
 import type { RemoveNullOfRequired } from "../../../types/RemoveNullOfRequired";
 
 export type PageLifetimesOption<TIsPage extends boolean, PropertiesDoc extends object> = IfExtends<

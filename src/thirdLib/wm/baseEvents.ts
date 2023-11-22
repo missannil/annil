@@ -1,5 +1,5 @@
 import type { Bubbles } from "../../api/RootComponent/CustomEvents/CustomEventsTag";
-import type { WMBaseEvent } from "../../types/officialCorrelation";
+import type { WMBaseEvent } from "../../types/OfficialTypeAlias";
 
 export type BaseEvents = {
   /**

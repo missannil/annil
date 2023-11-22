@@ -1,7 +1,7 @@
 import { load, render } from "miniprogram-simulate";
 import { runInAction } from "mobx";
 import path from "path";
-import type { InstanceInner } from "../../src/behaviors/BComputedAndWatch/types";
+import type { Instance } from "../../src/behaviors/BComputedAndWatch/types";
 import { user } from "./user";
 describe("store-test", () => {
   const id = load(path.resolve(__dirname, "store"));
@@ -13,7 +13,7 @@ describe("store-test", () => {
 
   type InstanceData = { age: number; aaa_name: string };
 
-  const instance = comp.instance as unknown as (InstanceInner & { data: InstanceData });
+  const instance = comp.instance as unknown as (Instance & { data: InstanceData });
 
   test("store数据初始化在attached周期", () => {
     expect(instance.data.age).toBe(10);

@@ -1,5 +1,5 @@
 import type { Select } from "hry-types/src/Object/_api";
-import type { Detail, WMBaseEvent } from "../../../types/officialCorrelation";
+import type { Detail, WMBaseEvent } from "../../../types/OfficialTypeAlias";
 import type { ComponentDoc } from "../../DefineComponent/ReturnType/ComponentDoc";
 import type { CustomEventsDoc } from "../CustomEvents/CustomEventsDoc";
 import type {

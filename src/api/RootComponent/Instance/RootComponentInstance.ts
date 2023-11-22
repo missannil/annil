@@ -3,8 +3,8 @@ import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { Func } from "hry-types/src/Misc/Func";
 import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
 import type { IReactionDisposer } from "mobx";
-import type { WMInstanceMethods } from "../../../types/officialAlias";
-import type { WMComponentInstance, WMPageInstance } from "../../../types/officialCorrelation";
+
+import type { WMComponentInstance, WMInstanceMethods, WMPageInstance } from "../../../types/OfficialTypeAlias";
 import type { CustomEventMethods } from "./CustomEventMethods";
 import type { CustomSetData } from "./CustomSetData";
 export type RootComponentInstance<

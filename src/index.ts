@@ -1,6 +1,6 @@
 export type { Vant, Wm } from "./thirdLib";
 
-export type { Dataset, Detail, WMBaseEvent, WMCustomEvent } from "./types/officialCorrelation";
+export type { Dataset, Detail, WMBaseEvent, WMCustomEvent } from "./types/OfficialTypeAlias";
 
 import { navigateTo } from "./api/navigateTo";
 

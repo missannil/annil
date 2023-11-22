@@ -11,7 +11,7 @@ import type {
   WMCompOtherOption,
   WMCompPageLifetimes,
   WMPageLifetimes,
-} from "../../types/officialCorrelation";
+} from "../../types/OfficialTypeAlias";
 import type { RootComponentDoc } from "../RootComponent/RootComponentDoc";
 import type { GetSubComputedDoc } from "./SubComputed/GetSubComputedDoc";
 import type { SubComputedConstraint } from "./SubComputed/SubComputedConstraint";

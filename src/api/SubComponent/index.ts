@@ -63,7 +63,7 @@ type Options<
   >
   & SubComputedOption<
     TSubComputed,
-    AllRootDataDoc & SubDataDoc & SubDataDoc & SubComputedDoc,
+    // AllRootDataDoc & SubDataDoc & SubDataDoc & SubComputedDoc,
     // 合法的配置
     Omit<CurrentCompDoc["properties"], (keyof (InheritDoc & SubDataDoc & SubStoreDoc))>
   >

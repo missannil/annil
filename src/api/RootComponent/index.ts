@@ -51,7 +51,7 @@ type RootComponentOptions<
   & EventsOption<TEvents, EventsConstraint<TReceivedComponentDoc>>
   & DataOption<TData, PropertiesDoc>
   & StoreOption<TStore, PropertiesDoc & DataDoc>
-  & ComputedOption<TComputed, Required<PropertiesDoc> & DataDoc & StoreDoc, ComputedDoc>
+  & ComputedOption<TComputed, Required<PropertiesDoc> & DataDoc & StoreDoc>
   & PageLifetimesOption<TIsPage, PropertiesDoc>
   & LifetimesOption<TIsPage>
   & WatchOption<

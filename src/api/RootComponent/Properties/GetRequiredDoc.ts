@@ -10,16 +10,23 @@ import type { PropertiesConstraint, RequiredSingle, RequiredType } from "./Prope
  */
 export type GetRequiredDoc<
   TProperties extends PropertiesConstraint,
+  TIsPage extends boolean,
   // @ts-ignore
   Required extends Record<string, RequiredType> = Select<TProperties, RequiredType>,
 > = {
   [k in keyof Required]: IfExtends<
     Required[k],
     RequiredSingle,
-    AddNullForObject<InferSpecificType<Required[k]>>,
-    // @ts-ignore Required[k] 必为 RequiredUnion
-    | AddNullForObject<InferSpecificType<Required[k]["type"]>>
-    // @ts-ignore Required[k] 必为 RequiredUnion
-    | AddNullForObject<InferSpecificType<Required[k]["optionalTypes"][number]>>
+    IfExtends<false, TIsPage, AddNullForObject<InferSpecificType<Required[k]>>, InferSpecificType<Required[k]>>,
+    IfExtends<
+      false,
+      TIsPage,
+      // @ts-ignore Required[k] 必为 RequiredUnion
+      | AddNullForObject<InferSpecificType<Required[k]["type"]>>
+      // @ts-ignore Required[k] 必为 RequiredUnion
+      | AddNullForObject<InferSpecificType<Required[k]["optionalTypes"][number]>>,
+      // @ts-ignore Required[k] 必为 RequiredUnion
+      InferSpecificType<Required[k]["type"]> | InferSpecificType<Required[k]["optionalTypes"][number]>
+    >
   >;
 };

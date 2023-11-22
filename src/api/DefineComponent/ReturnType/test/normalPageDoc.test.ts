@@ -25,14 +25,14 @@ const compDocOnlyProperties = DefineComponent({
   rootComponent: OnlyPropsRootDoc,
 });
 
-// 页面时返回的propertiesDoc无前缀,必传对象无null类型。
+// 页面时返回的propertiesDoc无前缀
 type CompDocOnlyPropertiesExpected = {
   path: "/pages/index/index";
   properties: {
-    optionalObj?: Mock_User | null;
+    optionalObj?: Mock_User;
     optionalObjOrNull?: Mock_User | null;
     str: string;
-    obj: Mock_User; // 去除了 OnlyPropsRootDoc加入的null
+    obj: Mock_User;
   };
 };
 

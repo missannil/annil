@@ -8,9 +8,10 @@ import type { OptionalType, PropertiesConstraint } from "./PropertiesConstraint"
 
 type _GetPropertiesDoc<
   TProperties extends PropertiesConstraint,
+  TIsPage extends boolean,
   Type extends "Required" | "Optional" | "all" = "all",
-  OptionalDoc = GetOptionalDoc<Select<TProperties, OptionalType>>,
-  RequiredDoc = GetRequiredDoc<Omit<TProperties, keyof OptionalDoc>>,
+  OptionalDoc = GetOptionalDoc<Select<TProperties, OptionalType>, TIsPage>,
+  RequiredDoc = GetRequiredDoc<Omit<TProperties, keyof OptionalDoc>, TIsPage>,
 > = IfExtends<
   Type,
   "all",
@@ -27,5 +28,6 @@ type _GetPropertiesDoc<
  */
 export type GetPropertiesDoc<
   TProperties extends PropertiesConstraint,
+  TisPage extends boolean,
   Type extends "Required" | "Optional" | "all" = "all",
-> = _GetPropertiesDoc<TProperties, Type>;
+> = _GetPropertiesDoc<TProperties, TisPage, Type>;

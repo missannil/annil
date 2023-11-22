@@ -29,7 +29,7 @@ const mock_optional = {
     },
   },
   optional_objOrNull: {
-    type: Object as SpecificType<Mock_User>, // 可选类型可定义null
+    type: Object as SpecificType<Mock_User | null>, // 可选类型定义null默认值方可为null
     value: null,
   },
 } satisfies Record<string, OptionalType>;

@@ -1,4 +1,5 @@
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
+import type { NoInfer } from "hry-types/src/Generic/NoInfer";
 import type { EmptyObject } from "hry-types/src/Misc/EmptyObject";
 import type { Func } from "hry-types/src/Misc/Func";
 import type { ComputeIntersectionDeep } from "hry-types/src/Object/_api";
@@ -52,7 +53,7 @@ type RootComponentOptions<
   & DataOption<TData, PropertiesDoc>
   & StoreOption<TStore, PropertiesDoc & DataDoc>
   & ComputedOption<TComputed, Required<PropertiesDoc> & DataDoc & StoreDoc>
-  & PageLifetimesOption<TIsPage, PropertiesDoc>
+  & PageLifetimesOption<TIsPage, NoInfer<PropertiesDoc>>
   & LifetimesOption<TIsPage>
   & WatchOption<
     & ComputedDoc
@@ -93,7 +94,7 @@ type RootComponentConstructor<TReceivedComponentDoc extends ComponentDoc[] | Com
     TMethods extends MethodsConstraint = {},
     EventsDoc extends object = IfExtends<EventsConstraint<TReceivedComponentDoc>, TEvents, {}, TEvents>,
     CustomEventsDoc extends object = GetCustomEventDoc<TCustomEvents>,
-    PropertiesDoc extends object = GetPropertiesDoc<TProperties>,
+    PropertiesDoc extends object = GetPropertiesDoc<TProperties, TIsPage>,
     DataDoc extends object = TData,
     StoreDoc extends object = GeTStoreDoc<TStore>,
     ComputedDoc extends object = GetComputedDoc<TComputed>,

@@ -1,7 +1,7 @@
 import type mobx from "mobx";
 import type { ComponentOptions } from "../api/DefineComponent";
 import { deleteProtoField } from "../utils/deleteProtoField";
-import type { InstanceInner } from "./BComputedAndWatch/types";
+import type { Instance } from "./BComputedAndWatch/types";
 
 export const BStore = Behavior({
   definitionFilter(options: ComponentOptions) {
@@ -24,7 +24,7 @@ export const BStore = Behavior({
   },
 
   lifetimes: {
-    created(this: InstanceInner) {
+    created(this: Instance) {
       // 取出通过addStoreConfigToMethods函数带入的storeConfig
       const storeConfig = this.__storeConfig__?.();
       if (!storeConfig) return;
@@ -49,7 +49,7 @@ export const BStore = Behavior({
       }
       deleteProtoField(this, "__storeConfig__");
     },
-    detached(this: InstanceInner) {
+    detached(this: Instance) {
       // 清除store数据
       for (const key in this.disposer) {
         this.disposer[key]();

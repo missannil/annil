@@ -6,7 +6,7 @@ import type { FullCustomEvents, ShortCustomeEvents } from "../api/RootComponent/
 import type { PageInstance } from "../api/RootComponent/Instance/RootComponentInstance";
 import type { RootComponentDoc } from "../api/RootComponent/RootComponentDoc";
 import type { SubComponentOptions } from "../api/SubComponent";
-import type { InstanceInner } from "../behaviors/BComputedAndWatch/types";
+import type { Instance } from "../behaviors/BComputedAndWatch/types";
 import { deepClone } from "./deepClone";
 import { INNERMARKER } from "./InnerMarker";
 
@@ -236,7 +236,7 @@ export function detachedHijack(
   };
 }
 
-export function storeHandle(this: InstanceInner) {
+export function storeHandle(this: Instance) {
   // 取出通过methods带入的responsiveConfig
   const responsiveConfig = this.__storeConfig__?.();
   if (!responsiveConfig) return;
@@ -288,15 +288,15 @@ export function onLoadHijack(
   const cloneOpt = deepClone(options);
   const originalOnLoad: Func | undefined = options.methods.onLoad;
 
-  options.methods.onLoad = function(opt: unknown) {
+  options.methods.onLoad = function(props: unknown) {
     before.forEach((func) => {
-      func.call(this, opt, cloneOpt);
+      func.call(this, props, cloneOpt);
     });
 
-    originalOnLoad?.call(this, opt);
+    originalOnLoad?.call(this, props);
 
     after.forEach((func) => {
-      func.call(this, opt, cloneOpt);
+      func.call(this, props, cloneOpt);
     });
   };
 }

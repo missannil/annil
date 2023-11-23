@@ -1,13 +1,13 @@
 import type { Func } from "hry-types/src/Misc/Func";
 import type { ComponentOptions } from "../../api/DefineComponent";
-import { isEmptyObject } from "../../utils/isEmptyObject";
-import { deepProxy, unwrap } from "./data-tracer";
-import { type ComputedDependence, initComputed } from "./initComputed";
-
 import { deepClone } from "../../utils/deepClone";
 import { deleteProtoField } from "../../utils/deleteProtoField";
+import { initWatchOldValue } from "../../utils/initWatchOldValue";
+import { isEmptyObject } from "../../utils/isEmptyObject";
+import { initComputed } from "./initComputed";
 import { isEqual } from "./isEqual";
-import type { InstanceInner, WatchOldValue } from "./types";
+import { isPage } from "./IsPage";
+import type { Instance } from "./types";
 /**
  * 实现
  * 1. 计算属性初始化在attached之后(前版本在beforeCreate)
@@ -21,69 +21,11 @@ import type { InstanceInner, WatchOldValue } from "./types";
 /**
  * computed初始化值在组件建立后,这样能保证计算属性依赖properties字段时,properties必传字段一定有值,减少计算属性代码(不必考虑properties无值时的情况)。坏处是增加了组件初始化时运行的代码量。
  */
-function getPathsValue(this: InstanceInner, paths: string[]) {
-  return paths.reduce((pre: unknown, path) => {
-    // pre有可能为undefined,比如paths(['computedUser','name'])的首路径为还未初始化的计算属性,还有可能是properties的对象类型(默认为null)
-    return pre ? pre[path] : pre;
-  }, this.data);
-}
 
-function computedUpdater(this: InstanceInner, isUpdated = false): boolean {
-  // console.log("computedUpdater开始");
-
-  // console.log("循环判断缓存中每个计算属性依赖是否有变化");
-
-  for (const key in this.__computedCache__) {
-    // console.log("当前计算属性为:", key);
-
-    const itemCache = this.__computedCache__[key];
-    let changed = false;
-    for (const dep of itemCache.dependences) {
-      const curVal = getPathsValue.call(this, dep.paths);
-
-      // 检查依赖是否更新
-      if (!isEqual(curVal, dep.val)) {
-        changed = true;
-
-        break;
-      }
-    }
-
-    if (changed) {
-      const newDependences: ComputedDependence[] = [];
-
-      const newValue = itemCache.method.call({
-        data: deepProxy(this.data, newDependences),
-      });
-
-      // 更新值不会立即再次进入**函数,而是当前**函数运行完毕后触发**函数,
-      this.setData({
-        [key]: unwrap(newValue),
-      });
-
-      isUpdated = true;
-
-      // 更新依赖
-      this.__computedCache__[key].dependences = newDependences;
-
-      // 有一个计算属性更新就重新更新所有计算互相,避免后置依赖导致前置依赖错误
-      return computedUpdater.call(this, isUpdated);
-    }
-  }
-
-  return isUpdated;
-}
-function initWatchOldValue(this: InstanceInner, watchConfig: object): WatchOldValue {
-  const watchOldValue = {};
-  for (const key in watchConfig) {
-    watchOldValue[key] = deepClone(getPathsValue.call(this, key.split(".")));
-  }
-
-  return watchOldValue;
-}
 export const BComputedAndWatch = Behavior({
   definitionFilter(options: ComponentOptions) {
     const computedConfig = options.computed;
+
     // computed handle
     if (computedConfig && !isEmptyObject(computedConfig)) {
       const methodsConfig = options.methods ||= {};
@@ -95,7 +37,7 @@ export const BComputedAndWatch = Behavior({
       // 通过observers加入`**`字段来触发计算属性更新
       const originalFunc = observersConfig["**"] as Func | undefined;
 
-      observersConfig["**"] = function(this: InstanceInner): undefined {
+      observersConfig["**"] = function(this: Instance): undefined {
         const computedStatus = this.__computedStatus__;
         switch (computedStatus) {
           case undefined:
@@ -132,6 +74,7 @@ export const BComputedAndWatch = Behavior({
         }
       };
     }
+
     // watch handle
     const watchConfig = options.watch;
     if (watchConfig && !isEmptyObject(watchConfig)) {
@@ -144,18 +87,11 @@ export const BComputedAndWatch = Behavior({
       for (const key in watchConfig) {
         const watchHadle = watchConfig[key];
 
-        observersConfig[key] = function(this: InstanceInner, newValue: unknown) {
+        observersConfig[key] = function(this: Instance, newValue: unknown) {
           const watchOldValue = this.__watchOldValue__!;
           const oldValue = watchOldValue[key];
-
-          if (oldValue === undefined) {
-            // oldValue为undefined时,表示key为计算属性关联的路径,触发是因为计算属性初始化导致。所以当前newValue为计算属性初始值。properties字段对象类型oldvalue为null
-            watchOldValue[key] = deepClone(newValue);
-
-            // 这里返回表示不监控计算属性初始化时的赋值
-            return;
-          }
-          if (isEqual(newValue, oldValue)) return;
+          // 当watch对象的子属性时,有可能对象为null(properties默认值)
+          if ((newValue === undefined) || isEqual(newValue, oldValue)) return;
           watchOldValue[key] = deepClone(newValue);
 
           watchHadle.call(this, newValue, oldValue);
@@ -164,50 +100,23 @@ export const BComputedAndWatch = Behavior({
     }
   },
   lifetimes: {
-    created(this: InstanceInner) {
+    created(this: Instance) {
       // 初始化watch 生成OldValue
       const watchConfig = this.__watchConfig__?.();
 
       deleteProtoField(this, "__watchConfig__");
 
       if (watchConfig) {
-        // 1 此时由于计算属性还未初始化所以计算属性的oldValue为undefined,后续 2
+        // 此时计算属性还未初始化,properties还未第一次传入
         this.__watchOldValue__ = initWatchOldValue.call(this, watchConfig);
       }
     },
-    attached(this: InstanceInner) {
-      const computedConfig = this.__computedConfig__?.();
-
-      deleteProtoField(this, "__computedConfig__");
-
-      // 处理 computed
-      if (computedConfig) {
-        // 实例加入 __computedUpdateStatus__ 提高性能
-        this.__computedStatus__ = "初始化中";
-
-        // 初始化计算属性(返回缓存)
-        this.__computedCache__ = initComputed.call(
-          this,
-          computedConfig,
-          Object.keys(computedConfig),
-        );
-
-        // 给原型上加入__computedUpdater__方法 在observers下的'**'配置中触发
-
-        this.__computedUpdater__ = computedUpdater.bind(this);
-
-        this.__computedStatus__ = "待更新";
-
-        // // 2 为watchOldValue加入计算属性的初始值
-        // const watchOldValue = this.__watchOldValue__;
-        // if (!watchOldValue) return;
-        // const computedCache = this.__computedCache__;
-        // for (const key in computedCache) {
-        //   if (Object.prototype.hasOwnProperty.call(watchOldValue, key)) {
-        //     watchOldValue[key] = computedCache[key].value;
-        //   }
-        // }
+    attached(this: Instance) {
+      if (!isPage(this)) {
+        // 组件此时properties已传入
+        initComputed.call(this);
       }
+      // else 页面在onLoad时传入properties 计算属性初始化逻辑通过onLoadHijack函数完成
     },
   },
 });

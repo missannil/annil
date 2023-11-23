@@ -1,5 +1,5 @@
 import type { Func } from "hry-types/src/Misc/Func";
-import type { WMCompPageLifetimes, WMPageLifetimes } from "../../types/officialCorrelation";
+import type { WMCompPageLifetimes, WMPageLifetimes } from "../../types/OfficialTypeAlias";
 import type { LifetimesConstraint } from "./Lifetimes/LifetimesConstraint";
 
 type _RootComponentDoc = {

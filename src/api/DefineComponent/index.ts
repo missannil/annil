@@ -2,8 +2,9 @@ import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { Func } from "hry-types/src/Misc/Func";
 import { BBeforeCreate } from "../../behaviors/BbeforeCreated";
 import { BComputedAndWatch } from "../../behaviors/BComputedAndWatch";
+import { initComputed } from "../../behaviors/BComputedAndWatch/initComputed";
 import { BStore } from "../../behaviors/BStore";
-import type { WMComponent, WMCompPageLifetimes, WMPageLifetimes } from "../../types/officialCorrelation";
+import type { WMComponent, WMCompPageLifetimes, WMPageLifetimes } from "../../types/OfficialTypeAlias";
 import { isEmptyObject } from "../../utils/isEmptyObject";
 import {
   excludeFields,
@@ -89,7 +90,7 @@ export type DefineComponentOptions = {
 };
 
 export const DefineComponent: DefineComponentConstructor = function(options): any {
-  console.log("------------------------------------------------分割线------------------------------------------------");
+  // console.log("------------------------------------------------分割线------------------------------------------------");
 
   // 最终的配置
   const componentOptions: ComponentOptions = {
@@ -122,7 +123,7 @@ export const DefineComponent: DefineComponentConstructor = function(options): an
 
   componentOptions.behaviors!.push(BBeforeCreate);
 
-  onLoadHijack(componentOptions, [onLoadReceivedDataHandle], []);
+  onLoadHijack(componentOptions, [onLoadReceivedDataHandle, initComputed], []);
 
   if (componentOptions.isPage) {
     Reflect.deleteProperty(componentOptions.options!, "virtualHost");

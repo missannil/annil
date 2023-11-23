@@ -2,8 +2,10 @@
 // import type { IsDependOnOthers } from "./data-tracer";
 
 import type { Func } from "hry-types/src/Misc/Func";
+import { computedUpdater } from "../../utils/computedUpdater";
+import { deleteProtoField } from "../../utils/deleteProtoField";
 import { deepProxy, unwrap } from "./data-tracer";
-import type { ComputedCache, InstanceInner } from "./types";
+import type { ComputedCache, Instance } from "./types";
 export type ComputedDependence = { paths: string[]; val: unknown };
 
 type ComputedInfo = {
@@ -27,7 +29,7 @@ function isValidDependences(dependences: ComputedDependence[], computedKeys: str
 }
 
 export function getComputedInfo(
-  this: InstanceInner,
+  this: Instance,
   computedKeys: string[],
   computedFunc: Func,
   key: string,
@@ -106,8 +108,8 @@ function uniqueDependences(dependences: ComputedDependence[]): ComputedDependenc
  * @param computedCache - 计算属性缓存默认=`{}`
  * @returns 计算属性缓存
  */
-export function initComputed(
-  this: InstanceInner,
+function _initComputed(
+  this: Instance,
   computedConfig: Record<string, Func>,
   uninitedkeys: string[], //
   computedCache: ComputedCache = {},
@@ -137,5 +139,28 @@ export function initComputed(
   }
 
   // uninitedkey不为空,递归
-  return initComputed.call(this, computedConfig, uninitedkeys, computedCache);
+  return _initComputed.call(this, computedConfig, uninitedkeys, computedCache);
+}
+export function initComputed(this: Instance) {
+  const computedConfig = this.__computedConfig__?.();
+
+  deleteProtoField(this, "__computedConfig__");
+
+  if (computedConfig) {
+    // 实例加入 __computedUpdateStatus__ 提高性能
+    this.__computedStatus__ = "初始化中";
+
+    // 初始化计算属性(返回缓存)
+    this.__computedCache__ = _initComputed.call(
+      this,
+      computedConfig,
+      Object.keys(computedConfig),
+    );
+
+    // 给原型上加入__computedUpdater__方法 在observers下的'**'配置中触发
+
+    this.__computedUpdater__ = computedUpdater.bind(this);
+
+    this.__computedStatus__ = "待更新";
+  }
 }

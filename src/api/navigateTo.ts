@@ -1,7 +1,7 @@
 import type { IfEquals } from "hry-types/src/Any/IfEquals";
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { NoInfer } from "hry-types/src/Generic/NoInfer";
-import type { WMNavigateToOption } from "../types/officialCorrelation";
+import type { WMNavigateToOption } from "../types/OfficialTypeAlias";
 import type { RequiredKeys } from "../types/RequiredKeys";
 import { INNERMARKER } from "../utils/InnerMarker";
 import type { PageDoc } from "./DefineComponent/ReturnType/PageDoc";

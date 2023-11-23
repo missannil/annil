@@ -1,4 +1,4 @@
-import type { WMCompLifetimes } from "../../../types/officialCorrelation";
+import type { WMCompLifetimes } from "../../../types/OfficialTypeAlias";
 
 export type LifetimesConstraint = // 官方组件生命周期
   WMCompLifetimes["lifetimes"];

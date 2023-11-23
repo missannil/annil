@@ -3,7 +3,7 @@ import type { NoInfer } from "hry-types/src/Generic/NoInfer";
 import type { EmptyObject } from "hry-types/src/Misc/EmptyObject";
 import type { Func } from "hry-types/src/Misc/Func";
 import type { ComputeIntersectionDeep } from "hry-types/src/Object/_api";
-import type { WMCompOtherOption } from "../../types/officialCorrelation";
+import type { WMCompOtherOption } from "../../types/OfficialTypeAlias";
 import type { ComponentDoc } from "../DefineComponent/ReturnType/ComponentDoc";
 import type { ComputedConstraint } from "./Computed/ComputedConstraint";
 import type { ComputedOption } from "./Computed/ComputedOption";

@@ -90,15 +90,8 @@ export const BComputedAndWatch = Behavior({
         observersConfig[key] = function(this: Instance, newValue: unknown) {
           const watchOldValue = this.__watchOldValue__!;
           const oldValue = watchOldValue[key];
-
-          if (oldValue === undefined) {
-            // oldValue为undefined时,表示key为计算属性关联的路径,触发是因为计算属性初始化导致。所以当前newValue为计算属性初始值。properties字段对象类型oldvalue为null
-            watchOldValue[key] = deepClone(newValue);
-
-            // 这里返回表示不监控计算属性初始化时的赋值
-            return;
-          }
-          if (isEqual(newValue, oldValue)) return;
+          // 当watch对象的子属性时,有可能对象为null(properties默认值)
+          if ((newValue === undefined) || isEqual(newValue, oldValue)) return;
           watchOldValue[key] = deepClone(newValue);
 
           watchHadle.call(this, newValue, oldValue);
@@ -114,7 +107,7 @@ export const BComputedAndWatch = Behavior({
       deleteProtoField(this, "__watchConfig__");
 
       if (watchConfig) {
-        // 1 此时由于计算属性还未初始化所以计算属性的oldValue为undefined,后续 2
+        // 此时计算属性还未初始化,properties还未第一次传入
         this.__watchOldValue__ = initWatchOldValue.call(this, watchConfig);
       }
     },

@@ -26,13 +26,13 @@ describe("watch", () => {
 
     expect(comp.data["root-watch-user"]).toStrictEqual([user, null]);
 
-    expect(comp.data["root-watch-user.age"]).toStrictEqual([20, null]);
+    expect(comp.data["root-watch-user.age"]).toStrictEqual([20, undefined]);
 
     expect(comp.data["sub-watch-num"]).toStrictEqual([num, 0]);
 
     expect(comp.data["sub-watch-user"]).toStrictEqual([user, null]);
 
-    expect(comp.data["sub-watch-user.name"]).toStrictEqual([user.name, null]);
+    expect(comp.data["sub-watch-user.name"]).toStrictEqual([user.name, undefined]);
 
     await sleep(1000);
 

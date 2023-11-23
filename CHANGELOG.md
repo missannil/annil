@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.2](https://github.com/missannil/ts-wmp/compare/v0.5.1...v0.5.2) (2023-11-23)
+
+
+### Bug Fixes
+
+* 提交测试 ([#45](https://github.com/missannil/ts-wmp/issues/45)) ([01c0835](https://github.com/missannil/ts-wmp/commit/01c08351e07f98aacbb19873bb0b49fa1092c498))
+
 ## [0.5.1](https://github.com/missannil/ts-wmp/compare/v0.5.0...v0.5.1) (2023-11-21)
 
 

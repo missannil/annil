@@ -56,6 +56,7 @@ const subDoc = SubComponent<Mock_RootDoc, Mock_CompDoc>()({
 Checking<typeof subDoc, SubComponentDoc, Test.Fail>;
 
 DefineComponent({
+  name: "xxx",
   // @ts-expect-error 不能将类型“string”分配给类型“_SubComponentDoc”。
   subComponents: [subDoc],
 });

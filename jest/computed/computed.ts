@@ -4,10 +4,10 @@ type User = { name: string; age: number };
 
 const sub = SubComponent<Root, { properties: { aaa_num: number; aaa_user: User | null } }>()({
   computed: {
-    aaa_num() {
+    aaa_num(): number {
       return this.data.num;
     },
-    aaa_user() {
+    aaa_user(): User | null {
       return this.data.user;
     },
   },

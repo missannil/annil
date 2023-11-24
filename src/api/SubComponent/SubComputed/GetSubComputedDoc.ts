@@ -1,5 +1,3 @@
-import type { SubComputedConstraint } from "./SubComputedConstraint";
-
-export type GetSubComputedDoc<TComputed extends SubComputedConstraint> = {
+export type GetSubComputedDoc<TComputed extends AnyObject> = {
   [k in keyof TComputed]: ReturnType<TComputed[k]>;
 };

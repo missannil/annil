@@ -35,3 +35,16 @@ SubComponent<{}, OnlyPropsCompDoc>()({
     _aaa_xxx() {},
   },
 });
+
+// 3 类型错误
+SubComponent<{}, OnlyPropsCompDoc>()({
+  inherit: {
+    aaa_str: "wxml",
+  },
+  computed: {
+    // @ts-expect-error  类型错误
+    aaa_num() {
+      return "string";
+    },
+  },
+});

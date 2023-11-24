@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.3](https://github.com/missannil/ts-wmp/compare/v0.5.2...v0.5.3) (2023-11-24)
+
+
+### Bug Fixes
+
+* 升级ts到5.3.2,把hry-types和miniprogram-api-typings放入到生产依赖 ([#48](https://github.com/missannil/ts-wmp/issues/48)) ([247e5ea](https://github.com/missannil/ts-wmp/commit/247e5eafb3b4e7ff15039e77e7febca186a78131))
+
 ## [0.5.2](https://github.com/missannil/ts-wmp/compare/v0.5.1...v0.5.2) (2023-11-23)
 
 

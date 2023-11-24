@@ -40,13 +40,13 @@ type Options<
   TInherit extends object,
   TSubData extends object,
   TSubStore extends object,
-  TSubComputed extends SubComputedConstraint,
+  TSubComputed extends object,
   TEvents extends object,
   TSubMethods extends object,
   InheritDoc extends object,
   SubDataDoc extends object,
   SubStoreDoc extends object,
-  SubComputedDoc extends SubComputedConstraint,
+  SubComputedDoc extends object,
   SubEventsDoc extends object,
   SubMethodsDoc extends object,
 > =
@@ -113,7 +113,9 @@ type SubComponentConstructor<
     TSubData extends SubDataConstraint<Omit<Required<CurrentCompDoc["properties"]>, keyof InheritDoc>>,
     TSubStore extends SubStoreConstraint<Omit<Required<CurrentCompDoc["properties"]>, keyof (InheritDoc & SubDataDoc)>>,
     TEvents extends SubEventsConstraint<CurrentCompDoc>,
-    TSubComputed extends SubComputedConstraint = {},
+    TSubComputed extends SubComputedConstraint<
+      Omit<Required<CurrentCompDoc["properties"]>, keyof (InheritDoc & SubDataDoc & SubStoreDoc)>
+    >,
     TSubMethods extends SubMethodsConstraint = {},
     InheritDoc extends object = IfExtends<InheritConstraint<AllRootDataDoc, CurrentCompDoc>, TInherit, {}, TInherit>,
     SubDataDoc extends object = IfExtends<
@@ -129,7 +131,14 @@ type SubComponentConstructor<
       { [k in keyof TSubStore]: ReturnType<TSubStore[k] & {}> }
     >,
     // 无效的计算
-    // SubComputedDoc extends ComputedConstraint = GetSubComputedDoc<TSubComputed>,
+    SubComputedDoc extends object = IfExtends<
+      SubComputedConstraint<
+        Omit<Required<CurrentCompDoc["properties"]>, keyof (InheritDoc & SubDataDoc & SubStoreDoc)>
+      >,
+      TSubComputed,
+      {},
+      GetSubComputedDoc<TSubComputed>
+    >,
     SubEventsDoc extends object = IfExtends<
       SubEventsConstraint<CurrentCompDoc>,
       TEvents,
@@ -140,7 +149,12 @@ type SubComponentConstructor<
     // 缺失的必传字段(配置中inhrit,data,computed的字段不包含的必传字段)
     MissingRequiredField extends PropertyKey = Exclude<
       RequiredKeys<CurrentCompDoc["properties"] & {}>,
-      keyof (InheritDoc & SubDataDoc & SubStoreDoc & GetSubComputedDoc<TSubComputed>)
+      keyof (
+        & InheritDoc
+        & SubDataDoc
+        & SubStoreDoc
+        & SubComputedDoc
+      )
     >,
   >(
     options: Options<
@@ -158,7 +172,7 @@ type SubComponentConstructor<
       InheritDoc,
       SubDataDoc,
       SubStoreDoc,
-      GetSubComputedDoc<TSubComputed>,
+      SubComputedDoc,
       SubEventsDoc,
       SubMethodsDoc
     >,

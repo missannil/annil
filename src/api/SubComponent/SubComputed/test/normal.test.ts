@@ -49,7 +49,7 @@ SubComponent<Root, OnlyPropsCompDoc>()({
     aaa_obj() {
       return {} as Mock_User | null;
     },
-    aaa_num123() {
+    aaa_num123(): 123 {
       return 123;
     },
   },
@@ -60,10 +60,10 @@ SubComponent<Root, OnlyPropsCompDoc>()({
     aaa_num() {
       return 123 as number;
     },
-    aaa_num123() {
+    aaa_num123(): 123 {
       return 123;
     },
-    aaa_str() {
+    aaa_str(): "a" {
       return "a";
     },
     aaa_obj() {
@@ -119,14 +119,13 @@ SubComponent<Root, CompDoc>()({
     aaa_xxx: 123,
   },
   computed: {
-    aaa_num() {
+    aaa_num(): number {
       return this.data.aaa_xxx;
     },
-    aaa_user() {
+    aaa_user(): User | null {
       return this.data.user;
     },
-    aaa_age() {
-      // 输入aaa_num时无提示,但完成后不报错。因为类型的计算在输入完成后才生效。
+    aaa_age(): number {
       return this.data.aaa_num;
     },
   },

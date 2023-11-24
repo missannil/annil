@@ -90,7 +90,7 @@ export type DefineComponentOptions = {
 };
 
 export const DefineComponent: DefineComponentConstructor = function(options): any {
-  console.log("------------------------------------------------分割线------------------------------------------------");
+  // console.log("------------------------------------------------分割线------------------------------------------------");
 
   // 最终的配置
   const componentOptions: ComponentOptions = {

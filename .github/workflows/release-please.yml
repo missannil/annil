@@ -1,0 +1,50 @@
+# 工作流名称
+name: release-please
+on:
+    push:
+        branches:
+          - main
+# 权限
+permissions:
+    contents: write
+    pull-requests: write
+# 工作流程
+jobs:
+    # 第一个工作
+    release-please:
+        # 运行环境
+        runs-on: ubuntu-latest
+        steps:
+            # 使用哪个action
+            - uses: google-github-actions/release-please-action@v3
+              # action id 便于其他流访问
+              id: release
+              with:
+                  #项目类型
+                  release-type: node
+                  #包名称
+                  package-name: ts-wmp
+              # 以下为npm发布逻辑
+            - uses: actions/checkout@v3
+              # if语句为真运行actions。
+              # 当id为release的action结果为created时(即并入了main分支时)
+              if: ${{ steps.release.outputs.release_created }}
+              # 开启node坏境
+            - uses: actions/setup-node@v3
+              with:
+                  node-version: 18
+                  registry-url: 'https://registry.npmjs.org'
+              if: ${{ steps.release.outputs.release_created }}
+            - run: npm i husky -D
+              if: ${{ steps.release.outputs.release_created }}
+            - run: npm i
+              if: ${{ steps.release.outputs.release_created }}
+              # 打包
+            - run: npm run build
+              if: ${{ steps.release.outputs.release_created }}
+              # 发布
+            - run: npm publish
+              env:
+                  # 在项目-settings-secrets and variables-actions 下建立Environment secrets,名字为NPM_TOKEN,值为npm下建立的密钥。
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+              if: ${{ steps.release.outputs.release_created }}

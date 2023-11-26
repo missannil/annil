@@ -1,7 +1,8 @@
 import { Checking, type Test } from "hry-types";
 import type { ReadonlyDeep } from "hry-types/src/Any/_api";
 import type { ComponentDoc } from "../../../DefineComponent/ReturnType/ComponentDoc";
-import type { Mock_User } from "../../../RootComponent/Properties/expected/normalRequired";
+
+import type { Mock_User } from "../../../RootComponent/Properties/test/normalRequired.test";
 import { SubComponent } from "../..";
 
 type OnlyCustomCompDoc = ComponentDoc<{

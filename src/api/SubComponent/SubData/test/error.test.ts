@@ -1,5 +1,6 @@
 import type { ComponentDoc } from "../../../DefineComponent/ReturnType/ComponentDoc";
-import type { Mock_User } from "../../../RootComponent/Properties/expected/normalRequired";
+
+import type { Mock_User } from "../../../RootComponent/Properties/test/normalRequired.test";
 import { SubComponent } from "../..";
 
 type OnlyCustomCompDoc = ComponentDoc<{

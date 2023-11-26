@@ -4,13 +4,19 @@ import type { ReadonlyDeep } from "hry-types/src/Any/_api";
 import { RootComponent } from "../..";
 
 import type { SpecificType } from "../../../..";
+// import {
+//   type Mock_Cart,
+//   mock_requiredTypes,
+//   mock_requiredUnion,
+//   type Mock_User,
+// } from "../../Properties/expected/normalRequired";
+import type { OptionalType } from "../../Properties/PropertiesConstraint";
 import {
   type Mock_Cart,
   mock_requiredTypes,
   mock_requiredUnion,
   type Mock_User,
-} from "../../Properties/expected/normalRequired";
-import type { OptionalType } from "../../Properties/PropertiesConstraint";
+} from "../../Properties/test/normalRequired.test";
 const mock_optional = {
   optional_num: {
     type: Number,

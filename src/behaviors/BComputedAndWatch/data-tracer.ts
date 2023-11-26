@@ -6,9 +6,6 @@ export function deepProxy(
   basePath: string[] = [],
 ): object {
   const handler = {
-    set() {
-      throw Error("计算属性中不可以改变data对象的值");
-    },
     get(target: object, prop: string) {
       // // 得到原始的对象 在unwrap时使用
       // console.log(target, prop);

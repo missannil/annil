@@ -153,7 +153,15 @@ type SubComponentConstructor<
         & InheritDoc
         & SubDataDoc
         & SubStoreDoc
-        & SubComputedDoc
+        // 改用SubComputedDoc是会报错的
+        & IfExtends<
+          SubComputedConstraint<
+            Omit<Required<CurrentCompDoc["properties"]>, keyof (InheritDoc & SubDataDoc & SubStoreDoc)>
+          >,
+          TSubComputed,
+          {},
+          GetSubComputedDoc<TSubComputed>
+        >
       )
     >,
   >(

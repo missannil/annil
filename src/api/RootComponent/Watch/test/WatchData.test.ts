@@ -3,7 +3,7 @@ import { Checking, type Test } from "hry-types";
 import type { ReadonlyDeep } from "hry-types/src/Any/_api";
 import { observable } from "mobx";
 import { RootComponent } from "../..";
-import type { Mock_User } from "../../Properties/expected/normalRequired";
+import type { Mock_User } from "../../Properties/test/normalRequired.test";
 
 const obj = observable({
   gender: <"male" | "female"> "male",

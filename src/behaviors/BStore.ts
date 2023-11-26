@@ -15,6 +15,7 @@ export const BStore = Behavior({
       options.data[key] = toJS(storeConfig[key]());
 
       // 把响应式数据配置保留在methods的__storeConfig__字段下带入到组件实例中(不用函数返回方式也可以,但不符合methods字段类型),后续再从原型上删除。
+      /* istanbul ignore next */
       options.methods ||= {};
 
       options.methods.__storeConfig__ = () => storeConfig;
@@ -50,7 +51,8 @@ export const BStore = Behavior({
       deleteProtoField(this, "__storeConfig__");
     },
     detached(this: Instance) {
-      // 清除store数据
+      // 清除store数据 test中模拟了测试，所以忽略 框架不支持 issue {@link https://github.com/wechat-miniprogram/miniprogram-simulate/issues/110}
+      /* istanbul ignore next */
       for (const key in this.disposer) {
         this.disposer[key]();
       }

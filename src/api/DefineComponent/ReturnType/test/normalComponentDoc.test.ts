@@ -11,8 +11,9 @@ import type {
   CaptureComposed,
   Composed,
 } from "../../../RootComponent/CustomEvents/CustomEventsTag";
-import type { Mock_User } from "../../../RootComponent/Properties/expected/normalRequired";
+
 import type { PropertiesConstraint } from "../../../RootComponent/Properties/PropertiesConstraint";
+import type { Mock_User } from "../../../RootComponent/Properties/test/normalRequired.test";
 import type { RootComponentDoc } from "../../../RootComponent/RootComponentDoc";
 import type { SubComponentDoc } from "../../../SubComponent/SubComponentDoc";
 import { DefineComponent } from "../..";

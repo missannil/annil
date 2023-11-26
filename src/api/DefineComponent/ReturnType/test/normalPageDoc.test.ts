@@ -1,6 +1,7 @@
 import { Checking, type Test } from "hry-types";
 import { RootComponent, type SpecificType } from "../../../..";
-import type { Mock_User } from "../../../RootComponent/Properties/expected/normalRequired";
+
+import type { Mock_User } from "../../../RootComponent/Properties/test/normalRequired.test";
 import { DefineComponent } from "../..";
 
 const OnlyPropsRootDoc = RootComponent()({

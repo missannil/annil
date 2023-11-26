@@ -38,6 +38,9 @@ const rootComponent = RootComponent()({
     "user.age"(a, b) {
       this.data["root-watch-user.age"] = [a, b];
     },
+    // @ts-ignore 模拟user传入null情形。不愿多写一个测试了
+    "user.xxx"() {
+    },
   },
 });
 

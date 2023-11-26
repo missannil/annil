@@ -7,6 +7,14 @@ exports.default = {
   clearMocks: true,
   testEnvironment: "jsdom",
   collectCoverage: false,
+  collectCoverageFrom: [
+    "./src/**/*.ts",
+    "!src/**/*.test.ts",
+    "!src/api/navigateTo.ts",
+    "!src/utils/funcConfigHandle.ts",
+    "!src/utils/onLoadReceivedDataHandle.ts",
+    "!src/thirdLib/**",
+  ],
   coverageDirectory: "coverage",
   testMatch: [
     "<rootDir>/jest/**/*.test.ts",

@@ -1,4 +1,4 @@
-import type { Wm } from "../../../../thirdLib";
+import type { Wm } from "../../../..";
 import { SubComponent } from "../..";
 
 // 测试1

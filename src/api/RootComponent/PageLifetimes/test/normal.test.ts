@@ -2,7 +2,7 @@ import { Checking, type Test } from "hry-types";
 import { RootComponent, type SpecificType } from "../../../..";
 
 import type { RemoveNullOfRequired } from "../../../../types/RemoveNullOfRequired";
-import type { Mock_User } from "../../Properties/expected/normalRequired";
+import type { Mock_User } from "../../Properties/test/normalRequired.test";
 
 /**
  * 组件时

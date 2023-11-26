@@ -2,7 +2,7 @@ import { Checking, type Test } from "hry-types";
 import type { ReadonlyDeep } from "hry-types/src/Any/_api";
 import type { SpecificType } from "../../../../types/SpecificType";
 import { RootComponent } from "../..";
-import type { Mock_User } from "../../Properties/expected/normalRequired";
+import type { Mock_User } from "../../Properties/test/normalRequired.test";
 
 /**
  * computed字段约束为 [ComputedConstraint](../ComputedConstraint.ts)

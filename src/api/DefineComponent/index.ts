@@ -5,15 +5,11 @@ import { BComputedAndWatch } from "../../behaviors/BComputedAndWatch";
 import { initComputed } from "../../behaviors/BComputedAndWatch/initComputed";
 import { BStore } from "../../behaviors/BStore";
 import type { WMComponent, WMCompPageLifetimes, WMPageLifetimes } from "../../types/OfficialTypeAlias";
+import { funcConfigHandle } from "../../utils/funcConfigHandle";
 import { isEmptyObject } from "../../utils/isEmptyObject";
-import {
-  excludeFields,
-  funcConfigHandle,
-  onLoadHijack,
-  onLoadReceivedDataHandle,
-  rootComponentFieldHandle,
-  subComponentsHandle,
-} from "../../utils/preprocessingOptions";
+import { onLoadReceivedDataHandle } from "../../utils/onLoadReceivedDataHandle";
+import { rootComponentFieldHandle } from "../../utils/rootComponentFieldHandle";
+import { subComponentsHandle } from "../../utils/subComponentsHandle";
 import type { LifetimesConstraint } from "../RootComponent/Lifetimes/LifetimesConstraint";
 import type { RootComponentDoc } from "../RootComponent/RootComponentDoc";
 import type { SubComponentDoc } from "../SubComponent/SubComponentDoc";
@@ -22,6 +18,9 @@ import type { CreateComponentDoc } from "./ReturnType/CreateComponentDoc";
 import type { CreatePageDoc } from "./ReturnType/CreatePageDoc";
 import type { RootComponentOption } from "./RootComponent/RootComponentOption";
 import type { SubComponentsOption } from "./SubComponents/SubComponentsOption";
+
+import { InternalFieldProtection } from "../../utils/InternalFieldProtection";
+import { onLoadHijack } from "../../utils/onLoadHijack";
 
 type RootOptions<
   TRootComponentDoc extends RootComponentDoc,
@@ -90,10 +89,11 @@ export type DefineComponentOptions = {
 };
 
 export const DefineComponent: DefineComponentConstructor = function(options): any {
-  // console.log("------------------------------------------------分割线------------------------------------------------");
+  console.log("------------------------------------------------分割线------------------------------------------------");
 
-  // 最终的配置
-  const componentOptions: ComponentOptions = {
+  // 最终的配置,默认配置与根组件和子组件列表配置汇集而成。
+  const finalOptions: ComponentOptions = {
+    // default options
     options: {
       // addGlobalClass: true,
       multipleSlots: true,
@@ -104,31 +104,36 @@ export const DefineComponent: DefineComponentConstructor = function(options): an
     behaviors: [BStore, BComputedAndWatch],
   };
   /**
-   * 有些选项配置是函数,且可能分布在根组件和子组件中,tempConfig 用于收集这些配置,最终再一起整合进componentOptions配置。rootComponentHandle和subComponentsHandle都会收集配置，funcConfigHandle整理配置。
+   * 有些选项配置是函数,且可能分布在根组件和子组件中,funcConfig 用于收集这些配置,最终再一起整合进finalOptions配置。rootComponentHandle和subComponentsHandle都会收集函数配置到funcConfig中，再由funcConfigHandle整合配置到finalOptions中。
    */
-  const funcConfig: FuncConfig = {};
+  const allFuncConfig: FuncConfig = {};
 
   if (options.rootComponent && !isEmptyObject(options.rootComponent)) {
-    rootComponentFieldHandle(options.rootComponent, componentOptions, funcConfig);
+    rootComponentFieldHandle(options.rootComponent, finalOptions, allFuncConfig);
   }
 
   if (options.subComponents && !isEmptyObject(options.subComponents)) {
-    subComponentsHandle(componentOptions, options.subComponents, funcConfig);
+    subComponentsHandle(finalOptions, options.subComponents, allFuncConfig);
   }
-  if (!isEmptyObject(funcConfig)) {
-    funcConfigHandle(componentOptions, options.rootComponent?.isPage, funcConfig);
+  // 框架无法测试页面
+  /* istanbul ignore next */
+  if (!isEmptyObject(allFuncConfig)) {
+    funcConfigHandle(finalOptions, options.rootComponent?.isPage, allFuncConfig);
   }
 
-  componentOptions.methods && excludeFields(componentOptions.methods, ["disposer", "applySetData"]);
+  finalOptions.methods && InternalFieldProtection(finalOptions.methods);
 
-  componentOptions.behaviors!.push(BBeforeCreate);
+  finalOptions.behaviors!.push(BBeforeCreate);
 
-  onLoadHijack(componentOptions, [onLoadReceivedDataHandle, initComputed], []);
+  onLoadHijack(finalOptions, [onLoadReceivedDataHandle, initComputed], []);
 
-  if (componentOptions.isPage) {
-    Reflect.deleteProperty(componentOptions.options!, "virtualHost");
+  // 框架无法测试页面
+  /* istanbul ignore next */
+  if (finalOptions.isPage) {
+    Reflect.deleteProperty(finalOptions.options!, "virtualHost");
   }
-  Component(componentOptions as any);
+
+  Component(finalOptions as any);
 };
 
 export type PageOptions = {

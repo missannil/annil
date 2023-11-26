@@ -3,7 +3,8 @@ import type { ReadonlyDeep } from "hry-types/src/Any/_api";
 import type { Wm } from "../../../../thirdLib";
 import type { CompDocExtends } from "../../../../types/CompDocExtends";
 import type { ComponentDoc } from "../../../DefineComponent/ReturnType/ComponentDoc";
-import type { Mock_User } from "../../../RootComponent/Properties/expected/normalRequired";
+
+import type { Mock_User } from "../../../RootComponent/Properties/test/normalRequired.test";
 import { SubComponent } from "../..";
 
 type CompDoc = ComponentDoc<{

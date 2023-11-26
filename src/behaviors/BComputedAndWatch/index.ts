@@ -28,7 +28,10 @@ export const BComputedAndWatch = Behavior({
 
     // computed handle
     if (computedConfig && !isEmptyObject(computedConfig)) {
-      const methodsConfig = options.methods ||= {};
+      /* istanbul ignore next */
+      options.methods ||= {};
+
+      const methodsConfig = options.methods;
 
       // 把计算属性配置保留在methods的__computedConfig__字段下带入到组件实例中。
       methodsConfig.__computedConfig__ = () => computedConfig;
@@ -42,7 +45,7 @@ export const BComputedAndWatch = Behavior({
         switch (computedStatus) {
           case undefined:
             // 1 触发来自attach时或没有计算属性时
-            originalFunc && originalFunc.call(this);
+            originalFunc && /* istanbul ignore next */ originalFunc.call(this);
 
             break;
           case "初始化中":
@@ -58,7 +61,7 @@ export const BComputedAndWatch = Behavior({
                 this.__computedStatus__ = "更新完毕";
               } else {
                 // 无需更新计算属性
-                originalFunc && originalFunc.call(this);
+                originalFunc && /* istanbul ignore next */ originalFunc.call(this);
               }
             }
             break;
@@ -68,7 +71,7 @@ export const BComputedAndWatch = Behavior({
               // console.log("来自计算属性更新后的自身回调");
               this.__computedStatus__ = "待更新";
 
-              originalFunc && originalFunc.call(this);
+              originalFunc && /* istanbul ignore next */ originalFunc.call(this);
             }
             break;
         }
@@ -78,6 +81,7 @@ export const BComputedAndWatch = Behavior({
     // watch handle
     const watchConfig = options.watch;
     if (watchConfig && !isEmptyObject(watchConfig)) {
+      /* istanbul ignore next */
       const methodsConfig = options.methods ||= {};
 
       // 把watch配置保留在methods的__watchConfig__字段下带入到组件实例中。

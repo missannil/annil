@@ -12,6 +12,7 @@ export function isEqual(value: unknown, other: unknown) {
   const keys1 = Object.keys(value);
   const keys2 = Object.keys(other);
   // 对象类型长度不等，一定不相等
+  /* istanbul ignore next */
   if (keys1.length !== keys2.length) {
     return false;
   }

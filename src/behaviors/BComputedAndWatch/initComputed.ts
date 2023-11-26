@@ -37,19 +37,21 @@ export function getComputedInfo(
   // 建立当前计算字段的依赖
   const dependences: ComputedDependence[] = [];
   let initValue: unknown;
-  try {
-    initValue = computedFunc.call({
-      data: deepProxy(this.data, dependences),
-    });
-  } catch (error) {
-    // 为js开发考虑使用了 this.data.xxx.age 当xxx为undefined时
-    if (!isValidDependences(dependences, computedKeys)) {
-      // 情况2 依赖了未初始化的计算属性的子属性(会报错) 见computed测试文件
-      return false;
-    }
-    // 其他错误正常报错
-    throw error;
-  }
+  // try {
+  initValue = computedFunc.call({
+    data: deepProxy(this.data, dependences),
+  });
+  // } catch (error) {
+  //   // 为js开发考虑使用了 this.data.xxx.age 当xxx为undefined时
+  //   if (!isValidDependences(dependences, computedKeys)) {
+  //     console.log(222);
+
+  //     // 情形2 依赖了未初始化的计算属性的子属性(会报错) 对应测试文件[NoOptionalProperties.ts](../../../jest/computed/NoOptionalProperties/NoOptionalProperties.test.ts)的age字段
+  //     return false;
+  //   }
+  //   // 其他错误正常报错
+  //   throw error;
+  // }
   if (isValidDependences(dependences, computedKeys)) {
     // 有效的依赖
     initValue = unwrap(initValue);
@@ -60,7 +62,9 @@ export function getComputedInfo(
 
     return { dependences, value: initValue };
   } else {
-    // 情况1 依赖了其他未初始化的计算属性(不报错) 见computed测试文件
+    /**
+     * 情形1 依赖了其他未初始化的计算属性(不报错) 对应测试文件[NoOptionalProperties.ts](../../../jest/computed/NoOptionalProperties/NoOptionalProperties.test.ts)的copyPropUser字段
+     */
     return false;
   }
 }
@@ -76,6 +80,7 @@ export function getComputedInfo(
  */
 function uniqueDependences(dependences: ComputedDependence[]): ComputedDependence[] {
   if (dependences.length === 1) return dependences;
+  // console.log(dependences);
 
   for (let f = 0; f < dependences.length; f++) {
     const firstPath = dependences[f].paths.join(".") + ".";
@@ -83,15 +88,17 @@ function uniqueDependences(dependences: ComputedDependence[]): ComputedDependenc
       const curPath = dependences[i].paths.join(".") + ".";
       // console.log(firstPath,curPath)
       if (firstPath.startsWith(curPath)) {
-        // console.log('删除:',f)
-        // 例如 path[0] = 'a.b.c',curPath = 'a.b'
+        // console.log("删除:", curPath, f);
+
+        // 例如 path[0] = 'a.b.c.',curPath = 'a.b.'
         dependences.splice(f, 1);
 
         return uniqueDependences(dependences);
       }
       if (curPath.startsWith(firstPath)) {
-        // console.log('删除:',i)
-        // 例如 curPath = 'a.b.c' path[0] = 'a.b',
+        // console.log("删除:", firstPath, i);
+
+        // 例如 curPath = 'a.b.' path[0] = 'a.b.c.',
         dependences.splice(i, 1);
 
         return uniqueDependences(dependences);

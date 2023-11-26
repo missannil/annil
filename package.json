@@ -4,11 +4,12 @@
   "description": "微信小程序(原生开发)插件",
   "main": "dist/index.js",
   "scripts": {
-    "jest": "jest --watch",
+    "test": "jest --watch",
+    "coverage": "jest --collectCoverage",
     "prepare": "husky install",
     "lint": "eslint . --fix && npm run fmt",
     "fmt": "dprint fmt",
-    "test": "tsc --watch",
+    "type": "tsc --watch",
     "build": "tsc -p tsconfig.build.json"
   },
   "devDependencies": {

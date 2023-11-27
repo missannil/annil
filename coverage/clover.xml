@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1701041843020" clover="3.2.0">
-  <project timestamp="1701041843020" name="All files">
-    <metrics statements="271" coveredstatements="271" conditionals="135" coveredconditionals="135" methods="50" coveredmethods="48" elements="456" coveredelements="454" complexity="0" loc="271" ncloc="271" packages="7" files="25" classes="25"/>
+<coverage generated="1701065650727" clover="3.2.0">
+  <project timestamp="1701065650728" name="All files">
+    <metrics statements="270" coveredstatements="270" conditionals="135" coveredconditionals="135" methods="50" coveredmethods="48" elements="455" coveredelements="453" complexity="0" loc="270" ncloc="270" packages="7" files="25" classes="25"/>
     <package name="src">
       <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="3"/>
       <file name="index.ts" path="C:\Users\missa\Desktop\annil\src\index.ts">
@@ -14,9 +14,9 @@
       </file>
     </package>
     <package name="src.api.DefineComponent">
-      <metrics statements="23" coveredstatements="23" conditionals="8" coveredconditionals="8" methods="1" coveredmethods="1"/>
+      <metrics statements="22" coveredstatements="22" conditionals="8" coveredconditionals="8" methods="1" coveredmethods="1"/>
       <file name="index.ts" path="C:\Users\missa\Desktop\annil\src\api\DefineComponent\index.ts">
-        <metrics statements="23" coveredstatements="23" conditionals="8" coveredconditionals="8" methods="1" coveredmethods="1"/>
+        <metrics statements="22" coveredstatements="22" conditionals="8" coveredconditionals="8" methods="1" coveredmethods="1"/>
         <line num="3" count="10" type="stmt"/>
         <line num="4" count="10" type="stmt"/>
         <line num="5" count="10" type="stmt"/>
@@ -29,7 +29,6 @@
         <line num="22" count="10" type="stmt"/>
         <line num="23" count="10" type="stmt"/>
         <line num="91" count="10" type="stmt"/>
-        <line num="92" count="10" type="stmt"/>
         <line num="95" count="10" type="stmt"/>
         <line num="109" count="10" type="stmt"/>
         <line num="111" count="10" type="cond" truecount="3" falsecount="0"/>

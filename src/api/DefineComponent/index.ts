@@ -89,7 +89,7 @@ export type DefineComponentOptions = {
 };
 
 export const DefineComponent: DefineComponentConstructor = function(options): any {
-  console.log("------------------------------------------------分割线------------------------------------------------");
+  // console.log("------------------------------------------------分割线------------------------------------------------");
 
   // 最终的配置,默认配置与根组件和子组件列表配置汇集而成。
   const finalOptions: ComponentOptions = {

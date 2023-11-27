@@ -22,6 +22,7 @@ exports.default = {
   transform: {
     "\\.ts?$": "ts-jest", // 添加的
   },
+  coverageReporters: ["json"],
   // All imported modules in your tests should be mocked automatically
   // automock: false,
 

@@ -1,8 +1,9 @@
-import { deepProxy, unwrap } from "../behaviors/BComputedAndWatch/data-tracer";
-import type { ComputedDependence } from "../behaviors/BComputedAndWatch/initComputed";
-import { isEqual } from "../behaviors/BComputedAndWatch/isEqual";
-import type { Instance } from "../behaviors/BComputedAndWatch/types";
+import { deepProxy, unwrap } from "./data-tracer";
 import { getPathsValue } from "./getPathsValue";
+
+import type { ComputedDependence } from "./initComputed";
+import { isEqual } from "./isEqual";
+import type { Instance } from "./types";
 
 export function computedUpdater(this: Instance, isUpdated = false): boolean {
   // console.log("computedUpdater开始");

@@ -1,4 +1,4 @@
-import type { Instance } from "../behaviors/BComputedAndWatch/types";
+import type { Instance } from "./types";
 
 export function getPathsValue(this: Instance, paths: string[]) {
   return paths.reduce((pre: any, path) => {

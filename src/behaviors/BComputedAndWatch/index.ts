@@ -1,13 +1,22 @@
 import type { Func } from "hry-types/src/Misc/Func";
-import type { ComponentOptions } from "../../api/DefineComponent";
+import type { FinalOptionsForComponent } from "../../api/DefineComponent";
 import { deepClone } from "../../utils/deepClone";
 import { deleteProtoField } from "../../utils/deleteProtoField";
-import { initWatchOldValue } from "../../utils/initWatchOldValue";
+
 import { isEmptyObject } from "../../utils/isEmptyObject";
+import { getPathsValue } from "./getPathsValue";
 import { initComputed } from "./initComputed";
 import { isEqual } from "./isEqual";
 import { isPage } from "./IsPage";
-import type { Instance } from "./types";
+import type { Instance, WatchOldValue } from "./types";
+function initWatchOldValue(this: Instance, watchConfig: object): WatchOldValue {
+  const watchOldValue = {};
+  for (const key in watchConfig) {
+    watchOldValue[key] = deepClone(getPathsValue.call(this, key.split(".")));
+  }
+
+  return watchOldValue;
+}
 /**
  * 实现
  * 1. 计算属性初始化在attached之后(前版本在beforeCreate)
@@ -23,7 +32,7 @@ import type { Instance } from "./types";
  */
 
 export const BComputedAndWatch = Behavior({
-  definitionFilter(options: ComponentOptions) {
+  definitionFilter(options: FinalOptionsForComponent) {
     const computedConfig = options.computed;
 
     // computed handle

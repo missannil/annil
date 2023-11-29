@@ -2,8 +2,8 @@
 // import type { IsDependOnOthers } from "./data-tracer";
 
 import type { Func } from "hry-types/src/Misc/Func";
-import { computedUpdater } from "../../utils/computedUpdater";
 import { deleteProtoField } from "../../utils/deleteProtoField";
+import { computedUpdater } from "./computedUpdater";
 import { deepProxy, unwrap } from "./data-tracer";
 import type { ComputedCache, Instance } from "./types";
 export type ComputedDependence = { paths: string[]; val: unknown };

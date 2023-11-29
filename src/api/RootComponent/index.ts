@@ -3,7 +3,7 @@ import type { NoInfer } from "hry-types/src/Generic/NoInfer";
 import type { EmptyObject } from "hry-types/src/Misc/EmptyObject";
 import type { Func } from "hry-types/src/Misc/Func";
 import type { ComputeIntersectionDeep } from "hry-types/src/Object/_api";
-import type { WMCompOtherOption } from "../../types/OfficialTypeAlias";
+import type { WMCompOtherOption, WMCompPageLifetimes, WMPageLifetimes } from "../../types/OfficialTypeAlias";
 import type { ComponentDoc } from "../DefineComponent/ReturnType/ComponentDoc";
 import type { ComputedConstraint } from "./Computed/ComputedConstraint";
 import type { ComputedOption } from "./Computed/ComputedOption";
@@ -11,11 +11,13 @@ import type { GetComputedDoc } from "./Computed/GetComputedDoc";
 import type { CustomEventConstraint } from "./CustomEvents/CustomEventConstraint";
 import type { CustomEventsOption } from "./CustomEvents/CustomEventsOption";
 import type { GetCustomEventDoc } from "./CustomEvents/GetCustomEventDoc";
+import type { DataConstraint } from "./Data/DataConstraint";
 import type { DataOption } from "./Data/DataOption";
 import type { EventsConstraint } from "./Events/EventsConstraint";
 import type { EventsOption } from "./Events/EventsOption";
 import type { RootComponentInstance } from "./Instance/RootComponentInstance";
 import type { IsPageOption } from "./IsPage/IsPageOption";
+import type { LifetimesConstraint } from "./Lifetimes/LifetimesConstraint";
 import type { LifetimesOption } from "./Lifetimes/LifetimesOption";
 import type { MethodsConstraint } from "./Methods/MethodsConstraint";
 import type { MethodsOption } from "./Methods/MethodsOption";
@@ -135,5 +137,19 @@ export function RootComponent<
 >(): RootComponentConstructor<
   TReceivedComponentDoc
 > {
-  return (options: any) => options;
+  return ((options: any) => options as RootComponentTrueOptions) as any;
 }
+
+export type RootComponentTrueOptions = {
+  isPage?: boolean;
+  properties?: PropertiesConstraint;
+  data?: DataConstraint;
+  computed?: ComputedConstraint;
+  customEvents?: CustomEventConstraint;
+  methods?: MethodsConstraint;
+  events?: EventsConstraint;
+  store?: StoreConstraint;
+  watch?: Record<string, Func>;
+  lifetimes?: LifetimesConstraint;
+  pageLifetimes?: Partial<WMCompPageLifetimes & { load: Func } & WMPageLifetimes>;
+};

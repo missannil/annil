@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "jest --watch",
-    "coverage": "jest --collectCoverage",
+    "coverage": "jest --coverage",
     "prepare": "husky install",
     "lint": "eslint . --fix && npm run fmt",
     "fmt": "dprint fmt",
@@ -44,7 +44,7 @@
     "program",
     "wmp"
   ],
-  "author": "",
+  "author": "missannil",
   "license": "MIT",
   "dependencies": {
     "hry-types": "^0.16.12",

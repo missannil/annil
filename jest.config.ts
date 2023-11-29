@@ -11,18 +11,16 @@ exports.default = {
     "./src/**/*.ts",
     "!src/**/*.test.ts",
     "!src/api/navigateTo.ts",
-    "!src/utils/funcConfigHandle.ts",
-    "!src/utils/onLoadReceivedDataHandle.ts",
     "!src/thirdLib/**",
   ],
-  coverageDirectory: "coverage",
+  // coverageDirectory: "coverage",
   testMatch: [
     "<rootDir>/jest/**/*.test.ts",
   ],
   transform: {
     "\\.ts?$": "ts-jest", // 添加的
   },
-  coverageReporters: ["json"],
+  // coverageReporters: ["json"],
   // All imported modules in your tests should be mocked automatically
   // automock: false,
 

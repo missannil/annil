@@ -202,7 +202,25 @@
 <a name='L137'></a><a href='#L137'>137</a>
 <a name='L138'></a><a href='#L138'>138</a>
 <a name='L139'></a><a href='#L139'>139</a>
-<a name='L140'></a><a href='#L140'>140</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L140'></a><a href='#L140'>140</a>
+<a name='L141'></a><a href='#L141'>141</a>
+<a name='L142'></a><a href='#L142'>142</a>
+<a name='L143'></a><a href='#L143'>143</a>
+<a name='L144'></a><a href='#L144'>144</a>
+<a name='L145'></a><a href='#L145'>145</a>
+<a name='L146'></a><a href='#L146'>146</a>
+<a name='L147'></a><a href='#L147'>147</a>
+<a name='L148'></a><a href='#L148'>148</a>
+<a name='L149'></a><a href='#L149'>149</a>
+<a name='L150'></a><a href='#L150'>150</a>
+<a name='L151'></a><a href='#L151'>151</a>
+<a name='L152'></a><a href='#L152'>152</a>
+<a name='L153'></a><a href='#L153'>153</a>
+<a name='L154'></a><a href='#L154'>154</a>
+<a name='L155'></a><a href='#L155'>155</a>
+<a name='L156'></a><a href='#L156'>156</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -340,13 +358,27 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { NoInfer } from "hry-types/src/Generic/NoInfer";
 import type { EmptyObject } from "hry-types/src/Misc/EmptyObject";
 import type { Func } from "hry-types/src/Misc/Func";
 import type { ComputeIntersectionDeep } from "hry-types/src/Object/_api";
-import type { WMCompOtherOption } from "../../types/OfficialTypeAlias";
+import type { WMCompOtherOption, WMCompPageLifetimes, WMPageLifetimes } from "../../types/OfficialTypeAlias";
 import type { ComponentDoc } from "../DefineComponent/ReturnType/ComponentDoc";
 import type { ComputedConstraint } from "./Computed/ComputedConstraint";
 import type { ComputedOption } from "./Computed/ComputedOption";
@@ -354,11 +386,13 @@ import type { GetComputedDoc } from "./Computed/GetComputedDoc";
 import type { CustomEventConstraint } from "./CustomEvents/CustomEventConstraint";
 import type { CustomEventsOption } from "./CustomEvents/CustomEventsOption";
 import type { GetCustomEventDoc } from "./CustomEvents/GetCustomEventDoc";
+import type { DataConstraint } from "./Data/DataConstraint";
 import type { DataOption } from "./Data/DataOption";
 import type { EventsConstraint } from "./Events/EventsConstraint";
 import type { EventsOption } from "./Events/EventsOption";
 import type { RootComponentInstance } from "./Instance/RootComponentInstance";
 import type { IsPageOption } from "./IsPage/IsPageOption";
+import type { LifetimesConstraint } from "./Lifetimes/LifetimesConstraint";
 import type { LifetimesOption } from "./Lifetimes/LifetimesOption";
 import type { MethodsConstraint } from "./Methods/MethodsConstraint";
 import type { MethodsOption } from "./Methods/MethodsOption";
@@ -478,8 +512,22 @@ export function RootComponent&lt;
 &gt;(): RootComponentConstructor&lt;
   TReceivedComponentDoc
 &gt; {
-  return (options: any) =&gt; options;
+  return ((options: any) =&gt; options as RootComponentTrueOptions) as any;
 }
+&nbsp;
+export type RootComponentTrueOptions = {
+  isPage?: boolean;
+  properties?: PropertiesConstraint;
+  data?: DataConstraint;
+  computed?: ComputedConstraint;
+  customEvents?: CustomEventConstraint;
+  methods?: MethodsConstraint;
+  events?: EventsConstraint;
+  store?: StoreConstraint;
+  watch?: Record&lt;string, Func&gt;;
+  lifetimes?: LifetimesConstraint;
+  pageLifetimes?: Partial&lt;WMCompPageLifetimes &amp; { load: Func } &amp; WMPageLifetimes&gt;;
+};
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -487,7 +535,7 @@ export function RootComponent&lt;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-11-27T06:14:10.679Z
+                at 2023-11-29T11:14:53.818Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

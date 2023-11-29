@@ -1,7 +1,7 @@
 export type WMTriggerEventOption = WechatMiniprogram.Component.TriggerEventOption;
 
 export type WMCustomEvent<
-  Detail = object,
+  Detail = undefined,
   Mark extends object = object,
   CurrentTargetDataset extends object = object,
   TargetDataset extends object = CurrentTargetDataset,
@@ -25,7 +25,7 @@ export type WMBaseEvent<
 export type Dataset<
   TCurrentTargetDataset extends object,
   TargetDataset extends object = TCurrentTargetDataset,
-  Detail = {},
+  Detail = undefined,
 > = WMCustomEvent<Detail, object, TCurrentTargetDataset, TargetDataset>;
 
 /**

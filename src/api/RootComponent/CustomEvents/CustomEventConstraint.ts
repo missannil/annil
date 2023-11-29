@@ -47,4 +47,6 @@ export type FullCustomEvents = {
   options: OptionsFieldsConfigOfCustomEvents;
 };
 
-export type CustomEventConstraint = Record<string, FullCustomEvents | ShortCustomeEvents>;
+export type CustomEvents = FullCustomEvents | ShortCustomeEvents;
+
+export type CustomEventConstraint = Record<string, CustomEvents>;

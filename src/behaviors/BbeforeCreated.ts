@@ -1,9 +1,9 @@
-import type { ComponentOptions } from "../api/DefineComponent";
+import type { FinalOptionsForComponent } from "../api/DefineComponent";
 
 export const BBeforeCreate = Behavior({
-  definitionFilter(options: ComponentOptions) {
+  definitionFilter(options: FinalOptionsForComponent) {
     // 触发beforeCreate生命周期函数
-    const beforeCreateFunc = options.lifetimes?.beforeCreate;
+    const beforeCreateFunc = options.lifetimes!.beforeCreate;
 
     beforeCreateFunc && beforeCreateFunc(options);
   },

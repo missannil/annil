@@ -196,11 +196,10 @@ export function SubComponent<
   CompDoc extends ComponentDoc,
   Prefix extends string = "",
 >(): IfExtends<EmptyObject, CompDoc, (opt: EmptyObject) => never, SubComponentConstructor<RootDoc, CompDoc, Prefix>> {
-  return ((options: any) => options) as any;
+  return ((options: any) => options as SubComponentTrueOptions) as any;
 }
 
-// 相比与 export type TrivialOption = Options<{},...>,更直观字段和类型,但断耦合,注意类型是否正确.这是为最终生成官方Component API 的options参数而生。
-export type SubComponentOptions = {
+export type SubComponentTrueOptions = {
   inhrit?: string;
   data?: Record<string, unknown>;
   computed?: Record<string, Func>;

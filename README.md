@@ -27,7 +27,7 @@
 
 ### 简介
 
-annil(安奈儿)是为使用typescript原生开发微信小程序而写的插件,让代码更易写、易读、易维护。
+annil(安奈儿)是微信小程序原生开发插件,旨在让代码更易写、易读、易维护。
 
 ### 特点
 
@@ -40,12 +40,5 @@ annil(安奈儿)是为使用typescript原生开发微信小程序而写的插件
 ## 安装
 
 ```bash
-npm i annil typescript --save-dev
-```
-
-配置tsconfig.json
-
-```json
-{
-}
+npm i annil --save-dev
 ```

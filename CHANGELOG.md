@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.3](https://github.com/missannil/annil/compare/v1.0.2...v1.0.3) (2023-11-30)
+
+
+### Bug Fixes
+
+* test.yml ([4c0fca9](https://github.com/missannil/annil/commit/4c0fca9d0ce1050f5197a3730edac02cf32aac42))
+
 ## [1.0.2](https://github.com/missannil/annil/compare/v1.0.1...v1.0.2) (2023-11-30)
 
 

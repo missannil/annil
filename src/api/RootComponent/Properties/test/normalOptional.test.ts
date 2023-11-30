@@ -73,3 +73,23 @@ type OptionalDocExpected = {
 };
 
 Checking<typeof OptionalDoc, OptionalDocExpected, Test.Pass>;
+
+// properties 使用SpecificType时,接受interface类型
+interface Foo {
+  name: string;
+}
+
+RootComponent()({
+  properties: {
+    xxx: Object as SpecificType<{ dd: Foo }>,
+    user: {
+      type: Object as SpecificType<Foo>,
+      value: { name: "zhao" },
+    },
+  },
+  computed: {
+    ddd() {
+      this.data.user?.name;
+    },
+  },
+});

@@ -3,7 +3,8 @@
  * https://jestjs.io/docs/configuration
  */
 import type { Config } from "@jest/types";
-exports.default = {
+
+export const config = {
   clearMocks: true,
   testEnvironment: "jsdom",
   collectCoverage: false,
@@ -13,13 +14,22 @@ exports.default = {
     "!src/api/navigateTo.ts",
     "!src/thirdLib/**",
   ],
-  // coverageDirectory: "coverage",
   testMatch: [
     "<rootDir>/jest/**/*.test.ts",
   ],
   transform: {
     "\\.ts?$": "ts-jest", // 添加的
   },
+  coverageReporters: ["text", "text-summary"],
+  coverageThreshold: {
+    global: {
+      branches: 95,
+      functions: 95,
+      lines: 95,
+      statements: 95,
+    },
+  },
+  // coverageDirectory: "coverage",
   // coverageReporters: ["json"],
   // All imported modules in your tests should be mocked automatically
   // automock: false,
@@ -206,4 +216,6 @@ exports.default = {
   // Whether to use watchman for file crawling
   // watchman: true,
 } satisfies Config.InitialOptions;
+
 // export default config;
+exports.default = config;

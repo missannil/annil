@@ -83,7 +83,7 @@ type RootComponentConstructor<TReceivedComponentDoc extends ComponentDoc[] | Com
       | boolean
       | null
       | Literal[]
-      | Record<string, Literal>,
+      | object,
     // TEvents 不能有默认值 {} 会引起事件参数类型(e)失效
     TEvents extends EventsConstraint<TReceivedComponentDoc>,
     TIsPage extends boolean = false,

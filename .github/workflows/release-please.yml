@@ -10,7 +10,7 @@ permissions:
     pull-requests: write
 # 工作流程
 jobs:
-    # 第一个工作
+    # 更新release-please分支
     release-please:
         # 运行环境
         runs-on: ubuntu-latest
@@ -24,32 +24,37 @@ jobs:
                   release-type: node
                   #包名称
                   package-name: annil
+
+    # 构建和发布
+    build-and-publish:
+        runs-on: ubuntu-latest
+        needs: release-please
+        if: ${{ needs.release-please.outputs.release_created }}
+        steps:
               # 以下为npm发布逻辑
             - uses: actions/checkout@v3
               # if语句为真运行actions。
               # 当id为release的action结果为created时(即并入了main分支时)
-              if: ${{ steps.release.outputs.release_created }}
               # 开启node坏境
             - uses: actions/setup-node@v3
               with:
                   node-version: 18
                   registry-url: 'https://registry.npmjs.org'
-              if: ${{ steps.release.outputs.release_created }}
             - run: npm i husky -D
-              if: ${{ steps.release.outputs.release_created }}
             - run: npm i
-              if: ${{ steps.release.outputs.release_created }}
               # 打包
             - run: npm run build
-              if: ${{ steps.release.outputs.release_created }}
-              # 发布
-            - run: npm publish
-              env:
-                  # 在项目-settings-secrets and variables-actions 下建立Environment secrets,名字为NPM_TOKEN,值为npm下建立的密钥。
-                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-              if: ${{ steps.release.outputs.release_created }}
+              # 生成覆盖率报告
+            - name: Generate coverage report
+              run: npx jest --coverage --config jest.config.ci.ts
+              # 上传覆盖率报告
             - name: Upload coverage reports to Codecov
               uses: codecov/codecov-action@v3
               env:
                   CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-              if: ${{ steps.release.outputs.release_created }}
+            # 发布
+            - run: npm publish
+              env:
+                  # 在项目-settings-secrets and variables-actions 下建立Environment secrets,名字为NPM_TOKEN,值为npm下建立的密钥。
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+

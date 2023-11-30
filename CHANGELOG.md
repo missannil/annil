@@ -4,6 +4,14 @@
 
 * 解决SpecificType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.0.4](https://github.com/missannil/annil/compare/v1.0.3...v1.0.4) (2023-11-30)
+
+
+### Bug Fixes
+
+* release.yml ([c8b68b6](https://github.com/missannil/annil/commit/c8b68b66a50f5834756ab9f0d926bc7f1be2f90e))
+* yml ([e51c002](https://github.com/missannil/annil/commit/e51c00290d24d9372766e66e9c807e0c3d65429f))
+
 ## [1.0.1](https://github.com/missannil/annil/compare/v1.0.0...v1.0.1) (2023-11-27)
 
 

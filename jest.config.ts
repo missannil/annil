@@ -23,7 +23,7 @@ export const config = {
   coverageReporters: ["text", "text-summary"],
   coverageThreshold: {
     global: {
-      branches: 95,
+      branches: 96,
       functions: 95,
       lines: 95,
       statements: 95,

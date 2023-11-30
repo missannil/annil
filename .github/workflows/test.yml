@@ -25,3 +25,5 @@ jobs:
         run:   npx dprint check
       - name : test types  
         run:   npx tsc --noEmit
+      - name: Generate coverage report
+        run: npx jest --coverage 

@@ -1,7 +1,7 @@
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { Select } from "hry-types/src/Object/Select";
 
-import type { ComputeIntersection } from "hry-types/src/Object/_api";
+import type { ComputeIntersection, NonReadonlyDeep } from "hry-types/src/Object/_api";
 import type { GetOptionalDoc } from "./GetOptionalDoc";
 import type { GetRequiredDoc } from "./GetRequiredDoc";
 import type { OptionalType, PropertiesConstraint } from "./PropertiesConstraint";
@@ -10,8 +10,8 @@ type _GetPropertiesDoc<
   TProperties extends PropertiesConstraint,
   TIsPage extends boolean,
   Type extends "Required" | "Optional" | "all" = "all",
-  OptionalDoc = GetOptionalDoc<Select<TProperties, OptionalType>, TIsPage>,
-  RequiredDoc = GetRequiredDoc<Omit<TProperties, keyof OptionalDoc>, TIsPage>,
+  OptionalDoc = NonReadonlyDeep<GetOptionalDoc<Select<TProperties, OptionalType>, TIsPage>>,
+  RequiredDoc = NonReadonlyDeep<GetRequiredDoc<Omit<TProperties, keyof OptionalDoc>, TIsPage>>,
 > = IfExtends<
   Type,
   "all",

@@ -93,3 +93,17 @@ RootComponent()({
     },
   },
 });
+
+/**
+ * 对象类型字面量类型可验证通过。
+ */
+type obj = { gender: "male" | "femal" };
+
+RootComponent()({
+  properties: {
+    obj: {
+      type: Object as DetailedType<obj>,
+      value: { gender: "male" },
+    },
+  },
+});

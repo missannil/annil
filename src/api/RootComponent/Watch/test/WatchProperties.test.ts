@@ -3,7 +3,7 @@ import { Checking, type Test } from "hry-types";
 import type { ReadonlyDeep } from "hry-types/src/Any/_api";
 import { RootComponent } from "../..";
 
-import type { SpecificType } from "../../../..";
+import type { DetailedType } from "../../../..";
 // import {
 //   type Mock_Cart,
 //   mock_requiredTypes,
@@ -23,11 +23,11 @@ const mock_optional = {
     value: 123,
   },
   optional_gender: {
-    type: String as SpecificType<"male" | "female">,
+    type: String as DetailedType<"male" | "female">,
     value: "male" as const,
   },
   optional_obj: {
-    type: Object as SpecificType<Mock_User>,
+    type: Object as DetailedType<Mock_User>,
     value: {
       id: "id",
       name: "name",
@@ -35,7 +35,7 @@ const mock_optional = {
     },
   },
   optional_objOrNull: {
-    type: Object as SpecificType<Mock_User | null>, // 可选类型定义null默认值方可为null
+    type: Object as DetailedType<Mock_User | null>, // 可选类型定义null默认值方可为null
     value: null,
   },
 } satisfies Record<string, OptionalType>;

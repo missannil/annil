@@ -1,5 +1,5 @@
 import { Checking, type Test } from "hry-types";
-import { RootComponent, type SpecificType } from "../../../..";
+import { type DetailedType, RootComponent } from "../../../..";
 import type { CustomEventConstraint, FullCustomEvents, ShortCustomeEvents } from "../CustomEventConstraint";
 import type {
   Bubbles,
@@ -16,8 +16,8 @@ import type {
 export const mock_shortCustomEvents = {
   str: String,
   null: null,
-  unionStr: String as SpecificType<"male" | "female">,
-  union: [String, Number as SpecificType<0 | 1 | 2>, null],
+  unionStr: String as DetailedType<"male" | "female">,
+  union: [String, Number as DetailedType<0 | 1 | 2>, null],
 } satisfies Record<string, ShortCustomeEvents>;
 
 /**
@@ -25,27 +25,27 @@ export const mock_shortCustomEvents = {
  */
 export const mock_fullCustomEvents = {
   bubbles: {
-    detailType: String,
+    detail: String,
     options: { bubbles: true },
   },
   capturePhase: {
-    detailType: null,
+    detail: null,
     options: { capturePhase: true },
   },
   bubbles_capturePhase: {
-    detailType: [String, Number],
+    detail: [String, Number],
     options: { bubbles: true, capturePhase: true },
   },
   bubbles_composed: {
-    detailType: String as SpecificType<"male" | "female">,
+    detail: String as DetailedType<"male" | "female">,
     options: { bubbles: true, composed: true },
   },
   capturePhase_composed: {
-    detailType: [String, Number as SpecificType<0 | 1 | 2>, null],
+    detail: [String, Number as DetailedType<0 | 1 | 2>, null],
     options: { capturePhase: true, composed: true },
   },
   bubbles_capturePhase_composed: {
-    detailType: Boolean,
+    detail: Boolean,
     options: { bubbles: true, capturePhase: true, composed: true },
   },
 } satisfies Record<string, FullCustomEvents>;

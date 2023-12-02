@@ -1,6 +1,6 @@
 import { Checking, type Test } from "hry-types";
 import type { ReadonlyDeep } from "hry-types/src/Any/_api";
-import type { SpecificType } from "../../../../types/SpecificType";
+import type { DetailedType } from "../../../../types/DetailedType";
 import { RootComponent } from "../..";
 import type { Mock_User } from "../../Properties/test/normalRequired.test";
 
@@ -10,7 +10,7 @@ import type { Mock_User } from "../../Properties/test/normalRequired.test";
 RootComponent()({
   properties: {
     Pnum: Number,
-    obj: Object as SpecificType<Mock_User>,
+    obj: Object as DetailedType<Mock_User>,
   },
   data: {
     DNum: 123,

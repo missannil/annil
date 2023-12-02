@@ -1,4 +1,4 @@
-import { DefineComponent, RootComponent, type SpecificType, SubComponent } from "../../../src";
+import { DefineComponent, type DetailedType, RootComponent, SubComponent } from "../../../src";
 
 type User = { name: string; age: number };
 
@@ -25,7 +25,7 @@ type Root = typeof rootComponent;
 const rootComponent = RootComponent()({
   properties: {
     num: Number,
-    user: Object as SpecificType<User>,
+    user: Object as DetailedType<User>,
   },
 
   watch: {

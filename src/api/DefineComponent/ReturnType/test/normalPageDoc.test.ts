@@ -1,5 +1,5 @@
 import { Checking, type Test } from "hry-types";
-import { RootComponent, type SpecificType } from "../../../..";
+import { type DetailedType, RootComponent } from "../../../..";
 
 import type { Mock_User } from "../../../RootComponent/Properties/test/normalRequired.test";
 import { DefineComponent } from "../..";
@@ -8,13 +8,13 @@ const OnlyPropsRootDoc = RootComponent()({
   isPage: true,
   properties: {
     str: String,
-    obj: Object as SpecificType<Mock_User>,
+    obj: Object as DetailedType<Mock_User>,
     optionalObj: {
-      type: Object as SpecificType<Mock_User>,
+      type: Object as DetailedType<Mock_User>,
       value: {} as Mock_User,
     },
     optionalObjOrNull: {
-      type: Object as SpecificType<Mock_User | null>,
+      type: Object as DetailedType<Mock_User | null>,
       value: null,
     },
   },

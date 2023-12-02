@@ -1,11 +1,11 @@
-import { DefineComponent, RootComponent, type SpecificType } from "../../src";
+import { DefineComponent, type DetailedType, RootComponent } from "../../src";
 import type { User } from "../common";
 
 const rootComponent = RootComponent()({
   customEvents: {
     str: String,
     union: {
-      detailType: [Array as SpecificType<string[]>, Object as SpecificType<User>],
+      detail: [Array as DetailedType<string[]>, Object as DetailedType<User>],
       options: { bubbles: true },
     },
   },

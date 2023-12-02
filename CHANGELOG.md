@@ -2,7 +2,7 @@
 
 ### Bug Fixes
 
-* 解决SpecificType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
+* 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
 ## [1.0.4](https://github.com/missannil/annil/compare/v1.0.3...v1.0.4) (2023-11-30)
 

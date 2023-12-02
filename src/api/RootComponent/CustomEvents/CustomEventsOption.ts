@@ -17,9 +17,9 @@ export type CustomEventsOption<
    *   // ...
    *   customEvents: {
    *     A: Number, // number
-   *     B: [String as SpecificType<"male" | "femal">, Number], // "male" | "femal" | number
+   *     B: [String as DetailedType<"male" | "femal">, Number], // "male" | "femal" | number
    *     C: {
-   *       detailType: String,
+   *       detail: String,
    *       options: {
    *         bubbles: true,
    *         composed: true,

@@ -106,7 +106,8 @@ type SubComponentConstructor<
   AllRootDataDoc extends object =
     & Required<TRootDoc["properties"]>
     & TRootDoc["data"]
-    & TRootDoc["computed"],
+    & TRootDoc["computed"]
+    & TRootDoc["store"],
 > = {
   <
     TInherit extends InheritConstraint<AllRootDataDoc, CurrentCompDoc>,

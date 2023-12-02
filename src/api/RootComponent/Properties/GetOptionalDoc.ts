@@ -1,7 +1,7 @@
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { Select } from "hry-types/src/Object/Select";
 import type { AddNullForObject } from "../../../types/AddNullForObject";
-import type { InferSpecificType } from "../../../types/InferSpecificType";
+import type { InferDetailedType } from "../../../types/InferDetailedType";
 import type { OptionalType, PropertiesConstraint } from "./PropertiesConstraint";
 
 /**
@@ -20,19 +20,19 @@ export type GetOptionalDoc<
       false,
       TIsPage,
       // 组件时 对象加null
-      AddNullForObject<InferSpecificType<Optional[k]["type"]>>,
+      AddNullForObject<InferDetailedType<Optional[k]["type"]>>,
       // 页面时 对象不加
-      InferSpecificType<Optional[k]["type"]>
+      InferDetailedType<Optional[k]["type"]>
     >,
     IfExtends<
       false,
       TIsPage,
       // 组件时 对象加null
       AddNullForObject<
-        InferSpecificType<Optional[k]["type"]> | InferSpecificType<(Optional[k]["optionalTypes"] & {})[number]>
+        InferDetailedType<Optional[k]["type"]> | InferDetailedType<(Optional[k]["optionalTypes"] & {})[number]>
       >,
       // 页面时 对象不加
-      InferSpecificType<Optional[k]["type"]> | InferSpecificType<(Optional[k]["optionalTypes"] & {})[number]>
+      InferDetailedType<Optional[k]["type"]> | InferDetailedType<(Optional[k]["optionalTypes"] & {})[number]>
     >
   >;
 };

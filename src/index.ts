@@ -10,8 +10,17 @@ import { RootComponent } from "./api/RootComponent";
 
 import { SubComponent } from "./api/SubComponent";
 
-import type { SpecificType } from "./types/SpecificType";
+import type { DetailedType } from "./types/DetailedType";
 
+import type { GenerateDoc } from "./types/GenerateDoc";
 import type { ParamsEqual } from "./types/TwoParamsEqual";
 
-export { DefineComponent, navigateTo, type ParamsEqual, RootComponent, type SpecificType, SubComponent };
+export {
+  DefineComponent,
+  type DetailedType,
+  type GenerateDoc,
+  navigateTo,
+  type ParamsEqual,
+  RootComponent,
+  SubComponent,
+};

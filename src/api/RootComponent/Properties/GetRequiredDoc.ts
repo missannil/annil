@@ -1,7 +1,7 @@
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { Select } from "hry-types/src/Object/Select";
 import type { AddNullForObject } from "../../../types/AddNullForObject";
-import type { InferSpecificType } from "../../../types/InferSpecificType";
+import type { InferDetailedType } from "../../../types/InferDetailedType";
 import type { PropertiesConstraint, RequiredSingle, RequiredType } from "./PropertiesConstraint";
 
 /**
@@ -17,16 +17,16 @@ export type GetRequiredDoc<
   [k in keyof Required]: IfExtends<
     Required[k],
     RequiredSingle,
-    IfExtends<false, TIsPage, AddNullForObject<InferSpecificType<Required[k]>>, InferSpecificType<Required[k]>>,
+    IfExtends<false, TIsPage, AddNullForObject<InferDetailedType<Required[k]>>, InferDetailedType<Required[k]>>,
     IfExtends<
       false,
       TIsPage,
       // @ts-ignore Required[k] 必为 RequiredUnion
-      | AddNullForObject<InferSpecificType<Required[k]["type"]>>
+      | AddNullForObject<InferDetailedType<Required[k]["type"]>>
       // @ts-ignore Required[k] 必为 RequiredUnion
-      | AddNullForObject<InferSpecificType<Required[k]["optionalTypes"][number]>>,
+      | AddNullForObject<InferDetailedType<Required[k]["optionalTypes"][number]>>,
       // @ts-ignore Required[k] 必为 RequiredUnion
-      InferSpecificType<Required[k]["type"]> | InferSpecificType<Required[k]["optionalTypes"][number]>
+      InferDetailedType<Required[k]["type"]> | InferDetailedType<Required[k]["optionalTypes"][number]>
     >
   >;
 };

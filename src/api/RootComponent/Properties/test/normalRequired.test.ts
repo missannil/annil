@@ -1,5 +1,5 @@
 import { Checking, type Test } from "hry-types";
-import type { SpecificType } from "../../../../types/SpecificType";
+import type { DetailedType } from "../../../../types/DetailedType";
 
 import type { ReadonlyDeep } from "hry-types/src/Any/_api";
 import { RootComponent } from "../..";
@@ -30,12 +30,12 @@ export const mock_requiredSingle = {
   bool: Boolean,
   arr: Array,
   obj: Object,
-  tuple: Array as unknown as SpecificType<[string, number, boolean]>,
-  union_str: String as SpecificType<"male" | "female">,
-  union_num: Number as SpecificType<0 | 1 | 2>,
-  union_bool: Boolean as SpecificType<false | true>,
-  union_arr: Array as SpecificType<number[] | string[]>,
-  union_obj: Object as SpecificType<Mock_User | Mock_Cart>,
+  tuple: Array as unknown as DetailedType<[string, number, boolean]>,
+  union_str: String as DetailedType<"male" | "female">,
+  union_num: Number as DetailedType<0 | 1 | 2>,
+  union_bool: Boolean as DetailedType<false | true>,
+  union_arr: Array as DetailedType<number[] | string[]>,
+  union_obj: Object as DetailedType<Mock_User | Mock_Cart>,
 } satisfies Record<string, RequiredSingle>;
 
 /**
@@ -47,16 +47,16 @@ export const mock_requiredUnion = {
     optionalTypes: [Number, Boolean],
   },
   union_literalStr_Literalnum: {
-    type: String as SpecificType<"male" | "female">,
-    optionalTypes: [Number as SpecificType<0 | 1 | 2>],
+    type: String as DetailedType<"male" | "female">,
+    optionalTypes: [Number as DetailedType<0 | 1 | 2>],
   },
   union_mockUser_num: {
-    type: Object as SpecificType<Mock_User>,
+    type: Object as DetailedType<Mock_User>,
     optionalTypes: [Number],
   },
   union_num_mockUser: {
     type: Number,
-    optionalTypes: [Object as SpecificType<Mock_User>],
+    optionalTypes: [Object as DetailedType<Mock_User>],
   },
 } satisfies Record<string, RequiredUnion>;
 

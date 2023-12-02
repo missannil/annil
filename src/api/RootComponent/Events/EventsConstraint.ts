@@ -46,7 +46,7 @@ type TransformCustomEventsDocTypeToFunctionTypeAndAddSuffix<T extends CustomEven
   ) => void;
 };
 
-// 所有子组件自定义事件(过滤掉非冒泡或捕获)的key加入后缀并把值(detailType)转换为函数类型
+// 所有子组件自定义事件(过滤掉非冒泡或捕获)的key加入后缀并把值(detail)转换为函数类型
 type GetAllSubCustomEventsConstraint<TReceivedComponentDoc extends ComponentDoc[] | ComponentDoc> = {} extends
   TReceivedComponentDoc ? {}
   : TReceivedComponentDoc extends ComponentDoc[] ? TransformCustomEventsDocTypeToFunctionTypeAndAddSuffix<

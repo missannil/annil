@@ -1,5 +1,5 @@
 import type { User } from "../../jest/common";
-import { DefineComponent, RootComponent, type SpecificType } from "../../src";
+import { DefineComponent, type DetailedType, RootComponent } from "../../src";
 
 // const subB = SubComponent<RootDoc, { properties: { subA_name: string; subA_age: number } }>()({
 //   computed: {
@@ -16,7 +16,7 @@ import { DefineComponent, RootComponent, type SpecificType } from "../../src";
 
 const rootComponent = RootComponent()({
   properties: {
-    user: Object as SpecificType<User>,
+    user: Object as DetailedType<User>,
   },
   computed: {
     age() {

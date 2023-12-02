@@ -1,5 +1,5 @@
 import type { EmptyObject } from "hry-types/src/Misc/EmptyObject";
-import type { InferSpecificType } from "../../../types/InferSpecificType";
+import type { InferDetailedType } from "../../../types/InferDetailedType";
 
 /**
  * 验证properties的value类型是否正确
@@ -12,7 +12,7 @@ export type PropertiesValueValidator<
       k in keyof TProperties as TProperties[k] extends {
         type: infer R;
         value: infer V;
-      } ? V extends InferSpecificType<R> ? never
+      } ? V extends InferDetailedType<R> ? never
         : k
         : never
     ]: { value: () => "⚠️类型错误⚠️" };

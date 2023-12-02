@@ -1,16 +1,16 @@
-import type { SpecificType } from "../../../types/SpecificType";
+import type { DetailedType } from "../../../types/DetailedType";
 
 /**
  * properties 必传(单一)类型
  */
-export type RequiredSingle = SpecificType;
+export type RequiredSingle = DetailedType;
 
 /**
  * properties 必传(联合)类型
  */
 export type RequiredUnion<Literal = unknown> = {
-  type: SpecificType<Literal>;
-  optionalTypes: SpecificType[];
+  type: DetailedType<Literal>;
+  optionalTypes: DetailedType[];
 };
 
 /**
@@ -22,9 +22,9 @@ export type RequiredType<Literal = unknown> = RequiredUnion<Literal> | RequiredS
  * properties 选传类型
  */
 export type OptionalType<Literal = unknown> = {
-  type: SpecificType<Literal>;
+  type: DetailedType<Literal>;
   value: Literal;
-  optionalTypes?: SpecificType[];
+  optionalTypes?: DetailedType[];
 };
 
 /**

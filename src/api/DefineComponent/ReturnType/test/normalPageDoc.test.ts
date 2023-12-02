@@ -38,3 +38,12 @@ type CompDocOnlyPropertiesExpected = {
 };
 
 Checking<typeof compDocOnlyProperties, CompDocOnlyPropertiesExpected, Test.Pass>;
+
+// 页面类型不受subComponents是[never,never]时影响
+const whenSubIsAllNever = DefineComponent({
+  path: "/pages/index/index",
+  rootComponent: OnlyPropsRootDoc,
+  subComponents: [{} as never],
+});
+
+Checking<typeof whenSubIsAllNever, CompDocOnlyPropertiesExpected, Test.Pass>;

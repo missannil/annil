@@ -1,6 +1,6 @@
 import { Checking, type Test } from "hry-types";
 import type { ReadonlyDeep } from "hry-types/src/Any/_api";
-import type { SpecificType } from "../../../../types/SpecificType";
+import type { DetailedType } from "../../../../types/DetailedType";
 import { RootComponent } from "../..";
 import { type Mock_User } from "./normalRequired.test";
 
@@ -14,22 +14,22 @@ const OptionalDoc = RootComponent()({
       value: 123,
     },
     optional_gender: {
-      type: String as SpecificType<"male" | "female">, // 同类字面量联合类型
+      type: String as DetailedType<"male" | "female">, // 同类字面量联合类型
       value: "male",
     },
     optional_tuple: {
-      type: Array as unknown as SpecificType<[number, string, boolean]>, // 元组类型
+      type: Array as unknown as DetailedType<[number, string, boolean]>, // 元组类型
       value: [1, "a", true] as [number, string, boolean],
     },
     optional_obj: {
-      type: Object as SpecificType<Mock_User>, // 对象类型
+      type: Object as DetailedType<Mock_User>, // 对象类型
       value: {
         id: "id",
         age: 20,
       },
     },
     optional_objOrNull: {
-      type: Object as SpecificType<Mock_User | null>, // 对象类型与null的联合
+      type: Object as DetailedType<Mock_User | null>, // 对象类型与null的联合
       value: null,
     },
     optional_union: { // 非同类联合类型 string | number
@@ -74,16 +74,16 @@ type OptionalDocExpected = {
 
 Checking<typeof OptionalDoc, OptionalDocExpected, Test.Pass>;
 
-// properties 使用SpecificType时,接受interface类型
+// properties 使用DetailedType时,接受interface类型
 interface Foo {
   name: string;
 }
 
 RootComponent()({
   properties: {
-    xxx: Object as SpecificType<{ dd: Foo }>,
+    xxx: Object as DetailedType<{ dd: Foo }>,
     user: {
-      type: Object as SpecificType<Foo>,
+      type: Object as DetailedType<Foo>,
       value: { name: "zhao" },
     },
   },

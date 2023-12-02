@@ -1,4 +1,4 @@
-import { RootComponent, type SpecificType } from "../../../../index";
+import { type DetailedType, RootComponent } from "../../../../index";
 import type { Mock_Cart } from "./normalRequired.test";
 
 // 1 非法字段
@@ -35,7 +35,7 @@ RootComponent()({
     },
     optionalObj: {
       // @ts-expect-error 对象默认值要写null则必须先定义
-      type: Object as SpecificType<Mock_Cart>,
+      type: Object as DetailedType<Mock_Cart>,
       // @ts-expect-error 对象默认值要写null则必须先定义
       value: null,
     },

@@ -1,8 +1,8 @@
-import { DefineComponent, RootComponent, type SpecificType } from "../../src";
+import { DefineComponent, type DetailedType, RootComponent } from "../../src";
 
 const rootComponent = RootComponent()({
   properties: {
-    _age: Number as SpecificType<number>,
+    _age: Number as DetailedType<number>,
   },
   computed: {
     age() {

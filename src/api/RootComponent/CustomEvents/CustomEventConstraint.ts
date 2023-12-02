@@ -1,6 +1,6 @@
-import type { SpecificType } from "../../../types/SpecificType";
+import type { DetailedType } from "../../../types/DetailedType";
 
-type SimpleCustomeEvents = SpecificType | null;
+type SimpleCustomeEvents = DetailedType | null;
 
 export type SimpleCustomeEventsList = SimpleCustomeEvents[];
 
@@ -43,7 +43,7 @@ export type OptionsFieldsConfigOfCustomEvents =
  * 带options的CustomEvents配置
  */
 export type FullCustomEvents = {
-  detailType: ShortCustomeEvents;
+  detail: ShortCustomeEvents;
   options: OptionsFieldsConfigOfCustomEvents;
 };
 

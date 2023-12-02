@@ -19,10 +19,17 @@ type Root = {
   data: {
     str: string;
   };
+  store: {
+    SNum: number;
+  };
   computed: {
     bool: boolean;
   };
 };
+
+type $aaa = ComponentDoc<
+  { properties: { aaa_str: string; aaa_user: User | null; aaa_num: number; aaa_age: number } }
+>;
 
 SubComponent<{}, OnlyCustomCompDoc>()({
   // 1 CompDoc的properties为空时,可以写{}
@@ -76,6 +83,7 @@ SubComponent<Root, OnlyPropsCompDoc>()({
         ReadonlyDeep<{
           num: number;
           user: User | null;
+          SNum: number;
           str: string;
           bool: boolean;
           aaa_num: number;
@@ -98,6 +106,7 @@ SubComponent<Root, OnlyPropsCompDoc>()({
           num: number;
           user: User | null;
           str: string;
+          SNum: number;
           bool: boolean;
           aaa_num: number;
           aaa_num123: 123;
@@ -110,24 +119,21 @@ SubComponent<Root, OnlyPropsCompDoc>()({
   },
 });
 
-// 计算属性可互相引用 ！！！但是没有自动提示！！！
-type CompDoc = ComponentDoc<
-  { properties: { aaa_num: number; aaa_user: User | null; aaa_xxx: number; aaa_age: number } }
->;
+// 计算属性可互相引用,但要加返回类型注释
 
-SubComponent<Root, CompDoc>()({
-  data: {
-    aaa_xxx: 123,
-  },
+SubComponent<Root, $aaa>()({
   computed: {
     aaa_num(): number {
-      return this.data.aaa_xxx;
+      return this.data.SNum;
     },
     aaa_user(): User | null {
       return this.data.user;
     },
     aaa_age(): number {
       return this.data.aaa_num;
+    },
+    aaa_str(): string {
+      return this.data.str;
     },
   },
 });

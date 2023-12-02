@@ -1,6 +1,6 @@
 import { Checking, type Test } from "hry-types";
 import type { ReadonlyDeep } from "hry-types/src/Any/_api";
-import type { SpecificType } from "../../../../types/SpecificType";
+import type { DetailedType } from "../../../../types/DetailedType";
 import { RootComponent } from "../..";
 import type { Mock_User } from "../../Properties/test/normalRequired.test";
 
@@ -88,7 +88,7 @@ Checking<typeof EmptyComputedFieldDoc, { methods: { M1: () => void } }, Test.Pas
 RootComponent()({
   isPage: true,
   properties: {
-    obj: Object as SpecificType<{ name: string; age: number }>,
+    obj: Object as DetailedType<{ name: string; age: number }>,
   },
   computed: {
     age() {

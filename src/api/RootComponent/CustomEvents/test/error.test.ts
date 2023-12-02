@@ -7,26 +7,26 @@ RootComponent()({
   customEvents: {
     // @ts-expect-error options 没有options字段时无需写对象形式,应简写`error1:Boolean`。
     error1: {
-      detailType: Boolean,
+      detail: Boolean,
     },
     // @ts-expect-error options 不可以为空对象 无意义
     error2: {
-      detailType: Boolean,
+      detail: Boolean,
       options: {},
     },
     // @ts-expect-error false字段不要写 默认就为false
     error3: {
-      detailType: Boolean,
+      detail: Boolean,
       options: { bubbles: false },
     },
     // @ts-expect-error false 字段不要写 默认false
     error4: {
-      detailType: Boolean,
+      detail: Boolean,
       options: { capturePhase: false },
     },
     // @ts-expect-error composed字段不可以单独开启,必须存在 bubbles或capturePhase字段为true时
     error5: {
-      detailType: Boolean,
+      detail: Boolean,
       options: { composed: true },
     },
   },
@@ -53,7 +53,7 @@ RootComponent()({
 RootComponent()({
   customEvents: {
     error1: {
-      detailType: String,
+      detail: String,
       options: {
         bubbles: true,
         // @ts-expect-error 非法字段  composed 少了d
@@ -69,7 +69,7 @@ RootComponent()({
 RootComponent()({
   customEvents: {
     error2: {
-      detailType: String,
+      detail: String,
       options: {
         bubbles: true,
         // @ts-expect-error 非法字段  capturePhases 多了 s
@@ -90,7 +90,7 @@ RootComponent()({
   },
   customEvents: {
     bbb: {
-      detailType: null,
+      detail: null,
       options: {
         // @ts-expect-error 非法字段
         bubbleds: false,

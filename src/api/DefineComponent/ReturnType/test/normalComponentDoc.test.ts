@@ -1,6 +1,6 @@
 import { Checking, type Test } from "hry-types";
 import { type ComputeIntersectionDeep } from "hry-types/src/Object/ComputeIntersectionDeep";
-import { RootComponent, type SpecificType } from "../../../..";
+import { type DetailedType, RootComponent } from "../../../..";
 import type { CustomEventConstraint } from "../../../RootComponent/CustomEvents/CustomEventConstraint";
 import type {
   Bubbles,
@@ -20,43 +20,43 @@ import { DefineComponent } from "../..";
 
 const properties = {
   str: String,
-  obj: Object as SpecificType<Mock_User>,
+  obj: Object as DetailedType<Mock_User>,
   optionalObj: {
-    type: Object as SpecificType<Mock_User>,
+    type: Object as DetailedType<Mock_User>,
     value: {} as Mock_User,
   },
   optionalObjOrNull: {
-    type: Object as SpecificType<Mock_User | null>,
+    type: Object as DetailedType<Mock_User | null>,
     value: null,
   },
 } satisfies PropertiesConstraint;
 const customEvents = {
   str: String,
   null: null,
-  unionStr: String as SpecificType<"male" | "female">,
-  list: [String, Number as SpecificType<0 | 1 | 2>, null],
+  unionStr: String as DetailedType<"male" | "female">,
+  list: [String, Number as DetailedType<0 | 1 | 2>, null],
   bubbles: {
-    detailType: String,
+    detail: String,
     options: { bubbles: true },
   },
   capturePhase: {
-    detailType: null,
+    detail: null,
     options: { capturePhase: true },
   },
   bubbles_capturePhase: {
-    detailType: [String, Number],
+    detail: [String, Number],
     options: { bubbles: true, capturePhase: true },
   },
   bubbles_composed: {
-    detailType: String as SpecificType<"male" | "female">,
+    detail: String as DetailedType<"male" | "female">,
     options: { bubbles: true, composed: true },
   },
   capturePhase_composed: {
-    detailType: [String, Number as SpecificType<0 | 1 | 2>, null],
+    detail: [String, Number as DetailedType<0 | 1 | 2>, null],
     options: { capturePhase: true, composed: true },
   },
   bubbles_capturePhase_composed: {
-    detailType: Boolean,
+    detail: Boolean,
     options: { bubbles: true, capturePhase: true, composed: true },
   },
 } satisfies CustomEventConstraint;

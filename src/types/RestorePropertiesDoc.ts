@@ -3,7 +3,7 @@
 
 // import type { ListOfSamePrimitive } from "./ListOfSamePrimitive";
 // import type { ReStorePropTypeOfList } from "./ReStorePropTypeOfList";
-// import type { SpecificType } from "./SpecificType";
+// import type { DetailedType } from "./DetailedType";
 
 /**
  * 还原properties描述
@@ -16,9 +16,9 @@
  */
 // type ReStorePropertiesDoc<T extends ComponentDoc> = {
 //   [k in keyof T]?: ListOfSamePrimitive<T[k]> extends infer R extends unknown[]
-//     ? R["length"] extends 1 ? SpecificType<R[0]> | { type: SpecificType<R[0]>; value: R[0] }
+//     ? R["length"] extends 1 ? DetailedType<R[0]> | { type: DetailedType<R[0]>; value: R[0] }
 //     : {
-//       type: SpecificType<R[0]>;
+//       type: DetailedType<R[0]>;
 //       value?: R[0];
 //       optionalTypes?: ReStorePropTypeOfList<Drop<R, R[0]>>[number][];
 //     }

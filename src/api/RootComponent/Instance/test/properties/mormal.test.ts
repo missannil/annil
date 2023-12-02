@@ -1,13 +1,13 @@
 import { Checking, type Test } from "hry-types";
 import type { ReadonlyDeep } from "hry-types/src/Any/ReadonlyDeep";
-import { RootComponent, type SpecificType } from "../../../../..";
+import { type DetailedType, RootComponent } from "../../../../..";
 
 // 组件时
 RootComponent()({
   properties: {
     obj: Object,
     optionalObj: {
-      type: Object as SpecificType<{ name: string }>,
+      type: Object as DetailedType<{ name: string }>,
       value: { name: "zhao" },
     },
   },
@@ -25,7 +25,7 @@ RootComponent()({
   properties: {
     obj: Object,
     optionalObj: {
-      type: Object as SpecificType<{ name: string }>,
+      type: Object as DetailedType<{ name: string }>,
       value: { name: "zhao" },
     },
   },

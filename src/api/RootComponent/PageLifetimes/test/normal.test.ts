@@ -1,5 +1,5 @@
 import { Checking, type Test } from "hry-types";
-import { RootComponent, type SpecificType } from "../../../..";
+import { type DetailedType, RootComponent } from "../../../..";
 
 import type { RemoveNullOfRequired } from "../../../../types/RemoveNullOfRequired";
 import type { Mock_User } from "../../Properties/test/normalRequired.test";
@@ -29,11 +29,11 @@ RootComponent()({
     str: String,
     obj: Object,
     union: {
-      type: Object as SpecificType<Mock_User>,
+      type: Object as DetailedType<Mock_User>,
       value: { id: "001", name: "zhao" },
     },
     optionalObject: {
-      type: Object as SpecificType<Mock_User | null>,
+      type: Object as DetailedType<Mock_User | null>,
       value: null,
     },
   },

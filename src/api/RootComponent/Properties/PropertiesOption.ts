@@ -13,7 +13,7 @@ export type PropertiesOption<
  = // DuplicateFieldCheck extends PropertyKey = "",
   {
     /**
-     * 可通过 as SpecificType<anyType> 书写任意类型
+     * 可通过 as DetailedType<anyType> 书写任意类型
      * @remarks 禁用observable字段,简写或对象写法无value字段时为必传属性(必传对象类型加入null类型),对象写法有value字段为可选属性.
      */
     properties?:

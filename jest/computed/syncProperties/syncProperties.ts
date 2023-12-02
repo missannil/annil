@@ -1,4 +1,4 @@
-import { DefineComponent, RootComponent, type SpecificType, SubComponent } from "../../../src";
+import { DefineComponent, type DetailedType, RootComponent, SubComponent } from "../../../src";
 import { type CompDoc, type User, user } from "../../common";
 
 const subA = SubComponent<Root, CompDoc>()({
@@ -17,9 +17,9 @@ type Root = typeof rootComponent;
 
 const rootComponent = RootComponent()({
   properties: {
-    requiredUser: Object as SpecificType<User>,
+    requiredUser: Object as DetailedType<User>,
     optionalUser: {
-      type: Object as SpecificType<User>,
+      type: Object as DetailedType<User>,
       value: user,
     },
   },

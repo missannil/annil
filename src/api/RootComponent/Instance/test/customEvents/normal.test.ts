@@ -1,41 +1,41 @@
 import { Checking, type Test } from "hry-types";
-import type { SpecificType } from "../../../../..";
+import type { DetailedType } from "../../../../..";
 import { RootComponent } from "../../..";
 
 RootComponent()({
   customEvents: {
     str: String,
-    num: Number as SpecificType<1 | 2>,
-    union: [String as SpecificType<"male" | "femal">, Number],
+    num: Number as DetailedType<1 | 2>,
+    union: [String as DetailedType<"male" | "femal">, Number],
     null: null,
     bubbles: {
-      detailType: String,
+      detail: String,
       options: {
         bubbles: true,
       },
     },
     capturePhase: {
-      detailType: Number,
+      detail: Number,
       options: {
         capturePhase: true,
       },
     },
     bubblesComposed: {
-      detailType: Number,
+      detail: Number,
       options: {
         bubbles: true,
         composed: true,
       },
     },
     capturePhaseComposed: {
-      detailType: Number,
+      detail: Number,
       options: {
         capturePhase: true,
         composed: true,
       },
     },
     bubblesCapturePhaseComposed: {
-      detailType: null,
+      detail: null,
       options: {
         bubbles: true,
         capturePhase: true,

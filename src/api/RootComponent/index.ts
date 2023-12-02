@@ -77,17 +77,10 @@ type RootComponentOptions<
 
 type RootComponentConstructor<TReceivedComponentDoc extends ComponentDoc[] | ComponentDoc> = {
   <
-    Literal extends
-      | string
-      | number
-      | boolean
-      | null
-      | Literal[]
-      | object,
     // TEvents 不能有默认值 {} 会引起事件参数类型(e)失效
     TEvents extends EventsConstraint<TReceivedComponentDoc>,
     TIsPage extends boolean = false,
-    TProperties extends PropertiesConstraint<Literal> = {},
+    const TProperties extends PropertiesConstraint = {},
     TData extends object = {},
     TStore extends StoreConstraint = {},
     TComputed extends ComputedConstraint = {},

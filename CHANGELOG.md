@@ -4,6 +4,13 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.0.6](https://github.com/missannil/annil/compare/v1.0.5...v1.0.6) (2023-12-02)
+
+
+### Bug Fixes
+
+* 修复 properties对象字段为字面量类型时value类型不匹配的问题 ([faa5c96](https://github.com/missannil/annil/commit/faa5c96c0c0af8112b7828911cc0d40f56903669))
+
 ## [1.0.5](https://github.com/missannil/annil/compare/v1.0.4...v1.0.5) (2023-12-02)
 
 

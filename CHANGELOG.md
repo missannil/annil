@@ -4,6 +4,13 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.0.7](https://github.com/missannil/annil/compare/v1.0.6...v1.0.7) (2023-12-02)
+
+
+### Bug Fixes
+
+* 修复DefinedComponent的subComonsnts字段为[never]类型时,生成page类型错误的情况 ([a8aec74](https://github.com/missannil/annil/commit/a8aec74bbe964585f71d96bebdc85a32241271aa))
+
 ## [1.0.6](https://github.com/missannil/annil/compare/v1.0.5...v1.0.6) (2023-12-02)
 
 

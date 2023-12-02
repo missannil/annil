@@ -39,7 +39,7 @@ interface DefineComponentConstructor {
     "",
     TName,
     // 生成页面文档
-    CreatePageDoc<TRootComponentDoc, TPath, TSubComponentTuple>,
+    CreatePageDoc<TRootComponentDoc, TPath>,
     // 生成组件文档
     CreateComponentDoc<TRootComponentDoc, TName, TSubComponentTuple>
   >;

@@ -2,7 +2,8 @@ import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { NoInfer } from "hry-types/src/Generic/NoInfer";
 import type { EmptyObject } from "hry-types/src/Misc/EmptyObject";
 import type { Func } from "hry-types/src/Misc/Func";
-import type { ComputeIntersectionDeep } from "hry-types/src/Object/_api";
+import type { ComputeIntersection } from "hry-types/src/Object/_api";
+import type { ComputeObject } from "../../types/ComputeObj";
 import type { WMCompOtherOption, WMCompPageLifetimes, WMPageLifetimes } from "../../types/OfficialTypeAlias";
 import type { ComponentDoc } from "../DefineComponent/ReturnType/ComponentDoc";
 import type { ComputedConstraint } from "./Computed/ComputedConstraint";
@@ -111,16 +112,16 @@ type RootComponentConstructor<TReceivedComponentDoc extends ComponentDoc[] | Com
       StoreDoc,
       ComputedDoc
     >,
-  ): // 返回类型 RootComponentDoc
-  ComputeIntersectionDeep<
+  ): // 返回类型 satisfies RootComponentDoc
+  ComputeIntersection<
     & IfExtends<TIsPage, false, {}, { isPage: true }>
     & IfExtends<EmptyObject, PropertiesDoc, {}, { properties: PropertiesDoc }>
     & IfExtends<EmptyObject, DataDoc, {}, { data: DataDoc }>
-    & IfExtends<EmptyObject, StoreDoc, {}, { store: StoreDoc }>
+    & IfExtends<EmptyObject, StoreDoc, {}, { store: ComputeObject<StoreDoc> }>
     & IfExtends<EmptyObject, ComputedDoc, {}, { computed: ComputedDoc }>
     & IfExtends<EmptyObject, TMethods, {}, { methods: TMethods }>
     & IfExtends<EmptyObject, EventsDoc, {}, { events: EventsDoc }>
-    & IfExtends<EmptyObject, CustomEventsDoc, {}, { customEvents: CustomEventsDoc }>
+    & IfExtends<EmptyObject, CustomEventsDoc, {}, { customEvents: ComputeObject<CustomEventsDoc> }>
   >;
 };
 

@@ -1,7 +1,7 @@
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { EmptyObject } from "hry-types/src/Misc/EmptyObject";
 import type { RequiredKeys } from "hry-types/src/Object/RequiredKeys";
-import type { ExtractDocPrefix } from "../../types/GetComponentPrefix";
+import type { GetComponentPrefix } from "../../types/GetComponentPrefix";
 import type { ReplacePrefix } from "../../types/ReplacePrefix";
 import type { ComponentDoc } from "../DefineComponent/ReturnType/ComponentDoc";
 
@@ -95,7 +95,7 @@ type SubComponentConstructor<
   TSupplementalPrefix extends string = "",
   IsPage extends boolean = TRootDoc["isPage"] extends true ? true : false,
   // 重构子组件的前缀
-  CurrentPrefix extends string = `${ExtractDocPrefix<TOriginalCompDoc>}${Capitalize<TSupplementalPrefix>}`,
+  CurrentPrefix extends string = `${GetComponentPrefix<TOriginalCompDoc>}${Capitalize<TSupplementalPrefix>}`,
   // 更新原始文档的前缀为Prefix
   CurrentCompDoc extends ComponentDoc = IfExtends<
     TSupplementalPrefix,

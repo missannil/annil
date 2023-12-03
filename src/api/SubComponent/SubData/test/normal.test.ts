@@ -1,7 +1,7 @@
 import { Checking, type Test } from "hry-types";
 import type { ReadonlyDeep } from "hry-types/src/Any/_api";
 import type { Wm } from "../../../../thirdLib";
-import type { CompDocExtends } from "../../../../types/CompDocExtends";
+import type { ComponentDocExtension } from "../../../../types/ComponentDocExtension";
 import type { ComponentDoc } from "../../../DefineComponent/ReturnType/ComponentDoc";
 
 import type { Mock_User } from "../../../RootComponent/Properties/test/normalRequired.test";
@@ -28,7 +28,10 @@ SubComponent<{}, CompDoc>()({
 });
 
 // 2. 使用CompDocExtends泛型拓展组件文档,满足内部组件内部包含一些slot或基本组件数据
-type viewExtends = CompDocExtends<Wm.View, { view_obj: Mock_User | null; view_str: string; view_ddd: number }>;
+type viewExtends = ComponentDocExtension<
+  Wm.View,
+  { properties: { view_obj: Mock_User | null; view_str: string; view_ddd: number } }
+>;
 
 const res = SubComponent<{}, viewExtends>()({
   inherit: {

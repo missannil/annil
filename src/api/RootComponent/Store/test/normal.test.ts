@@ -1,3 +1,4 @@
+import { Checking, type Test } from "hry-types";
 import { observable } from "mobx";
 import { RootComponent } from "../..";
 const user = observable({
@@ -5,9 +6,18 @@ const user = observable({
   age: 20,
 });
 
-RootComponent()({
+const storeDoc = RootComponent()({
   store: {
     userName: () => user.name,
     userAge: () => user.age,
   },
 });
+
+type StoreDocExpected = {
+  store: {
+    userName: string;
+    userAge: number;
+  };
+};
+
+Checking<typeof storeDoc, StoreDocExpected, Test.Pass>;

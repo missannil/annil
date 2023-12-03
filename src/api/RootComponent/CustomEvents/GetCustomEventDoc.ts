@@ -42,5 +42,3 @@ export type GetCustomEventDoc<T extends CustomEventConstraint> =
         | AddTagForCustomEventsDoc<T[k]["options"]>;
   }
 ;
-
-// type ddd = IsUnion

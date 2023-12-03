@@ -1,5 +1,5 @@
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
-import type { ComputeIntersectionDeep } from "hry-types/src/Object/ComputeIntersectionDeep";
+import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
 import type { AddNullForObject } from "../../../types/AddNullForObject";
 import type { RootComponentDoc } from "../../RootComponent/RootComponentDoc";
 import type { SubComponentDoc } from "../../SubComponent/SubComponentDoc";
@@ -19,7 +19,7 @@ export type CreateComponentDoc<
     & GetCustomEventDocOfSubDoc<TSubComponentTuple[number]>,
   StopKeys extends string = GetStopKeys<TRootDoc["events"]>,
   FinalCustomEventDoc extends object = Omit<AllCustomEventsDoc, StopKeys>,
-> = ComputeIntersectionDeep<
+> = ComputeIntersection<
   & IfExtends<
     unknown,
     AllPropertiesDoc,

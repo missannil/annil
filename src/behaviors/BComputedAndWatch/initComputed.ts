@@ -39,6 +39,7 @@ export function getComputedInfo(
   let initValue: unknown;
   // try {
   initValue = computedFunc.call({
+    ...this,
     data: deepProxy(this.data, dependences),
   });
   // } catch (error) {

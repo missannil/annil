@@ -26,7 +26,7 @@ const compDocOnlyProperties = DefineComponent({
   rootComponent: OnlyPropsRootDoc,
 });
 
-// 页面时返回的propertiesDoc无前缀
+// 1 页面时返回的propertiesDoc无前缀
 type CompDocOnlyPropertiesExpected = {
   path: "/pages/index/index";
   properties: {
@@ -39,11 +39,11 @@ type CompDocOnlyPropertiesExpected = {
 
 Checking<typeof compDocOnlyProperties, CompDocOnlyPropertiesExpected, Test.Pass>;
 
-// 页面类型不受subComponents是[never,never]时影响
+// 2 页面类型不受subComponents是[never,never]时影响
 const whenSubIsAllNever = DefineComponent({
   path: "/pages/index/index",
   rootComponent: OnlyPropsRootDoc,
-  subComponents: [{} as never],
+  subComponents: [{} as never, {} as never],
 });
 
 Checking<typeof whenSubIsAllNever, CompDocOnlyPropertiesExpected, Test.Pass>;

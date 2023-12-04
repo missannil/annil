@@ -11,13 +11,13 @@ const NonEmptyRootDoc = {} as SubComponentDoc<{
   a: string | Bubbles | Composed;
 }>;
 
-// 组件时
+// 1 组件时
 DefineComponent({
   name: "test",
   subComponents: [SubDocIsAny, NonEmptyRootDoc],
 });
 
-// 页面时
+// 2 页面时
 DefineComponent({
   path: "/test/index/index",
   rootComponent: { isPage: true },
@@ -30,10 +30,9 @@ const B = {} as { a: string | Composed; b: string | Composed };
 
 const C = {} as { a: boolean | Composed; c: boolean | Composed };
 
-// subComponents字段支持最多999个子组件
 const aaa = DefineComponent({
   name: "test",
-  // 支持999个子项
+  // 3 subComponents字段支持最多999个子组件
   subComponents: [
     A,
     B,

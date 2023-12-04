@@ -1,16 +1,14 @@
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
-import type { RootComponentDoc } from "../../RootComponent/RootComponentDoc";
+import type { Includes } from "../../../types/includes";
 
 /**
- * 根据TRootComponent类型,生成name或path字段
- * @remarks RootComponentDoc为页面时(isPage为true),返回path字段,否则返回name字段
- * @returns  `{ name: TName } or { path: TPage }`
+ * 根据IsPage,生成name或path字段
  */
 export type NameOrPageOption<
   TName extends string,
   TPath extends `/${string}`,
-  TRootComponent extends RootComponentDoc,
-> = TRootComponent["isPage"] extends true ? {
+  IsPage extends boolean,
+> = IsPage extends true ? {
     /**
      * 页面路径已'/'开头
      */
@@ -18,7 +16,14 @@ export type NameOrPageOption<
   }
   : {
     /**
-     * 组件名不可为空
+     * 组件名不可为空串和含有下划线
      */
-    name: TName & IfExtends<TName, "", () => "⚠️组件名不可为空⚠️", unknown>;
+    name:
+      & TName
+      & IfExtends<
+        TName,
+        "",
+        () => "⚠️组件名不可为空⚠️",
+        IfExtends<Includes<TName, "_">, true, () => "⚠️组件名不可包含下划线 _ ⚠️", unknown>
+      >;
   };

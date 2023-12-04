@@ -3,13 +3,19 @@
   "version": "1.0.8",
   "description": "微信小程序(原生开发)插件",
   "main": "dist/index.js",
+  "types": "src/index.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/missannil/annil.git"
+  },
+  "homepage": "https://github.com/missannil/annil.git",
   "scripts": {
     "test": "jest --watch",
     "coverage": "jest --coverage",
     "prepare": "husky install",
     "lint": "eslint . --fix && npm run fmt",
     "fmt": "dprint fmt",
-    "type": "tsc --watch",
+    "test:type": "tsc --watch",
     "build": "tsc -p tsconfig.build.json"
   },
   "devDependencies": {
@@ -33,16 +39,14 @@
     "LICENSE",
     "CHANGELOG.md",
     "README.md",
-    "src/",
-    "dist/",
-    "tsconfig.json"
+    "src",
+    "dist"
   ],
   "keywords": [
     "mini",
     "miniprogram",
-    "wechat",
     "program",
-    "wmp"
+    "wechat"
   ],
   "author": "missannil",
   "license": "MIT",

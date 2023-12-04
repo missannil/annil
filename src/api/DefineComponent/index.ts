@@ -22,7 +22,7 @@ type RootOptions<
   TName extends string,
   TPath extends Path,
 > =
-  & NameOrPathOption<TName, TPath, TRootComponentDoc>
+  & NameOrPathOption<TName, TPath, TRootComponentDoc["isPage"] & {}>
   & RootComponentOption<TRootComponentDoc>
   & SubComponentsOption<TSubComponentTuple>;
 

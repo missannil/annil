@@ -1,5 +1,4 @@
 import { Checking, type Test } from "hry-types";
-import { type ComputeIntersectionDeep } from "hry-types/src/Object/ComputeIntersectionDeep";
 import { type DetailedType, RootComponent } from "../../../..";
 import type { CustomEventConstraint } from "../../../RootComponent/CustomEvents/CustomEventConstraint";
 import type {
@@ -12,6 +11,7 @@ import type {
   Composed,
 } from "../../../RootComponent/CustomEvents/CustomEventsTag";
 
+import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
 import type { PropertiesConstraint } from "../../../RootComponent/Properties/PropertiesConstraint";
 import type { Mock_User } from "../../../RootComponent/Properties/test/normalRequired.test";
 import type { RootComponentDoc } from "../../../RootComponent/RootComponentDoc";
@@ -60,7 +60,7 @@ const customEvents = {
     options: { bubbles: true, capturePhase: true, composed: true },
   },
 } satisfies CustomEventConstraint;
-// 只有Properties字段
+
 const OnlyPropsRootDoc = RootComponent()({
   properties,
 });
@@ -70,10 +70,10 @@ const onlyProperties = DefineComponent({
   rootComponent: OnlyPropsRootDoc,
 });
 
-// 可传对象字段加入null,(rootDoc中必传对象加入null了)
+// 1. 类型为typeof OnlyPropsRootDoc加前缀(组件名)
 type OnlyPropertiesExpected = {
   properties: {
-    test_optionalObj?: Mock_User | null; // 多了null
+    test_optionalObj?: Mock_User | null;
     test_optionalObjOrNull?: Mock_User | null;
     test_str: string;
     test_obj: Mock_User | null;
@@ -82,7 +82,6 @@ type OnlyPropertiesExpected = {
 
 Checking<typeof onlyProperties, OnlyPropertiesExpected, Test.Pass>;
 
-// 只有customEvents字段
 const OnlyCustomEventsRootDoc = RootComponent()({
   customEvents,
 });
@@ -92,6 +91,7 @@ const compOnlyCustomEvents = DefineComponent({
   rootComponent: OnlyCustomEventsRootDoc,
 });
 
+// 2 rootComponent中只有customEvents字段时 加前缀(组件名) 无properties字段
 type CompOnlyCustomEventsExpected = {
   customEvents: {
     test_str: string;
@@ -99,7 +99,7 @@ type CompOnlyCustomEventsExpected = {
     test_unionStr: "male" | "female";
     test_list: string | 0 | 1 | 2 | null;
     test_bubbles: string | Bubbles;
-    test_capturePhase: Capture | null;
+    test_capturePhase: null | Capture;
     test_bubbles_capturePhase: string | number | BubblesCapture;
     test_bubbles_composed: "male" | "female" | BubblesComposed;
     test_capturePhase_composed: string | 0 | 1 | 2 | CaptureComposed | null;
@@ -109,48 +109,19 @@ type CompOnlyCustomEventsExpected = {
 
 Checking<typeof compOnlyCustomEvents, CompOnlyCustomEventsExpected, Test.Pass>;
 
-// 都有
 const rootComponent = RootComponent()({
   properties,
   customEvents,
 });
-
+// 3. properties和customEvents字段都有时
 const compDoc = DefineComponent({
   name: "test",
   rootComponent,
 });
 
-Checking<typeof compDoc, ComputeIntersectionDeep<CompOnlyCustomEventsExpected & OnlyPropertiesExpected>, Test.Pass>;
+Checking<typeof compDoc, ComputeIntersection<CompOnlyCustomEventsExpected & OnlyPropertiesExpected>, Test.Pass>;
 
-// rootComponent字段和SubComponents字段同时具有properties字段时
-// const A = {} as { properties: { str: string; obj: { age: number } } };
-
-// const B = {} as { properties: { num: number } };
-
-// const C = {} as { properties: { bool: boolean } };
-
-// const CompDoc = DefineComponent({
-//   name: "test",
-//   subComponents: [A, B, C],
-// });
-
-// // 因为子组件中properties不存在相同key,所以返回类型是交叉的。
-// type CompDocExpect = ComputeIntersectionDeep<
-//   {
-//     properties: {
-//       test_str: string;
-//       test_obj: {
-//         age: number;
-//       } | null;
-//       test_num: number;
-//       test_bool: boolean;
-//     };
-//   }
-// >;
-
-// Checking<typeof CompDoc, CompDocExpect, Test.Pass>;
-
-type D = SubComponentDoc<{
+type SubA = SubComponentDoc<{
   str: string | Bubbles | Composed;
   num: number | Capture | Composed;
   null: null | Bubbles | Capture | Composed;
@@ -158,10 +129,10 @@ type D = SubComponentDoc<{
 
 const customEventsRootDoc = DefineComponent({
   name: "test",
-  subComponents: [{} as D],
+  subComponents: [{} as SubA],
 });
 
-// 预期添加组件名做为前缀
+// 4 子组件返回的事件类型是必带Composed的
 type customEventsRootDocExpect = {
   customEvents: {
     test_str: string | Bubbles | Composed;
@@ -172,19 +143,19 @@ type customEventsRootDocExpect = {
 
 Checking<typeof customEventsRootDoc, customEventsRootDocExpect, Test.Pass>;
 
-type E = SubComponentDoc<{
+type SubB = SubComponentDoc<{
   str: number | Bubbles | Composed;
   num: string | Capture | Composed;
   null: boolean | Bubbles | Capture | Composed;
 }>;
 
-// 子组件有相同自定义字段时
+//
 const WhenSameKeyOfCustomEventsRootDoc = DefineComponent({
   name: "test",
-  subComponents: [{} as D, {} as E],
+  subComponents: [{} as SubA, {} as SubB],
 });
 
-// customEvents相同key类型联合
+// 5 子组件中存在相同自定义事件字段时,类型联合
 type WhenSameKeyOfCustomEventsRootDocExpect = {
   customEvents: {
     test_str: string | number | Bubbles | Composed;
@@ -201,15 +172,16 @@ type RootDocCatch = RootComponentDoc<{
   };
 }>;
 
-// 根组件有阻止(catch)子组件事件时
 const whenRootDocCatch = DefineComponent({
   name: "test",
   rootComponent: {} as RootDocCatch,
-  subComponents: [{} as D],
+  subComponents: [{} as SubA],
 });
 
+// 6 根组件有阻止(catch)子组件事件时(子组件aaa的str事件是阻止事件,不会被继续传递),去除对应的事件
 type whenRootDocCatchExpect = {
   customEvents: {
+    // 少了str事件
     test_num: number | Composed | Capture;
     test_null: Bubbles | Composed | Capture | null;
   };
@@ -217,7 +189,7 @@ type whenRootDocCatchExpect = {
 
 Checking<typeof whenRootDocCatch, whenRootDocCatchExpect, Test.Pass>;
 
-// ComponetDoc可能返回类型为{}
+// 7 根组件和子组件都没有事件和properties时 返回组件类型为 {}
 const ComponetDoc = DefineComponent({
   name: "test",
   rootComponent: {},

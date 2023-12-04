@@ -10,15 +10,9 @@ import type { SubComponentDoc } from "../../SubComponent/SubComponentDoc";
  */
 export type SubComponentsOption<
   TSubComponentTuple extends SubComponentDoc[],
-> // // 子组件中properties字段重复的key,用做验证(报错)
- = // PropertiesDuplicatedKeys extends string = Extends<TSubComponentTuple["length"], 0 | 1> extends true ? never
-  //   : GetPropertiesDuplicatedKeys<Shift<TSubComponentTuple>, keyof TSubComponentTuple[0]["properties"]>,
-  {
-    subComponents?: [...TSubComponentTuple];
-    // & IfExtends<
-    //   PropertiesDuplicatedKeys,
-    //   never,
-    //   unknown,
-    //   `⚠️重复的字段:${UnionToComma<PropertiesDuplicatedKeys>}⚠️`
-    // >;
-  };
+> = {
+  /**
+   * 子组件列表
+   */
+  subComponents?: [...TSubComponentTuple];
+};

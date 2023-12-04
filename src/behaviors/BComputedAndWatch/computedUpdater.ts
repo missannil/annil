@@ -30,6 +30,7 @@ export function computedUpdater(this: Instance, isUpdated = false): boolean {
       const newDependences: ComputedDependence[] = [];
 
       const newValue = itemCache.method.call({
+        ...this,
         data: deepProxy(this.data, newDependences),
       });
 

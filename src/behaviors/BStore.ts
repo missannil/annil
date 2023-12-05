@@ -1,10 +1,10 @@
 import type mobx from "mobx";
-import type { FinalOptionsForComponent } from "../api/DefineComponent";
+import type { FinalOptionsOfComponent } from "../api/DefineComponent";
 import { deleteProtoField } from "../utils/deleteProtoField";
 import type { Instance } from "./BComputedAndWatch/types";
 
 export const BStore = Behavior({
-  definitionFilter(options: FinalOptionsForComponent) {
+  definitionFilter(options: FinalOptionsOfComponent) {
     // 初始化store
     const storeConfig = options.store;
     if (!storeConfig) return;

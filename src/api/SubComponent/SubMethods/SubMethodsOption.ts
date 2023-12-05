@@ -1,13 +1,17 @@
 import type { V } from "hry-types";
 import type { PrefixValidator } from "hry-types/src/Generic/PrefixValidator";
+import type { SubMethodsConstraint } from "./SubMethodsConstraint";
 
 export type SubMethodsOption<
-  TSubMethods extends object,
+  TSubMethods extends SubMethodsConstraint,
   TPrefix extends string,
-  CompCustomEventsKeys extends PropertyKey,
+  ExcludedKeys extends PropertyKey,
 > = {
+  /**
+   * 前缀检测和重复检测(与events和组件customEvents字段)
+   */
   methods?:
     & TSubMethods
     & PrefixValidator<TSubMethods, TPrefix>
-    & V.DuplicateFieldValidator<TSubMethods, CompCustomEventsKeys>;
+    & V.DuplicateFieldValidator<TSubMethods, ExcludedKeys>;
 };

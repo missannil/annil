@@ -4,18 +4,23 @@ import type { Detail, WMBaseEvent } from "../../../types/OfficialTypeAlias";
 import type { ComponentDoc } from "../../DefineComponent/ReturnType/ComponentDoc";
 import type { Bubbles, Capture, CustomEventsTags } from "../../RootComponent/CustomEvents/CustomEventsTag";
 
+/**
+ * 把组件事件类型转为函数类型,冒泡事件捕获事件会多一个加后缀(_catch)的key,表示阻止事件冒泡和捕获。
+ */
 export type SubEventsConstraint<
   CompDoc extends ComponentDoc,
-  keys extends keyof CompDoc["customEvents"] = keyof CompDoc["customEvents"],
 > = {
   [
-    k in keys as Contains<CompDoc["customEvents"][k], Bubbles | Capture> extends true ? (k | `${k & string}_catch`)
+    k in keyof CompDoc["customEvents"] as Contains<CompDoc["customEvents"][k], Bubbles | Capture> extends true
+      ? (k | `${k & string}_catch`)
       : k
   ]?: (
     e: IfExtends<
+      // 有可能是基础组件(手写类型),所以事件类型可能为WMBaseEvent
       WMBaseEvent,
       CompDoc["customEvents"][k],
       WMBaseEvent,
+      // 去除 CustomEventsTags 标记
       Detail<Exclude<CompDoc["customEvents"][k], CustomEventsTags>>
     >,
   ) => void;

@@ -16,7 +16,7 @@ import type {
 import type { EventsConstraint } from "../RootComponent/Events/EventsConstraint";
 import type { PageInstance } from "../RootComponent/Instance/RootComponentInstance";
 import type { SubComponentTrueOptions } from "../SubComponent";
-import type { FinalOptionsForComponent, FuncOptions } from ".";
+import type { FinalOptionsOfComponent, FuncOptions } from ".";
 /**
  * 针对通过 navigateTo传过来的数据解析
  * @param option - option中的url是拼接了encodeURIComponent转码的data对象的,key为INNERMARKER.url
@@ -49,7 +49,7 @@ function onLoadReceivedDataHandle(
  */
 /* istanbul ignore next */
 function onLoadHijack(
-  options: FinalOptionsForComponent,
+  options: FinalOptionsOfComponent,
   before: Func[],
   after: Func[] = [],
 ) {
@@ -71,17 +71,46 @@ function onLoadHijack(
   };
 }
 /**
+ * attached生命周期劫持函数
+ */
+/* istanbul ignore next  */
+function attachedHijack(
+  options: FinalOptionsOfComponent,
+  before: Func[],
+  after: Func[] = [],
+) {
+  /* istanbul ignore next */
+  options.lifetimes ||= {};
+
+  const originalAttached: Func | undefined = options.lifetimes.attached;
+
+  options.lifetimes.attached = function() {
+    before.forEach((func) => {
+      func.call(this, options);
+    });
+
+    originalAttached?.call(this);
+
+    /* istanbul ignore next  */
+    after.forEach((func) => {
+      func.call(this, options);
+    });
+  };
+}
+/**
  * 内部保护字段 即不允许配置的字段名(所有方法下)
  */
-const INNERFIELDS = ["disposer"];
+// const INNERFIELDS = ["disposer"];
 
 /**
  * 报错的形式避免输入字段和内部字段冲突
+ * 保护config下不被配置keys包含的内部预定字段
  */
 /* istanbul ignore next */
-function InternalFieldProtection(methodsConfig: object) {
-  const methodsConfigKeys = Object.keys(methodsConfig);
-  for (const key of INNERFIELDS) {
+function InternalFieldProtection(config: object | undefined, keys: string[]) {
+  if (!config) return;
+  const methodsConfigKeys = Object.keys(config);
+  for (const key of keys) {
     if (methodsConfigKeys.includes(key)) {
       throw Error(`${key}已被内部字段占用`);
     }
@@ -99,7 +128,7 @@ function _funcConfigHandle(methodsConfig: object, configList: Record<string, Fun
 }
 
 function funcConfigHandle(
-  finalOptionsForComponent: FinalOptionsForComponent,
+  finalOptionsForComponent: FinalOptionsOfComponent,
   isPage: boolean | undefined,
   funcOptions: FuncOptions,
 ) {
@@ -138,7 +167,7 @@ function funcFieldsCollect(
 
 // 其他字段加入到componentOptions对应字段配置中
 function otherFieldsHandle(
-  finalOptions: FinalOptionsForComponent,
+  finalOptions: FinalOptionsOfComponent,
   rootComponentOptions: RootComponentTrueOptions,
 ) {
   for (const key in rootComponentOptions) {
@@ -155,14 +184,14 @@ function otherFieldsHandle(
 /**
  * 把events字段配置变成函数放入到componentOptions.methods中
  */
-function eventsHandle(componentOptions: FinalOptionsForComponent, eventsConfig: EventsConstraint) {
+function eventsHandle(componentOptions: FinalOptionsOfComponent, eventsConfig: EventsConstraint) {
   /* istanbul ignore next */
   componentOptions.methods ||= {};
 
   Object.assign(componentOptions.methods, eventsConfig);
 }
 function subComponentsHandle(
-  componentOptions: FinalOptionsForComponent,
+  componentOptions: FinalOptionsOfComponent,
   subComponents: SubComponentTrueOptions[],
   funcOptions: FuncOptions,
 ) {
@@ -186,7 +215,7 @@ function IsFullCustomEvents(
  * 把customEvents字段配置变成函数放入到componentOptions.methods中
  */
 function customEventsHandle(
-  componentOptions: FinalOptionsForComponent,
+  componentOptions: FinalOptionsOfComponent,
   customEventsConfig: CustomEventConstraint,
 ) {
   /* istanbul ignore next */
@@ -206,7 +235,49 @@ function customEventsHandle(
     }
   }
 }
+/**
+ *  触发各个组件的页面load事件
+ */
+/* istanbul ignore next  */
+function triggerCompLoad(this: Instance, props: object) {
+  if (!this.__compLoadList__) return;
+  this.__compLoadList__.forEach((loadFunc) => {
+    loadFunc(props);
+  });
+}
+/* istanbul ignore next  */
+function getPageInstance(pageId: string): Instance {
+  const pagestack = getCurrentPages() as unknown as Instance[];
+  let pageInstance: Instance;
+  pagestack.some((instance) => {
+    if (instance.getPageId() === pageId) {
+      pageInstance = instance;
 
+      return true;
+    }
+
+    return false;
+  });
+
+  // @ts-ignore pagestack中一定赋值了
+  return pageInstance;
+}
+/**
+ * 收集组件pageLifetimes下的load周期函数到页面实例的__loadFunList__
+ */
+/* istanbul ignore next  */
+function collectLoadLifetimesOfComponent(this: Instance, finalOptionsForComponent: FinalOptionsOfComponent) {
+  const loadFunc = finalOptionsForComponent.pageLifetimes?.load;
+
+  console.log(loadFunc, finalOptionsForComponent);
+
+  if (!loadFunc) return;
+
+  const pageInstance = getPageInstance(this.getPageId());
+  const __compLoadList__: Function[] = (pageInstance.__compLoadList__ ||= []);
+
+  __compLoadList__.push(loadFunc.bind(this));
+}
 /**
  * 收集 rootComponentOptions 配置到 finalOptions 和 funcOptions 中
  * @param finalOptions - 收集配置对象
@@ -214,10 +285,18 @@ function customEventsHandle(
  * @param rootComponentOptions - 被收集的源配置对象
  */
 function collectRootComponentOption(
-  finalOptions: FinalOptionsForComponent,
+  finalOptions: FinalOptionsOfComponent,
   funcOptions: FuncOptions,
   rootComponentOptions: RootComponentTrueOptions,
 ) {
+  console.log("-------------------------");
+
+  InternalFieldProtection(rootComponentOptions.customEvents, ["load"]);
+
+  InternalFieldProtection(rootComponentOptions.methods, ["load"]);
+
+  InternalFieldProtection(rootComponentOptions.events, ["load"]);
+
   rootComponentOptions.customEvents && customEventsHandle(finalOptions, rootComponentOptions.customEvents);
 
   delete rootComponentOptions.customEvents;
@@ -239,8 +318,8 @@ function collectRootComponentOption(
 export function collectOptionsForComponent(
   rootComponentOption: RootComponentTrueOptions | undefined,
   subComponentsList: SubComponentTrueOptions[] | undefined,
-): FinalOptionsForComponent {
-  const finalOptionsForComponent: FinalOptionsForComponent = {
+): FinalOptionsOfComponent {
+  const finalOptionsForComponent: FinalOptionsOfComponent = {
     // default options
     options: {
       // addGlobalClass: true,
@@ -273,12 +352,16 @@ export function collectOptionsForComponent(
     funcConfigHandle(finalOptionsForComponent, rootComponentOption?.isPage, funcOptions);
   }
 
-  finalOptionsForComponent.methods && InternalFieldProtection(finalOptionsForComponent.methods);
+  finalOptionsForComponent.methods && InternalFieldProtection(finalOptionsForComponent.methods, ["disposer"]);
 
   // BBeforeCreate在最后面
   finalOptionsForComponent.behaviors!.push(BBeforeCreate);
 
-  onLoadHijack(finalOptionsForComponent, [onLoadReceivedDataHandle, initComputed], []);
+  console.log(finalOptionsForComponent, 999, funcOptions);
+
+  attachedHijack(finalOptionsForComponent, [collectLoadLifetimesOfComponent], []);
+
+  onLoadHijack(finalOptionsForComponent, [onLoadReceivedDataHandle, initComputed], [triggerCompLoad]);
 
   // 框架无法测试页面
   /* istanbul ignore next */

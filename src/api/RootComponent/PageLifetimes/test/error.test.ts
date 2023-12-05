@@ -1,20 +1,22 @@
 import { RootComponent } from "../..";
 /**
- *  1 组件时(无ispage字段或为false),
+ *   组件时 非法字段错误
  */
 RootComponent()({
   pageLifetimes: {
     show() {},
     hide() {},
     resize() {},
-    load() {},
-    // @ts-expect-error 错误的声明周期
+    load(props) {
+      props;
+    },
+    // @ts-expect-error 1 错误的声明周期
     xxx() {},
   },
 });
 
 /**
- *  2. 页面时
+ *  页面时
  */
 RootComponent()({
   isPage: true,
@@ -22,7 +24,7 @@ RootComponent()({
     onLoad(props) {
       props;
     },
-    // @ts-expect-error 错误的声明周期
+    // @ts-expect-error 2 错误的声明周期
     xxx() {},
   },
 });

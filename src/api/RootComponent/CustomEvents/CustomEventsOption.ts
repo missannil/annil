@@ -1,37 +1,41 @@
 import type { V } from "hry-types";
 import type { CustomEventConstraint } from "./CustomEventConstraint";
 
-/**
- * customEvents字段泛型输入
- */
 export type CustomEventsOption<
   TCustomEvents extends CustomEventConstraint,
-  DuplicateFieldCheck,
+  EventsKeys extends PropertyKey,
 > = {
   /**
-   * 自定义事件
-   * @remarks 使用this.customEventsA 调用
+   * customEvents 定义组件的自定义事件 [类型约束](CustomEventConstraint.ts)
+   * @remarks 通过this.A(123)调用。与events字段重复检测
    * @example
    * ```ts
-   *  {
-   *   // ...
-   *   customEvents: {
-   *     A: Number, // number
-   *     B: [String as DetailedType<"male" | "femal">, Number], // "male" | "femal" | number
-   *     C: {
-   *       detail: String,
-   *       options: {
-   *         bubbles: true,
-   *         composed: true,
-   *         capturePhase: true,
-   *       },
-   *     },
-   *   },
-   * };
+   * {
+   *  customEvents: {
+   *    A: Number, // number
+   *    B: [String as DetailedType<"male" | "femal">, Number], // "male" | "femal" | number
+   *    C: {
+   *      detail: String,
+   *      options: {
+   *        bubbles: true,
+   *        composed: true,
+   *        capturePhase: true,
+   *      },
+   *    },
+   *  },
+   *  methods: {
+   *    M1() {
+   *      // 调用自定义事件
+   *      this.A(123);
+   *      this.B("femal");
+   *      this.C("string");
+   *    },
+   *  },
+   * },
    * ```
    */
   customEvents?:
     & TCustomEvents
     & V.IllegalFieldValidator<TCustomEvents, "bubbles" | "composed" | "capturePhase", 1, "options">
-    & V.DuplicateFieldValidator<TCustomEvents, keyof DuplicateFieldCheck, "与events字段重复">;
+    & V.DuplicateFieldValidator<TCustomEvents, EventsKeys, "与events字段重复">;
 };

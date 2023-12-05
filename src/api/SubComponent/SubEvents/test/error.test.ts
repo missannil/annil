@@ -1,4 +1,5 @@
 import type { ComponentDoc } from "../../../DefineComponent/ReturnType/ComponentDoc";
+import type { Bubbles } from "../../../RootComponent/CustomEvents/CustomEventsTag";
 import { SubComponent } from "../..";
 
 type CompDoc = ComponentDoc<{
@@ -17,16 +18,16 @@ SubComponent<{}, CompDoc>()({
 
 type CompDoc1 = ComponentDoc<{
   customEvents: {
-    aaa_str: string;
+    aaa_str: string | Bubbles;
   };
 }>;
 
-// 组件文档有自定义事件时,events下的字段仅可写文档包含字段
+// 非法字段检测 组件文档有自定义事件时,events下的字段仅可写文档包含字段
 SubComponent<{}, CompDoc1>()({
   events: {
-    aaa_str(e) {
+    aaa_str(e) { // ok
       e;
-    }, // ok
+    },
     // @ts-expect-error 非法字段
     aaa_other() {},
   },

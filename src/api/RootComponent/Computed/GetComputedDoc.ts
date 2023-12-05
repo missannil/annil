@@ -5,6 +5,4 @@ import type { ComputedConstraint } from "./ComputedConstraint";
  * @param T - ComputedConstraint
  * @returns object
  */
-export type GetComputedDoc<TComputed extends ComputedConstraint> = TComputed extends unknown
-  ? { [k in keyof TComputed]: ReturnType<TComputed[k]> }
-  : never;
+export type GetComputedDoc<TComputed extends ComputedConstraint> = { [k in keyof TComputed]: ReturnType<TComputed[k]> };

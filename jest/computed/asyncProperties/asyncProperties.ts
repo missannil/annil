@@ -4,10 +4,10 @@ import { type CompDoc, type User, user } from "../../common";
 const subA = SubComponent<Root, CompDoc>()({
   computed: {
     // 可引用根组件properties、data和计算字段
-    compA_num() {
+    compA_num(): number {
       return (this.data.requiredUser?.age || 0) + this.data.num + (this.data.copyPropUser?.age || 0);
     },
-    compA_user() {
+    compA_user(): User | null {
       return this.data.copyPropUser;
     },
   },

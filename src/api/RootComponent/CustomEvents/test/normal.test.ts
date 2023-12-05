@@ -61,7 +61,7 @@ const rootDoc = RootComponent()({
 
 type RootDoc = {
   customEvents: {
-    // 简写字段 即类型为事件参数e对象的detail字段类型
+    // 简写字段 值类型为事件参数e的detail类型
     str: string;
     null: null;
     unionStr: "male" | "female";

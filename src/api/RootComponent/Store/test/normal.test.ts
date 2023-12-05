@@ -20,4 +20,5 @@ type StoreDocExpected = {
   };
 };
 
+// 返回类型为函数返回类型
 Checking<typeof storeDoc, StoreDocExpected, Test.Pass>;

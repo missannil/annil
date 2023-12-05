@@ -13,7 +13,15 @@ import type { GenerateDoc } from "./types/GenerateDoc";
 import type { ParamsEqual } from "./types/TwoParamsEqual";
 export type { Vant, Wm } from "./thirdLib";
 
-export type { Dataset, Detail, WMBaseEvent, WMCustomEvent } from "./types/OfficialTypeAlias";
+export type {
+  CurrentTargetDataset,
+  Dataset,
+  Detail,
+  Mark,
+  TargetDataset,
+  WMBaseEvent,
+  WMCustomEvent,
+} from "./types/OfficialTypeAlias";
 
 export {
   type ComponentDocExtension,

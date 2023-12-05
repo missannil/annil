@@ -11,6 +11,7 @@ export type InstanceCustomFields = {
   __computedCache__?: ComputedCache;
   __watchOldValue__?: WatchOldValue;
   __watchConfig__?: () => Record<string, Func>;
+  __compLoadList__?: Func[];
   disposer: Record<string, Func>;
 };
 

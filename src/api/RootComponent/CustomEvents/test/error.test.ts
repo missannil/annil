@@ -5,26 +5,26 @@ import { RootComponent } from "../..";
  */
 RootComponent()({
   customEvents: {
-    // @ts-expect-error options 没有options字段时无需写对象形式,应简写`error1:Boolean`。
+    // @ts-expect-error options 1.1 没有options字段时无需写对象形式,应简写`error1:Boolean`。
     error1: {
       detail: Boolean,
     },
-    // @ts-expect-error options 不可以为空对象 无意义
+    // @ts-expect-error options 1.2 不可以为空对象 无意义
     error2: {
       detail: Boolean,
       options: {},
     },
-    // @ts-expect-error false字段不要写 默认就为false
+    // @ts-expect-error 1.3 false字段不要写 默认就为false
     error3: {
       detail: Boolean,
       options: { bubbles: false },
     },
-    // @ts-expect-error false 字段不要写 默认false
+    // @ts-expect-error 1.4 false 字段不要写 默认false
     error4: {
       detail: Boolean,
       options: { capturePhase: false },
     },
-    // @ts-expect-error composed字段不可以单独开启,必须存在 bubbles或capturePhase字段为true时
+    // @ts-expect-error 1.5 composed字段不可以单独开启,必须存在 bubbles或capturePhase字段为true时
     error5: {
       detail: Boolean,
       options: { composed: true },

@@ -2,13 +2,16 @@ import type { ComponentDoc } from "../../../DefineComponent/ReturnType/Component
 import type { RootComponentDoc } from "../../../RootComponent/RootComponentDoc";
 import { SubComponent } from "../..";
 
+/**
+ * inherit字段最终会在选项中删除,它用ts开发类型检测。
+ */
 type Mock_RootDoc = RootComponentDoc<{
   properties: {
     required_num: number;
     optional_literal_num?: 123 | 456 | 789;
     unionStrNum: string | number;
     required_obj: object | null;
-    optional_obj?: object;
+    optional_obj?: object | null;
   };
   data: {
     str: string;
@@ -31,7 +34,7 @@ type Mock_CompDoc = ComponentDoc<{
   };
 }>;
 
-// 1 没有可继承的数据,类型可为'wxml',表示数据来自wxml(例如数据来自父组件循环wx:for后的数据等情况)
+// 1 没有可继承的数据,类型可为'wxml',表示数据来自wxml(例如数据来自父元素循环wx:for后的数据等情况)
 SubComponent<{}, Mock_CompDoc>()({
   inherit: {
     aaa_num: "wxml",
@@ -51,5 +54,3 @@ SubComponent<Mock_RootDoc, Mock_CompDoc>()({
     aaa_obj1: "" as "required_obj" | "optional_obj" | "wxml",
   },
 });
-
-// inherit字段最终会在配置对象中删除,它用类型检测。

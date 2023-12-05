@@ -31,11 +31,13 @@ export type Dataset<
 /**
  * 自定义事件Detail类型
  */
-export type Mark<TMark extends object> = WechatMiniprogram.CustomEvent<
-  {},
-  TMark,
-  {},
-  {}
+export type Mark<TMark extends object> = Required<
+  WechatMiniprogram.CustomEvent<
+    object,
+    TMark,
+    object,
+    object
+  >
 >;
 
 /**
@@ -53,12 +55,6 @@ export type CurrentTargetDataset<T extends object> = WMCustomEvent<{}, {}, T>;
  */
 export type TargetDataset<TargetDataset extends object> = WMCustomEvent<{}, {}, {}, TargetDataset>;
 
-// export type WMTrivialOption<
-//   TData extends WechatMiniprogram.Component.DataOption,
-//   TProperty extends WechatMiniprogram.Component.PropertyOption,
-//   TMethod extends WechatMiniprogram.Component.MethodOption,
-//   TCustomInstanceProperty extends WechatMiniprogram.IAnyObject = {},
-//   TIsPage extends boolean = false,
 export type WMComponentOption = WechatMiniprogram.Component.TrivialOption;
 
 export type WMNavigateToSuccessCallbackResult = WechatMiniprogram.NavigateToSuccessCallbackResult;

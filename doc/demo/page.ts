@@ -5,7 +5,7 @@ import type { User } from "./types";
 
 const compA = SubComponent<Root, CompA>()({
   computed: {
-    subA_user() {
+    subA_user(): User {
       return this.data.user;
     },
   },

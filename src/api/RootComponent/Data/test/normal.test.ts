@@ -3,21 +3,19 @@ import { Checking, type Test } from "hry-types";
 import type { ReadonlyDeep } from "hry-types/src/Any/_api";
 import { RootComponent } from "../..";
 
-/**
- * data字段约束为object,函数类型表示引入的响应式字段(mobx)
- */
+type Gender = "male" | "female";
+
 const RootDoc = RootComponent()({
   data: {
-    gender: <"male" | "female"> "male", // 联合字面量
+    gender: <Gender> "male", // 联合字面量
     num: 123,
     _innernalFields: 123, // 内部字段无法在wxml中使用
   },
   methods: {
     foo() {
-      // 1. data配置类型为函数时,this.data中变为函数返回类型
       Checking<
         typeof this.data,
-        ReadonlyDeep<{ gender: "male" | "female"; num: number; _innernalFields: number }>,
+        ReadonlyDeep<{ gender: Gender; num: number; _innernalFields: number }>,
         Test.Pass
       >;
     },
@@ -25,12 +23,11 @@ const RootDoc = RootComponent()({
 });
 
 type RootDocExpected = {
-  gender: "male" | "female";
+  gender: Gender;
   num: number;
   _innernalFields: number;
 };
 
-// 2. data配置类型为函数时,dataDoc中变为函数返回类型
 Checking<typeof RootDoc["data"], RootDocExpected, Test.Pass>;
 
 // data为空对象时

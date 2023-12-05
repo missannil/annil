@@ -21,6 +21,7 @@ import type { SubDataOption } from "./SubData/SubDataOption";
 import type { SubEventsConstraint } from "./SubEvents/SubEventsConstraint";
 import type { SubEventsOption } from "./SubEvents/SubEventsOptions";
 import type { InheritConstraint } from "./SubInherit/SubInheritConstraint";
+import type { SubInheritOption } from "./SubInherit/SubInheritOption";
 import type { SubInstance } from "./SubInstance/SubInstance";
 import type { SubLifetimesOption } from "./SubLifetimes/SubLifetimesOption";
 import type { SubMethodsConstraint } from "./SubMethods/SubMethodsConstraint";
@@ -42,7 +43,7 @@ type Options<
   TSubStore extends object,
   TSubComputed extends object,
   TEvents extends object,
-  TSubMethods extends object,
+  TSubMethods extends SubMethodsConstraint,
   InheritDoc extends object,
   SubDataDoc extends object,
   SubStoreDoc extends object,
@@ -50,7 +51,7 @@ type Options<
   SubEventsDoc extends object,
   SubMethodsDoc extends object,
 > =
-  & { inherit?: TInherit }
+  & SubInheritOption<TInherit>
   & SubDataOption<
     TSubData,
     Exclude<keyof CurrentCompDoc["properties"], (keyof InheritDoc)>,
@@ -67,8 +68,9 @@ type Options<
     // 合法的配置
     Omit<CurrentCompDoc["properties"], (keyof (InheritDoc & SubDataDoc & SubStoreDoc))>
   >
+  // 无需与根组件的events字段重复检测,因为根组件多了bubbles字段,一定不会重复
   & SubEventsOption<TEvents, SubEventsDoc, keyof SubEventsConstraint<CurrentCompDoc>>
-  & SubMethodsOption<TSubMethods, Prefix, keyof CurrentCompDoc["customEvents"]>
+  & SubMethodsOption<TSubMethods, Prefix, keyof (CurrentCompDoc["customEvents"] & SubEventsDoc)>
   & SubPageLifetimesOption<IsPage, RootDoc["properties"] & {}>
   & SubLifetimesOption
   & SubWatchOption<
@@ -104,7 +106,8 @@ type SubComponentConstructor<
     ReplacePrefix<TOriginalCompDoc, CurrentPrefix>
   >,
   AllRootDataDoc extends object =
-    & Required<TRootDoc["properties"]>
+    // rootDoc中的properties是带有可选的,这是为了给使用者(上层组件)提示,而在自身组件实例中并不存在可选状态,故加了Required,正因加了Required使得最终结果不可能为unknown而是`{}`,满足object约束
+    & Required<TRootDoc["properties"]> // Required<unknown> = {}
     & TRootDoc["data"]
     & TRootDoc["computed"]
     & TRootDoc["store"],
@@ -114,9 +117,10 @@ type SubComponentConstructor<
     TSubData extends SubDataConstraint<Omit<Required<CurrentCompDoc["properties"]>, keyof InheritDoc>>,
     TSubStore extends SubStoreConstraint<Omit<Required<CurrentCompDoc["properties"]>, keyof (InheritDoc & SubDataDoc)>>,
     TEvents extends SubEventsConstraint<CurrentCompDoc>,
+    // 加默认值计算字段无提示且需要手写返回类型,不加watch无法对computed监控
     TSubComputed extends SubComputedConstraint<
       Omit<Required<CurrentCompDoc["properties"]>, keyof (InheritDoc & SubDataDoc & SubStoreDoc)>
-    >,
+    > = {},
     TSubMethods extends SubMethodsConstraint = {},
     InheritDoc extends object = IfExtends<InheritConstraint<AllRootDataDoc, CurrentCompDoc>, TInherit, {}, TInherit>,
     SubDataDoc extends object = IfExtends<

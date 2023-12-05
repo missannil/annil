@@ -6,6 +6,9 @@ export type MethodsOption<
   TMethods extends MethodsConstraint,
   DuplicateField extends PropertyKey,
 > = {
+  /**
+   * 与customEvents和events字段重复检测
+   */
   methods?:
     & TMethods
     & V.DuplicateFieldValidator<TMethods, DuplicateField>;

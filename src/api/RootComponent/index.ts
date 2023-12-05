@@ -26,13 +26,12 @@ import type { PageLifetimesOption } from "./PageLifetimes/PageLifetimesOption";
 import type { GetPropertiesDoc } from "./Properties/GetPropertiesDoc";
 import type { PropertiesConstraint } from "./Properties/PropertiesConstraint";
 import type { PropertiesOption } from "./Properties/PropertiesOption";
-import type { GeTStoreDoc } from "./Store/GeTStoreDoc";
+import type { GetStoreDoc } from "./Store/GeTStoreDoc";
 import type { StoreConstraint } from "./Store/StoreConstraint";
 import type { StoreOption } from "./Store/StoreOption";
 import type { WatchOption } from "./Watch/WatchOption";
 
 type RootComponentOptions<
-  TReceivedComponentDoc extends object,
   TEvents extends object,
   TIsPage extends boolean,
   TCustomEvents extends CustomEventConstraint,
@@ -51,11 +50,11 @@ type RootComponentOptions<
   & MethodsOption<TMethods, keyof (EventsDoc & CustomEventsDoc)>
   & PropertiesOption<TProperties>
   & IsPageOption<TIsPage>
-  & CustomEventsOption<TCustomEvents, EventsDoc>
-  & EventsOption<TEvents, EventsConstraint<TReceivedComponentDoc>>
-  & DataOption<TData, PropertiesDoc>
-  & StoreOption<TStore, PropertiesDoc & DataDoc>
-  & ComputedOption<TComputed, Required<PropertiesDoc> & DataDoc & StoreDoc>
+  & EventsOption<TEvents>
+  & CustomEventsOption<TCustomEvents, keyof EventsDoc>
+  & DataOption<TData, keyof PropertiesDoc>
+  & StoreOption<TStore, keyof (PropertiesDoc & DataDoc)>
+  & ComputedOption<TComputed, keyof (PropertiesDoc & DataDoc & StoreDoc)>
   & PageLifetimesOption<TIsPage, NoInfer<PropertiesDoc>>
   & LifetimesOption<TIsPage>
   & WatchOption<
@@ -76,10 +75,10 @@ type RootComponentOptions<
     >
   >;
 
-type RootComponentConstructor<TReceivedComponentDoc extends ComponentDoc[] | ComponentDoc> = {
+type RootComponentConstructor<TComponentDocList extends ComponentDoc[]> = {
   <
     // TEvents 不能有默认值 {} 会引起事件参数类型(e)失效
-    TEvents extends EventsConstraint<TReceivedComponentDoc>,
+    TEvents extends EventsConstraint<TComponentDocList>,
     TIsPage extends boolean = false,
     const TProperties extends PropertiesConstraint = {},
     TData extends object = {},
@@ -88,15 +87,14 @@ type RootComponentConstructor<TReceivedComponentDoc extends ComponentDoc[] | Com
     // 页面时自定义事件无意义
     TCustomEvents extends IfExtends<TIsPage, false, CustomEventConstraint, EmptyObject> = {},
     TMethods extends MethodsConstraint = {},
-    EventsDoc extends object = IfExtends<EventsConstraint<TReceivedComponentDoc>, TEvents, {}, TEvents>,
+    EventsDoc extends object = IfExtends<EventsConstraint<TComponentDocList>, TEvents, {}, TEvents>,
     CustomEventsDoc extends object = GetCustomEventDoc<TCustomEvents>,
     PropertiesDoc extends object = GetPropertiesDoc<TProperties, TIsPage>,
     DataDoc extends object = TData,
-    StoreDoc extends object = GeTStoreDoc<TStore>,
+    StoreDoc extends object = GetStoreDoc<TStore>,
     ComputedDoc extends object = GetComputedDoc<TComputed>,
   >(
     options: RootComponentOptions<
-      TReceivedComponentDoc,
       TEvents,
       TIsPage,
       TCustomEvents,
@@ -126,10 +124,10 @@ type RootComponentConstructor<TReceivedComponentDoc extends ComponentDoc[] | Com
 };
 
 export function RootComponent<
-  // ComponentDoc表示RootComponent作为单独组件,ComponentDoc[]表示RootComponent作为多个子组件的根组件
-  TReceivedComponentDoc extends ComponentDoc[] | ComponentDoc = {},
+  // TComponentDocList泛型为了给events字段提供类型约束
+  TComponentDocList extends ComponentDoc[] = [],
 >(): RootComponentConstructor<
-  TReceivedComponentDoc
+  TComponentDocList
 > {
   return ((options: any) => options as RootComponentTrueOptions) as any;
 }

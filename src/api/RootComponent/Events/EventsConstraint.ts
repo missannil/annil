@@ -1,3 +1,5 @@
+// import type { IfExtends } from "hry-types/src/Any/IfExtends";
+import type { IfExtends } from "hry-types/src/Any/_api";
 import type { Select } from "hry-types/src/Object/_api";
 import type { Detail, WMBaseEvent } from "../../../types/OfficialTypeAlias";
 import type { ComponentDoc } from "../../DefineComponent/ReturnType/ComponentDoc";
@@ -16,9 +18,9 @@ type FilterNormalFields<O extends object> = Select<O, Bubbles | Capture, "contai
 
 // 获取冒泡或捕获的事件
 type GetBubblesOrCaptureEventsFromCompDoc<
-  TComponentDocTuple extends ComponentDoc[],
+  ComponentDocList extends ComponentDoc[],
   Result extends CustomEventsDoc = {},
-> = TComponentDocTuple extends [infer Head extends ComponentDoc, ...infer Rest extends ComponentDoc[]]
+> = ComponentDocList extends [infer Head extends ComponentDoc, ...infer Rest extends ComponentDoc[]]
   ? GetBubblesOrCaptureEventsFromCompDoc<
     Rest,
     Result & (FilterNormalFields<Head["customEvents"] & {}>)
@@ -47,23 +49,26 @@ type TransformCustomEventsDocTypeToFunctionTypeAndAddSuffix<T extends CustomEven
 };
 
 // 所有子组件自定义事件(过滤掉非冒泡或捕获)的key加入后缀并把值(detail)转换为函数类型
-type GetAllSubCustomEventsConstraint<TReceivedComponentDoc extends ComponentDoc[] | ComponentDoc> = {} extends
-  TReceivedComponentDoc ? {}
-  : TReceivedComponentDoc extends ComponentDoc[] ? TransformCustomEventsDocTypeToFunctionTypeAndAddSuffix<
-      GetBubblesOrCaptureEventsFromCompDoc<TReceivedComponentDoc>
-    >
-  : ComponentDoc["customEvents"] & {};
+type GetAllSubCustomEventsConstraint<
+  ComponentDocList extends ComponentDoc[],
+  AllCustomEvents extends CustomEventsDoc = GetBubblesOrCaptureEventsFromCompDoc<ComponentDocList>,
+> = IfExtends<
+  {},
+  AllCustomEvents,
+  BaseEvent,
+  TransformCustomEventsDocTypeToFunctionTypeAndAddSuffix<
+    AllCustomEvents
+  >
+>;
+
+type BaseEvent = Record<string, (e: WMBaseEvent) => any>;
 
 /**
- * events字段约束
+ * events字段约束 由自身事件和冒泡的子组件事件组成。带前缀是子组件事件,带后缀(_catch)表示阻止冒泡
  */
-export type EventsConstraint<TReceivedComponentDoc extends ComponentDoc[] | ComponentDoc = {}> = {} extends
-  TReceivedComponentDoc ? Record<string, (e: WMBaseEvent) => any>
-  : TReceivedComponentDoc extends ComponentDoc ? {
-      [k in keyof TReceivedComponentDoc["customEvents"]]?: (
-        e: Exclude<TReceivedComponentDoc["customEvents"][k], CustomEventsTags>,
-      ) => void;
-    }
-  : GetAllSubCustomEventsConstraint<TReceivedComponentDoc>;
-// // 一般事件字段约束
-// & Record<string, (e: WMBaseEvent) => any>;
+export type EventsConstraint<ComponentDocList extends ComponentDoc[] = []> = IfExtends<
+  [],
+  ComponentDocList,
+  BaseEvent,
+  GetAllSubCustomEventsConstraint<ComponentDocList>
+>;

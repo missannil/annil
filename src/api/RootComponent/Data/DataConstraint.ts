@@ -1,1 +1,1 @@
-export type DataConstraint = Record<string, any>;
+export type DataConstraint = Record<string, unknown>;

@@ -13,11 +13,11 @@ type _RootComponentDoc = {
   store?: object;
   watch?: Record<string, Func>;
   lifetimes?: LifetimesConstraint;
-  pageLifetimes?: Partial<WMCompPageLifetimes & { load: Func } & WMPageLifetimes>;
+  pageLifetimes?: Partial<WMCompPageLifetimes & { load: Func }>;
 };
 
 // 验证key是否合法
-type _Validator<O, ErrKeys = Exclude<keyof O, keyof _RootComponentDoc>> = [ErrKeys] extends [never] ? _RootComponentDoc
+type _Validator<O, Doc, ErrKeys = Exclude<keyof O, keyof Doc>> = [ErrKeys] extends [never] ? Doc
   : `错误的字段${ErrKeys & string}`;
 
 /**
@@ -35,4 +35,20 @@ type _Validator<O, ErrKeys = Exclude<keyof O, keyof _RootComponentDoc>> = [ErrKe
  * };
  * ```
  */
-export type RootComponentDoc<O extends _Validator<O> = _RootComponentDoc> = O;
+export type RootComponentDoc<O extends _Validator<O, _RootComponentDoc> = _RootComponentDoc> = O;
+
+type _RootPageDoc = {
+  isPage?: boolean;
+  properties?: object;
+  data?: object;
+  computed?: object;
+  customEvents?: object;
+  methods?: object;
+  events?: object;
+  store?: object;
+  watch?: Record<string, Func>;
+  lifetimes?: LifetimesConstraint;
+  pageLifetimes?: Partial<WMPageLifetimes>;
+};
+
+export type RootPageDoc<O extends _Validator<O, _RootPageDoc> = _RootPageDoc> = O;

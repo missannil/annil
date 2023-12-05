@@ -19,5 +19,7 @@ SubComponent<{}, DocA>()({
     aaa_str: () => user.name,
 
     aaa_num: () => user.age,
+    // 运行内部字段(暂定)
+    _aaa_ddd: () => user.age,
   },
 });

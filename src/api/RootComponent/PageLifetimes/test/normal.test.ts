@@ -1,7 +1,6 @@
 import { Checking, type Test } from "hry-types";
 import { type DetailedType, RootComponent } from "../../../..";
 
-import type { RemoveNullOfRequired } from "../../../../types/RemoveNullOfRequired";
 import type { Mock_User } from "../../Properties/test/normalRequired.test";
 
 /**
@@ -16,7 +15,9 @@ RootComponent()({
     },
     show() {},
     // 新增周期函数
-    load() {},
+    load(obj) {
+      Checking<typeof obj, object, Test.Pass>;
+    },
   },
 });
 
@@ -43,14 +44,12 @@ RootComponent()({
     onLoad(props) {
       Checking<
         typeof props,
-        Required<
-          RemoveNullOfRequired<{
-            union?: Mock_User;
-            optionalObject?: Mock_User | null;
-            str: string;
-            obj: object;
-          }>
-        >,
+        {
+          union?: Mock_User;
+          optionalObject?: Mock_User | null;
+          str: string;
+          obj: object;
+        },
         Test.Pass
       >;
     },

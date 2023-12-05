@@ -6,12 +6,6 @@ type RootDoc = RootComponentDoc<{
   methods: {
     Mstr: () => string;
   };
-  events: {
-    Estr: () => string;
-  };
-  customEvents: {
-    Cstr: string;
-  };
 }>;
 
 type CompDoc = ComponentDoc<{
@@ -20,16 +14,16 @@ type CompDoc = ComponentDoc<{
   };
 }>;
 
-// 默认可以为{}。
-SubComponent<RootDoc, CompDoc>()({
-  methods: {},
-});
-
-// methods字段可以写 任意字段函数,不与RootDoc和CompDoc中的方法字段重复即可,前缀为CompDoc的前缀
+// methods字段同组件前缀
 SubComponent<RootDoc, CompDoc>()({
   methods: {
     aaa_xxx() {},
     aaa_yyy() {},
     // ...
   },
+});
+
+// 2 默认可以为{}。
+SubComponent<RootDoc, CompDoc>()({
+  methods: {},
 });

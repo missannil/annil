@@ -5,7 +5,7 @@ import { SubComponent } from "../..";
 SubComponent<{ events: { a: string } }, Wm.View>()({
   watch: {
     // @ts-expect-error 无可监控字段时，约束为EmptyObject,不可写任何字段
-    xxx() {},
+    nothing() {},
   },
 });
 
@@ -14,7 +14,16 @@ SubComponent<{ events: { a: string } }, Wm.View>()({
  */
 SubComponent<{ events: { a: string } }, Wm.View>()({
   data: {
-    // @ts-expect-error 超出字段报错
-    view_classdd: "",
+    view_style: "",
+  },
+  watch: {
+    view_style(newValue, oldValue) { // ok
+      newValue;
+
+      oldValue;
+    },
+    // @ts-expect-error 超出约束字段错误
+    view_XXstyle() {
+    },
   },
 });

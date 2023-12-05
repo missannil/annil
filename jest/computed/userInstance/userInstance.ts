@@ -3,7 +3,7 @@ import { type CompDoc } from "../../common";
 
 const subA = SubComponent<Root, CompDoc>()({
   computed: {
-    compA_num() {
+    compA_num(): number {
       return this.increase(2) + this.data.num;
     },
   },

@@ -54,7 +54,7 @@ export type FuncOptions = Record<"pageLifetimes" | "lifetimes" | "watch", Record
 /**
  * 最终传入原生Component的配置项
  */
-export type FinalOptionsForComponent = {
+export type FinalOptionsOfComponent = {
   isPage?: boolean;
   options?: WMComponent.Options;
   properties?: Record<string, any>;
@@ -66,7 +66,7 @@ export type FinalOptionsForComponent = {
   methods?: Record<string, Func> & { __storeConfig__?: Func };
   watch?: Record<string, Func>;
   lifetimes?: LifetimesConstraint;
-  pageLifetimes?: Partial<WMCompPageLifetimes & { load: Func } & WMPageLifetimes>;
+  pageLifetimes?: Partial<WMCompPageLifetimes & { load: (prop: unknown) => void } & WMPageLifetimes>;
 };
 
 export const DefineComponent: DefineComponentConstructor = function(options): any {

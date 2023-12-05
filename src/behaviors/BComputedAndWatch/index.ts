@@ -1,5 +1,5 @@
 import type { Func } from "hry-types/src/Misc/Func";
-import type { FinalOptionsForComponent } from "../../api/DefineComponent";
+import type { FinalOptionsOfComponent } from "../../api/DefineComponent";
 import { deepClone } from "../../utils/deepClone";
 import { deleteProtoField } from "../../utils/deleteProtoField";
 
@@ -32,7 +32,7 @@ function initWatchOldValue(this: Instance, watchConfig: object): WatchOldValue {
  */
 
 export const BComputedAndWatch = Behavior({
-  definitionFilter(options: FinalOptionsForComponent) {
+  definitionFilter(options: FinalOptionsOfComponent) {
     const computedConfig = options.computed;
 
     // computed handle

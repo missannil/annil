@@ -1,12 +1,8 @@
 import { Checking, type Test } from "hry-types";
 import type { ReadonlyDeep } from "hry-types/src/Any/_api";
-import type { DetailedType } from "../../../../types/DetailedType";
 import { RootComponent } from "../..";
 import type { Mock_User } from "../../Properties/test/normalRequired.test";
 
-/**
- * computed字段约束为 [ComputedConstraint](../ComputedConstraint.ts)
- */
 const RootDoc = RootComponent()({
   properties: {
     firstName: String,
@@ -14,10 +10,13 @@ const RootDoc = RootComponent()({
   data: {
     lastName: "lastName",
   },
+  store: {
+    prefix: () => "hry-", // 模拟而已
+  },
   computed: {
     fullName() {
-      // 1 计算属性字段可以通过this.data 引用properties、data
-      return this.data.firstName + this.data.lastName;
+      // 1 计算属性字段可以通过this.data 引用properties、data、store字段
+      return this.data.prefix + this.data.firstName + this.data.lastName;
     },
     user() {
       return {} as Mock_User;
@@ -35,11 +34,15 @@ const RootDoc = RootComponent()({
           lastName: string;
           fullName: string;
           user: Mock_User;
+          prefix: string;
           id_fullName: string;
           readOnly: "str";
         }>,
         Test.Pass
       >;
+
+      // @ts-expect-error  深度只读 不可赋值
+      this.data.user.id = "xxx";
 
       return "str";
     },
@@ -84,16 +87,3 @@ const EmptyComputedFieldDoc = RootComponent()({
 });
 
 Checking<typeof EmptyComputedFieldDoc, { methods: { M1: () => void } }, Test.Pass>;
-
-RootComponent()({
-  isPage: true,
-  properties: {
-    obj: Object as DetailedType<{ name: string; age: number }>,
-  },
-  computed: {
-    age() {
-      // 页面实例对象不添加Null,因为计算属性初始化在onLoad之后(即properties已传入时,且不会传入Null)
-      return this.data.obj.age;
-    },
-  },
-});

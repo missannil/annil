@@ -1,15 +1,7 @@
 import { Checking, type Test } from "hry-types";
-
 import type { ReadonlyDeep } from "hry-types/src/Any/_api";
-import { RootComponent } from "../..";
-
 import type { DetailedType } from "../../../..";
-// import {
-//   type Mock_Cart,
-//   mock_requiredTypes,
-//   mock_requiredUnion,
-//   type Mock_User,
-// } from "../../Properties/expected/normalRequired";
+import { RootComponent } from "../..";
 import type { OptionalType } from "../../Properties/PropertiesConstraint";
 import {
   type Mock_Cart,
@@ -154,9 +146,6 @@ RootComponent()({
       Checking<string, typeof newValue, Test.Pass>;
 
       Checking<string, typeof oldValue, Test.Pass>;
-    },
-
-    "optional_objOrNull.age"() {
     },
   },
 });

@@ -1,6 +1,7 @@
 import { Checking, type Test } from "hry-types";
 import type { Wm } from "../../../../thirdLib";
-import type { Detail, WMBaseEvent } from "../../../../types/OfficialTypeAlias";
+
+import type { Detail, Mark, WMBaseEvent } from "../../../..";
 import type { ComponentDoc } from "../../../DefineComponent/ReturnType/ComponentDoc";
 import type {
   Bubbles,
@@ -10,6 +11,7 @@ import type {
   Capture,
   CaptureComposed,
 } from "../../../RootComponent/CustomEvents/CustomEventsTag";
+import type { Mock_User } from "../../../RootComponent/Properties/test/normalRequired.test";
 import { SubComponent } from "../..";
 
 type CompDoc = ComponentDoc<{
@@ -51,13 +53,13 @@ const sub1 = SubComponent<{}, CompDoc>()({
   },
 });
 
-// 1.2 Composed事件会被返回
 type Sub1Expected = {
   BubblesComposed: string | BubblesComposed;
   CapturePhaseComposed: string | CaptureComposed;
   BubblesCapturePhaseComposed: string | BubblesCaptureComposed;
 };
 
+// 1.2 Composed事件会被返回
 Checking<typeof sub1, Sub1Expected, Test.Pass>;
 
 // 2.1 key可写入后缀字段(_catch,表示阻止冒泡和捕获事件)。
@@ -75,7 +77,6 @@ const sub2 = SubComponent<{}, CompDoc>()({
 // 2.2 返回没有被加后最(_catch)的Composed事件
 Checking<typeof sub2, { BubblesCapturePhaseComposed: string | BubblesCaptureComposed }, Test.Pass>;
 
-// 2.3 key可写入后缀字段(_catch,表示阻止冒泡和捕获事件)。
 const sub3 = SubComponent<{}, CompDoc>()({
   events: {
     aaa_BubblesComposed_catch(e) {
@@ -106,7 +107,7 @@ SubComponent<{}, Wm.View>()({
   },
 });
 
-// 3.2 基础组件自定义事件参数为Detail<object>
+// 3.1 基础组件自定义事件参数为Detail<object>
 SubComponent<{}, Wm.ScrollView>()({
   events: {
     scrollView_bindscroll(e) {
@@ -122,6 +123,32 @@ SubComponent<{}, Wm.ScrollView>()({
         }>,
         Test.Pass
       >;
+    },
+    // ...
+  },
+});
+
+// 4 可为事件自定义类型
+SubComponent<{}, Wm.View>()({
+  events: {
+    view_tap(e: Detail<number>) {
+      Checking<typeof e.detail, number, Test.Pass>;
+    },
+    view_longtap(e: Mark<Mock_User>) {
+      Checking<typeof e.mark, Mock_User, Test.Pass>;
+    },
+    // ...
+  },
+});
+
+// 4 可为事件自定义类型
+SubComponent<{}, Wm.View>()({
+  events: {
+    view_tap(e: Detail<number>) {
+      Checking<typeof e.detail, number, Test.Pass>;
+    },
+    view_longtap(e: Mark<Mock_User>) {
+      Checking<typeof e.mark, Mock_User, Test.Pass>;
     },
     // ...
   },

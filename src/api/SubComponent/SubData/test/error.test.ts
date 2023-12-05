@@ -24,7 +24,7 @@ type OnlyPropsCompDoc = ComponentDoc<{
   };
 }>;
 
-// 2 CompDoc有properties字段但去除Inherit字段后为空,只可写临时字段(内部字段)
+// 2 CompDoc有properties字段但去除Inherit字段后为空,只可写内部字段
 SubComponent<{}, OnlyPropsCompDoc>()({
   inherit: {
     aaa_str: "wxml",

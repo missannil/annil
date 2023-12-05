@@ -31,5 +31,9 @@ SubComponent<{
     aaa_str: () => user.name,
     // @ts-expect-error 2 与 data 字段重复
     aaa_num: () => user.age,
+    // @ts-expect-error 3 内部字段前缀错误
+    _num: () => user.age,
+    // @ts-expect-error 4 超出约束字段
+    num: () => user.age,
   },
 });

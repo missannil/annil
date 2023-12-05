@@ -5,15 +5,15 @@ const user = observable({
   age: 20,
 });
 
-// 约束错误
+// 1 约束错误
 RootComponent()({
   store: {
-    // @ts-expect-error 不能将类型“string”分配给类型“() => unknown”
+    // @ts-expect-error 1.1 不能将类型“string”分配给类型“() => unknown”
     userName: user.name,
   },
 });
 
-// 重复字段错误
+// 2 重复字段错误
 RootComponent()({
   properties: {
     userName: String,
@@ -22,9 +22,9 @@ RootComponent()({
     userAge: 20,
   },
   store: {
-    // @ts-expect-error 1 与properties字段重复
+    // @ts-expect-error 2.1 与properties字段重复
     userName: () => user.name,
-    // @ts-expect-error 2 与userAge字段重复
+    // @ts-expect-error 2.2 与userAge字段重复
     userAge: () => user.age,
   },
 });

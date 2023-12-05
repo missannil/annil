@@ -6,5 +6,4 @@ export type SubComputedOption<
   computed?:
     & TComputed
     & V.IllegalFieldValidator<TComputed, keyof legal, 0, "", "重复或无效的字段">;
-  // & ValidatorOfReturnType<TComputed, legal>;
 };

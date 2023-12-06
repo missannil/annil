@@ -4,7 +4,6 @@ import { BComputedAndWatch } from "../../behaviors/BComputedAndWatch";
 import { initComputed } from "../../behaviors/BComputedAndWatch/initComputed";
 import type { Instance } from "../../behaviors/BComputedAndWatch/types";
 import { BStore } from "../../behaviors/BStore";
-import { deepClone } from "../../utils/deepClone";
 import { INNERMARKER } from "../../utils/InnerMarker";
 import { isEmptyObject } from "../../utils/isEmptyObject";
 import type { RootComponentTrueOptions } from "../RootComponent";
@@ -18,95 +17,128 @@ import type { PageInstance } from "../RootComponent/Instance/RootComponentInstan
 import type { SubComponentTrueOptions } from "../SubComponent";
 import type { FinalOptionsOfComponent, FuncOptions } from ".";
 /**
- * 针对通过 navigateTo传过来的数据解析
+ * 针对通过 navigateTo传过来的数据对页面onLoad周期传入数据解析
  * @param option - option中的url是拼接了encodeURIComponent转码的data对象的,key为INNERMARKER.url
  */
-/* istanbul ignore next */
+/* istanbul ignore next: miniprogram-simulate(当前版本 1.6.1) 无法测试页面 */
 function onLoadReceivedDataHandle(
   this: PageInstance,
   option: Record<typeof INNERMARKER.url, string>,
 ) {
   const innerData: string | undefined = option[INNERMARKER.url];
-  // 未使用自定义的navigateTo
+  // 未使用navigateTo API
   if (innerData === undefined) return;
-  const optionData = JSON.parse(decodeURIComponent(innerData));
+  const decodeOption = JSON.parse(decodeURIComponent(innerData));
 
   // 使用navigateTo
-  for (const key in optionData) {
-    option[key] = optionData[key];
+  for (const key in decodeOption) {
+    option[key] = decodeOption[key];
   }
-
-  // setData会触发计算属性 继承属性等 。
-  this.setData(option as any);
-
   delete option[INNERMARKER.url];
 
-  Reflect.deleteProperty(this.data, INNERMARKER.url);
+  // 默认生命周期不会把接收的数据setData,为了更方便setData.注: 此时计算属性还未初始化。
+  // this.setData(option);
+}
+/**
+ * 针对通过 navigateTo传过来的数据对组件load周期传入数据解析
+ * @param option - option中的url是拼接了encodeURIComponent转码的data对象的,key为INNERMARKER.url
+ */
+/* istanbul ignore next: miniprogram-simulate(当前版本 1.6.1) 无法测试页面 */
+// function loadReceivedDataHandle(
+//   this: PageInstance,
+//   option: Record<typeof INNERMARKER.url, string>,
+// ) {
+//   const innerData: string | undefined = option[INNERMARKER.url];
+//   // 未使用自定义的navigateTo
+//   if (innerData === undefined) return;
+//   const decodeOption = JSON.parse(decodeURIComponent(innerData));
+
+//   // 使用navigateTo
+//   for (const key in decodeOption) {
+//     option[key] = decodeOption[key];
+//   }
+//   delete option[INNERMARKER.url];
+// }
+/**
+ * 劫持指定配置字段
+ */
+/* istanbul ignore next: miniprogram-simulate(当前版本 1.6.1) 无法测试页面 */
+function hijack(config: object, field: string, before: Func[] = [], after: Func[] = []) {
+  const originalFunc: Func | undefined = config[field];
+
+  config[field] = function(...args: any[]) {
+    before.forEach(func => func.call(this, ...args));
+
+    originalFunc && originalFunc.apply(this, args);
+
+    after.forEach(func => func.call(this, ...args));
+  };
+
+  return;
 }
 
 /**
  * onLoad生命周期劫持函数
  */
-/* istanbul ignore next */
-function onLoadHijack(
-  options: FinalOptionsOfComponent,
-  before: Func[],
-  after: Func[] = [],
-) {
-  options.methods ||= {};
+/* istanbul ignore next: miniprogram-simulate(当前版本 1.6.1) 无法测试页面 */
+// function onLoadHijack(
+//   options: FinalOptionsOfComponent,
+//   before: Func[],
+//   after: Func[] = [],
+// ) {
+//   options.methods ||= {};
 
-  const cloneOpt = deepClone(options);
-  const originalOnLoad: Func | undefined = options.methods.onLoad;
+//   const cloneOpt = deepClone(options);
+//   const originalOnLoad: Func | undefined = options.methods.onLoad;
 
-  options.methods.onLoad = function(props: unknown) {
-    before.forEach((func) => {
-      func.call(this, props, cloneOpt);
-    });
+//   options.methods.onLoad = function(props: unknown) {
+//     before.forEach((func) => {
+//       func.call(this, props, cloneOpt);
+//     });
 
-    originalOnLoad?.call(this, props);
+//     originalOnLoad?.call(this, props);
 
-    after.forEach((func) => {
-      func.call(this, props, cloneOpt);
-    });
-  };
-}
+//     after.forEach((func) => {
+//       func.call(this, props, cloneOpt);
+//     });
+//   };
+// }
 /**
- * attached生命周期劫持函数
+ * 劫持pageLifetimes中的load字段
  */
 /* istanbul ignore next  */
-function attachedHijack(
-  options: FinalOptionsOfComponent,
-  before: Func[],
-  after: Func[] = [],
-) {
-  /* istanbul ignore next */
-  options.lifetimes ||= {};
+// function loadHijack(
+//   options: FinalOptionsOfComponent,
+//   before: Func[],
+//   after: Func[] = [],
+// ) {
+//    /* istanbul ignore next: miniprogram-simulate(当前版本 1.6.1) 无法测试页面 */
+//   options.lifetimes ||= {};
 
-  const originalAttached: Func | undefined = options.lifetimes.attached;
+//   const originalAttached: Func | undefined = options.lifetimes.attached;
 
-  options.lifetimes.attached = function() {
-    before.forEach((func) => {
-      func.call(this, options);
-    });
+//   options.lifetimes.attached = function() {
+//     before.forEach((func) => {
+//       func.call(this, options);
+//     });
 
-    originalAttached?.call(this);
+//     originalAttached?.call(this);
 
-    /* istanbul ignore next  */
-    after.forEach((func) => {
-      func.call(this, options);
-    });
-  };
-}
+//     /* istanbul ignore next  */
+//     after.forEach((func) => {
+//       func.call(this, options);
+//     });
+//   };
+// }
 /**
  * 内部保护字段 即不允许配置的字段名(所有方法下)
  */
 // const INNERFIELDS = ["disposer"];
 
 /**
- * 报错的形式避免输入字段和内部字段冲突
- * 保护config下不被配置keys包含的内部预定字段
+ * 报错的形式避免输入字段和内部字段冲突,保证config下不包含内部预定字段(列表)
  */
-/* istanbul ignore next */
+/* istanbul ignore next: miniprogram-simulate(当前版本 1.6.1) 无法测试页面 */
 function InternalFieldProtection(config: object | undefined, keys: string[]) {
   if (!config) return;
   const methodsConfigKeys = Object.keys(config);
@@ -126,14 +158,16 @@ function _funcConfigHandle(methodsConfig: object, configList: Record<string, Fun
     };
   }
 }
-
+/**
+ * 把函数列表配置放入一个配置中循环一次运行
+ */
 function funcConfigHandle(
   finalOptionsForComponent: FinalOptionsOfComponent,
   isPage: boolean | undefined,
   funcOptions: FuncOptions,
 ) {
   // 测试框架无法测试page情形
-  /* istanbul ignore next */
+  /* istanbul ignore next: miniprogram-simulate(当前版本 1.6.1) 无法测试页面 */
   if (isPage) {
     // 页面时 生命周期方法(即 on 开头的方法),(https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/component.html)
     funcOptions.pageLifetimes && _funcConfigHandle(finalOptionsForComponent.methods ||= {}, funcOptions.pageLifetimes);
@@ -165,7 +199,9 @@ function funcFieldsCollect(
   }
 }
 
-// 其他字段加入到componentOptions对应字段配置中
+/**
+ * 其他字段加入到componentOptions对应字段配置中
+ */
 function otherFieldsHandle(
   finalOptions: FinalOptionsOfComponent,
   rootComponentOptions: RootComponentTrueOptions,
@@ -174,7 +210,7 @@ function otherFieldsHandle(
     const config = rootComponentOptions[key];
     if (Array.isArray(config)) {
       // 好像只有behaviors是数组吧.
-      /* istanbul ignore next */
+      /* istanbul ignore next: miniprogram-simulate(当前版本 1.6.1) 无法测试页面 */
       (finalOptions[key] ||= []).push(...config);
     } else {
       Object.assign(finalOptions[key] ||= {}, config);
@@ -182,10 +218,10 @@ function otherFieldsHandle(
   }
 }
 /**
- * 把events字段配置变成函数放入到componentOptions.methods中
+ * 把events字段放入到componentOptions.methods中
  */
 function eventsHandle(componentOptions: FinalOptionsOfComponent, eventsConfig: EventsConstraint) {
-  /* istanbul ignore next */
+  /* istanbul ignore next: miniprogram-simulate(当前版本 1.6.1) 无法测试页面 */
   componentOptions.methods ||= {};
 
   Object.assign(componentOptions.methods, eventsConfig);
@@ -218,7 +254,7 @@ function customEventsHandle(
   componentOptions: FinalOptionsOfComponent,
   customEventsConfig: CustomEventConstraint,
 ) {
-  /* istanbul ignore next */
+  /* istanbul ignore next: miniprogram-simulate(当前版本 1.6.1) 无法测试页面 */
   componentOptions.methods ||= {};
 
   for (const key in customEventsConfig) {
@@ -239,45 +275,45 @@ function customEventsHandle(
  *  触发各个组件的页面load事件
  */
 /* istanbul ignore next  */
-function triggerCompLoad(this: Instance, props: object) {
-  if (!this.__compLoadList__) return;
-  this.__compLoadList__.forEach((loadFunc) => {
-    loadFunc(props);
-  });
-}
+// function triggerCompLoad(this: Instance, props: object) {
+//   if (!this.__compLoadList__) return;
+//   this.__compLoadList__.forEach((loadFunc) => {
+//     loadFunc(props);
+//   });
+// }
 /* istanbul ignore next  */
-function getPageInstance(pageId: string): Instance {
-  const pagestack = getCurrentPages() as unknown as Instance[];
-  let pageInstance: Instance;
-  pagestack.some((instance) => {
-    if (instance.getPageId() === pageId) {
-      pageInstance = instance;
+// function getPageInstance(pageId: string): Instance {
+//   const pagestack = getCurrentPages() as unknown as Instance[];
+//   let pageInstance: Instance;
+//   pagestack.some((instance) => {
+//     if (instance.getPageId() === pageId) {
+//       pageInstance = instance;
 
-      return true;
-    }
+//       return true;
+//     }
 
-    return false;
-  });
+//     return false;
+//   });
 
-  // @ts-ignore pagestack中一定赋值了
-  return pageInstance;
-}
+//   // @ts-ignore pagestack中一定赋值了
+//   return pageInstance;
+// }
 /**
  * 收集组件pageLifetimes下的load周期函数到页面实例的__loadFunList__
  */
 /* istanbul ignore next  */
-function collectLoadLifetimesOfComponent(this: Instance, finalOptionsForComponent: FinalOptionsOfComponent) {
-  const loadFunc = finalOptionsForComponent.pageLifetimes?.load;
+// function collectLoadLifetimesOfComponent(this: Instance, finalOptionsForComponent: FinalOptionsOfComponent) {
+//   const loadFunc = finalOptionsForComponent.pageLifetimes?.load;
 
-  console.log(loadFunc, finalOptionsForComponent);
+//   console.log(loadFunc, finalOptionsForComponent);
 
-  if (!loadFunc) return;
+//   if (!loadFunc) return;
 
-  const pageInstance = getPageInstance(this.getPageId());
-  const __compLoadList__: Function[] = (pageInstance.__compLoadList__ ||= []);
+//   const pageInstance = getPageInstance(this.getPageId());
+//   const __compLoadList__: Function[] = (pageInstance.__compLoadList__ ||= []);
 
-  __compLoadList__.push(loadFunc.bind(this));
-}
+//   __compLoadList__.push(loadFunc.bind(this));
+// }
 /**
  * 收集 rootComponentOptions 配置到 finalOptions 和 funcOptions 中
  * @param finalOptions - 收集配置对象
@@ -289,14 +325,6 @@ function collectRootComponentOption(
   funcOptions: FuncOptions,
   rootComponentOptions: RootComponentTrueOptions,
 ) {
-  console.log("-------------------------");
-
-  InternalFieldProtection(rootComponentOptions.customEvents, ["load"]);
-
-  InternalFieldProtection(rootComponentOptions.methods, ["load"]);
-
-  InternalFieldProtection(rootComponentOptions.events, ["load"]);
-
   rootComponentOptions.customEvents && customEventsHandle(finalOptions, rootComponentOptions.customEvents);
 
   delete rootComponentOptions.customEvents;
@@ -322,7 +350,7 @@ export function collectOptionsForComponent(
   const finalOptionsForComponent: FinalOptionsOfComponent = {
     // default options
     options: {
-      // addGlobalClass: true,
+      addGlobalClass: true, // "styleIsolation": "apply-shared"
       multipleSlots: true,
       pureDataPattern: /^_/,
       virtualHost: true,
@@ -346,28 +374,27 @@ export function collectOptionsForComponent(
   if (subComponentsList && !isEmptyObject(subComponentsList)) {
     subComponentsHandle(finalOptionsForComponent, subComponentsList, funcOptions);
   }
-  // 框架无法测试页面
-  /* istanbul ignore next */
-  if (!isEmptyObject(funcOptions)) {
-    funcConfigHandle(finalOptionsForComponent, rootComponentOption?.isPage, funcOptions);
-  }
+  // miniprogram-simulate(当前版本 1.6.1) 无法测试页面
+  /* istanbul ignore next: miniprogram-simulate(当前版本 1.6.1) 无法测试页面 */
+  funcConfigHandle(finalOptionsForComponent, rootComponentOption?.isPage, funcOptions);
 
   finalOptionsForComponent.methods && InternalFieldProtection(finalOptionsForComponent.methods, ["disposer"]);
 
-  // BBeforeCreate在最后面
-  finalOptionsForComponent.behaviors!.push(BBeforeCreate);
+  /* istanbul ignore next: miniprogram-simulate(当前版本 1.6.1) 无法测试页面 */
+  finalOptionsForComponent.methods?.onLoad
+    && hijack(finalOptionsForComponent.methods, "onLoad", [onLoadReceivedDataHandle, initComputed], []);
 
-  console.log(finalOptionsForComponent, 999, funcOptions);
+  /* istanbul ignore next: miniprogram-simulate(当前版本 1.6.1) 无法测试页面 */
+  finalOptionsForComponent.pageLifetimes?.load
+    && hijack(finalOptionsForComponent.pageLifetimes, "load", [onLoadReceivedDataHandle], []);
 
-  attachedHijack(finalOptionsForComponent, [collectLoadLifetimesOfComponent], []);
-
-  onLoadHijack(finalOptionsForComponent, [onLoadReceivedDataHandle, initComputed], [triggerCompLoad]);
-
-  // 框架无法测试页面
-  /* istanbul ignore next */
+  /* istanbul ignore next: miniprogram-simulate(当前版本 1.6.1) 无法测试页面 */
   if (finalOptionsForComponent.isPage) {
+    // 页面时删除预设的虚拟组件字段
     Reflect.deleteProperty(finalOptionsForComponent.options!, "virtualHost");
   }
+  // BBeforeCreate在最后面,让BeforeCreate生命周期运行在最终建立组件时。
+  finalOptionsForComponent.behaviors!.push(BBeforeCreate);
 
   return finalOptionsForComponent;
 }

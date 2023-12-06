@@ -5,6 +5,7 @@ export function deepClone<T>(value: T): T {
   if (typeof value !== "object" || value === null) {
     return value;
   }
+  /* istanbul ignore next */
   const clone = (Array.isArray(value) ? [] : {}) as T;
 
   Object.setPrototypeOf(clone, Object.getPrototypeOf(value));

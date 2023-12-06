@@ -14,7 +14,8 @@ export type PageLifetimesOption<TIsPage extends boolean, PropertiesDoc extends o
       & Partial<WMCompPageLifetimes>
       & {
         /**
-         * 事件发生在页面onLoad事件后,要求组件为同步组件
+         * 周期发生在组件attached之后,页面onLoad之前,要求组件为同步组件
+         * 最低基础库： `3.0.2`
          */
         load?: (props: object) => void | Promise<void>;
       }
@@ -33,7 +34,6 @@ export type PageLifetimesOption<TIsPage extends boolean, PropertiesDoc extends o
          * 页面加载时触发。一个页面只会调用一次，可以在 onLoad 的参数中获取Properties定义的数据。
          */
         onLoad?: (
-          // 页面时PropertiesDoc对象字段是格外不加null的
           props: PropertiesDoc,
         ) => void | Promise<void>;
       }

@@ -6,13 +6,15 @@ import type { ReplacePrefix } from "../../types/ReplacePrefix";
 import type { ComponentDoc } from "../DefineComponent/ReturnType/ComponentDoc";
 
 import type { Func } from "hry-types/src/Misc/Func";
-import type {
-  WMCompLifetimes,
-  WMCompOtherOption,
-  WMCompPageLifetimes,
-  WMPageLifetimes,
-} from "../../types/OfficialTypeAlias";
+import type { WMCompOtherOption } from "../../types/OfficialTypeAlias";
+import type { ComputedConstraint } from "../RootComponent/Computed/ComputedConstraint";
+import type { DataConstraint } from "../RootComponent/Data/DataConstraint";
+import type { EventsConstraint } from "../RootComponent/Events/EventsConstraint";
+import type { LifetimesConstraint } from "../RootComponent/Lifetimes/LifetimesConstraint";
+import type { MethodsConstraint } from "../RootComponent/Methods/MethodsConstraint";
+import type { PageLifetimesOption } from "../RootComponent/PageLifetimes/PageLifetimesOption";
 import type { RootComponentDoc } from "../RootComponent/RootComponentDoc";
+import type { StoreConstraint } from "../RootComponent/Store/StoreConstraint";
 import type { GetSubComputedDoc } from "./SubComputed/GetSubComputedDoc";
 import type { SubComputedConstraint } from "./SubComputed/SubComputedConstraint";
 import type { SubComputedOption } from "./SubComputed/SubComputedOption";
@@ -206,11 +208,16 @@ export function SubComponent<
 
 export type SubComponentTrueOptions = {
   inhrit?: string;
-  data?: Record<string, unknown>;
-  computed?: Record<string, Func>;
-  events?: Record<string, Func>;
-  methods?: Record<string, Func>;
+  data?: DataConstraint;
+  computed?: ComputedConstraint;
+  store?: StoreConstraint;
+  events?: EventsConstraint;
+  methods?: MethodsConstraint;
+  // behaviors?: string[];
+  observers?: Record<string, Func>;
   watch?: Record<string, Func>;
-  lifetimes?: WMCompLifetimes["lifetimes"];
-  pageLifetimes?: Partial<WMCompPageLifetimes & { load: Func } & WMPageLifetimes>;
+  lifetimes?: LifetimesConstraint;
+  pageLifetimes?:
+    | PageLifetimesOption<false, object>["pageLifetimes"]
+    | PageLifetimesOption<true, object>["pageLifetimes"];
 };

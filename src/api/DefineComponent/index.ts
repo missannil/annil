@@ -1,6 +1,6 @@
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { Func } from "hry-types/src/Misc/Func";
-import type { WMComponent, WMCompPageLifetimes, WMPageLifetimes } from "../../types/OfficialTypeAlias";
+import type { WMComponent } from "../../types/OfficialTypeAlias";
 
 import type { LifetimesConstraint } from "../RootComponent/Lifetimes/LifetimesConstraint";
 import type { RootComponentDoc } from "../RootComponent/RootComponentDoc";
@@ -12,6 +12,11 @@ import type { RootComponentOption } from "./RootComponent/RootComponentOption";
 import type { SubComponentsOption } from "./SubComponents/SubComponentsOption";
 
 import type { RootComponentTrueOptions } from "../RootComponent";
+import type { ComputedConstraint } from "../RootComponent/Computed/ComputedConstraint";
+import type { DataConstraint } from "../RootComponent/Data/DataConstraint";
+import type { MethodsConstraint } from "../RootComponent/Methods/MethodsConstraint";
+import type { PageLifetimesOption } from "../RootComponent/PageLifetimes/PageLifetimesOption";
+import type { StoreConstraint } from "../RootComponent/Store/StoreConstraint";
 import { collectOptionsForComponent } from "./collectOptionsForComponent";
 
 type Path = `/${string}`;
@@ -58,19 +63,18 @@ export type FinalOptionsOfComponent = {
   isPage?: boolean;
   options?: WMComponent.Options;
   properties?: Record<string, any>;
-  data?: object;
-  store?: object;
-  computed?: Record<string, Func>;
+  data?: DataConstraint;
+  store?: StoreConstraint;
+  computed?: ComputedConstraint;
   observers?: Record<string, Func>;
   behaviors?: string[];
-  methods?: Record<string, Func> & { __storeConfig__?: Func };
+  methods?: MethodsConstraint;
   watch?: Record<string, Func>;
   lifetimes?: LifetimesConstraint;
-  pageLifetimes?: Partial<WMCompPageLifetimes & { load: (prop: unknown) => void } & WMPageLifetimes>;
-};
+} & PageLifetimesOption<false, object>;
 
 export const DefineComponent: DefineComponentConstructor = function(options): any {
   Component(
-    collectOptionsForComponent(options.rootComponent as RootComponentTrueOptions | undefined, options.subComponents),
+    collectOptionsForComponent(options.rootComponent as RootComponentTrueOptions, options.subComponents),
   );
 };

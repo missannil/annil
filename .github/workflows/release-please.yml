@@ -55,7 +55,12 @@ jobs:
               env:
                   CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
             # 发布
-            - run: npm publish
+            - run: |
+                if echo "${{ needs.release-please.outputs.version }}" | grep -q "beta"; then
+                  npm publish --tag beta
+                else
+                  npm publish
+                fi
               env:
                   # 在项目-settings-secrets and variables-actions 下建立Environment secrets,名字为NPM_TOKEN,值为npm下建立的密钥。
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

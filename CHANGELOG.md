@@ -4,6 +4,13 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.2.0-beta.0](https://github.com/missannil/annil/compare/v1.1.2...v1.2.0-beta.0) (2023-12-07)
+
+
+### Features
+
+* 页面onLoad和组件pageLifetimes.load周期参数使用encodeURI加密和解析 ([8b5cc6e](https://github.com/missannil/annil/commit/8b5cc6ee65abb0def005126c9382a07b8affc0ca))
+
 ## [1.1.2](https://github.com/missannil/annil/compare/v1.1.1...v1.1.2) (2023-12-06)
 
 

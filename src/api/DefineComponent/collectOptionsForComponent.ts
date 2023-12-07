@@ -17,8 +17,11 @@ import type { PageInstance } from "../RootComponent/Instance/RootComponentInstan
 import type { SubComponentTrueOptions } from "../SubComponent";
 import type { FinalOptionsOfComponent, FuncOptions } from ".";
 /**
- * 针对通过 navigateTo传过来的数据对页面onLoad周期传入数据解析
- * @param option - option中的url是拼接了encodeURIComponent转码的data对象的,key为INNERMARKER.url
+ * 原生Component会对传入的对象字段匹配的properties字段setData赋值。不符合字段或Page时不会赋值。
+ * 此函数为给实例setData赋值,默认传递值与properties相符(ts类型安全)。
+ * @param option - 传入onLoad的参数 有以下两种可能
+ * 1. 使用wx.navigateTo传值的。这种情况无内置字段 option[INNERMARKER.url] 等于 undefined
+ * 2. 使用插件提供的navigateTo传值。这种情况 INNERMARKER.url被load周期劫持函数解码后赋值INNERMARKER.url字段为本身,即option[INNERMARKER.url] 等于 INNERMARKER.url
  */
 /* istanbul ignore next: miniprogram-simulate(当前版本 1.6.1) 无法测试页面 */
 function onLoadReceivedDataHandle(
@@ -26,39 +29,35 @@ function onLoadReceivedDataHandle(
   option: Record<typeof INNERMARKER.url, string>,
 ) {
   const innerData: string | undefined = option[INNERMARKER.url];
-  // 未使用navigateTo API
-  if (innerData === undefined) return;
-  const decodeOption = JSON.parse(decodeURIComponent(innerData));
 
-  // 使用navigateTo
-  for (const key in decodeOption) {
-    option[key] = decodeOption[key];
-  }
+  // 情况1为undefined,2为INNERMARKER.url所以innerData !== INNERMARKER.url表示没有通过插件提供的API传值
+  if (innerData !== INNERMARKER.url) return;
+
   delete option[INNERMARKER.url];
 
-  // 默认生命周期不会把接收的数据setData,为了更方便setData.注: 此时计算属性还未初始化。
-  // this.setData(option);
+  this.setData(option);
 }
 /**
  * 针对通过 navigateTo传过来的数据对组件load周期传入数据解析
  * @param option - option中的url是拼接了encodeURIComponent转码的data对象的,key为INNERMARKER.url
  */
 /* istanbul ignore next: miniprogram-simulate(当前版本 1.6.1) 无法测试页面 */
-// function loadReceivedDataHandle(
-//   this: PageInstance,
-//   option: Record<typeof INNERMARKER.url, string>,
-// ) {
-//   const innerData: string | undefined = option[INNERMARKER.url];
-//   // 未使用自定义的navigateTo
-//   if (innerData === undefined) return;
-//   const decodeOption = JSON.parse(decodeURIComponent(innerData));
+function loadReceivedDataHandle(
+  this: PageInstance,
+  option: Record<typeof INNERMARKER.url, string>,
+) {
+  const innerData: string | undefined = option[INNERMARKER.url];
+  // 未使用自定义的navigateTo
+  if (innerData === undefined) return;
+  const decodeOption = JSON.parse(decodeURIComponent(innerData));
 
-//   // 使用navigateTo
-//   for (const key in decodeOption) {
-//     option[key] = decodeOption[key];
-//   }
-//   delete option[INNERMARKER.url];
-// }
+  // 使用navigateTo API
+  for (const key in decodeOption) {
+    option[key] = decodeOption[key];
+  }
+  // 给onLoad劫持函数一个标记,判断传值来自哪个API
+  option[INNERMARKER.url] = INNERMARKER.url;
+}
 /**
  * 劫持指定配置字段
  */
@@ -386,7 +385,7 @@ export function collectOptionsForComponent(
 
   /* istanbul ignore next: miniprogram-simulate(当前版本 1.6.1) 无法测试页面 */
   finalOptionsForComponent.pageLifetimes?.load
-    && hijack(finalOptionsForComponent.pageLifetimes, "load", [onLoadReceivedDataHandle], []);
+    && hijack(finalOptionsForComponent.pageLifetimes, "load", [loadReceivedDataHandle], []);
 
   /* istanbul ignore next: miniprogram-simulate(当前版本 1.6.1) 无法测试页面 */
   if (finalOptionsForComponent.isPage) {

@@ -59,6 +59,10 @@ jobs:
             - run: |
                 if echo "${{ needs.release-please.outputs.version }}" | grep -q "beta"; then
                   npm publish --tag beta
+                elif echo "${{ needs.release-please.outputs.version }}" | grep -q "dev"; then
+                  npm publish --tag dev
+                elif echo "${{ needs.release-please.outputs.version }}" | grep -q "rc"; then
+                  npm publish --tag rc
                 else
                   npm publish
                 fi

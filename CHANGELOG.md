@@ -4,6 +4,13 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.2.0-beta.1](https://github.com/missannil/annil/compare/v1.2.0-beta.0...v1.2.0-beta.1) (2023-12-07)
+
+
+### Bug Fixes
+
+* 组件/页面接受load和onLoad是参数解析的问题 ([d4b13f9](https://github.com/missannil/annil/commit/d4b13f95679dd5ea81f872991403fe4bb3cfd448))
+
 ## [1.2.0-beta.0](https://github.com/missannil/annil/compare/v1.1.2...v1.2.0-beta.0) (2023-12-07)
 
 

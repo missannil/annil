@@ -4,6 +4,13 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.2.0](https://github.com/missannil/annil/compare/v1.2.0-beta.4...v1.2.0) (2023-12-07)
+
+
+### Miscellaneous Chores
+
+* release-please.yml 增加dev和rc发版配置 ([02c0215](https://github.com/missannil/annil/commit/02c0215fee0664d65b74a25ecb3ad571f6ddaad6))
+
 ## [1.2.0-beta.4](https://github.com/missannil/annil/compare/v1.2.0-beta.3...v1.2.0-beta.4) (2023-12-07)
 
 

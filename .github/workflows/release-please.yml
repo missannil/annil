@@ -16,6 +16,7 @@ jobs:
         runs-on: ubuntu-latest
         outputs:
             release_created: ${{ steps.release.outputs.release_created }}
+            version: ${{ steps.release.outputs.version }}
         steps:
             # 使用哪个action
             - uses: google-github-actions/release-please-action@v3

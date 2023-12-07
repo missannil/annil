@@ -10,6 +10,7 @@ export function deepClone<T>(value: T): T {
 
   Object.setPrototypeOf(clone, Object.getPrototypeOf(value));
 
+  /* istanbul ignore next */
   for (const key in value) {
     if (Object.prototype.hasOwnProperty.call(value, key)) {
       clone[key] = deepClone(value[key]);

@@ -4,7 +4,7 @@ import type { Includes } from "../../../types/includes";
 /**
  * 根据IsPage,生成name或path字段
  */
-export type NameOrPageOption<
+export type NameOrPathOption<
   TName extends string,
   TPath extends `/${string}`,
   IsPage extends boolean,

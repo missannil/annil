@@ -1,4 +1,4 @@
-import type { FinalOptionsOfComponent } from "../api/DefineComponent";
+import type { FinalOptionsOfComponent } from "../api/DefineComponent/collectOptionsForComponent";
 
 export const BBeforeCreate = Behavior({
   definitionFilter(options: FinalOptionsOfComponent) {

@@ -1,5 +1,6 @@
 import type mobx from "mobx";
-import type { FinalOptionsOfComponent } from "../api/DefineComponent";
+
+import type { FinalOptionsOfComponent } from "../api/DefineComponent/collectOptionsForComponent";
 import { deleteProtoField } from "../utils/deleteProtoField";
 import type { Instance } from "./BComputedAndWatch/types";
 

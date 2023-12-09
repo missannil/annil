@@ -4,18 +4,48 @@ import { BComputedAndWatch } from "../../behaviors/BComputedAndWatch";
 import { initComputed } from "../../behaviors/BComputedAndWatch/initComputed";
 import type { Instance } from "../../behaviors/BComputedAndWatch/types";
 import { BStore } from "../../behaviors/BStore";
+import type { WMComponent } from "../../types/OfficialTypeAlias";
 import { INNERMARKER } from "../../utils/InnerMarker";
 import { isEmptyObject } from "../../utils/isEmptyObject";
 import type { RootComponentTrueOptions } from "../RootComponent";
+import type { ComputedConstraint } from "../RootComponent/Computed/ComputedConstraint";
 import type {
   CustomEventConstraint,
   CustomEvents,
   FullCustomEvents,
 } from "../RootComponent/CustomEvents/CustomEventConstraint";
+import type { DataConstraint } from "../RootComponent/Data/DataConstraint";
 import type { EventsConstraint } from "../RootComponent/Events/EventsConstraint";
 import type { PageInstance } from "../RootComponent/Instance/RootComponentInstance";
+import type { LifetimesConstraint } from "../RootComponent/Lifetimes/LifetimesConstraint";
+import type { MethodsConstraint } from "../RootComponent/Methods/MethodsConstraint";
+import type { PageLifetimesOption } from "../RootComponent/PageLifetimes/PageLifetimesOption";
+import type { StoreConstraint } from "../RootComponent/Store/StoreConstraint";
 import type { SubComponentTrueOptions } from "../SubComponent";
-import type { FinalOptionsOfComponent, FuncOptions } from ".";
+import type { DefineComponentOption } from ".";
+/**
+ * 临时的函数配置项
+ * 把根组件与子组件中配置类型为函数的相同字段配置收集在一起(数组)
+ */
+export type FuncOptions = Record<"pageLifetimes" | "lifetimes" | "watch", Record<string, Func[]>>;
+
+/**
+ * 最终传入原生Component的配置项
+ */
+export type FinalOptionsOfComponent = {
+  isPage?: boolean;
+  options?: WMComponent.Options;
+  properties?: Record<string, any>;
+  data?: DataConstraint;
+  store?: StoreConstraint;
+  computed?: ComputedConstraint;
+  observers?: Record<string, Func>;
+  behaviors?: string[];
+  methods?: MethodsConstraint;
+  watch?: Record<string, Func>;
+  lifetimes?: LifetimesConstraint;
+} & PageLifetimesOption<false, object>;
+
 /**
  * 原生Component会对传入的对象字段匹配的properties字段setData赋值。不符合字段或Page时不会赋值。
  * 此函数为给实例setData赋值,默认传递值与properties相符(ts类型安全)。
@@ -44,6 +74,27 @@ function onLoadReceivedDataHandle(
 
   this.setData(option);
 }
+// 类型保护
+// function isPageInstance(ins: Instance): ins is PageInstance & InstanceCustomFields {
+//   return (ins as PageInstance).route !== undefined;
+// }
+/**
+ * 验证path是否正确
+ * @param path - 配置路径
+ * @returns
+ */
+// function pathCheck(path: string | undefined) {
+//   return function(this: Instance) {
+//     if (isPageInstance(this)) {
+//       const route = this.route;
+//       if (route !== path) {
+//         throw Error(
+//           `[ /${route} ] DefinedComponent的配置字段path值错误,应为: /${route}`,
+//         );
+//       }
+//     }
+//   };
+// }
 /**
  * 针对通过 navigateTo传过来的数据对组件load周期传入数据解析
  * @param option - option中的url是拼接了encodeURIComponent转码的data对象的,key为INNERMARKER.url
@@ -54,8 +105,8 @@ function loadReceivedDataHandle(
   option: Record<typeof INNERMARKER.url, string>,
 ) {
   const innerData: string | undefined = option[INNERMARKER.url];
-  // 未使用自定义的navigateTo
-  if (innerData === undefined) return;
+  // 未使用自定义的navigateTo 或者在之前的load中已经被解析过了
+  if (innerData === undefined || innerData == INNERMARKER.url) return;
   const decodeOption = JSON.parse(decodeURIComponent(innerData));
 
   // 使用navigateTo API
@@ -82,64 +133,6 @@ function hijack(config: object, field: string, before: Func[] = [], after: Func[
 
   return;
 }
-
-/**
- * onLoad生命周期劫持函数
- */
-/* istanbul ignore next: miniprogram-simulate(当前版本 1.6.1) 无法测试页面 */
-// function onLoadHijack(
-//   options: FinalOptionsOfComponent,
-//   before: Func[],
-//   after: Func[] = [],
-// ) {
-//   options.methods ||= {};
-
-//   const cloneOpt = deepClone(options);
-//   const originalOnLoad: Func | undefined = options.methods.onLoad;
-
-//   options.methods.onLoad = function(props: unknown) {
-//     before.forEach((func) => {
-//       func.call(this, props, cloneOpt);
-//     });
-
-//     originalOnLoad?.call(this, props);
-
-//     after.forEach((func) => {
-//       func.call(this, props, cloneOpt);
-//     });
-//   };
-// }
-/**
- * 劫持pageLifetimes中的load字段
- */
-/* istanbul ignore next  */
-// function loadHijack(
-//   options: FinalOptionsOfComponent,
-//   before: Func[],
-//   after: Func[] = [],
-// ) {
-//    /* istanbul ignore next: miniprogram-simulate(当前版本 1.6.1) 无法测试页面 */
-//   options.lifetimes ||= {};
-
-//   const originalAttached: Func | undefined = options.lifetimes.attached;
-
-//   options.lifetimes.attached = function() {
-//     before.forEach((func) => {
-//       func.call(this, options);
-//     });
-
-//     originalAttached?.call(this);
-
-//     /* istanbul ignore next  */
-//     after.forEach((func) => {
-//       func.call(this, options);
-//     });
-//   };
-// }
-/**
- * 内部保护字段 即不允许配置的字段名(所有方法下)
- */
-// const INNERFIELDS = ["disposer"];
 
 /**
  * 报错的形式避免输入字段和内部字段冲突,保证config下不包含内部预定字段(列表)
@@ -278,49 +271,6 @@ function customEventsHandle(
   }
 }
 /**
- *  触发各个组件的页面load事件
- */
-/* istanbul ignore next  */
-// function triggerCompLoad(this: Instance, props: object) {
-//   if (!this.__compLoadList__) return;
-//   this.__compLoadList__.forEach((loadFunc) => {
-//     loadFunc(props);
-//   });
-// }
-/* istanbul ignore next  */
-// function getPageInstance(pageId: string): Instance {
-//   const pagestack = getCurrentPages() as unknown as Instance[];
-//   let pageInstance: Instance;
-//   pagestack.some((instance) => {
-//     if (instance.getPageId() === pageId) {
-//       pageInstance = instance;
-
-//       return true;
-//     }
-
-//     return false;
-//   });
-
-//   // @ts-ignore pagestack中一定赋值了
-//   return pageInstance;
-// }
-/**
- * 收集组件pageLifetimes下的load周期函数到页面实例的__loadFunList__
- */
-/* istanbul ignore next  */
-// function collectLoadLifetimesOfComponent(this: Instance, finalOptionsForComponent: FinalOptionsOfComponent) {
-//   const loadFunc = finalOptionsForComponent.pageLifetimes?.load;
-
-//   console.log(loadFunc, finalOptionsForComponent);
-
-//   if (!loadFunc) return;
-
-//   const pageInstance = getPageInstance(this.getPageId());
-//   const __compLoadList__: Function[] = (pageInstance.__compLoadList__ ||= []);
-
-//   __compLoadList__.push(loadFunc.bind(this));
-// }
-/**
  * 收集 rootComponentOptions 配置到 finalOptions 和 funcOptions 中
  * @param finalOptions - 收集配置对象
  * @param funcOptions  - 收集特殊配置对象字段
@@ -343,6 +293,7 @@ function collectRootComponentOption(
 
   otherFieldsHandle(finalOptions, rootComponentOptions);
 }
+
 /**
  * 返回一个由rootComponentOption和subComponentsList配置整合的对象
  * @param rootComponentOption -
@@ -350,9 +301,10 @@ function collectRootComponentOption(
  * @returns FinalOptionsForComponent
  */
 export function collectOptionsForComponent(
-  rootComponentOption: RootComponentTrueOptions | undefined,
-  subComponentsList: SubComponentTrueOptions[] | undefined,
+  defineComponentOption: DefineComponentOption,
 ): FinalOptionsOfComponent {
+  const rootComponentOption = defineComponentOption.rootComponent;
+  const subComponentsList = defineComponentOption.subComponents;
   const finalOptionsForComponent: FinalOptionsOfComponent = {
     // default options
     options: {
@@ -393,6 +345,8 @@ export function collectOptionsForComponent(
   /* istanbul ignore next: miniprogram-simulate(当前版本 1.6.1) 无法测试页面 */
   finalOptionsForComponent.pageLifetimes?.load
     && hijack(finalOptionsForComponent.pageLifetimes, "load", [loadReceivedDataHandle], []);
+
+  // hijack(finalOptionsForComponent.lifetimes!, "attached", [pathCheck(defineComponentOption.path)], []);
 
   /* istanbul ignore next: miniprogram-simulate(当前版本 1.6.1) 无法测试页面 */
   if (finalOptionsForComponent.isPage) {

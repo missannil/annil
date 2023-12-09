@@ -2,7 +2,6 @@ import type { Func } from "hry-types/src/Misc/Func";
 import type { FinalOptionsOfComponent } from "../../api/DefineComponent";
 import { deepClone } from "../../utils/deepClone";
 import { deleteProtoField } from "../../utils/deleteProtoField";
-
 import { isEmptyObject } from "../../utils/isEmptyObject";
 import { getPathsValue } from "./getPathsValue";
 import { initComputed } from "./initComputed";

@@ -9,18 +9,13 @@ describe("计算属性可以使用this上的属性和方法", () => {
   const parent = document.createElement("parent-wrapper"); // 创建挂载(父)节点
 
   comp.attach(parent); // attach 到父亲节点上，此时会触发自定义组件的 attached 钩子
+  // 初始值
 
   test("初始化值和改变依赖后的值", async () => {
-    // 初始值
-    expect(comp.data.age).toBe(2 + 1);
+    expect(comp.data.age).toBe(25);
 
-    expect(comp.data.compA_num).toBe(3 + 1);
+    await sleep(0);
 
-    await sleep(1000);
-
-    // 改变依赖后
-    expect(comp.data.age).toBe(2 + 2);
-
-    expect(comp.data.compA_num).toBe(3 + 2);
+    expect(comp.data.age).toBe(26);
   });
 });

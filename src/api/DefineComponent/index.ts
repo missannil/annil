@@ -73,7 +73,11 @@ export type FinalOptionsOfComponent = {
   lifetimes?: LifetimesConstraint;
 } & PageLifetimesOption<false, object>;
 
+/**
+ * 把根组件选项和子组件选项转化为原生Component API选项并执行
+ */
 export const DefineComponent: DefineComponentConstructor = function(options): any {
+  // console.log("---------------------------");
   Component(
     collectOptionsForComponent(options.rootComponent as RootComponentTrueOptions, options.subComponents),
   );

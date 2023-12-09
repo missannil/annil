@@ -30,8 +30,15 @@ function onLoadReceivedDataHandle(
 ) {
   const innerData: string | undefined = option[INNERMARKER.url];
 
-  // 情况1为undefined,2为INNERMARKER.url所以innerData !== INNERMARKER.url表示没有通过插件提供的API传值
-  if (innerData !== INNERMARKER.url) return;
+  // 情况1为undefined,2为INNERMARKER.url有值但不是本身,说明没有组件中的写了load(因为组件的load提前解析这个参数),3所以innerData等于 INNERMARKER.url即有组件配置了load(提前解析了)
+  if (innerData === undefined) return;
+  if (innerData !== INNERMARKER.url) {
+    // 需要情况2 需要解析
+    const decodeOption = JSON.parse(decodeURIComponent(innerData));
+    for (const key in decodeOption) {
+      option[key] = decodeOption[key];
+    }
+  }
 
   delete option[INNERMARKER.url];
 

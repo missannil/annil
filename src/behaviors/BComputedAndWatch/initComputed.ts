@@ -37,11 +37,20 @@ export function getComputedInfo(
   // 建立当前计算字段的依赖
   const dependences: ComputedDependence[] = [];
   let initValue: unknown;
-  // try {
-  initValue = computedFunc.call({
-    ...this,
-    data: deepProxy(this.data, dependences),
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
+  const _this = this;
+  const computedThis = new Proxy({ data: deepProxy(this.data, dependences) }, {
+    get(target, key) {
+      if (key === "data") {
+        return Reflect.get(target, key);
+      }
+
+      return Reflect.get(_this, key);
+    },
   });
+
+  initValue = computedFunc.call(computedThis);
+
   // } catch (error) {
   //   // 为js开发考虑使用了 this.data.xxx.age 当xxx为undefined时
   //   if (!isValidDependences(dependences, computedKeys)) {

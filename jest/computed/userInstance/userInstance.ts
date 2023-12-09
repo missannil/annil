@@ -1,40 +1,44 @@
-import { DefineComponent, RootComponent, SubComponent } from "../../../src";
-import { type CompDoc } from "../../common";
+import { DefineComponent, type DetailedType, RootComponent } from "../../../src";
 
-const subA = SubComponent<Root, CompDoc>()({
-  computed: {
-    compA_num(): number {
-      return this.increase(2) + this.data.num;
+type User = { name: string; age: number; gender: "female" | "male" };
+
+const externalNum = 1;
+const storeUser = {
+  name: "xxx",
+  gender: "female",
+  Average: 25,
+};
+const rootComponent = RootComponent()({
+  properties: {
+    user: {
+      type: Object as DetailedType<User>,
+      value: { name: "zhao", age: 18, gender: "female" },
     },
   },
-});
-
-type Root = typeof rootComponent;
-
-const rootComponent = RootComponent()({
   data: {
-    num: 1,
+    gapAge: 5,
+  },
+  store: {
+    average: () => storeUser.Average,
   },
   computed: {
-    // 可使用this上的属性和方法和外部数据,但要特别注意方法的副作用，建议不使用或使用的方法为纯函数。
+    // 可使用this和外部数据,但要特别注意方法的副作用，建议不使用,或使用的方法为纯函数。
     age() {
-      // if(this.xxx){
-      return this.increase(1) + this.data.num;
-      // }
+      return Math.round((this.RealAge(this.data.user!.age) + this.data.average) / 2) + externalNum;
     },
   },
   methods: {
-    increase(num: number) {
-      return num + 1;
+    RealAge(falseAge: number) {
+      return falseAge + this.data.gapAge;
     },
   },
   lifetimes: {
     attached() {
       setTimeout(() => {
         this.setData({
-          num: 2,
+          gapAge: 7,
         });
-      }, 1000);
+      }, 0);
     },
   },
 });
@@ -42,5 +46,4 @@ const rootComponent = RootComponent()({
 DefineComponent({
   name: "computed",
   rootComponent,
-  subComponents: [subA],
 });

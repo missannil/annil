@@ -25,14 +25,21 @@ export function computedUpdater(this: Instance, isUpdated = false): boolean {
         break;
       }
     }
-
     if (changed) {
       const newDependences: ComputedDependence[] = [];
+      // eslint-disable-next-line @typescript-eslint/no-this-alias
+      const _this = this;
+      const computedThis = new Proxy({ data: deepProxy(this.data, newDependences) }, {
+        get(target, key) {
+          if (key === "data") {
+            return Reflect.get(target, key);
+          }
 
-      const newValue = itemCache.method.call({
-        ...this,
-        data: deepProxy(this.data, newDependences),
+          return Reflect.get(_this, key);
+        },
       });
+
+      const newValue = itemCache.method.call(computedThis);
 
       // 更新值不会立即再次进入**函数,而是当前**函数运行完毕后触发**函数,
       this.setData({

@@ -4,6 +4,13 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.2.1](https://github.com/missannil/annil/compare/v1.2.0...v1.2.1) (2023-12-09)
+
+
+### Bug Fixes
+
+* 修复计算属性中使用this的问题 ([d9d1635](https://github.com/missannil/annil/commit/d9d1635489a8a4fb4db9c387c2b3e182ea415445))
+
 ## [1.2.0](https://github.com/missannil/annil/compare/v1.2.0-beta.4...v1.2.0) (2023-12-07)
 
 

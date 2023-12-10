@@ -12,7 +12,7 @@ import type { Instance, WatchOldValue } from "./types";
 function initWatchOldValue(this: Instance, watchConfig: object): WatchOldValue {
   const watchOldValue = {};
   for (const key in watchConfig) {
-    watchOldValue[key] = deepClone(getPathsValue.call(this, key.split(".")));
+    watchOldValue[key] = deepClone(getPathsValue.call(this, key));
   }
 
   return watchOldValue;
@@ -100,14 +100,14 @@ export const BComputedAndWatch = Behavior({
       for (const key in watchConfig) {
         const watchHadle = watchConfig[key];
 
-        observersConfig[key] = function(this: Instance, newValue: unknown) {
+        // 在监控多个数据时,参数是多个值
+        observersConfig[key] = function(this: Instance, ...newValue: unknown[]) {
           const watchOldValue = this.__watchOldValue__!;
           const oldValue = watchOldValue[key];
-          // 当watch对象的子属性时,有可能对象为null(properties默认值)
-          if ((newValue === undefined) || isEqual(newValue, oldValue)) return;
+          if (isEqual(newValue, oldValue)) return;
           watchOldValue[key] = deepClone(newValue);
 
-          watchHadle.call(this, newValue, oldValue);
+          watchHadle.call(this, ...newValue, ...oldValue);
         };
       }
     }

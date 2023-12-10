@@ -4,6 +4,13 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.2.2-dev.202312100](https://github.com/missannil/annil/compare/v1.2.1...v1.2.2-dev.202312100) (2023-12-10)
+
+
+### type
+
+* 修改了customEvents字段的类型,允许undefined类型 ([2c1c35a](https://github.com/missannil/annil/commit/2c1c35a8581016c2e0eb9cfeb01f2ed6e4f8d53c))
+
 ## [1.2.1](https://github.com/missannil/annil/compare/v1.2.0...v1.2.1) (2023-12-09)
 
 

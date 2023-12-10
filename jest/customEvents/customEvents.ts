@@ -8,12 +8,18 @@ const rootComponent = RootComponent()({
       detail: [Array as DetailedType<string[]>, Object as DetailedType<User>],
       options: { bubbles: true },
     },
+    null: null,
+    nothing: undefined,
   },
   lifetimes: {
     attached() {
       this.str("string");
 
       this.union(["a", "b", "c"]);
+
+      this.nothing();
+
+      this.null(null);
     },
   },
 });

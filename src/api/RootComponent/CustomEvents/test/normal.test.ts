@@ -15,6 +15,7 @@ import type {
  */
 export const mock_shortCustomEvents = {
   str: String,
+  nothing: undefined,
   null: null,
   unionStr: String as DetailedType<"male" | "female">,
   union: [String, Number as DetailedType<0 | 1 | 2>, null],
@@ -64,6 +65,7 @@ type RootDoc = {
     // 简写字段 值类型为事件参数e的detail类型
     str: string;
     null: null;
+    nothing: undefined;
     unionStr: "male" | "female";
     union: string | 0 | 1 | 2 | null;
     // 带options字段 通过联合类型加入。

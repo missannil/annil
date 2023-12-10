@@ -1,6 +1,6 @@
 import { load, render, sleep } from "miniprogram-simulate";
 import path from "path";
-describe("watch-compputed", () => {
+describe("watch-computed", () => {
   const id = load(path.resolve(__dirname, "computed")); // 此处必须传入绝对路径
   const comp = render(id); // 挂载周期 位于created和attached之间
 

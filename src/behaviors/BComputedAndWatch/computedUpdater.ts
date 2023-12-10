@@ -16,7 +16,8 @@ export function computedUpdater(this: Instance, isUpdated = false): boolean {
     const itemCache = this.__computedCache__[key];
     let changed = false;
     for (const dep of itemCache.dependences) {
-      const curVal = getPathsValue.call(this, dep.paths);
+      // getPathsValue返回的是数组
+      const curVal = getPathsValue.call(this, dep.paths.join("."))[0];
 
       // 检查依赖是否更新
       if (!isEqual(curVal, dep.val)) {

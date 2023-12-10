@@ -26,4 +26,4 @@ export type ComputedCache = Record<
   }
 >;
 
-export type WatchOldValue = Record<string, unknown>;
+export type WatchOldValue = Record<string, unknown[]>;

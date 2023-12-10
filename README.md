@@ -27,12 +27,10 @@ annil(安奈儿)是微信小程序原生开发插件,提供了新的组件构建
 
 ### 特点
 
-- **API功能更全面**
+- **API功能更全面 **
 
-  新的组件API(相较原生Component/Page)加入了`computed`、`watch`、`store(全局响应式数据基于mobx)`等功能,使开发更便捷。
+  新的组件API(相较原生Component/Page)加入了`computed`、`watch`、`store(全局响应式数据基于mobx)`等功能,使开发更便捷。[示例](./doc/demo/firstMeeting.md)
 
-  ```ts
-  ```
 - **复杂组件解决方案**
 
   新的组件API把组件逻辑部分解耦为根组件逻辑和子组件逻辑,与wxml元素一一对应。彻底解决原生API书写复杂组件时代码逻辑耦合的问题。

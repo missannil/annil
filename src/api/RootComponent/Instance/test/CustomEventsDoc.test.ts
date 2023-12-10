@@ -7,6 +7,7 @@ RootComponent()({
     num: Number as DetailedType<1 | 2>,
     union: [String as DetailedType<"male" | "femal">, Number],
     null: null,
+    undefined: undefined,
     bubbles: {
       detail: String,
       options: {
@@ -50,7 +51,9 @@ RootComponent()({
 
       Checking<(detail: "male" | "femal" | number) => void, typeof this.union, Test.Pass>;
 
-      Checking<() => void, typeof this.null, Test.Pass>;
+      Checking<(detail: null) => void, typeof this.null, Test.Pass>;
+
+      Checking<() => void, typeof this.undefined, Test.Pass>;
 
       Checking<(detail: string) => void, typeof this.str, Test.Pass>;
 
@@ -60,7 +63,7 @@ RootComponent()({
 
       Checking<(detail: number) => void, typeof this.capturePhaseComposed, Test.Pass>;
 
-      Checking<() => void, typeof this.bubblesCapturePhaseComposed, Test.Pass>;
+      Checking<(detail: null) => void, typeof this.bubblesCapturePhaseComposed, Test.Pass>;
     },
   },
 });

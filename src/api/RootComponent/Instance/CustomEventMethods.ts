@@ -3,8 +3,8 @@ import type { CustomEventsTags } from "../CustomEvents/CustomEventsTag";
 
 export type CustomEventMethods<O extends object> = {
   [k in keyof O]: IfExtends<
-    Exclude<O[k], CustomEventsTags> & {},
-    never,
+    Exclude<O[k], CustomEventsTags>,
+    undefined,
     () => void,
     (detail: Exclude<O[k], CustomEventsTags>) => void
   >;

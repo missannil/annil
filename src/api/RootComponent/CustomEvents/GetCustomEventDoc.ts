@@ -10,6 +10,7 @@ import type { AddTagForCustomEventsDoc } from "./CustomEventsTag";
 
 export type GetShortCustomEventsDoc<T extends ShortCustomeEvents> = T extends DetailedType ? InferDetailedType<T>
   : T extends null ? null
+  : T extends undefined ? undefined
   : T extends SimpleCustomeEventsList ? GetShortCustomEventsDoc<T[number]>
   : never;
 

@@ -1,6 +1,6 @@
 import type { DetailedType } from "../../../types/DetailedType";
 
-type SimpleCustomeEvents = DetailedType | null;
+type SimpleCustomeEvents = DetailedType | null | undefined;
 
 export type SimpleCustomeEventsList = SimpleCustomeEvents[];
 

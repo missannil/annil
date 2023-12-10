@@ -17,6 +17,7 @@ type Mock_CustomEventsDoc = GetCustomEventDoc<typeof mock_customEvents>;
 export type Mock_CustomEventsDocExpected = {
   str: StrExpected;
   null: NullExpected;
+  nothing: undefined;
   unionStr: UnionStrExpected;
   union: ListExpected;
   bubbles: bubblesExpected;

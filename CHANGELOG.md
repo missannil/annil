@@ -4,6 +4,13 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.3.0-dev.202312100](https://github.com/missannil/annil/compare/v1.2.2-dev.202312100...v1.3.0-dev.202312100) (2023-12-11)
+
+
+### Features
+
+* watch支持配置单个字段监控多个数据,但没有类型提示 ([37db28a](https://github.com/missannil/annil/commit/37db28a87a7f3af145a7c141e05d2a3b35e6bcb7))
+
 ## [1.2.2-dev.202312100](https://github.com/missannil/annil/compare/v1.2.1...v1.2.2-dev.202312100) (2023-12-10)
 
 

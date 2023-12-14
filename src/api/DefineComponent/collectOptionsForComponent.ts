@@ -1,8 +1,7 @@
 import type { Func } from "hry-types/src/Misc/_api";
 import { BBeforeCreate } from "../../behaviors/BbeforeCreated";
 import { BComputedAndWatch } from "../../behaviors/BComputedAndWatch";
-import { initComputed } from "../../behaviors/BComputedAndWatch/initComputed";
-import type { Instance } from "../../behaviors/BComputedAndWatch/types";
+import type { ComputedCache, Instance } from "../../behaviors/BComputedAndWatch/types";
 import { BStore } from "../../behaviors/BStore";
 import type { WMComponent } from "../../types/OfficialTypeAlias";
 import { INNERMARKER } from "../../utils/InnerMarker";
@@ -20,6 +19,7 @@ import type { PageInstance } from "../RootComponent/Instance/RootComponentInstan
 import type { LifetimesConstraint } from "../RootComponent/Lifetimes/LifetimesConstraint";
 import type { MethodsConstraint } from "../RootComponent/Methods/MethodsConstraint";
 import type { PageLifetimesOption } from "../RootComponent/PageLifetimes/PageLifetimesOption";
+import type { PropertiesConstraint } from "../RootComponent/Properties/PropertiesConstraint";
 import type { StoreConstraint } from "../RootComponent/Store/StoreConstraint";
 import type { SubComponentTrueOptions } from "../SubComponent";
 import type { DefineComponentOption } from ".";
@@ -33,18 +33,21 @@ export type FuncOptions = Record<"pageLifetimes" | "lifetimes" | "watch", Record
  * 最终传入原生Component的配置项
  */
 export type FinalOptionsOfComponent = {
+  data: DataConstraint;
+  observers: Record<string, Func>;
+  behaviors: string[];
+  methods: MethodsConstraint & {
+    __computedInitCache__?: () => ComputedCache;
+  };
   isPage?: boolean;
   options?: WMComponent.Options;
-  properties?: Record<string, any>;
-  data?: DataConstraint;
+  properties?: PropertiesConstraint;
   store?: StoreConstraint;
   computed?: ComputedConstraint;
-  observers?: Record<string, Func>;
-  behaviors?: string[];
-  methods?: MethodsConstraint;
   watch?: Record<string, Func>;
   lifetimes?: LifetimesConstraint;
-} & PageLifetimesOption<false, object>;
+  pageLifetimes?: PageLifetimesOption<false, object>["pageLifetimes"];
+};
 
 /**
  * 原生Component会对传入的对象字段匹配的properties字段setData赋值。不符合字段或Page时不会赋值。
@@ -60,7 +63,7 @@ function onLoadReceivedDataHandle(
 ) {
   const innerData: string | undefined = option[INNERMARKER.url];
 
-  // 情况1为undefined,2为INNERMARKER.url有值但不是本身,说明没有组件中的写了load(因为组件的load提前解析这个参数),3所以innerData等于 INNERMARKER.url即有组件配置了load(提前解析了)
+  // 情况1为undefined,2为INNERMARKER.url有值但不是本身,说明是老框架。3所以innerData等于 INNERMARKER.url即有组件配置了load(新框架在pageLifetimes.load中提前解析了)
   if (innerData === undefined) return;
   if (innerData !== INNERMARKER.url) {
     // 需要情况2 需要解析
@@ -105,15 +108,15 @@ function loadReceivedDataHandle(
   option: Record<typeof INNERMARKER.url, string>,
 ) {
   const innerData: string | undefined = option[INNERMARKER.url];
-  // 未使用自定义的navigateTo 或者在之前的load中已经被解析过了
-  if (innerData === undefined || innerData == INNERMARKER.url) return;
+  // 未使用自定义的navigateTo
+  if (innerData === undefined) return;
+  // 使用navigateTo API
   const decodeOption = JSON.parse(decodeURIComponent(innerData));
 
-  // 使用navigateTo API
   for (const key in decodeOption) {
     option[key] = decodeOption[key];
   }
-  // 给onLoad劫持函数一个标记,判断传值来自哪个API
+  // 给onLoad劫持函数一个标记,判断在新框架下已经被解析过了
   option[INNERMARKER.url] = INNERMARKER.url;
 }
 /**
@@ -150,9 +153,9 @@ function InternalFieldProtection(config: object | undefined, keys: string[]) {
 /**
  * 把函数配置放入一个配置中依次运行
  */
-function _funcConfigHandle(methodsConfig: object, configList: Record<string, Func[]>) {
+function _funcOptionsHandle(config: object, configList: Record<string, Func[]>) {
   for (const key in configList) {
-    methodsConfig[key] = function(...args: unknown[]) {
+    config[key] = function(...args: unknown[]) {
       configList[key].forEach(ele => ele.call(this, ...args));
     };
   }
@@ -160,27 +163,27 @@ function _funcConfigHandle(methodsConfig: object, configList: Record<string, Fun
 /**
  * 把函数列表配置放入一个配置中循环一次运行
  */
-function funcConfigHandle(
+function funcOptionsHandle(
   finalOptionsForComponent: FinalOptionsOfComponent,
   isPage: boolean | undefined,
   funcOptions: FuncOptions,
 ) {
-  // 测试框架无法测试page情形
   /* istanbul ignore next: miniprogram-simulate(当前版本 1.6.1) 无法测试页面 */
   if (isPage) {
     // 页面时 生命周期方法(即 on 开头的方法),(https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/component.html)
-    funcOptions.pageLifetimes && _funcConfigHandle(finalOptionsForComponent.methods ||= {}, funcOptions.pageLifetimes);
+    !(isEmptyObject(funcOptions.pageLifetimes))
+      && _funcOptionsHandle(finalOptionsForComponent.methods, funcOptions.pageLifetimes);
   } else {
     // 组件时
-    funcOptions.pageLifetimes
-      && _funcConfigHandle(finalOptionsForComponent.pageLifetimes ||= {}, funcOptions.pageLifetimes);
+    !(isEmptyObject(funcOptions.pageLifetimes))
+      && _funcOptionsHandle(finalOptionsForComponent.pageLifetimes ||= {}, funcOptions.pageLifetimes);
   }
-  funcOptions.lifetimes && _funcConfigHandle(finalOptionsForComponent.lifetimes ||= {}, funcOptions.lifetimes);
+  funcOptions.lifetimes && _funcOptionsHandle(finalOptionsForComponent.lifetimes ||= {}, funcOptions.lifetimes);
 
-  funcOptions.watch && _funcConfigHandle(finalOptionsForComponent.watch ||= {}, funcOptions.watch);
+  funcOptions.watch && _funcOptionsHandle(finalOptionsForComponent.watch ||= {}, funcOptions.watch);
 }
 /**
- * 把配置为函数的字段方法收集到funcConfig中
+ * 把配置为函数的字段方法收集到funcOptions中
  */
 function funcFieldsCollect(
   options: SubComponentTrueOptions | RootComponentTrueOptions,
@@ -193,8 +196,6 @@ function funcFieldsCollect(
         (funcOptions[key][_key] ||= []).push(options[key][_key]);
       }
     }
-
-    Reflect.deleteProperty(options, key);
   }
 }
 
@@ -207,10 +208,9 @@ function otherFieldsHandle(
 ) {
   for (const key in rootComponentOptions) {
     const config = rootComponentOptions[key];
-    if (Array.isArray(config)) {
-      // 好像只有behaviors是数组吧.
-      /* istanbul ignore next: miniprogram-simulate(当前版本 1.6.1) 无法测试页面 */
-      (finalOptions[key] ||= []).push(...config);
+    if (key === "behaviors") {
+      // 是不是只有behaviors是数组
+      finalOptions[key].push(...config);
     } else {
       Object.assign(finalOptions[key] ||= {}, config);
     }
@@ -219,11 +219,8 @@ function otherFieldsHandle(
 /**
  * 把events字段放入到componentOptions.methods中
  */
-function eventsHandle(componentOptions: FinalOptionsOfComponent, eventsConfig: EventsConstraint) {
-  /* istanbul ignore next: miniprogram-simulate(当前版本 1.6.1) 无法测试页面 */
-  componentOptions.methods ||= {};
-
-  Object.assign(componentOptions.methods, eventsConfig);
+function eventsHandle(methods: FinalOptionsOfComponent["methods"], eventsConfig: EventsConstraint) {
+  Object.assign(methods, eventsConfig);
 }
 function subComponentsHandle(
   componentOptions: FinalOptionsOfComponent,
@@ -231,7 +228,7 @@ function subComponentsHandle(
   funcOptions: FuncOptions,
 ) {
   subComponents.forEach((subOption) => {
-    subOption.events && eventsHandle(componentOptions, subOption.events);
+    subOption.events && eventsHandle(componentOptions.methods, subOption.events);
 
     funcFieldsCollect(subOption, funcOptions);
 
@@ -250,21 +247,18 @@ function IsFullCustomEvents(
  * 把customEvents字段配置变成函数放入到componentOptions.methods中
  */
 function customEventsHandle(
-  componentOptions: FinalOptionsOfComponent,
+  methods: FinalOptionsOfComponent["methods"],
   customEventsConfig: CustomEventConstraint,
 ) {
-  /* istanbul ignore next: miniprogram-simulate(当前版本 1.6.1) 无法测试页面 */
-  componentOptions.methods ||= {};
-
   for (const key in customEventsConfig) {
     const customEventOptions = customEventsConfig[key];
 
     if (IsFullCustomEvents(customEventOptions)) {
-      componentOptions.methods[key] = function(this: Instance, detail: unknown) {
+      methods[key] = function(this: Instance, detail: unknown) {
         this.triggerEvent(key, detail, customEventOptions.options);
       };
     } else {
-      componentOptions.methods[key] = function(this: Instance, detail: unknown) {
+      methods[key] = function(this: Instance, detail: unknown) {
         this.triggerEvent(key, detail);
       };
     }
@@ -281,13 +275,9 @@ function collectRootComponentOption(
   funcOptions: FuncOptions,
   rootComponentOptions: RootComponentTrueOptions,
 ) {
-  rootComponentOptions.customEvents && customEventsHandle(finalOptions, rootComponentOptions.customEvents);
+  rootComponentOptions.customEvents && customEventsHandle(finalOptions.methods, rootComponentOptions.customEvents);
 
-  delete rootComponentOptions.customEvents;
-
-  rootComponentOptions.events && eventsHandle(finalOptions, rootComponentOptions.events);
-
-  delete rootComponentOptions.events;
+  rootComponentOptions.events && eventsHandle(finalOptions.methods, rootComponentOptions.events);
 
   funcFieldsCollect(rootComponentOptions, funcOptions);
 
@@ -306,15 +296,16 @@ export function collectOptionsForComponent(
   const rootComponentOption = defineComponentOption.rootComponent;
   const subComponentsList = defineComponentOption.subComponents;
   const finalOptionsForComponent: FinalOptionsOfComponent = {
-    // default options
     options: {
       addGlobalClass: true, // "styleIsolation": "apply-shared"
       multipleSlots: true,
       pureDataPattern: /^_/,
       virtualHost: true,
     },
-    // default behaviors
     behaviors: [BStore, BComputedAndWatch],
+    methods: {},
+    observers: {},
+    data: {},
   };
   /**
    * 有些字段配置同时存在根组件和子组件当中(如pageLifetimes，lifetimes,watch字段), 且key相同值类型为函数。funcConfig对象用于收集这些配置为数组形式,最终再一起整合进finalOptionsForComponent配置中。即funcConfig是一个临时中介对象。
@@ -334,25 +325,25 @@ export function collectOptionsForComponent(
   }
   // miniprogram-simulate(当前版本 1.6.1) 无法测试页面
   /* istanbul ignore next: miniprogram-simulate(当前版本 1.6.1) 无法测试页面 */
-  funcConfigHandle(finalOptionsForComponent, rootComponentOption?.isPage, funcOptions);
+  funcOptionsHandle(finalOptionsForComponent, rootComponentOption?.isPage, funcOptions);
 
-  finalOptionsForComponent.methods && InternalFieldProtection(finalOptionsForComponent.methods, ["disposer"]);
+  InternalFieldProtection(finalOptionsForComponent.methods, ["disposer"]);
+
+  // 对页面传入参数进行处理 老框架劫持页面methods.onLoad,新框架劫持页面pageLifetimes.load
+  /* istanbul ignore next: miniprogram-simulate(当前版本 1.6.1) 无法测试页面 */
+  finalOptionsForComponent.isPage
+    && hijack(finalOptionsForComponent.pageLifetimes ||= {}, "load", [loadReceivedDataHandle], []);
 
   /* istanbul ignore next: miniprogram-simulate(当前版本 1.6.1) 无法测试页面 */
-  finalOptionsForComponent.methods?.onLoad
-    && hijack(finalOptionsForComponent.methods, "onLoad", [onLoadReceivedDataHandle, initComputed], []);
-
-  /* istanbul ignore next: miniprogram-simulate(当前版本 1.6.1) 无法测试页面 */
-  finalOptionsForComponent.pageLifetimes?.load
-    && hijack(finalOptionsForComponent.pageLifetimes, "load", [loadReceivedDataHandle], []);
+  hijack(finalOptionsForComponent.methods, "onLoad", [onLoadReceivedDataHandle], []);
 
   // hijack(finalOptionsForComponent.lifetimes!, "attached", [pathCheck(defineComponentOption.path)], []);
 
   /* istanbul ignore next: miniprogram-simulate(当前版本 1.6.1) 无法测试页面 */
-  if (finalOptionsForComponent.isPage) {
+  finalOptionsForComponent.isPage
     // 页面时删除预设的虚拟组件字段
-    Reflect.deleteProperty(finalOptionsForComponent.options!, "virtualHost");
-  }
+    && Reflect.deleteProperty(finalOptionsForComponent.options!, "virtualHost");
+
   // BBeforeCreate在最后面,让BeforeCreate生命周期运行在最终建立组件时。
   finalOptionsForComponent.behaviors!.push(BBeforeCreate);
 

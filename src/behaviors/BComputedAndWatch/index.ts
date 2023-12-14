@@ -1,22 +1,23 @@
-import type { Func } from "hry-types/src/Misc/Func";
-
+import type { Func } from "hry-types/src/Misc/_api";
 import type { FinalOptionsOfComponent } from "../../api/DefineComponent/collectOptionsForComponent";
 import { deepClone } from "../../utils/deepClone";
 import { deleteProtoField } from "../../utils/deleteProtoField";
 import { isEmptyObject } from "../../utils/isEmptyObject";
+import { computedUpdater } from "./computedUpdater";
 import { getPathsValue } from "./getPathsValue";
+import { getPropertiesValue } from "./getPropertiesValue";
 import { initComputed } from "./initComputed";
 import { isEqual } from "./isEqual";
-import { isPage } from "./IsPage";
 import type { Instance, WatchOldValue } from "./types";
 function initWatchOldValue(this: Instance, watchConfig: object): WatchOldValue {
   const watchOldValue = {};
   for (const key in watchConfig) {
-    watchOldValue[key] = deepClone(getPathsValue.call(this, key));
+    watchOldValue[key] = deepClone(getPathsValue(this.data, key));
   }
 
   return watchOldValue;
 }
+
 /**
  * 实现
  * 1. 计算属性初始化在attached之后(前版本在beforeCreate)
@@ -32,60 +33,50 @@ function initWatchOldValue(this: Instance, watchConfig: object): WatchOldValue {
  */
 
 export const BComputedAndWatch = Behavior({
+  // @ts-ignore
   definitionFilter(options: FinalOptionsOfComponent) {
+    // 计算属性初始化
+    const rawPropertiesValue = getPropertiesValue(options.properties);
+    const methodOpt = options.methods;
     const computedConfig = options.computed;
 
-    // computed handle
     if (computedConfig && !isEmptyObject(computedConfig)) {
-      /* istanbul ignore next */
-      options.methods ||= {};
+      const computedCache = initComputed(options, computedConfig, { ...options.data, ...rawPropertiesValue });
 
-      const methodsConfig = options.methods;
+      // 把计算属性缓存从方法中带入到实例中,在created周期加入实例后删除
+      methodOpt.__computedInitCache__ = () => computedCache;
+    }
+    const observersConfig = options.observers;
+    // 通过observers加入`**`字段来触发计算属性更新
+    const originalFunc = observersConfig["**"] as Func | undefined;
 
-      // 把计算属性配置保留在methods的__computedConfig__字段下带入到组件实例中。
-      methodsConfig.__computedConfig__ = () => computedConfig;
-
-      const observersConfig = options.observers ||= {};
-      // 通过observers加入`**`字段来触发计算属性更新
-      const originalFunc = observersConfig["**"] as Func | undefined;
-
-      observersConfig["**"] = function(this: Instance): undefined {
-        const computedStatus = this.__computedStatus__;
-        switch (computedStatus) {
-          case undefined:
-            // 1 触发来自attach时或没有计算属性时
-            originalFunc && /* istanbul ignore next */ originalFunc.call(this);
-
-            break;
-          case "初始化中":
-            // 2 触发来自计算属性初始化时的setData,什么都不需要做。 初始化后__computedStatus__变为待更新
-
-            break;
-          case "待更新":
-            // 3. 触发来自attached后的setData或properties更新
-            {
-              const isUpdated = this.__computedUpdater__();
-              if (isUpdated) {
-                // 更新了会再次触发自身转到 4
-                this.__computedStatus__ = "更新完毕";
-              } else {
-                // 无需更新计算属性
-                originalFunc && /* istanbul ignore next */ originalFunc.call(this);
-              }
-            }
-            break;
-          case "更新完毕":
-            {
-              // 4 来自计算属性更新后的自身回调
-              // console.log("来自计算属性更新后的自身回调");
-              this.__computedStatus__ = "待更新";
-
+    observersConfig["**"] = function(this: Instance): undefined {
+      const computedStatus = this.__computedStatus__;
+      switch (computedStatus) {
+        case "待更新":
+          // 3. 触发来自attached后的setData或properties更新
+          {
+            const isUpdated = this.__computedUpdater__();
+            if (isUpdated) {
+              // 更新了会再次触发自身转到 4
+              this.__computedStatus__ = "更新完毕";
+            } else {
+              // 无需更新计算属性
               originalFunc && /* istanbul ignore next */ originalFunc.call(this);
             }
-            break;
-        }
-      };
-    }
+          }
+          break;
+        case "更新完毕":
+          {
+            // 4 来自计算属性更新后的自身回调
+            // console.log("来自计算属性更新后的自身回调");
+            this.__computedStatus__ = "待更新";
+
+            originalFunc && /* istanbul ignore next */ originalFunc.call(this);
+          }
+          break;
+      }
+    };
 
     // watch handle
     const watchConfig = options.watch;
@@ -96,6 +87,7 @@ export const BComputedAndWatch = Behavior({
       // 把watch配置保留在methods的__watchConfig__字段下带入到组件实例中。
       methodsConfig.__watchConfig__ = () => watchConfig;
 
+      /* istanbul ignore next */
       const observersConfig = options.observers ||= {};
       for (const key in watchConfig) {
         const watchHadle = watchConfig[key];
@@ -114,22 +106,25 @@ export const BComputedAndWatch = Behavior({
   },
   lifetimes: {
     created(this: Instance) {
+      // 把计算属性的初始缓存放入实例
+      const __computedInitCache__ = this.__computedInitCache__?.();
+
+      this.__computedCache__ = __computedInitCache__;
+
+      deleteProtoField(this, "__computedInitCache__");
+
+      this.__computedStatus__ = "待更新";
+
+      this.__computedUpdater__ = computedUpdater.bind(this);
+
       // 初始化watch 生成OldValue
       const watchConfig = this.__watchConfig__?.();
 
       deleteProtoField(this, "__watchConfig__");
 
       if (watchConfig) {
-        // 此时计算属性还未初始化,properties还未第一次传入
         this.__watchOldValue__ = initWatchOldValue.call(this, watchConfig);
       }
-    },
-    attached(this: Instance) {
-      if (!isPage(this)) {
-        // 组件此时properties已传入
-        initComputed.call(this);
-      }
-      // else 页面在onLoad时传入properties 计算属性初始化逻辑通过onLoadHijack函数完成
     },
   },
 });

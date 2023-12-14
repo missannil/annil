@@ -5,22 +5,17 @@ import { deleteProtoField } from "../utils/deleteProtoField";
 import type { Instance } from "./BComputedAndWatch/types";
 
 export const BStore = Behavior({
+  // @ts-ignore
   definitionFilter(options: FinalOptionsOfComponent) {
     // 初始化store
     const storeConfig = options.store;
     if (!storeConfig) return;
     const { toJS } = require("mobx") as typeof mobx;
     for (const key in storeConfig) {
-      options.data ||= {};
-
       options.data[key] = toJS(storeConfig[key]());
 
       // 把响应式数据配置保留在methods的__storeConfig__字段下带入到组件实例中(不用函数返回方式也可以,但不符合methods字段类型),后续再从原型上删除。
-      options.methods ||= {};
-
       options.methods.__storeConfig__ = () => storeConfig;
-
-      delete options.store;
     }
   },
   lifetimes: {
@@ -28,6 +23,8 @@ export const BStore = Behavior({
       // 取出通过addStoreConfigToMethods函数带入的storeConfig
       const storeConfig = this.__storeConfig__?.();
       if (!storeConfig) return;
+      deleteProtoField(this, "__storeConfig__");
+
       const { comparer, reaction, toJS } = require("mobx") as typeof mobx;
 
       this.disposer = {};
@@ -47,7 +44,6 @@ export const BStore = Behavior({
           },
         );
       }
-      deleteProtoField(this, "__storeConfig__");
     },
     /* istanbul ignore next */
     detached(this: Instance) {

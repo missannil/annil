@@ -28,6 +28,8 @@ export function deepProxy(
       }
       const curPath = basePath.concat(prop);
 
+      // console.log(prop, val,'in');
+
       dependences.push({ paths: curPath, val: unwrap(val) });
 
       // 自身方法或原型属性不代理

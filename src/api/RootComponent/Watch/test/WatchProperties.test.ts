@@ -134,7 +134,7 @@ RootComponent()({
     optional_obj(newValue, oldValue) {
       Checking<ReadonlyDeep<Mock_User>, typeof newValue, Test.Pass>;
 
-      Checking<ReadonlyDeep<Mock_User> | null, typeof oldValue, Test.Pass>;
+      Checking<ReadonlyDeep<Mock_User | null>, typeof oldValue, Test.Pass>;
     },
     // 对象的二段key
     "optional_obj.age"(newValue, oldValue) {

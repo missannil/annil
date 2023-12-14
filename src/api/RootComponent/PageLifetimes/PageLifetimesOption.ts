@@ -17,7 +17,7 @@ export type PageLifetimesOption<TIsPage extends boolean, PropertiesDoc extends o
          * 周期发生在组件attached之后,页面onLoad之前,要求组件为同步组件
          * 最低基础库： `3.0.2`
          */
-        load?: (props: object) => void | Promise<void>;
+        load?: (props: object) => void;
       }
     >;
   },

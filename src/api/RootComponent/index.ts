@@ -128,7 +128,7 @@ export function RootComponent<
 >(): RootComponentConstructor<
   TComponentDocList
 > {
-  return ((options: any) => options as RootComponentTrueOptions) as any;
+  return (options: any) => options;
 }
 
 export type RootComponentTrueOptions = {

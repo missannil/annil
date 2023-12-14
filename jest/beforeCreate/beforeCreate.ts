@@ -8,7 +8,6 @@ const sub = SubComponent<Root, { properties: { aaa_num: number; aaa_user: User |
     aaa_num: 456,
     aaa_user: null,
   },
-  lifetimes: {},
 });
 
 type Root = typeof rootComponent;

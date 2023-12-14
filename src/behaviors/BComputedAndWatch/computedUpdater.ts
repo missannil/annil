@@ -6,18 +6,12 @@ import { isEqual } from "./isEqual";
 import type { Instance } from "./types";
 
 export function computedUpdater(this: Instance, isUpdated = false): boolean {
-  // console.log("computedUpdater开始");
-
-  // console.log("循环判断缓存中每个计算属性依赖是否有变化");
-
   for (const key in this.__computedCache__) {
-    // console.log("当前计算属性为:", key);
-
     const itemCache = this.__computedCache__[key];
     let changed = false;
     for (const dep of itemCache.dependences) {
       // getPathsValue返回的是数组
-      const curVal = getPathsValue.call(this, dep.paths.join("."))[0];
+      const curVal = getPathsValue(this.data, dep.paths.join("."))[0];
 
       // 检查依赖是否更新
       if (!isEqual(curVal, dep.val)) {
@@ -28,19 +22,7 @@ export function computedUpdater(this: Instance, isUpdated = false): boolean {
     }
     if (changed) {
       const newDependences: ComputedDependence[] = [];
-      // eslint-disable-next-line @typescript-eslint/no-this-alias
-      const _this = this;
-      const computedThis = new Proxy({ data: deepProxy(this.data, newDependences) }, {
-        get(target, key) {
-          if (key === "data") {
-            return Reflect.get(target, key);
-          }
-
-          return Reflect.get(_this, key);
-        },
-      });
-
-      const newValue = itemCache.method.call(computedThis);
+      const newValue = itemCache.method.call({ data: deepProxy(this.data, newDependences) });
 
       // 更新值不会立即再次进入**函数,而是当前**函数运行完毕后触发**函数,
       this.setData({

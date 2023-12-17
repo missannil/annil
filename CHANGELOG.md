@@ -4,6 +4,18 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.4.0](https://github.com/missannil/annil/compare/v1.3.1...v1.4.0) (2023-12-17)
+
+
+### Features
+
+* computed函数中this.data子字段设置为只读 ([66ac333](https://github.com/missannil/annil/commit/66ac333c63edd6d3e922c4691afe5c2f85c6972a))
+
+
+### Bug Fixes
+
+* 修复jest报错‘ ([66ac333](https://github.com/missannil/annil/commit/66ac333c63edd6d3e922c4691afe5c2f85c6972a))
+
 ## [1.3.1](https://github.com/missannil/annil/compare/v1.3.0...v1.3.1) (2023-12-17)
 
 

@@ -42,7 +42,8 @@
     "CHANGELOG.md",
     "README.md",
     "src",
-    "dist"
+    "dist",
+    "tsconfig.json"
   ],
   "keywords": [
     "mini",
@@ -53,7 +54,9 @@
   "author": "missannil",
   "license": "MIT",
   "dependencies": {
-    "hry-types": "^0.17.0",
-    "miniprogram-api-typings": "^3.12.1"
+    "hry-types": "^0.17.0"
+  },
+  "peerDependencies": {
+    "miniprogram-api-typings": "^3.12.2"
   }
 }

@@ -42,10 +42,13 @@ export function getPropertiesValue(propertiesOpt: PropertiesConstraint | undefin
     const config = propertiesOpt[key];
     /* istanbul ignore next */
     if (IsRequiredSingle(config)) {
+      // @ts-ignore 隐式索引
       result[key] = getRequiredSingleValue(config);
     } else if (IsRequiredUnion(config)) {
+      // @ts-ignore 隐式索引
       result[key] = getRequiredSingleValue(config.type);
     } else {
+      // @ts-ignore 隐式索引
       result[key] = config.value;
     }
   }

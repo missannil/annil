@@ -8,7 +8,7 @@ RootComponent()({
     ready() {},
     detached() {},
     error(err) {
-      err.cause;
+      err.message;
     },
     moved() {},
     // @ts-expect-error  1 错误的声明周期字段报错

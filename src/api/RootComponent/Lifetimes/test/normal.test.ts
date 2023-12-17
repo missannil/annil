@@ -18,7 +18,7 @@ RootComponent()({
     detached() {
     },
     error(err) {
-      err.cause;
+      err.message;
     },
     moved() {
     },

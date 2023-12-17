@@ -9,12 +9,15 @@ const sub = SubComponent<Root, { properties: { aaa_num: number; aaa_user: User |
   },
   watch: {
     num(a, b) {
+      // @ts-ignore
       this.data["sub-watch-num"] = [a, b];
     },
     user(a, b) {
+      // @ts-ignore
       this.data["sub-watch-user"] = [a, b];
     },
     "user.name"(a, b) {
+      // @ts-ignore
       this.data["sub-watch-user.name"] = [a, b];
     },
   },
@@ -30,12 +33,15 @@ const rootComponent = RootComponent()({
 
   watch: {
     num(a, b) {
+      // @ts-ignore
       this.data["root-watch-num"] = [a, b];
     },
     user(a, b) {
+      // @ts-ignore
       this.data["root-watch-user"] = [a, b];
     },
     "user.age"(a, b) {
+      // @ts-ignore
       this.data["root-watch-user.age"] = [a, b];
     },
     // @ts-ignore 模拟user传入null情形。不愿多写一个测试了

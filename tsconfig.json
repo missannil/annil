@@ -9,19 +9,20 @@
     "skipLibCheck": true, // 跳过声明文件的类型检查(.d.ts),除了你引用的, 默认false(不跳过)。
     "moduleResolution": "Bundler", // 模块解析策略 //5.0 新值 bundler
     "noImplicitAny": true, // 不允许隐式的any类型
-    "esModuleInterop": true, // 默认false 将 CommonJS/AMD/UMD 模块视为类似于 ES6 模块,但有缺陷。
+    // "esModuleInterop": true, // 默认false 将 CommonJS/AMD/UMD 模块视为类似于 ES6 模块,但有缺陷。
     "removeComments": true, // 去除注释
     "noEmit": true,
     "noImplicitReturns": true, // 隐式函数返回
     "forceConsistentCasingInFileNames": true, // 区分文件名的大小写
     "noUnusedLocals": true, // 报告未使用局部变量的错误
     "noUnusedParameters": false, // 报告函数中未使用参数的错误
-    "suppressImplicitAnyIndexErrors": true, // 为true关闭隐式索引错误,但很激进,建议使用@ts-ignore
+    // "suppressImplicitAnyIndexErrors": true, // 为true关闭隐式索引错误,但很激进,建议使用@ts-ignore
     "isolatedModules": true, // 独立模块(必须有导入或导出) 默认false
-    "preserveValueImports": true, // 引入类型加type
-    "ignoreDeprecations": "5.0",
-    "noFallthroughCasesInSwitch": true, // 报告switch语句中漏接情况的错误
-    "allowSyntheticDefaultImports": true, // esModuleInterop 为true时自动true
+    // "preserveValueImports": true, // 保留未使用的导入值
+    // "ignoreDeprecations": "5.0",
+    // "noFallthroughCasesInSwitch": true, // 报告switch语句中漏接情况的错误
+    "verbatimModuleSyntax": true,
+    // "allowSyntheticDefaultImports": true, // esModuleInterop 为true时自动true
     // 默认加载所有@types下的包 types指定具体的包,其他拒绝。包含上级目录
     "types": ["hry-types", "mobx", "jest", "miniprogram-api-typings"]
   },

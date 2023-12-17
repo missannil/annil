@@ -11,7 +11,7 @@ export function deepProxy(
       // console.log(target, prop);
 
       if (prop === "__rawObject__") return target;
-
+      // @ts-ignore 隐式索引
       const val = target[prop];
 
       // console.log("获取依赖", prop, val);
@@ -41,6 +41,9 @@ export function deepProxy(
       if (typeof val !== "object" || val === null) return val;
 
       return deepProxy(val, dependences, curPath);
+    },
+    set(_target: object, prop: string) {
+      throw Error(`${prop}字段是只读的`);
     },
   };
 

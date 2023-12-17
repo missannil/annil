@@ -124,8 +124,10 @@ function loadReceivedDataHandle(
  */
 /* istanbul ignore next: miniprogram-simulate(当前版本 1.6.1) 无法测试页面 */
 function hijack(config: object, field: string, before: Func[] = [], after: Func[] = []) {
+  // @ts-ignore 隐式索引
   const originalFunc: Func | undefined = config[field];
 
+  // @ts-ignore 隐式索引
   config[field] = function(...args: any[]) {
     before.forEach(func => func.call(this, ...args));
 
@@ -155,6 +157,7 @@ function InternalFieldProtection(config: object | undefined, keys: string[]) {
  */
 function _funcOptionsHandle(config: object, configList: Record<string, Func[]>) {
   for (const key in configList) {
+    // @ts-ignore 隐式索引
     config[key] = function(...args: unknown[]) {
       configList[key].forEach(ele => ele.call(this, ...args));
     };
@@ -191,8 +194,11 @@ function funcFieldsCollect(
 ) {
   for (const key in funcOptions) {
     // key = "pageLifetimes" | "lifetimes" | "watch"
+    // @ts-ignore 隐式索引
     if (options[key]) {
+      // @ts-ignore 隐式索引
       for (const _key in options[key]) {
+        // @ts-ignore 隐式索引
         (funcOptions[key][_key] ||= []).push(options[key][_key]);
       }
     }
@@ -207,11 +213,13 @@ function otherFieldsHandle(
   rootComponentOptions: RootComponentTrueOptions,
 ) {
   for (const key in rootComponentOptions) {
+    // @ts-ignore 隐式索引
     const config = rootComponentOptions[key];
     if (key === "behaviors") {
       // 是不是只有behaviors是数组
       finalOptions[key].push(...config);
     } else {
+      // @ts-ignore 隐式索引
       Object.assign(finalOptions[key] ||= {}, config);
     }
   }

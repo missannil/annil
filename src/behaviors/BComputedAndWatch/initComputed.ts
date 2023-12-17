@@ -113,6 +113,7 @@ export function initComputed(
 
       dataOpt[key] = itemCache.value;
 
+      // @ts-ignore 隐式索引
       initAllData[key] = itemCache.value;
 
       computedCache[key] = itemCache;

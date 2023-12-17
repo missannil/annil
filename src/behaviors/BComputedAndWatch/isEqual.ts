@@ -18,6 +18,7 @@ export function isEqual(value: unknown, other: unknown) {
   }
   // 递归比较存在的相同key是否相等
   for (const key of keys1) {
+    // @ts-ignore 隐式索引
     if (!keys2.includes(key) || !isEqual(value[key], other[key])) {
       return false;
     }

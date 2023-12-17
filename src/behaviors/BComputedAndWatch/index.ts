@@ -12,6 +12,7 @@ import type { Instance, WatchOldValue } from "./types";
 function initWatchOldValue(this: Instance, watchConfig: object): WatchOldValue {
   const watchOldValue = {};
   for (const key in watchConfig) {
+    // @ts-ignore 隐式索引
     watchOldValue[key] = deepClone(getPathsValue(this.data, key));
   }
 

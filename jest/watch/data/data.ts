@@ -9,15 +9,19 @@ const sub = SubComponent<Root, { properties: { sub_num: number; sub_user: User |
   },
   watch: {
     num(a, b) {
+      // @ts-ignore
       this.data["sub-watch-num"] = [a, b];
     },
     user(a, b) {
+      // @ts-ignore
       this.data["sub-watch-user"] = [a, b];
     },
     sub_num(a, b) {
+      // @ts-ignore
       this.data["sub-watch-sub_num"] = [a, b];
     },
     sub_user(a, b) {
+      // @ts-ignore
       this.data["sub-watch-sub_user"] = [a, b];
     },
   },
@@ -40,9 +44,11 @@ const rootComponent = RootComponent()({
   },
   watch: {
     num(a, b) {
+      // @ts-ignore
       this.data["root-watch-num"] = [a, b];
     },
     user(a, b) {
+      // @ts-ignore
       this.data["root-watch-user"] = [a, b];
     },
   },

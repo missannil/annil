@@ -42,6 +42,7 @@ export function deepProxy(
 
       return deepProxy(val, dependences, curPath);
     },
+    /* istanbul ignore next */
     set(_target: object, prop: string) {
       throw Error(`${prop}字段是只读的`);
     },

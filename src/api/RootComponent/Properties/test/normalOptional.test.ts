@@ -1,6 +1,7 @@
 import { Checking, type Test } from "hry-types";
 import type { ReadonlyDeep } from "hry-types/src/Any/_api";
 import type { DetailedType } from "../../../../types/DetailedType";
+import { IInjectData } from "../../../InstanceInject/instanceConfig";
 import { RootComponent } from "../..";
 import { type Mock_User } from "./normalRequired.test";
 
@@ -43,14 +44,16 @@ const OptionalDoc = RootComponent()({
       // 1. 内部this.data中的类型(去除可选)
       Checking<
         typeof this.data,
-        ReadonlyDeep<{
-          optional_num: number;
-          optional_gender: "male" | "female";
-          optional_tuple: [number, string, boolean];
-          optional_obj: Mock_User | null;
-          optional_objOrNull: Mock_User | null;
-          optional_union: string | number;
-        }>,
+        ReadonlyDeep<
+          {
+            optional_num: number;
+            optional_gender: "male" | "female";
+            optional_tuple: [number, string, boolean];
+            optional_obj: Mock_User | null;
+            optional_objOrNull: Mock_User | null;
+            optional_union: string | number;
+          } & IInjectData
+        >,
         Test.Pass
       >;
     },

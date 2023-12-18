@@ -64,7 +64,7 @@ annil(安奈儿)是微信小程序原生开发插件,其提供的API功能更强
 - 可选
 
   ```bash
-  npm typescript miniprogram-api-typings --save-dev
+  npm typescript --save-dev
   ```
 
   ```bash
@@ -93,8 +93,6 @@ annil(安奈儿)是微信小程序原生开发插件,其提供的API功能更强
    module.exports = require("./mobx.cjs.production.min.js");
    ```
 
-   > 另外,构建时会出现`node_modules/miniprogram-api-typings/index.d.ts.js: Npm package entry file not found`错误,这是因为annil插件把官方类型库`miniprogram-api-typings`加入到生产依赖中,而npm构建时找不到它的生产目录所致,无视即可。还需删除`miniprogram_npm`下的`hry-types`目录(annil依赖的类型工具库)。
-
 3. 配置tsconfig.json(使用ts开发时)
    ```json
    {
@@ -102,7 +100,9 @@ annil(安奈儿)是微信小程序原生开发插件,其提供的API功能更强
        // ...
        "lib": ["ES2022"],
        "skipLibCheck": true,
-       "types": ["miniprogram-api-typings", "mobx"]
+       "strict": true,
+       "strictFunctionTypes": false, // 解决给事件参数e重定义类型报错的问题
+       "types": ["miniprogram-api-typings"]
      }
      // ...
    }

@@ -54,6 +54,7 @@ export type DefineComponentOption = {
  */
 export const DefineComponent: DefineComponentConstructor = function(options): any {
   // console.log("---------------------------");
+
   Component(
     collectOptionsForComponent(options as DefineComponentOption) as any,
   );

@@ -2,6 +2,7 @@ import { Checking, type Test } from "hry-types";
 import type { ReadonlyDeep } from "hry-types/src/Any/_api";
 import type { ComponentDoc } from "../../../DefineComponent/ReturnType/ComponentDoc";
 
+import { IInjectData } from "../../../InstanceInject/instanceConfig";
 import type { Mock_User } from "../../../RootComponent/Properties/test/normalRequired.test";
 import { SubComponent } from "../..";
 
@@ -80,17 +81,19 @@ SubComponent<Root, OnlyPropsCompDoc>()({
       // 5 this.data
       Checking<
         typeof this.data,
-        ReadonlyDeep<{
-          num: number;
-          user: User | null;
-          SNum: number;
-          str: string;
-          bool: boolean;
-          aaa_num: number;
-          aaa_num123: 123;
-          aaa_str: "a";
-          aaa_obj: Mock_User;
-        }>,
+        ReadonlyDeep<
+          {
+            num: number;
+            user: User | null;
+            SNum: number;
+            str: string;
+            bool: boolean;
+            aaa_num: number;
+            aaa_num123: 123;
+            aaa_str: "a";
+            aaa_obj: Mock_User;
+          } & IInjectData
+        >,
         Test.Pass
       >;
 
@@ -102,17 +105,19 @@ SubComponent<Root, OnlyPropsCompDoc>()({
       // 5 this.data 深度只读
       Checking<
         typeof this.data,
-        ReadonlyDeep<{
-          num: number;
-          user: User | null;
-          str: string;
-          SNum: number;
-          bool: boolean;
-          aaa_num: number;
-          aaa_num123: 123;
-          aaa_str: "a";
-          aaa_obj: Mock_User;
-        }>,
+        ReadonlyDeep<
+          {
+            num: number;
+            user: User | null;
+            str: string;
+            SNum: number;
+            bool: boolean;
+            aaa_num: number;
+            aaa_num123: 123;
+            aaa_str: "a";
+            aaa_obj: Mock_User;
+          } & IInjectData
+        >,
         Test.Pass
       >;
     },

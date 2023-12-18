@@ -2,6 +2,7 @@ import { Checking, type Test } from "hry-types";
 import type { ReadonlyDeep } from "hry-types/src/Any/_api";
 import type { ComponentDoc } from "../../../DefineComponent/ReturnType/ComponentDoc";
 
+import { IInjectData } from "../../../InstanceInject/instanceConfig";
 import type { Mock_User } from "../../../RootComponent/Properties/test/normalRequired.test";
 import { SubComponent } from "../..";
 
@@ -51,12 +52,14 @@ SubComponent<{}, CompDoc>()({
       // 4 this.data中的data配置数据
       Checking<
         typeof this.data,
-        ReadonlyDeep<{
-          aaa_str: "a";
-          aaa_num: 123;
-          aaa_obj: null;
-          _aaa_str: string;
-        }>,
+        ReadonlyDeep<
+          {
+            aaa_str: "a";
+            aaa_num: 123;
+            aaa_obj: null;
+            _aaa_str: string;
+          } & IInjectData
+        >,
         Test.Pass
       >;
     },

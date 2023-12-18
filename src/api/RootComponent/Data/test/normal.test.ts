@@ -1,6 +1,7 @@
 import { Checking, type Test } from "hry-types";
 
 import type { ReadonlyDeep } from "hry-types/src/Any/_api";
+import { IInjectData } from "../../../InstanceInject/instanceConfig";
 import { RootComponent } from "../..";
 
 type Gender = "male" | "female";
@@ -15,7 +16,7 @@ const RootDoc = RootComponent()({
     foo() {
       Checking<
         typeof this.data,
-        ReadonlyDeep<{ gender: Gender; num: number; _innernalFields: number }>,
+        ReadonlyDeep<{ gender: Gender; num: number; _innernalFields: number } & IInjectData>,
         Test.Pass
       >;
     },
@@ -36,7 +37,7 @@ const EmptyDataRootDoc = RootComponent()({
   methods: {
     M1() {
       // 3.1 data为空对象时 this.data为{}类型
-      Checking<typeof this.data, {}, Test.Pass>;
+      Checking<typeof this.data, ReadonlyDeep<IInjectData>, Test.Pass>;
     },
   },
 });
@@ -51,7 +52,7 @@ const noDataRootDoc = RootComponent()({
   methods: {
     M1() {
       // 4.1 data为空对象时 this.data为{}类型
-      Checking<typeof this.data, {}, Test.Pass>;
+      Checking<typeof this.data, ReadonlyDeep<IInjectData>, Test.Pass>;
     },
   },
 });

@@ -55,7 +55,7 @@ export type CurrentTargetDataset<T extends object> = WMCustomEvent<{}, {}, T>;
  */
 export type TargetDataset<TargetDataset extends object> = WMCustomEvent<{}, {}, {}, TargetDataset>;
 
-export type WMComponentOption = WechatMiniprogram.Component.TrivialOption;
+export type WMComponentOption = WechatMiniprogram.Component.ComponentOptions;
 
 export type WMNavigateToSuccessCallbackResult = WechatMiniprogram.NavigateToSuccessCallbackResult;
 

@@ -46,9 +46,6 @@ RootComponent()({
       runInAction(() => {
         store.name = "liil";
       });
-
-      // 有store字段时可以调用applySetData
-      this.applySetData();
     },
   },
 });

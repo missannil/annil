@@ -4,6 +4,18 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.5.0](https://github.com/missannil/annil/compare/v1.4.0...v1.5.0) (2023-12-18)
+
+
+### Features
+
+* 新增组件实例全局注入功能 ([2e44e57](https://github.com/missannil/annil/commit/2e44e574d761d8f640d5f58e3984af8c86b94ec3))
+
+
+### Bug Fixes
+
+* 修复依赖，把hry-types放到peer中 ([2e44e57](https://github.com/missannil/annil/commit/2e44e574d761d8f640d5f58e3984af8c86b94ec3))
+
 ## [1.4.0](https://github.com/missannil/annil/compare/v1.3.1...v1.4.0) (2023-12-17)
 
 

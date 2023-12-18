@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-
 import simulate from "miniprogram-simulate";
 import path from "path";
 

@@ -14,7 +14,7 @@ const subA = SubComponent<Root, CompDoc>()({
 
 type Root = typeof rootComponent;
 
-export const rootComponent = RootComponent()({
+const rootComponent = RootComponent()({
   data: {
     id: "",
   },

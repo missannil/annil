@@ -1,4 +1,5 @@
 import { DefineComponent } from "./api/DefineComponent";
+import { type IInjectInfo, instanceConfig } from "./api/InstanceInject/instanceConfig";
 import { navigateTo } from "./api/navigateTo";
 import { RootComponent } from "./api/RootComponent";
 import { SubComponent } from "./api/SubComponent";
@@ -23,6 +24,8 @@ export {
   DefineComponent,
   type DetailedType,
   type GenerateDoc,
+  type IInjectInfo,
+  instanceConfig,
   /* istanbul ignore next */
   navigateTo,
   type ParamsEqual,

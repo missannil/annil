@@ -1,6 +1,7 @@
 import { Checking, type Test } from "hry-types";
 import type { ReadonlyDeep } from "hry-types/src/Any/ReadonlyDeep";
 import { type DetailedType, RootComponent } from "../../../../..";
+import { IInjectData } from "../../../../InstanceInject/instanceConfig";
 
 // 组件时
 RootComponent()({
@@ -14,7 +15,11 @@ RootComponent()({
   lifetimes: {
     attached() {
       // 组件实例对象格外添加null类型
-      Checking<typeof this.data, ReadonlyDeep<{ optionalObj: { name: string } | null; obj: object | null }>, Test.Pass>;
+      Checking<
+        typeof this.data,
+        ReadonlyDeep<{ optionalObj: { name: string } | null; obj: object | null } & IInjectData>,
+        Test.Pass
+      >;
     },
   },
 });

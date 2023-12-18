@@ -2,6 +2,7 @@ import { Checking, type Test } from "hry-types";
 import type { DetailedType } from "../../../../types/DetailedType";
 
 import type { ReadonlyDeep } from "hry-types/src/Any/_api";
+import { IInjectData } from "../../../InstanceInject/instanceConfig";
 import { RootComponent } from "../..";
 import type { RequiredSingle, RequiredType, RequiredUnion } from "../PropertiesConstraint";
 
@@ -91,7 +92,7 @@ const RequiredDoc = RootComponent()({
   methods: {
     foo() {
       // 1 this.data中的类型(对象类型加null)
-      Checking<typeof this.data, ReadonlyDeep<RequiredTypeExpected>, Test.Pass>;
+      Checking<typeof this.data, ReadonlyDeep<RequiredTypeExpected & IInjectData>, Test.Pass>;
     },
   },
 });

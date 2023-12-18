@@ -1,8 +1,10 @@
 import type { Func } from "hry-types/src/Misc/_api";
+import { instanceConfig } from "../..";
 import { BBeforeCreate } from "../../behaviors/BbeforeCreated";
 import { BComputedAndWatch } from "../../behaviors/BComputedAndWatch";
 import type { ComputedCache, Instance } from "../../behaviors/BComputedAndWatch/types";
 import { BStore } from "../../behaviors/BStore";
+import { Assign } from "../../types/Assign";
 import type { WMComponent } from "../../types/OfficialTypeAlias";
 import { INNERMARKER } from "../../utils/InnerMarker";
 import { isEmptyObject } from "../../utils/isEmptyObject";
@@ -293,6 +295,44 @@ function collectRootComponentOption(
 }
 
 /**
+ * 合并 source 对象字段到 target字段
+ * @remarks 规则：
+ * 1. behaviors字段 源对象在前
+ * 2. 对象字段 源覆盖目标
+ * @param target - 目标对象
+ * @param source - 源对象
+ * @returns 按规则合并后的对象
+ */
+function merge<Target extends object, Source extends object>(target: Target, source: Source): Assign<Target, Source> {
+  for (const key in source) {
+    const sourceVal = source[key];
+    if (key in target) {
+      // @ts-ignore
+      const targetVal = target[key];
+      switch (key) {
+        case "behaviors":
+          {
+            // @ts-ignore
+            target[key] = [...sourceVal, ...targetVal];
+          }
+          break;
+
+        default:
+          {
+            // @ts-ignore 源覆盖目标
+            target[key] = Object.assign(targetVal, sourceVal);
+          }
+          break;
+      }
+    } else {
+      // @ts-ignore
+      target[key] = sourceVal;
+    }
+  }
+
+  return target as unknown as Assign<Target, Source>;
+}
+/**
  * 返回一个由rootComponentOption和subComponentsList配置整合的对象
  * @param rootComponentOption -
  * @param subComponentsList -
@@ -303,18 +343,14 @@ export function collectOptionsForComponent(
 ): FinalOptionsOfComponent {
   const rootComponentOption = defineComponentOption.rootComponent;
   const subComponentsList = defineComponentOption.subComponents;
-  const finalOptionsForComponent: FinalOptionsOfComponent = {
-    options: {
-      addGlobalClass: true, // "styleIsolation": "apply-shared"
-      multipleSlots: true,
-      pureDataPattern: /^_/,
-      virtualHost: true,
-    },
-    behaviors: [BStore, BComputedAndWatch],
-    methods: {},
+
+  const finalOptionsForComponent: FinalOptionsOfComponent = merge(instanceConfig.injectInfo || {}, {
     observers: {},
     data: {},
-  };
+    methods: {},
+    behaviors: [BStore, BComputedAndWatch],
+  });
+
   /**
    * 有些字段配置同时存在根组件和子组件当中(如pageLifetimes，lifetimes,watch字段), 且key相同值类型为函数。funcConfig对象用于收集这些配置为数组形式,最终再一起整合进finalOptionsForComponent配置中。即funcConfig是一个临时中介对象。
    */
@@ -350,7 +386,7 @@ export function collectOptionsForComponent(
   /* istanbul ignore next: miniprogram-simulate(当前版本 1.6.1) 无法测试页面 */
   finalOptionsForComponent.isPage
     // 页面时删除预设的虚拟组件字段
-    && Reflect.deleteProperty(finalOptionsForComponent.options!, "virtualHost");
+    && finalOptionsForComponent.options && Reflect.deleteProperty(finalOptionsForComponent.options, "virtualHost");
 
   // BBeforeCreate在最后面,让BeforeCreate生命周期运行在最终建立组件时。
   finalOptionsForComponent.behaviors!.push(BBeforeCreate);

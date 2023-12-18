@@ -63,13 +63,3 @@ RootComponent()({
     },
   },
 });
-
-RootComponent()({
-  store: {},
-  lifetimes: {
-    attached() {
-      // @ts-expect-error 没有store字段时不可以调用applySetData
-      this.applySetData();
-    },
-  },
-});

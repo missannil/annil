@@ -1,4 +1,6 @@
 import { Checking, type Test } from "hry-types";
+import { ReadonlyDeep } from "hry-types/src/Any/_api";
+import { IInjectData } from "../../../InstanceInject/instanceConfig";
 import { RootComponent } from "../..";
 
 /**
@@ -9,7 +11,7 @@ const emptyObj = RootComponent()({
   methods: {
     foo() {
       // 1 this.data 为空对象类型
-      Checking<typeof this.data, {}, Test.Pass>;
+      Checking<typeof this.data, ReadonlyDeep<IInjectData>, Test.Pass>;
     },
   },
 });
@@ -28,7 +30,7 @@ const noProperties = RootComponent()({
   methods: {
     foo() {
       // 3 this.data 为空对象类型
-      Checking<typeof this.data, {}, Test.Pass>;
+      Checking<typeof this.data, ReadonlyDeep<IInjectData>, Test.Pass>;
     },
   },
 });

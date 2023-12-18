@@ -3,7 +3,6 @@ import type { ComponentInstance, PageInstance } from "../../api/RootComponent/In
 import type { ComputedDependence } from "./initComputed";
 
 export type InstanceCustomFields = {
-  __pendingSetData__?: object | null;
   __storeConfig__?: () => Record<string, () => unknown>;
   __computedStatus__?: "待更新" | "更新完毕";
   __computedUpdater__: Func;

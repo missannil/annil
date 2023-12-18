@@ -1,10 +1,11 @@
 import type { ReadonlyDeep } from "hry-types/src/Any/_api";
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
-import type { Func } from "hry-types/src/Misc/Func";
 import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
 import type { IReactionDisposer } from "mobx";
 
+import { Assign } from "../../../types/Assign";
 import type { WMComponentInstance, WMInstanceMethods, WMPageInstance } from "../../../types/OfficialTypeAlias";
+import { IInjectData, IInjectMethods } from "../../InstanceInject/instanceConfig";
 import type { CustomEventMethods } from "./CustomEventMethods";
 import type { CustomSetData } from "./CustomSetData";
 export type RootComponentInstance<
@@ -23,11 +24,9 @@ export type RootComponentInstance<
   & CustomSetData<TData>
   & IfExtends<{}, StoreDoc, unknown, {
     disposer?: { [k in keyof StoreDoc]: IReactionDisposer };
-    applySetData: Func;
   }>
-  & TMethods
-  & CustomEventMethods<CustomEventsDoc>
-  & { data: ReadonlyDeep<ComputeIntersection<AllData>> };
+  & Assign<IInjectMethods, TMethods & CustomEventMethods<CustomEventsDoc>>
+  & { data: ReadonlyDeep<Assign<IInjectData, ComputeIntersection<AllData>>> };
 
 export type ComponentInstance = RootComponentInstance<false, {}, {}, {}, {}, {}>;
 

@@ -1,5 +1,4 @@
 import type { Func } from "hry-types/src/Misc/_api";
-import { instanceConfig } from "../..";
 import { BBeforeCreate } from "../../behaviors/BbeforeCreated";
 import { BComputedAndWatch } from "../../behaviors/BComputedAndWatch";
 import type { ComputedCache, Instance } from "../../behaviors/BComputedAndWatch/types";
@@ -8,6 +7,7 @@ import { Assign } from "../../types/Assign";
 import type { WMComponent } from "../../types/OfficialTypeAlias";
 import { INNERMARKER } from "../../utils/InnerMarker";
 import { isEmptyObject } from "../../utils/isEmptyObject";
+import { instanceConfig } from "../InstanceInject/instanceConfig";
 import type { RootComponentTrueOptions } from "../RootComponent";
 import type { ComputedConstraint } from "../RootComponent/Computed/ComputedConstraint";
 import type {

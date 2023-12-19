@@ -5,6 +5,7 @@ import type { ComputeIntersection } from "hry-types/src/Object/_api";
 import type { ComputeObject } from "../../types/ComputeObj";
 import type { WMCompOtherOption } from "../../types/OfficialTypeAlias";
 import type { ComponentDoc } from "../DefineComponent/ReturnType/ComponentDoc";
+import { IInjectData } from "../InstanceInject/instanceConfig";
 import type { ComputedConstraint } from "./Computed/ComputedConstraint";
 import type { ComputedOption } from "./Computed/ComputedOption";
 import type { GetComputedDoc } from "./Computed/GetComputedDoc";
@@ -61,6 +62,7 @@ type RootComponentOptions<
     & Required<PropertiesDoc>
     & DataDoc
     & StoreDoc
+    & IInjectData
   >
   & Partial<Omit<WMCompOtherOption, "pageLifetimes">>
   & ThisType<

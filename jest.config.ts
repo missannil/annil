@@ -12,7 +12,7 @@ export const config = {
     "./src/**/*.ts",
     "!src/**/*.test.ts",
     "!src/api/navigateTo.ts",
-    "!src/inject.ts",
+    "!src/api/InstanceInject/inject.ts",
     "!src/thirdLib/**",
   ],
   testMatch: [

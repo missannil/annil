@@ -29,6 +29,7 @@ import type { GetStoreDoc } from "./Store/GeTStoreDoc";
 import type { StoreConstraint } from "./Store/StoreConstraint";
 import type { StoreOption } from "./Store/StoreOption";
 import type { WatchOption } from "./Watch/WatchOption";
+import { IInjectData } from "../InstanceInject/instanceConfig";
 
 type RootComponentOptions<
   TEvents extends object,
@@ -61,6 +62,7 @@ type RootComponentOptions<
     & Required<PropertiesDoc>
     & DataDoc
     & StoreDoc
+    & IInjectData
   >
   & Partial<Omit<WMCompOtherOption, "pageLifetimes">>
   & ThisType<

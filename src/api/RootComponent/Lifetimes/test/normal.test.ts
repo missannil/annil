@@ -1,3 +1,4 @@
+import { Checking, Test } from "hry-types";
 import { RootComponent } from "../../../..";
 
 /**
@@ -7,6 +8,8 @@ RootComponent()({
   lifetimes: {
     // 新增声明周期可用于查看或拓展配置文件
     beforeCreate(opitons) {
+      Checking<typeof this, void, Test.Pass>;
+
       opitons;
     },
     created() {

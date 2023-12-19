@@ -1,5 +1,4 @@
 import type { Func } from "hry-types/src/Misc/_api";
-import { instanceConfig } from "../..";
 import { BBeforeCreate } from "../../behaviors/BbeforeCreated";
 import { BComputedAndWatch } from "../../behaviors/BComputedAndWatch";
 import type { ComputedCache, Instance } from "../../behaviors/BComputedAndWatch/types";
@@ -25,6 +24,7 @@ import type { PropertiesConstraint } from "../RootComponent/Properties/Propertie
 import type { StoreConstraint } from "../RootComponent/Store/StoreConstraint";
 import type { SubComponentTrueOptions } from "../SubComponent";
 import type { DefineComponentOption } from ".";
+import { instanceConfig } from "../InstanceInject/instanceConfig";
 /**
  * 临时的函数配置项
  * 把根组件与子组件中配置类型为函数的相同字段配置收集在一起(数组)

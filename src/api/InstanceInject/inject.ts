@@ -25,7 +25,7 @@ const store = {
 };
 
 // 声明注入类型 js开发可以忽略
-declare module "./index" {
+declare module "../.." {
   interface IInjectInfo {
     data: typeof data;
     store: typeof store;

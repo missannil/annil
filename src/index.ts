@@ -26,7 +26,6 @@ export {
   type GenerateDoc,
   type IInjectInfo,
   instanceConfig,
-  /* istanbul ignore next */
   navigateTo,
   type ParamsEqual,
   RootComponent,

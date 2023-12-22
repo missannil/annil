@@ -5,7 +5,7 @@ import type { ComputeIntersection } from "hry-types/src/Object/_api";
 import type { ComputeObject } from "../../types/ComputeObj";
 import type { WMCompOtherOption } from "../../types/OfficialTypeAlias";
 import type { ComponentDoc } from "../DefineComponent/ReturnType/ComponentDoc";
-import { IInjectData } from "../InstanceInject/instanceConfig";
+import { IInjectStore } from "../InstanceInject/instanceConfig";
 import type { ComputedConstraint } from "./Computed/ComputedConstraint";
 import type { ComputedOption } from "./Computed/ComputedOption";
 import type { GetComputedDoc } from "./Computed/GetComputedDoc";
@@ -22,6 +22,7 @@ import type { LifetimesConstraint } from "./Lifetimes/LifetimesConstraint";
 import type { LifetimesOption } from "./Lifetimes/LifetimesOption";
 import type { MethodsConstraint } from "./Methods/MethodsConstraint";
 import type { MethodsOption } from "./Methods/MethodsOption";
+import { ObserversOption } from "./Observers/ObserversOption";
 import type { PageLifetimesOption } from "./PageLifetimes/PageLifetimesOption";
 import type { GetPropertiesDoc } from "./Properties/GetPropertiesDoc";
 import type { PropertiesConstraint } from "./Properties/PropertiesConstraint";
@@ -62,9 +63,16 @@ type RootComponentOptions<
     & Required<PropertiesDoc>
     & DataDoc
     & StoreDoc
-    & IInjectData
+    & IInjectStore
   >
-  & Partial<Omit<WMCompOtherOption, "pageLifetimes">>
+  & Partial<Omit<WMCompOtherOption, "pageLifetimes" | "definitionFilter" | "export" | "observers">>
+  & ObserversOption<
+    & ComputedDoc
+    & Required<PropertiesDoc>
+    & DataDoc
+    & StoreDoc
+    & IInjectStore
+  >
   & ThisType<
     RootComponentInstance<
       TIsPage,
@@ -104,6 +112,7 @@ type RootComponentConstructor<TComponentDocList extends ComponentDoc[]> = {
       TData,
       TStore,
       TComputed,
+      // TObservers,
       EventsDoc,
       CustomEventsDoc,
       PropertiesDoc,

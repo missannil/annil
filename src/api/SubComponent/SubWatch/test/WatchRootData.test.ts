@@ -75,6 +75,11 @@ SubComponent<RootDoc, CompDoc>()({
 
       Checking<ReadonlyDeep<TestObj>, typeof oldValue, Test.Pass>;
     },
+    "optional_obj.**"(newValue, oldValue) {
+      Checking<ReadonlyDeep<TestObj>, typeof newValue, Test.Pass>;
+
+      Checking<ReadonlyDeep<TestObj>, typeof oldValue, Test.Pass>;
+    },
     "optional_obj.subObj"(newValue, oldValue) {
       Checking<ReadonlyDeep<Mock_User>, typeof newValue, Test.Pass>;
 

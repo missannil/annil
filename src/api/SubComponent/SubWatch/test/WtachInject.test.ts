@@ -1,10 +1,10 @@
 import { Checking, Test } from "hry-types";
-import { RootComponent } from "../..";
+import { SubComponent } from "../..";
 
 /**
- * watch 只能监控 注入的store字段
+ * watch  注入的store字段
  */
-RootComponent()({
+SubComponent<{}, { properties: { aaa_num: number } }>()({
   watch: {
     injectTheme(newValue, oldValue) {
       Checking<"dark" | "light" | undefined, typeof newValue, Test.Pass>;

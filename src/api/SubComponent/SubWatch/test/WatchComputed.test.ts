@@ -64,6 +64,11 @@ SubComponent<RootDoc, CompDoc>()({
 
       Checking<Mock_User | null, typeof oldValue, Test.Pass>;
     },
+    "aaa_obj.**"(newValue: Mock_User, oldValue: Mock_User | null) {
+      Checking<Mock_User, typeof newValue, Test.Pass>;
+
+      Checking<Mock_User | null, typeof oldValue, Test.Pass>;
+    },
     "aaa_obj.id"(newValue: string, oldValue: string) {
       Checking<string, typeof newValue, Test.Pass>;
 

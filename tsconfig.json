@@ -18,7 +18,9 @@
     // "noUnusedParameters": false, // 报告函数中未使用参数的错误
     // "suppressImplicitAnyIndexErrors": true, // 为true关闭隐式索引错误,但很激进,建议使用@ts-ignore
     "isolatedModules": true, // 模块化(.ts文件必须有导入或导出) 默认false
-    "verbatimModuleSyntax": true, // 强制导入类型前缀type检测,在vscode中设置"typescript.preferences.preferTypeOnlyAutoImports":true
+    "preserveValueImports": true, // 引入类型加type
+    "ignoreDeprecations": "5.0",
+    // "verbatimModuleSyntax": true, // 强制导入类型前缀type检测,在vscode中设置"typescript.preferences.preferTypeOnlyAutoImports":true
     // 默认加载所有@types下的包 types指定具体的包,其他拒绝。包含上级目录
     "types": ["hry-types", "mobx", "jest", "miniprogram-api-typings"]
   },

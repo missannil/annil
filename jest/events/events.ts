@@ -24,10 +24,10 @@ const rootComponent = RootComponent()({
   },
   lifetimes: {
     attached() {
-      // @ts-ignore
+      // @ts-ignore 模拟触发事件
       this.onTap("rootEvent-onTap");
 
-      // @ts-ignore
+      // @ts-ignore 模拟触发事件
       this.compA_str("subEvent-compA");
     },
   },

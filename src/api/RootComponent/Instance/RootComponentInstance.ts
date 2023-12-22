@@ -3,9 +3,9 @@ import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
 import type { IReactionDisposer } from "mobx";
 
-import { Assign } from "../../../types/Assign";
+import type { Assign } from "../../../types/Assign";
 import type { WMComponentInstance, WMInstanceMethods, WMPageInstance } from "../../../types/OfficialTypeAlias";
-import { IInjectData, IInjectMethods } from "../../InstanceInject/instanceConfig";
+import type { IInjectData, IInjectMethods } from "../../InstanceInject/instanceConfig";
 import type { CustomEventMethods } from "./CustomEventMethods";
 import type { CustomSetData } from "./CustomSetData";
 export type RootComponentInstance<

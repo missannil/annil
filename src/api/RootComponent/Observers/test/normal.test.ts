@@ -1,6 +1,7 @@
-import { Checking, Test } from "hry-types";
-import { ReadonlyDeep } from "hry-types/src/Any/_api";
-import { User } from "../../../../../jest/common";
+import { Checking, type Test } from "hry-types";
+import type { ReadonlyDeep } from "hry-types/src/Any/_api";
+
+import type { User } from "../../../../../jest/common";
 import { RootComponent } from "../..";
 
 RootComponent()({

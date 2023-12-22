@@ -7,7 +7,7 @@ import type { ComponentDoc } from "../DefineComponent/ReturnType/ComponentDoc";
 
 import type { Func } from "hry-types/src/Misc/Func";
 import type { WMCompOtherOption } from "../../types/OfficialTypeAlias";
-import { IInjectStore } from "../InstanceInject/instanceConfig";
+import type { IInjectStore } from "../InstanceInject/instanceConfig";
 import type { ComputedConstraint } from "../RootComponent/Computed/ComputedConstraint";
 import type { DataConstraint } from "../RootComponent/Data/DataConstraint";
 import type { EventsConstraint } from "../RootComponent/Events/EventsConstraint";
@@ -29,7 +29,7 @@ import type { SubInstance } from "./SubInstance/SubInstance";
 import type { SubLifetimesOption } from "./SubLifetimes/SubLifetimesOption";
 import type { SubMethodsConstraint } from "./SubMethods/SubMethodsConstraint";
 import type { SubMethodsOption } from "./SubMethods/SubMethodsOption";
-import { SubObserversOption } from "./SubObservers/SubObserversOption";
+import type { SubObserversOption } from "./SubObservers/SubObserversOption";
 import type { SubPageLifetimesOption } from "./SubPageLifetimes/SubPageLifetimesOption";
 import type { CreateSubComponentDoc } from "./SubReturnType/CreateSubComponentDoc";
 import type { SubStoreConstraint } from "./SubStore/SubDataConstraint";

@@ -1,7 +1,7 @@
 import { Checking, type Test } from "hry-types";
 import type { ReadonlyDeep } from "hry-types/src/Any/ReadonlyDeep";
 import { type DetailedType, RootComponent } from "../../../../..";
-import { IInjectData } from "../../../../InstanceInject/instanceConfig";
+import type { IInjectData } from "../../../../InstanceInject/instanceConfig";
 
 // 组件时
 RootComponent()({

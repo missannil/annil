@@ -1,7 +1,7 @@
 import { Checking, type Test } from "hry-types";
 
 import type { ReadonlyDeep } from "hry-types/src/Any/_api";
-import { IInjectData } from "../../../InstanceInject/instanceConfig";
+import type { IInjectData } from "../../../InstanceInject/instanceConfig";
 import { RootComponent } from "../..";
 
 type Gender = "male" | "female";

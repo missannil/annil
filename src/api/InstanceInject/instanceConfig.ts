@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 
-import { ReturnTypeInObject } from "hry-types/src/Object/ReturnTypeInObject";
-import { WMComponentOption } from "../../types/OfficialTypeAlias";
-import { DataConstraint } from "../RootComponent/Data/DataConstraint";
-import { MethodsConstraint } from "../RootComponent/Methods/MethodsConstraint";
-import { StoreConstraint } from "../RootComponent/Store/StoreConstraint";
+import type { ReturnTypeInObject } from "hry-types/src/Object/ReturnTypeInObject";
+import type { WMComponentOption } from "../../types/OfficialTypeAlias";
+import type { DataConstraint } from "../RootComponent/Data/DataConstraint";
+import type { MethodsConstraint } from "../RootComponent/Methods/MethodsConstraint";
+import type { StoreConstraint } from "../RootComponent/Store/StoreConstraint";
 
 // 利用继承的多态性 使得IInjectInfo类型可由使用者外部定义
 interface BaseInjectInfo {

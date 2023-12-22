@@ -3,7 +3,7 @@ import { BBeforeCreate } from "../../behaviors/BbeforeCreated";
 import { BComputedAndWatch } from "../../behaviors/BComputedAndWatch";
 import type { ComputedCache, Instance } from "../../behaviors/BComputedAndWatch/types";
 import { BStore } from "../../behaviors/BStore";
-import { Assign } from "../../types/Assign";
+import type { Assign } from "../../types/Assign";
 import type { WMComponent } from "../../types/OfficialTypeAlias";
 import { INNERMARKER } from "../../utils/InnerMarker";
 import { isEmptyObject } from "../../utils/isEmptyObject";

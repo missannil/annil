@@ -17,8 +17,6 @@ module.exports = {
         "style",
         "test",
         "deps",
-        // 增加 type
-        "type",
       ],
     ],
   },

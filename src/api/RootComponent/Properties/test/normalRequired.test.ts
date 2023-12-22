@@ -2,7 +2,7 @@ import { Checking, type Test } from "hry-types";
 import type { DetailedType } from "../../../../types/DetailedType";
 
 import type { ReadonlyDeep } from "hry-types/src/Any/_api";
-import { IInjectData } from "../../../InstanceInject/instanceConfig";
+import type { IInjectData } from "../../../InstanceInject/instanceConfig";
 import { RootComponent } from "../..";
 import type { RequiredSingle, RequiredType, RequiredUnion } from "../PropertiesConstraint";
 

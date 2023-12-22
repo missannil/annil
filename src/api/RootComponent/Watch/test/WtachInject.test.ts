@@ -1,4 +1,4 @@
-import { Checking, Test } from "hry-types";
+import { Checking, type Test } from "hry-types";
 import { RootComponent } from "../..";
 
 /**

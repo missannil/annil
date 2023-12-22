@@ -2,7 +2,7 @@ import { Checking, type Test } from "hry-types";
 import type { ReadonlyDeep } from "hry-types/src/Any/_api";
 import type { ComponentDoc } from "../../../DefineComponent/ReturnType/ComponentDoc";
 
-import { IInjectData } from "../../../InstanceInject/instanceConfig";
+import type { IInjectData } from "../../../InstanceInject/instanceConfig";
 import type { Mock_User } from "../../../RootComponent/Properties/test/normalRequired.test";
 import { SubComponent } from "../..";
 

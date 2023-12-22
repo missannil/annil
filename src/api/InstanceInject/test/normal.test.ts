@@ -1,4 +1,4 @@
-import { Checking, Test } from "hry-types";
+import { Checking, type Test } from "hry-types";
 import { RootComponent } from "../../RootComponent";
 
 // 1. 注入字段无重复时

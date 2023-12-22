@@ -1,7 +1,7 @@
 import { Checking, type Test } from "hry-types";
 import type { ReadonlyDeep } from "hry-types/src/Any/_api";
 import type { DetailedType } from "../../../../types/DetailedType";
-import { IInjectData } from "../../../InstanceInject/instanceConfig";
+import type { IInjectData } from "../../../InstanceInject/instanceConfig";
 import { RootComponent } from "../..";
 import { type Mock_User } from "./normalRequired.test";
 

@@ -1,28 +1,79 @@
+/* eslint-disable complexity */
+
+function isSameType(a: object, b: object) {
+  return Object.prototype.toString.call(a) === Object.prototype.toString.call(b);
+}
+
+// 定义一个辅助函数，用于判断两个对象的属性数量是否相同
+function isSameSize(a: object, b: object) {
+  return Object.keys(a).length === Object.keys(b).length;
+}
+
+// 定义一个辅助函数，用于判断两个函数的代码是否相同
+function isSameCode(a: Function, b: Function) {
+  return a.toString() === b.toString();
+}
+
+// 定义一个辅助函数，用于判断两个日期的时间戳是否相同
+function isSameTime(a: Date, b: Date) {
+  return a.getTime() === b.getTime();
+}
+
+// 定义一个辅助函数，用于判断两个正则表达式的模式和标志是否相同
+function isSamePattern(a: RegExp, b: RegExp) {
+  return a.source === b.source && a.flags === b.flags;
+}
+
 /**
- * 深度判断2个值是否相等,NaN与NaN不等,+0与-0相等。
+ * 深度判断两个值是否相等,有一个值为非对象类型即使用Object.is判断。
+ * 不支持原型上的属性
+ * 两个函数使用toString()比较
+ * 支持Date,RegExp
  */
-export function isEqual(value: unknown, other: unknown) {
-  if (value === other) {
-    return true;
+export function isEqual(a: unknown, b: unknown) {
+  // 如果两个值是原始类型或null，直接用Object.is比较
+  if (a === null || b === null || typeof a !== "object" || typeof b !== "object") {
+    if (typeof a !== "function" || typeof b !== "function") {
+      return Object.is(a, b);
+    }
   }
-  // value和other有一个为null或不是对象 一定不相等
-  if (typeof value !== "object" || value === null || typeof other !== "object" || other === null) {
+
+  // 如果两个值是对象类型，先判断它们的类型、构造函数和属性数量是否相同
+  if (!isSameType(a, b) || a.constructor !== b.constructor || !isSameSize(a, b)) {
     return false;
   }
-  const keys1 = Object.keys(value);
-  const keys2 = Object.keys(other);
-  // 对象类型长度不等，一定不相等
-  /* istanbul ignore next */
-  if (keys1.length !== keys2.length) {
-    return false;
+
+  // 如果两个值是函数类型，再判断它们的代码是否相同
+  if (typeof a === "function") {
+    return isSameCode(a, b as Function);
   }
-  // 递归比较存在的相同key是否相等
-  for (const key of keys1) {
-    // @ts-ignore 隐式索引
-    if (!keys2.includes(key) || !isEqual(value[key], other[key])) {
+
+  // 如果两个值是日期类型，再判断它们的时间戳是否相同
+  if (a instanceof Date) {
+    return isSameTime(a, b as Date);
+  }
+
+  // // 如果两个值是正则表达式类型，再判断它们的模式和标志是否相同
+  if (a instanceof RegExp) {
+    return isSamePattern(a, b as RegExp);
+  }
+
+  // 对于其他对象类型，递归地比较它们的每个属性和值是否深度相等
+  const keysA = Object.keys(a);
+
+  const keysB = Object.keys(b);
+
+  for (const key of keysA) {
+    if (keysB.includes(key)) {
+      // @ts-ignore
+      if (!isEqual(a[key], b[key])) {
+        return false;
+      }
+    } else {
       return false;
     }
   }
 
+  // 如果以上的条件都满足，说明两个值是深度相等的
   return true;
 }

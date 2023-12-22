@@ -142,6 +142,11 @@ RootComponent()({
 
       Checking<number | undefined, typeof oldValue, Test.Pass>;
     },
+    "optional_obj.**"(newValue, oldValue) {
+      Checking<ReadonlyDeep<Mock_User>, typeof newValue, Test.Pass>;
+
+      Checking<ReadonlyDeep<Mock_User | null>, typeof oldValue, Test.Pass>;
+    },
     "optional_obj.id"(newValue, oldValue) {
       Checking<string, typeof newValue, Test.Pass>;
 

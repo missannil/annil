@@ -14,6 +14,7 @@ type _RootComponentDoc = {
   watch?: Record<string, Func>;
   lifetimes?: LifetimesConstraint;
   pageLifetimes?: Partial<WMCompPageLifetimes & { load: Func }>;
+  externalClasses?: string[];
 };
 
 // 验证key是否合法

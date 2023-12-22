@@ -41,6 +41,7 @@ export type FinalOptionsOfComponent = {
   methods: MethodsConstraint & {
     __computedInitCache__?: () => ComputedCache;
   };
+  externalClasses: string[];
   isPage?: boolean;
   options?: WMComponent.Options;
   properties?: PropertiesConstraint;
@@ -217,7 +218,7 @@ function otherFieldsHandle(
   for (const key in rootComponentOptions) {
     // @ts-ignore 隐式索引
     const config = rootComponentOptions[key];
-    if (key === "behaviors") {
+    if (key === "behaviors" || key === "externalClasses") {
       // 是不是只有behaviors是数组
       finalOptions[key].push(...config);
     } else {
@@ -349,6 +350,7 @@ export function collectOptionsForComponent(
     data: {},
     methods: {},
     behaviors: [BStore, BComputedAndWatch],
+    externalClasses: [],
   });
 
   /**

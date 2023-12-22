@@ -23,7 +23,7 @@ export type RootComponentInstance<
   // 加入自定义setData方法
   & CustomSetData<TData>
   & IfExtends<{}, StoreDoc, unknown, {
-    disposer?: { [k in keyof StoreDoc]: IReactionDisposer };
+    disposer: { [k in keyof StoreDoc]: IReactionDisposer };
   }>
   & Assign<IInjectMethods, TMethods & CustomEventMethods<CustomEventsDoc>>
   & { data: ReadonlyDeep<Assign<IInjectData, ComputeIntersection<AllData>>> };

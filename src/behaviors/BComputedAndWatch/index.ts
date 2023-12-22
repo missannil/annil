@@ -89,14 +89,18 @@ export const BComputedAndWatch = Behavior({
       methodsConfig.__watchConfig__ = () => watchConfig;
 
       /* istanbul ignore next */
-      const observersConfig = options.observers ||= {};
+      const observersConfig = options.observers;
       for (const key in watchConfig) {
         const watchHadle = watchConfig[key];
+        const originObserversHandle = observersConfig[key] as Func | undefined;
 
         // 在监控多个数据时,参数是多个值
         observersConfig[key] = function(this: Instance, ...newValue: unknown[]) {
+          originObserversHandle && originObserversHandle.call(this, ...newValue);
+
           const watchOldValue = this.__watchOldValue__!;
           const oldValue = watchOldValue[key];
+
           if (isEqual(newValue, oldValue)) return;
           watchOldValue[key] = deepClone(newValue);
 

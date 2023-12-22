@@ -25,31 +25,20 @@ type AddFieldsOfObject<
         getLastKeys<k>,
         "**",
         // @ts-ignore
-        Exclude<TWatchData[getFirstKeys<k>], null>,
+        TWatchData[getFirstKeys<k>],
         // @ts-ignore
         NonNullable<(Exclude<TWatchData[getFirstKeys<k>], null>)[getLastKeys<k>]>
       >
     >,
-    oldValue: ReadonlyDeep<
-      IfExtends<
-        getLastKeys<k>,
-        "**",
-        // @ts-ignore
-        TWatchData[getFirstKeys<k>],
-        // @ts-ignore
-        (Exclude<TWatchData[getFirstKeys<k>], null>)[getLastKeys<k>]
-      >
-    >,
-    // ReadonlyDeep<(Exclude<TWatchData[getFirstKeys<k>], null>)[getLastKeys<k>]>,
   ) => void;
 };
 
-export type WatchOption<TWatchData extends object, _WatchKeys extends keyof TWatchData = keyof TWatchData> = {
+export type ObserversOption<TWatchData extends object, _WatchKeys extends keyof TWatchData = keyof TWatchData> = {
   /**
    * 监控所有data字段,值变化时(JSON.stringify判断)运行watch函数,一参为最新值,二参为变化前值。
    * 对象数据可通过`obj.xxx:`监控具体字段(只加入了一级字段类型提示)
    */
-  watch?: IfExtends<
+  observers?: IfExtends<
     {},
     TWatchData,
     EmptyObject,
@@ -57,12 +46,10 @@ export type WatchOption<TWatchData extends object, _WatchKeys extends keyof TWat
     NoInfer<
       & {
         [k in _WatchKeys]?: (
-          // newValue 去除null 深度只读
-          newValue: ReadonlyDeep<Exclude<TWatchData[k], null>>,
-          oldValue: ReadonlyDeep<TWatchData[k]>,
+          newValue: ReadonlyDeep<TWatchData[k]>,
         ) => void;
       }
-      // 解决单独书写计算书写字段的报错(猜测是:ts字面量约束检测提前计算属性key引起的错误提示)
+      // 解决单独书写计算书写字段的报错(或许是:ts字面量约束检测提前计算属性key引起的错误提示)
       & {
         [k in _WatchKeys as never]: unknown;
       }

@@ -4,6 +4,14 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.5.3](https://github.com/missannil/annil/compare/v1.5.2...v1.5.3) (2023-12-22)
+
+
+### Bug Fixes
+
+* verbatimModuleSyntax:true ([486cf8d](https://github.com/missannil/annil/commit/486cf8dff98320eb5534ec01994a467ec75f5ced))
+* 去除verbatimModuleSyntax ([8687d3d](https://github.com/missannil/annil/commit/8687d3dab606593def0626eccd39830c806f5f1d))
+
 ## [1.5.2](https://github.com/missannil/annil/compare/v1.5.1...v1.5.2) (2023-12-22)
 
 

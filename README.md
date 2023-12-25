@@ -29,7 +29,7 @@ annil(安奈儿)是微信小程序原生开发插件,相较于原生API,使用an
 
 - **组件构建API功能更强大**
 
-  新的组件构建API加入了[computed](./doc/fields/computed.md)、[watch](./doc/fields/watch.md)、[store](./doc/fields/store.md)(基于mobx的全局响应式数据)`等功能,使开发更便捷。
+  新的组件构建API加入了[computed](./doc/demo/computed.md)、[watch](./doc/demo/watch.md)、[store](./doc/demo/store.md)(基于mobx的全局响应式数据)`等功能,使开发更便捷。
 
 - **复杂组件解决方案**
 
@@ -42,10 +42,6 @@ annil(安奈儿)是微信小程序原生开发插件,相较于原生API,使用an
 
   新的组件构建API(DefineComponent)返回的类型叫组件(文档)类型,好比传统组件(UI)库为每个组件书写的使用文档,在做为子组件构建新组件(页面)时,子组件API(SubComponent)要求使用者输入组件类型,在定义选项字段时,会得到类型提示、约束和检测。这样实现了一个页面中所有子组件之间的类型耦合,无论组件嵌套多少层,无论哪层组件数据类型发生改变,所有相关组件类型都会得到感知。当您增改、重构代码时,只要无类型报错(tsc --noEmit --watch)就不会有运行时报错的心智负担。
 
-- **类型约束书写规范**
-
-  annil通过类型来约束代码书写规范,例如在js开发时可以通过`this.setData({...})`新增一个未在data字段中定义的数据或修改properties中定义的数据,这显然是不对的。新API通过类型报错的形式约束[书写规范](./doc/designIdea.md),在特定情形下(例如测试)你可以通过 `//@ts-ignore`或`as any`关闭类型检测。
-
 - **高兼容性**
 
   annil提供的API都是原生API的语法糖,不具有强制性和侵入性,可渐进性使用或重构代码。
@@ -57,6 +53,10 @@ annil(安奈儿)是微信小程序原生开发插件,相较于原生API,使用an
 - **适配第三方库类型**
 
   第三方组件库一般都是以文档的形式对组件说明,插件提供了泛型[GenerateDoc](./src/types/GenerateDoc.ts),可根据组件文档快速书写组件类型,使第三方组件融入组件构建模型,后续插件会陆续添加原生(Wm)和常用第三方组件库(Vant)类型。
+
+- **设计思想**
+
+  请参考[设计思想](./doc/designIdea.md)
 
 ### 安装
 
@@ -129,6 +129,8 @@ annil(安奈儿)是微信小程序原生开发插件,相较于原生API,使用an
 - **navigateTo**
 
   [navigateTo](./doc/api/navigateTo.md)
+
+- 实用类型
 
 ### 更新日志
 

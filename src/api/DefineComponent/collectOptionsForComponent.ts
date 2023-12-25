@@ -42,6 +42,7 @@ export type FinalOptionsOfComponent = {
     __computedInitCache__?: () => ComputedCache;
   };
   externalClasses: string[];
+  pageLifetimes: PageLifetimesOption<false, object>["pageLifetimes"] & {};
   isPage?: boolean;
   options?: WMComponent.Options;
   properties?: PropertiesConstraint;
@@ -49,13 +50,11 @@ export type FinalOptionsOfComponent = {
   computed?: ComputedConstraint;
   watch?: Record<string, Func>;
   lifetimes?: LifetimesConstraint;
-  pageLifetimes?: PageLifetimesOption<false, object>["pageLifetimes"];
 };
 
 /**
  * 劫持attached,根据this.route做判断 isPage值是否正确
  */
-/* istanbul ignore next: miniprogram-simulate(当前版本 1.6.1) 无法测试页面 */
 export function isPageCheck(isPage: boolean | undefined) {
   return function(this: Instance) {
     const route = (this as PageInstance).route as string | undefined;
@@ -81,7 +80,7 @@ export function isPageCheck(isPage: boolean | undefined) {
  * 1. 使用wx.navigateTo传值的。这种情况无内置字段 option[INNERMARKER.url] 等于 undefined
  * 2. 使用插件提供的navigateTo传值。这种情况 INNERMARKER.url被load周期劫持函数解码后赋值INNERMARKER.url字段为本身,即option[INNERMARKER.url] 等于 INNERMARKER.url
  */
-/* istanbul ignore next: miniprogram-simulate(当前版本 1.6.1) 无法测试页面 */
+/* istanbul ignore next: miniprogram-simulate(当前版本 1.6.1) 无法测试页面生命周期 */
 function onLoadReceivedDataHandle(
   this: PageInstance,
   option: Record<typeof INNERMARKER.url, string>,
@@ -107,7 +106,7 @@ function onLoadReceivedDataHandle(
  * 针对通过 navigateTo传过来的数据对组件load周期传入数据解析
  * @param option - option中的url是拼接了encodeURIComponent转码的data对象的,key为INNERMARKER.url
  */
-/* istanbul ignore next: miniprogram-simulate(当前版本 1.6.1) 无法测试页面 */
+/* istanbul ignore next: miniprogram-simulate(当前版本 1.6.1) 无法测试load */
 function loadReceivedDataHandle(
   this: PageInstance,
   option: Record<typeof INNERMARKER.url, string>,
@@ -127,8 +126,12 @@ function loadReceivedDataHandle(
 /**
  * 劫持指定配置字段
  */
-/* istanbul ignore next: miniprogram-simulate(当前版本 1.6.1) 无法测试页面 */
-function hijack(config: object, field: string, before: Func[] = [], after: Func[] = []) {
+function hijack<T extends FinalOptionsOfComponent[keyof FinalOptionsOfComponent]>(
+  config: T,
+  field: keyof T,
+  before: Func[],
+  // after: Func[] = [],
+) {
   // @ts-ignore 隐式索引
   const originalFunc: Func | undefined = config[field];
 
@@ -138,7 +141,7 @@ function hijack(config: object, field: string, before: Func[] = [], after: Func[
 
     originalFunc && originalFunc.apply(this, args);
 
-    after.forEach(func => func.call(this, ...args));
+    // after.forEach(func => func.call(this, ...args));
   };
 
   return;
@@ -147,9 +150,7 @@ function hijack(config: object, field: string, before: Func[] = [], after: Func[
 /**
  * 报错的形式避免输入字段和内部字段冲突,保证config下不包含内部预定字段(列表)
  */
-/* istanbul ignore next: miniprogram-simulate(当前版本 1.6.1) 无法测试页面 */
-function InternalFieldProtection(config: object | undefined, keys: string[]) {
-  if (!config) return;
+function InternalFieldProtection(config: object, keys: string[]) {
   const methodsConfigKeys = Object.keys(config);
   for (const key of keys) {
     if (methodsConfigKeys.includes(key)) {
@@ -176,7 +177,6 @@ function funcOptionsHandle(
   isPage: boolean | undefined,
   funcOptions: FuncOptions,
 ) {
-  /* istanbul ignore next: miniprogram-simulate(当前版本 1.6.1) 无法测试页面 */
   if (isPage) {
     // 页面时 生命周期方法(即 on 开头的方法),(https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/component.html)
     !(isEmptyObject(funcOptions.pageLifetimes))
@@ -184,7 +184,7 @@ function funcOptionsHandle(
   } else {
     // 组件时
     !(isEmptyObject(funcOptions.pageLifetimes))
-      && _funcOptionsHandle(finalOptionsForComponent.pageLifetimes ||= {}, funcOptions.pageLifetimes);
+      && _funcOptionsHandle(finalOptionsForComponent.pageLifetimes, funcOptions.pageLifetimes);
   }
   funcOptions.lifetimes && _funcOptionsHandle(finalOptionsForComponent.lifetimes ||= {}, funcOptions.lifetimes);
 
@@ -352,12 +352,13 @@ export function collectOptionsForComponent(
   const rootComponentOption = defineComponentOption.rootComponent;
   const subComponentsList = defineComponentOption.subComponents;
 
-  const finalOptionsForComponent: FinalOptionsOfComponent = merge(instanceConfig.injectInfo || {}, {
+  const finalOptionsForComponent: FinalOptionsOfComponent = merge({ ...instanceConfig.injectInfo }, {
     observers: {},
     data: {},
     methods: {},
     behaviors: [BStore, BComputedAndWatch],
     externalClasses: [],
+    pageLifetimes: {},
   });
 
   /**
@@ -376,33 +377,28 @@ export function collectOptionsForComponent(
   if (subComponentsList && !isEmptyObject(subComponentsList)) {
     subComponentsHandle(finalOptionsForComponent, subComponentsList, funcOptions);
   }
-  // miniprogram-simulate(当前版本 1.6.1) 无法测试页面
-  /* istanbul ignore next: miniprogram-simulate(当前版本 1.6.1) 无法测试页面 */
+
   funcOptionsHandle(finalOptionsForComponent, rootComponentOption?.isPage, funcOptions);
 
   InternalFieldProtection(finalOptionsForComponent.methods, ["disposer"]);
 
   // 对页面传入参数进行处理 老框架劫持页面methods.onLoad,新框架劫持页面pageLifetimes.load
-  /* istanbul ignore next: miniprogram-simulate(当前版本 1.6.1) 无法测试页面 */
-  finalOptionsForComponent.isPage
-    && hijack(finalOptionsForComponent.pageLifetimes ||= {}, "load", [loadReceivedDataHandle], []);
 
-  /* istanbul ignore next: miniprogram-simulate(当前版本 1.6.1) 无法测试页面 */
+  finalOptionsForComponent.isPage
+    && hijack(finalOptionsForComponent.pageLifetimes, "load", [loadReceivedDataHandle]);
+
   hijack(
     finalOptionsForComponent.methods,
     "onLoad",
     [onLoadReceivedDataHandle],
-    [],
   );
 
   hijack(
     finalOptionsForComponent.lifetimes!,
     "attached",
     [isPageCheck(rootComponentOption?.isPage)],
-    [],
   );
 
-  /* istanbul ignore next: miniprogram-simulate(当前版本 1.6.1) 无法测试页面 */
   finalOptionsForComponent.isPage
     // 页面时删除预设的虚拟组件字段
     && finalOptionsForComponent.options && Reflect.deleteProperty(finalOptionsForComponent.options, "virtualHost");

@@ -32,7 +32,7 @@ import type { SubMethodsOption } from "./SubMethods/SubMethodsOption";
 import type { SubObserversOption } from "./SubObservers/SubObserversOption";
 import type { SubPageLifetimesOption } from "./SubPageLifetimes/SubPageLifetimesOption";
 import type { CreateSubComponentDoc } from "./SubReturnType/CreateSubComponentDoc";
-import type { SubStoreConstraint } from "./SubStore/SubDataConstraint";
+import type { SubStoreConstraint } from "./SubStore/SubStoreConstraint";
 import type { SubStoreOption } from "./SubStore/SubStoreOption";
 import type { SubWatchOption } from "./SubWatch/SubWatchOption";
 
@@ -63,8 +63,7 @@ type Options<
   >
   & SubStoreOption<
     TSubStore,
-    Exclude<keyof CurrentCompDoc["properties"], (keyof (InheritDoc & SubDataDoc))>,
-    Prefix
+    Exclude<keyof CurrentCompDoc["properties"], (keyof (InheritDoc & SubDataDoc))>
   >
   & SubComputedOption<
     TSubComputed,
@@ -84,7 +83,7 @@ type Options<
     & SubStoreDoc
     & IInjectStore
   >
-  & Partial<Omit<WMCompOtherOption, "pageLifetimes" | "definitionFilter" | "export" | "observers">>
+  & Partial<Omit<WMCompOtherOption, "pageLifetimes" | "definitionFilter" | "export" | "observers" | "relations">>
   & SubObserversOption<
     & SubComputedDoc
     & SubDataDoc

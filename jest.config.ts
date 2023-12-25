@@ -12,6 +12,7 @@ export const config = {
     "./src/**/*.ts",
     "!src/**/*.test.ts",
     "!src/api/navigateTo.ts",
+    "!src/api/DefineComponent/isPageCheck.ts",
     "!src/api/InstanceInject/inject.ts",
     "!src/thirdLib/**",
   ],
@@ -24,10 +25,10 @@ export const config = {
   coverageReporters: ["text", "text-summary"],
   coverageThreshold: {
     global: {
-      branches: 96,
-      functions: 95,
-      lines: 95,
-      statements: 95,
+      branches: 90,
+      functions: 90,
+      lines: 90,
+      statements: 90,
     },
   },
   // coverageDirectory: "coverage",

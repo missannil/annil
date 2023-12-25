@@ -57,7 +57,7 @@ type RootComponentOptions<
   & StoreOption<TStore, keyof (PropertiesDoc & DataDoc)>
   & ComputedOption<TComputed, keyof (PropertiesDoc & DataDoc & StoreDoc)>
   & PageLifetimesOption<TIsPage, PropertiesDoc>
-  & LifetimesOption<TIsPage>
+  & LifetimesOption
   & WatchOption<
     & ComputedDoc
     & Required<PropertiesDoc>
@@ -65,7 +65,7 @@ type RootComponentOptions<
     & StoreDoc
     & IInjectStore
   >
-  & Partial<Omit<WMCompOtherOption, "pageLifetimes" | "definitionFilter" | "export" | "observers">>
+  & Partial<Omit<WMCompOtherOption, "pageLifetimes" | "definitionFilter" | "observers">>
   & ObserversOption<
     & ComputedDoc
     & Required<PropertiesDoc>

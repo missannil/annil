@@ -4,6 +4,13 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.5.4](https://github.com/missannil/annil/compare/v1.5.3...v1.5.4) (2023-12-25)
+
+
+### Bug Fixes
+
+* isPagecheck ([03f6452](https://github.com/missannil/annil/commit/03f64523dc5f7da32616ec5c0ecfc4f50d4d4b7d))
+
 ## [1.5.3](https://github.com/missannil/annil/compare/v1.5.2...v1.5.3) (2023-12-22)
 
 

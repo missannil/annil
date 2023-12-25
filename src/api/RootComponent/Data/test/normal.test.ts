@@ -8,7 +8,7 @@ type Gender = "male" | "female";
 
 const RootDoc = RootComponent()({
   data: {
-    gender: <Gender> "male", // 联合字面量
+    gender: "male" as Gender, // 联合字面量
     num: 123,
     _innernalFields: 123, // 内部字段无法在wxml中使用
   },

@@ -43,9 +43,6 @@ SubComponent<RootDoc, CompDoc>()({
   data: {
     aaa_str: "str",
   },
-  store: {
-    _aaa_SubReactive: () => 123,
-  },
   computed: {},
   methods: {
     aaa_SubM() {},
@@ -68,7 +65,6 @@ SubComponent<RootDoc, CompDoc>()({
             Cnum: number;
             // 自身Data
             aaa_str: "str";
-            _aaa_SubReactive: 123;
           } & IInjectData
         >,
         Test.Pass

@@ -26,6 +26,10 @@ const subA = SubComponent<Root, CompDoc>()({
 type Root = typeof rootComponent;
 
 const rootComponent = RootComponent()({
+  // 为了覆盖率 忽略它
+  export() {
+    return {};
+  },
   properties: {
     requiredUser: Object as DetailedType<User>,
     optionalUser: {

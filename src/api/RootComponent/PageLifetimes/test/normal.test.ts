@@ -7,16 +7,15 @@ import type { Mock_User } from "../../Properties/test/normalRequired.test";
  * 组件时
  */
 RootComponent()({
-  // 1  官方类型 加入load类型(同步组件时触发)
   pageLifetimes: {
     hide() {},
     resize(size) {
       Checking<typeof size, WechatMiniprogram.Page.IResizeOption, Test.Pass>;
     },
     show() {},
-    // 新增周期函数
+    // 1 glass-easel(最低版本库3.0.2)支持的周期函数
     load(obj) {
-      Checking<typeof obj, object, Test.Pass>;
+      Checking<typeof obj, object | undefined, Test.Pass>;
     },
   },
 });
@@ -40,7 +39,7 @@ RootComponent()({
   },
   // 2 官方是把事件写在methods字段中,更改为写在pageLifetimes字段下
   pageLifetimes: {
-    // 3 重写onLoad周期参数props的类型. (propertiesDoc中必传字段去除null后去除可选字段)
+    // 3 重写onLoad周期参数props的类型(同页面properties定义类型).
     onLoad(props) {
       Checking<
         typeof props,
@@ -56,5 +55,15 @@ RootComponent()({
     onHide() {
       console.log("onHide");
     },
+    // onReady
+    // onResize
+    // onUnload
+    // onPageScroll
+    // onPullDownRefresh
+    // onReachBottom
+    // onShareAppMessage
+    // onShareTimeline
+    // onTabItemTap
+    // ...
   },
 });

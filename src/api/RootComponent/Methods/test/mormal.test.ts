@@ -9,7 +9,7 @@ const RootDoc = RootComponent()({
     num() {
       return 1;
     },
-    str(str: string): string {
+    str(str: string) {
       return str;
     },
   },

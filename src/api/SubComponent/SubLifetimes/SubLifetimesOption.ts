@@ -1,3 +1,3 @@
-import type { WMCompLifetimes } from "../../../types/OfficialTypeAlias";
+import type { LifetimesOption } from "../../RootComponent/Lifetimes/LifetimesOption";
 
-export type SubLifetimesOption = Partial<WMCompLifetimes>;
+export type SubLifetimesOption = LifetimesOption;

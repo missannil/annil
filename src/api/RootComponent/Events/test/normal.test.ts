@@ -24,7 +24,7 @@ RootComponent()({
 });
 
 /**
- * 2. 没有子组件时,事件参数e可通过WMBaseEvent和WMCustomEvent(多一个detail类型)定义内部类型。
+ * 2. 没有子组件时,事件参数e可通过WMBaseEvent、WMCustomEvent、Detail、Mark等插件提供的类型快速定义事件类型。
  */
 RootComponent()({
   events: {
@@ -122,7 +122,7 @@ type RootDocExpect = {
   };
 };
 
-// 4 返回EventsDoc正常
+// 4 返回EventsDoc
 Checking<typeof RootDoc, RootDocExpect, Test.Pass>;
 
 /**

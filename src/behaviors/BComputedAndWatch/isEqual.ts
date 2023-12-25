@@ -11,7 +11,8 @@ function isSameSize(a: object, b: object) {
 
 // 定义一个辅助函数，用于判断两个函数的代码是否相同
 function isSameCode(a: Function, b: Function) {
-  return a.toString() === b.toString();
+  // 去除空格比较函数字符串
+  return a.toString().split(" ").join("") === b.toString().split(" ").join("");
 }
 
 // 定义一个辅助函数，用于判断两个日期的时间戳是否相同

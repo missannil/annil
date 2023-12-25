@@ -23,38 +23,40 @@
 
 ### 简介
 
-annil(安奈儿)是微信小程序原生开发插件。
+annil(安奈儿)是微信小程序原生开发插件,相较于原生API,使用annil会大大提高开发效率和代码质量。
 
 ### 特点
 
-- **新的组件构建API**
+- **组件构建API功能更强大**
 
   新的组件构建API加入了[computed](./doc/fields/computed.md)、[watch](./doc/fields/watch.md)、[store](./doc/fields/store.md)(基于mobx的全局响应式数据)`等功能,使开发更便捷。
 
 - **复杂组件解决方案**
 
-  新的组件构建方案(根组件 + 子组件(可选)),组件逻辑与wxml元素(标签)一一对应。解决书写复杂组件时代码逻辑耦合的问题。
+  新的组件构建方案(根组件 + 子组件(可选)),组件逻辑与wxml标签一一对应。解决书写复杂组件时不同组件代码耦合的问题。
+- **专为typescript开发设计**
+
+  annil是专为TS开发而设计的,通过类型提示、约束、检测,提升开发效率,避免运行时错误的发生。使用js开发时可忽略开发文档中的ts部分。
 
 - **组件类型概念**
 
-  在使用ts开发时,新的组件构建API返回的类型叫组件文档类型,好比传统组件(UI)库为每个组件书写的使用文档,在做为子组件构建新组件(页面)时,子组件API要求使用者输入组件类型,让使用者知道该定义哪些字段(类型提示)并确保字段值类型正确(类型约束和检测)。这样实现了一个页面中所有子组件之间的类型耦合,无论组件嵌套多少层,无论哪层组件数据类型发生改变,所有相关组件类型都会得到感知。当您修改、重构代码时,只要无类型报错(tsc --noEmit --watch)就不会有运行时报错的心智负担。
+  新的组件构建API(DefineComponent)返回的类型叫组件(文档)类型,好比传统组件(UI)库为每个组件书写的使用文档,在做为子组件构建新组件(页面)时,子组件API(SubComponent)要求使用者输入组件类型,在定义选项字段时,会得到类型提示、约束和检测。这样实现了一个页面中所有子组件之间的类型耦合,无论组件嵌套多少层,无论哪层组件数据类型发生改变,所有相关组件类型都会得到感知。当您增改、重构代码时,只要无类型报错(tsc --noEmit --watch)就不会有运行时报错的心智负担。
 
-- **类型约束代码规范**
+- **类型约束书写规范**
 
-  js开发时可以任意`setData`一个未声明变量或通过`this.triggerEvent('name',unknown)`触发组件自定义事件。这是js的特点,但易读性和易维护性差。(ts开发时)新API通过类型报错形式对[代码规范](./doc/standard.md)给了强制约束
+  annil通过类型来约束代码书写规范,例如在js开发时可以通过`this.setData({...})`新增一个未在data字段中定义的数据或修改properties中定义的数据,这显然是不对的。新API通过类型报错的形式约束[书写规范](./doc/designIdea.md),在特定情形下(例如测试)你可以通过 `//@ts-ignore`或`as any`关闭类型检测。
 
 - **高兼容性**
 
-  annil提供的API都是原生API的语法糖,不具有强制性和侵入性,开发者可在整个项目中使用,也可只在某处使用。
+  annil提供的API都是原生API的语法糖,不具有强制性和侵入性,可渐进性使用或重构代码。
 
 - **类型修补**
 
-  官方类型(miniprogram-api-typings)存在更新不及时等问题,annil提供了新的类型方便ts开发,同时会对官方类型库发起PR。
-  这些类型都采用ES模块化,不会污染全局类型。
+  官方类型(miniprogram-api-typings)存在更新不及时等问题,annil提供了新的类型方便开发,这些类型都采用ES模块化,不会污染全局类型。
 
-- **适配任何第三方库**
+- **适配第三方库类型**
 
-  通过插件提供的泛型[GenerateDoc](./src/types/GenerateDoc.ts)即可根据组件文档生成组件类型,插件也内置了原生和第三方组件库类型。
+  第三方组件库一般都是以文档的形式对组件说明,插件提供了泛型[GenerateDoc](./src/types/GenerateDoc.ts),可根据组件文档快速书写组件类型,使第三方组件融入组件构建模型,后续插件会陆续添加原生(Wm)和常用第三方组件库(Vant)类型。
 
 ### 安装
 
@@ -69,6 +71,7 @@ annil(安奈儿)是微信小程序原生开发插件。
 - 可选
 
   ```bash
+  # 使用ts开发
   npm typescript --save-dev
   ```
 
@@ -115,18 +118,18 @@ annil(安奈儿)是微信小程序原生开发插件。
 
 ### 使用文档
 
-1. 组件构建API
+- **组件构建API**
 
-   [DefineComponent](./doc/api/DefineComponent.md)
+  [DefineComponent](./doc/api/DefineComponent.md)
 
-   [RootComopnent](./doc/api/RootComopnent.md)
+  [RootComopnent](./doc/api/RootComopnent.md)
 
-   [SubComponent](./doc/api/SubComponent.md)
+  [SubComponent](./doc/api/SubComponent.md)
+
+- **navigateTo**
+
+  [navigateTo](./doc/api/navigateTo.md)
 
 ### 更新日志
 
 [CHANGELOG](./CHANGELOG.md)
-
-### 协议
-
-[MIT](./LICENSE)

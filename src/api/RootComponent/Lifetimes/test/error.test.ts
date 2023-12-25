@@ -11,13 +11,7 @@ RootComponent()({
       err.message;
     },
     moved() {},
-    // @ts-expect-error  1 错误的声明周期字段报错
+    // @ts-expect-error  1 错误的生命周期字段报错
     xxx() {},
   },
-});
-
-RootComponent()({
-  isPage: true,
-  // @ts-expect-error 2 页面时未开启此字段
-  lifetimes: {},
 });

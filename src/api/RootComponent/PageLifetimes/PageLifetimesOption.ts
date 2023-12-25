@@ -6,9 +6,6 @@ export type PageLifetimesOption<TIsPage extends boolean, PropertiesDoc extends o
   TIsPage,
   false,
   {
-    /**
-     * 比官方定义新增load周期,发生在页面onLoad事件后
-     */
     pageLifetimes?: ComputeIntersection<
       // 官方组件页面生命周期
       & Partial<WMCompPageLifetimes>
@@ -17,7 +14,7 @@ export type PageLifetimesOption<TIsPage extends boolean, PropertiesDoc extends o
          * 周期发生在组件attached之后,页面onLoad之前,要求组件为同步组件
          * 最低基础库： `3.0.2`
          */
-        load?: (props: object) => void;
+        load?: (props?: object) => void;
       }
     >;
   },

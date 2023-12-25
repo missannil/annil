@@ -19,7 +19,17 @@ SubComponent<{}, DocA>()({
     aaa_str: () => user.name,
 
     aaa_num: () => user.age,
-    // 运行内部字段(暂定)
-    _aaa_ddd: () => user.age,
+    // 内部字段
+    // _aaa_ddd: () => user.age,
+  },
+});
+
+SubComponent<{}, DocA, "a">()({
+  store: {
+    aaaA_str: () => user.name,
+
+    aaaA_num: () => user.age,
+    // 内部字段
+    // _aaaA_ddd: () => user.age,
   },
 });

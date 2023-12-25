@@ -122,3 +122,86 @@ DefineComponent({
   rootComponent,
   subComponents: [subA],
 });
+
+type Gender = "male" | "female";
+
+const rootComponent1 = RootComponent()({
+  properties: {
+    gender: Object as DetailedType<Gender>, // 必传属性
+    age: { // 选传属性
+      type: Number,
+      value: 20,
+    },
+  },
+  customEvents: {
+    tap: String as DetailedType<Gender>,
+  },
+  events: {
+    onTap() {
+      const { gender } = this.data;
+
+      this.tap(gender); // this.triggerEvent('tap',gender)
+    },
+  },
+  // ...
+});
+const baseComp = DefineComponent({
+  name: "baseComp",
+  rootComponent: rootComponent1,
+  // subComponents:[]
+});
+export type $BaseComp = typeof baseComp;
+
+// 组件文档类型
+// type $BaseComp = {
+//   properties: {
+//       baseComp_gender: Gender;  // 必传属性
+//       baseComp_age?: number;    // 选传属性
+//   };
+//   customEvents: {     // 组件事件
+//       baseComp_tap: Gender;
+//   };
+// }
+
+const baseComp1 = SubComponent<Root1, $BaseComp, "a">()({
+  data: {
+    baseCompA_gender: "female",
+  },
+  events: {
+    baseCompA_tap(e) {
+      const gender = e.detail;
+
+      this.rootMethods(gender);
+    },
+  },
+});
+
+type Root1 = typeof rootComponent2;
+
+const rootComponent2 = RootComponent()({
+  isPage: true,
+  properties: {
+    User: Object as DetailedType<User>,
+  },
+  methods: {
+    rootMethods(gender: Gender) {
+      console.log(gender);
+      // do something
+    },
+  },
+  // ...
+});
+const index = DefineComponent({
+  path: "/pages/index/index",
+  rootComponent: rootComponent2,
+  subComponents: [baseComp1],
+});
+
+export type $Index = typeof index;
+// 页面文档
+// type $Index = {
+//   path: "/pages/index/index";
+//   properties: {
+//       User: User;
+//   };
+// }

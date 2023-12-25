@@ -53,6 +53,28 @@ export type FinalOptionsOfComponent = {
 };
 
 /**
+ * 劫持attached,根据this.route做判断 isPage值是否正确
+ */
+export function isPageCheck(isPage: boolean | undefined) {
+  return function(this: Instance) {
+    const route = (this as PageInstance).route as string | undefined;
+    if (route && isPage !== true) {
+      // 页面isPage值错误
+      throw Error(
+        `页面 /${route} 中, RootComponent构建页面时,isPage字段值应为 true`,
+      );
+    }
+
+    if (!route && isPage !== false && isPage !== undefined) {
+      // 组件写了isPage = true时
+      throw Error(
+        `组件 ${this.is} 中  RootComponent构建组件时,可不写isPage字段或值为 false`,
+      );
+    }
+  };
+}
+
+/**
  * 原生Component会对传入的对象字段匹配的properties字段setData赋值。不符合字段或Page时不会赋值。
  * 此函数为给实例setData赋值,默认传递值与properties相符(ts类型安全)。
  * @param option - 传入onLoad的参数 有以下两种可能
@@ -80,27 +102,7 @@ function onLoadReceivedDataHandle(
 
   this.setData(option);
 }
-// 类型保护
-// function isPageInstance(ins: Instance): ins is PageInstance & InstanceCustomFields {
-//   return (ins as PageInstance).route !== undefined;
-// }
-/**
- * 验证path是否正确
- * @param path - 配置路径
- * @returns
- */
-// function pathCheck(path: string | undefined) {
-//   return function(this: Instance) {
-//     if (isPageInstance(this)) {
-//       const route = this.route;
-//       if (route !== path) {
-//         throw Error(
-//           `[ /${route} ] DefinedComponent的配置字段path值错误,应为: /${route}`,
-//         );
-//       }
-//     }
-//   };
-// }
+
 /**
  * 针对通过 navigateTo传过来的数据对组件load周期传入数据解析
  * @param option - option中的url是拼接了encodeURIComponent转码的data对象的,key为INNERMARKER.url
@@ -218,12 +220,18 @@ function otherFieldsHandle(
   for (const key in rootComponentOptions) {
     // @ts-ignore 隐式索引
     const config = rootComponentOptions[key];
-    if (key === "behaviors" || key === "externalClasses") {
-      // 是不是只有behaviors是数组
+
+    if (Array.isArray(config) === true) {
+      //  "behaviors" || "externalClasses"是数组
+      // @ts-ignore 只有 behaviors 和 externalClasses, 且都默认为[]
       finalOptions[key].push(...config);
-    } else {
+    } else if (typeof config === "object") {
       // @ts-ignore 隐式索引
       Object.assign(finalOptions[key] ||= {}, config);
+    } else {
+      // 函数字段有 根组件有 `export` 子组件无此字段
+      // @ts-ignore 隐式索引
+      finalOptions[key] = config;
     }
   }
 }
@@ -381,9 +389,19 @@ export function collectOptionsForComponent(
     && hijack(finalOptionsForComponent.pageLifetimes ||= {}, "load", [loadReceivedDataHandle], []);
 
   /* istanbul ignore next: miniprogram-simulate(当前版本 1.6.1) 无法测试页面 */
-  hijack(finalOptionsForComponent.methods, "onLoad", [onLoadReceivedDataHandle], []);
+  hijack(
+    finalOptionsForComponent.methods,
+    "onLoad",
+    [onLoadReceivedDataHandle],
+    [],
+  );
 
-  // hijack(finalOptionsForComponent.lifetimes!, "attached", [pathCheck(defineComponentOption.path)], []);
+  hijack(
+    finalOptionsForComponent.lifetimes!,
+    "attached",
+    [isPageCheck(rootComponentOption?.isPage)],
+    [],
+  );
 
   /* istanbul ignore next: miniprogram-simulate(当前版本 1.6.1) 无法测试页面 */
   finalOptionsForComponent.isPage

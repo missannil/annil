@@ -4,6 +4,13 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.5.6](https://github.com/missannil/annil/compare/v1.5.5...v1.5.6) (2024-01-03)
+
+
+### Bug Fixes
+
+* 修复RootCOmonent在properties的可选数组类型时,value验证错误的问题 ([b836e83](https://github.com/missannil/annil/commit/b836e83916a6649b004646893ad91350787c9421))
+
 ## [1.5.5](https://github.com/missannil/annil/compare/v1.5.4...v1.5.5) (2024-01-01)
 
 

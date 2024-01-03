@@ -20,7 +20,7 @@ const OptionalDoc = RootComponent()({
     },
     optional_tuple: {
       type: Array as unknown as DetailedType<[number, string, boolean]>, // 元组类型
-      value: [1, "a", true] as [number, string, boolean],
+      value: [1, "a", true],
     },
     optional_obj: {
       type: Object as DetailedType<Mock_User>, // 对象类型
@@ -38,6 +38,10 @@ const OptionalDoc = RootComponent()({
       value: "string",
       optionalTypes: [Number],
     },
+    optional_arr: {
+      type: Array as DetailedType<string[]>,
+      value: [],
+    },
   },
   methods: {
     foo() {
@@ -52,6 +56,7 @@ const OptionalDoc = RootComponent()({
             optional_obj: Mock_User | null;
             optional_objOrNull: Mock_User | null;
             optional_union: string | number;
+            optional_arr: string[];
           } & IInjectData
         >,
         Test.Pass
@@ -69,6 +74,7 @@ type OptionalDocExpected = {
     optional_obj?: Mock_User | null;
     optional_objOrNull?: Mock_User | null;
     optional_union?: string | number;
+    optional_arr?: string[];
   };
   methods: {
     foo(): void;

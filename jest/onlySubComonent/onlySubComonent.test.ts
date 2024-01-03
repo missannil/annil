@@ -11,4 +11,6 @@ describe("RootComponent-events", () => {
   test("events字段 onTap事件", () => {
     expect(comp.instance.data.aaa_num).toBe(comp.instance.data.aaa2_num);
   });
+
+  // 有些测试描述不对，下次再改
 });

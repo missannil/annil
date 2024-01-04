@@ -2,7 +2,7 @@
  * 深度克隆 函数相同 原型一致
  */
 export function deepClone<T>(value: T): T {
-  if (typeof value !== "object" || value === null) {
+  if (typeof value !== "object" || value === null || value instanceof RegExp) {
     return value;
   }
   /* istanbul ignore next */

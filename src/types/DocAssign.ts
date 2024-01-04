@@ -21,16 +21,16 @@ type Validator<
 /**
  * 有时组件文档内部包含一些slot或基本组件,可通过CompDocExtends泛型拓展组件文档,使得类型更安全
  */
-export type ComponentDocExtension<
+export type DocAssign<
   TOriginalComponentDoc extends ComponentDoc,
   // @ts-ignore
   TExtensionDoc extends Validator<TOriginalComponentDoc, TExtensionDoc>,
 > = ComputeIntersectionDeep<TOriginalComponentDoc & TExtensionDoc>;
 
-// type test0 = ComponentDocExtension<{ properties: { aaa_xxx: string } }, { properties: { aaa_xxx: string } }>; // => "aaa_xxx字段重复"
+// type test0 = DocAssign<{ properties: { aaa_xxx: string } }, { properties: { aaa_xxx: string } }>; // => "aaa_xxx字段重复"
 
-// type test1 = ComponentDocExtension<{ customEvents: { aaa_xxx: string } }, { customEvents: { aaa_xxx: string } }>; // => "aaa_xxx字段重复"
+// type test1 = DocAssign<{ customEvents: { aaa_xxx: string } }, { customEvents: { aaa_xxx: string } }>; // => "aaa_xxx字段重复"
 
-// type test2 = ComponentDocExtension<{ properties: { aaa_xxx: string } }, { properties: { ddd_xxx: string } }>; // => "前缀错误,应为aaa"
+// type test2 = DocAssign<{ properties: { aaa_xxx: string } }, { properties: { ddd_xxx: string } }>; // => "前缀错误,应为aaa"
 
-// type test3 = ComponentDocExtension<{ customEvents: { aaa_xxx: string } }, { customEvents: { ddd_xxx: string } }>; // => "前缀错误,应为aaa"
+// type test3 = DocAssign<{ customEvents: { aaa_xxx: string } }, { customEvents: { ddd_xxx: string } }>; // => "前缀错误,应为aaa"

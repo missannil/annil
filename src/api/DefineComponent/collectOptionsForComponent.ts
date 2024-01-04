@@ -5,6 +5,7 @@ import type { ComputedCache, Instance } from "../../behaviors/BComputedAndWatch/
 import { BStore } from "../../behaviors/BStore";
 import type { Assign } from "../../types/Assign";
 import type { WMComponent } from "../../types/OfficialTypeAlias";
+import { deepClone } from "../../utils/deepClone";
 import { INNERMARKER } from "../../utils/InnerMarker";
 import { isEmptyObject } from "../../utils/isEmptyObject";
 import { instanceConfig } from "../InstanceInject/instanceConfig";
@@ -352,7 +353,7 @@ export function collectOptionsForComponent(
   const rootComponentOption = defineComponentOption.rootComponent;
   const subComponentsList = defineComponentOption.subComponents;
 
-  const finalOptionsForComponent: FinalOptionsOfComponent = merge({ ...instanceConfig.injectInfo }, {
+  const finalOptionsForComponent: FinalOptionsOfComponent = merge(deepClone(instanceConfig.injectInfo)!, {
     observers: {},
     data: {},
     methods: {},

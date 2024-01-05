@@ -4,6 +4,13 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.5.7](https://github.com/missannil/annil/compare/v1.5.6...v1.5.7) (2024-01-05)
+
+
+### Bug Fixes
+
+* rename ComponentDocExtension to DocAssign ([d933e0b](https://github.com/missannil/annil/commit/d933e0bff67a52d5f6ed9c00c60f7d2a2232aca0))
+
 ## [1.5.6](https://github.com/missannil/annil/compare/v1.5.5...v1.5.6) (2024-01-03)
 
 

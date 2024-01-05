@@ -353,7 +353,7 @@ export function collectOptionsForComponent(
   const rootComponentOption = defineComponentOption.rootComponent;
   const subComponentsList = defineComponentOption.subComponents;
 
-  const finalOptionsForComponent: FinalOptionsOfComponent = merge(deepClone(instanceConfig.injectInfo)!, {
+  const finalOptionsForComponent: FinalOptionsOfComponent = merge({ ...deepClone(instanceConfig.injectInfo) }, {
     observers: {},
     data: {},
     methods: {},

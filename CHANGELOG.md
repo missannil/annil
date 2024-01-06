@@ -4,6 +4,13 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.5.9](https://github.com/missannil/annil/compare/v1.5.8...v1.5.9) (2024-01-06)
+
+
+### Bug Fixes
+
+* 无注入数据时 watch监控类型错误的问题和SubComponentdata数据为字面量类型造成实例类型错误的问题 ([3cb2b90](https://github.com/missannil/annil/commit/3cb2b9069a9aa0f95767a346f16634d4db3109f9))
+
 ## [1.5.8](https://github.com/missannil/annil/compare/v1.5.7...v1.5.8) (2024-01-05)
 
 

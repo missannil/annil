@@ -63,8 +63,8 @@ SubComponent<RootDoc, CompDoc>()({
             PoptionalObj: Mock_User;
             Dnum: number;
             Cnum: number;
-            // 自身Data
-            aaa_str: "str";
+            // 自身Data类型与CompDoc类型相同
+            aaa_str: string;
           } & IInjectData
         >,
         Test.Pass

@@ -54,10 +54,10 @@ SubComponent<{}, CompDoc>()({
         typeof this.data,
         ReadonlyDeep<
           {
-            aaa_str: "a";
-            aaa_num: 123;
-            aaa_obj: null;
             _aaa_str: string;
+            aaa_str: "a" | "b";
+            aaa_num: number;
+            aaa_obj: Mock_User | null;
           } & IInjectData
         >,
         Test.Pass

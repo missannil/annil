@@ -67,7 +67,7 @@ SubComponent<Root, OnlyPropsCompDoc>()({
 SubComponent<Root, OnlyPropsCompDoc>()({
   computed: {
     aaa_num() {
-      return 123 as number;
+      return 123;
     },
     aaa_num123(): 123 {
       return 123;
@@ -90,8 +90,8 @@ SubComponent<Root, OnlyPropsCompDoc>()({
             bool: boolean;
             aaa_num: number;
             aaa_num123: 123;
-            aaa_str: "a";
-            aaa_obj: Mock_User;
+            aaa_str: "a" | "b";
+            aaa_obj: Mock_User | null;
           } & IInjectData
         >,
         Test.Pass
@@ -114,8 +114,8 @@ SubComponent<Root, OnlyPropsCompDoc>()({
             bool: boolean;
             aaa_num: number;
             aaa_num123: 123;
-            aaa_str: "a";
-            aaa_obj: Mock_User;
+            aaa_str: "a" | "b";
+            aaa_obj: Mock_User | null;
           } & IInjectData
         >,
         Test.Pass

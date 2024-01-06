@@ -21,7 +21,8 @@ export interface IInjectInfo extends BaseInjectInfo {
 
 export type IInjectData = IInjectInfo["data"] & ReturnTypeInObject<IInjectInfo["store"]>;
 
-export type IInjectStore = ReturnTypeInObject<IInjectInfo["store"]>;
+export type IInjectStore = StoreConstraint extends IInjectInfo["store"] ? unknown
+  : ReturnTypeInObject<IInjectInfo["store"]>;
 
 export type IInjectMethods = IInjectInfo["methods"];
 

@@ -6,6 +6,7 @@ import type { ReplacePrefix } from "../../types/ReplacePrefix";
 import type { ComponentDoc } from "../DefineComponent/ReturnType/ComponentDoc";
 
 import type { Func } from "hry-types/src/Misc/Func";
+import type { AssignValues } from "../../types/AssignValues";
 import type { WMCompOtherOption } from "../../types/OfficialTypeAlias";
 import type { IInjectStore } from "../InstanceInject/instanceConfig";
 import type { ComputedConstraint } from "../RootComponent/Computed/ComputedConstraint";
@@ -94,8 +95,8 @@ type Options<
   & ThisType<
     SubInstance<
       SubMethodsDoc & RootDoc["methods"],
-      TSubData,
-      AllRootDataDoc & SubDataDoc & SubComputedDoc & SubStoreDoc,
+      SubDataDoc,
+      AllRootDataDoc & AssignValues<SubDataDoc & SubComputedDoc & SubStoreDoc, Required<CurrentCompDoc["properties"]>>,
       RootDoc["customEvents"] & {},
       SubStoreDoc
     >

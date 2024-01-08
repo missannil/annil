@@ -50,7 +50,6 @@ export type WatchOldValue = Record<string, unknown[]>;
 
 export type OptionsInnerFields = {
   data: {
-    __computedStatus__?: "待更新" | "更新完毕";
     __computedCache__?: ComputedCache;
     __storeConfig__?: StoreConstraint;
     __watchOldValue__?: WatchOldValue;
@@ -418,7 +417,6 @@ export function assignOptions(
   InternalFieldProtection(finalOptionsForComponent.methods, ["disposer", "__computedUpdater__"]);
 
   InternalFieldProtection(finalOptionsForComponent.data, [
-    "__computedStatus__",
     "__computedCache__",
     "__storeConfig__",
     "__watchOldValue__",

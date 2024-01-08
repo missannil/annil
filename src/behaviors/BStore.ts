@@ -26,6 +26,7 @@ export const BStore = Behavior({
           },
         );
       }
+      delete this.data.__storeConfig__;
     },
 
     detached(this: Instance) {

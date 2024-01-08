@@ -35,8 +35,6 @@ export function computedWatchHandle(options: FinalOptionsOfComponent) {
 
     options.data.__computedCache__ = __computedInitCache__;
 
-    options.data.__computedStatus__ = "待更新";
-
     options.methods.__computedUpdater__ = computedUpdater;
     //    // 把计算属性缓存从方法中带入到实例中,在created周期加入实例后删除
     //    methodOpt.__computedInitCache__ = () => computedCache;
@@ -46,37 +44,8 @@ export function computedWatchHandle(options: FinalOptionsOfComponent) {
   const originalFunc = observersConfig["**"] as Func | undefined;
 
   observersConfig["**"] = function(this: Instance): undefined {
-    const computedStatus = this.data.__computedStatus__;
+    this.__computedUpdater__?.();
 
-    // __computedStatus__为undefined表示无计算属性,不处理
-
-    switch (computedStatus) {
-      case "待更新":
-        // 3. 触发来自attached后的setData或properties更新
-        {
-          const isUpdated = this.__computedUpdater__!();
-
-          if (isUpdated) {
-            // 更新了会再次触发自身转到 4
-            this.data.__computedStatus__ = "更新完毕";
-          } else {
-            // 无需更新计算属性
-
-            originalFunc && originalFunc.call(this);
-          }
-        }
-        break;
-      case "更新完毕":
-        {
-          // 4 来自计算属性更新后的自身回调
-          // console.log("来自计算属性更新后的自身回调");
-          this.data.__computedStatus__ = "待更新";
-
-          originalFunc && originalFunc.call(this);
-        }
-        break;
-    }
-    // 没有计算属性时
     originalFunc && originalFunc.call(this);
   };
 

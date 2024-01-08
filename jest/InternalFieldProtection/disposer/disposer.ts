@@ -1,4 +1,4 @@
-import { DefineComponent, RootComponent } from "../../src";
+import { DefineComponent, RootComponent } from "../../../src";
 
 const rootComponent = RootComponent()({
   methods: {

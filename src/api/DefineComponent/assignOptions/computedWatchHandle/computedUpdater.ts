@@ -1,13 +1,14 @@
+import type { Instance } from "..";
+
 import { deepProxy, unwrap } from "./data-tracer";
 import { getPathsValue } from "./getPathsValue";
 
-import type { ComputedDependence } from "./initComputed";
 import { isEqual } from "./isEqual";
-import type { Instance } from "./types";
+export type ComputedDependence = { paths: string[]; val: unknown };
 
 export function computedUpdater(this: Instance, isUpdated = false): boolean {
-  for (const key in this.__computedCache__) {
-    const itemCache = this.__computedCache__[key];
+  for (const key in this.data.__computedCache__) {
+    const itemCache = this.data.__computedCache__[key];
     let changed = false;
     for (const dep of itemCache.dependences) {
       // getPathsValue返回的是数组
@@ -32,7 +33,7 @@ export function computedUpdater(this: Instance, isUpdated = false): boolean {
       isUpdated = true;
 
       // 更新依赖
-      this.__computedCache__[key].dependences = newDependences;
+      this.data.__computedCache__[key].dependences = newDependences;
 
       // 有一个计算属性更新就重新更新所有计算互相,避免后置依赖导致前置依赖错误
       return computedUpdater.call(this, isUpdated);

@@ -1,6 +1,6 @@
 import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
 import type { WMCompLifetimes } from "../../../types/OfficialTypeAlias";
-import type { FinalOptionsOfComponent } from "../../DefineComponent/collectOptionsForComponent";
+import type { FinalOptionsOfComponent } from "../../DefineComponent/assignOptions";
 
 export type LifetimesConstraint = // 官方组件生命周期
   ComputeIntersection<

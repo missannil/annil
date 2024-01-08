@@ -1,11 +1,16 @@
-// import type { ComponentInstance } from "../../api/RootComponent/Instance/RootComponentInstance";
-// import type { IsDependOnOthers } from "./data-tracer";
-
 import type { Func } from "hry-types/src/Misc/Func";
-import type { FinalOptionsOfComponent } from "../../api/DefineComponent/collectOptionsForComponent";
+import type { FinalOptionsOfComponent } from "..";
+
+import type { ComputedDependence } from "./computedUpdater";
 import { deepProxy, unwrap } from "./data-tracer";
-import type { ComputedCache, ItemCache } from "./types";
-export type ComputedDependence = { paths: string[]; val: unknown };
+
+type ItemCache = {
+  dependences: ComputedDependence[];
+  method: Func;
+  value: unknown;
+};
+
+export type ComputedCache = Record<string, ItemCache>;
 
 /**
  * 如果依赖列表某项的首个字段值为undefined并且字段为其他计算属性字段 返回false(即被依赖的计算字段写在了依赖他的计算字段后面), 否则返回ComputedInfo。
@@ -97,6 +102,7 @@ export function initComputed(
   computedCache: ComputedCache = {},
 ): ComputedCache {
   // 收集依赖 uninitedkeys不受内部2处重新赋值的影响
+
   for (const key of uninitedkeys) {
     // uninitedkeys 受2处重新赋值的影响
     const itemCache = getItemCache(initAllData, uninitedkeys, computedConfig[key]);
@@ -108,8 +114,7 @@ export function initComputed(
       // 把当前依赖不正确的key放到后面去
       uninitedkeys.push(key);
     } else {
-      /* istanbul ignore next */
-      const dataOpt = options.data ||= {};
+      const dataOpt = options.data;
 
       dataOpt[key] = itemCache.value;
 

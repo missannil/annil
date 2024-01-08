@@ -9,9 +9,8 @@ import type { RootComponentOption } from "./RootComponent/RootComponentOption";
 import type { SubComponentsOption } from "./SubComponents/SubComponentsOption";
 
 import type { RootComponentTrueOptions } from "../RootComponent";
-import { collectOptionsForComponent } from "./collectOptionsForComponent";
-
-type Path = `/${string}`;
+import { assignOptions } from "./assignOptions";
+export type Path = `/${string}`;
 
 type RootOptions<
   TRootComponentDoc extends RootComponentDoc,
@@ -53,9 +52,7 @@ export type DefineComponentOption = {
  * 把根组件选项和子组件选项转化为原生Component API选项并执行
  */
 export const DefineComponent: DefineComponentConstructor = function(options): any {
-  // console.log("---------------------------");
-
   Component(
-    collectOptionsForComponent(options as DefineComponentOption) as any,
+    assignOptions(options as DefineComponentOption) as any,
   );
 };

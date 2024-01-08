@@ -3,11 +3,10 @@ import type {
   PropertiesTypes,
   RequiredSingle,
   RequiredUnion,
-} from "../../api/RootComponent/Properties/PropertiesConstraint";
+} from "../../../RootComponent/Properties/PropertiesConstraint";
 
 type PropertiesDefaultValue = "" | 0 | [] | null | false;
 
-/* istanbul ignore next */
 function getRequiredSingleValue(
   PropType: RequiredSingle,
 ): PropertiesDefaultValue {
@@ -25,7 +24,7 @@ function getRequiredSingleValue(
     default:
       /* istanbul ignore next */
       throw Error(
-        "properties字段类型只能为 String | Number | Array | Object | Boolean",
+        "properties字段类型只能为 String | Number | Array | Object | Boolean ",
       );
   }
 }
@@ -40,7 +39,7 @@ export function getPropertiesValue(propertiesOpt: PropertiesConstraint | undefin
   const result = {};
   for (const key in propertiesOpt) {
     const config = propertiesOpt[key];
-    /* istanbul ignore next */
+
     if (IsRequiredSingle(config)) {
       // @ts-ignore 隐式索引
       result[key] = getRequiredSingleValue(config);

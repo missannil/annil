@@ -1,4 +1,4 @@
-import type { ComputedDependence } from "./initComputed";
+import type { ComputedDependence } from "./computedUpdater";
 
 export function deepProxy(
   data: object,

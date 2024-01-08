@@ -1,4 +1,4 @@
-import type { FinalOptionsOfComponent } from "../api/DefineComponent/collectOptionsForComponent";
+import type { FinalOptionsOfComponent } from "../api/DefineComponent/assignOptions";
 
 export const BBeforeCreate = Behavior({
   // @ts-ignore

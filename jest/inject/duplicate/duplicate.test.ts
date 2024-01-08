@@ -2,7 +2,6 @@ import simulate from "miniprogram-simulate";
 import path from "path";
 import { instanceConfig } from "../../../src";
 import { BBeforeCreate } from "../../../src/behaviors/BbeforeCreated";
-import { BComputedAndWatch } from "../../../src/behaviors/BComputedAndWatch";
 import { BStore } from "../../../src/behaviors/BStore";
 export const checkData = {
   options: {} as object | undefined,
@@ -45,6 +44,6 @@ describe("inject数据被组件数据覆盖", () => {
 
     expect(checkData.data.injectStr).toBe("changed");
 
-    expect(checkData.behaviors).toStrictEqual([BStore, BComputedAndWatch, behavior, BBeforeCreate]);
+    expect(checkData.behaviors).toStrictEqual([BStore, behavior, BBeforeCreate]);
   });
 });

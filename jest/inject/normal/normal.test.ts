@@ -26,7 +26,7 @@ instanceConfig.setInjectInfo({
   },
 });
 
-describe("inject-无重复", () => {
+describe("inject功能测试", () => {
   const id = simulate.load(path.resolve(__dirname, "normal"));
   const comp = simulate.render(id);
   const parent = document.createElement("parent-wrapper");
@@ -39,6 +39,8 @@ describe("inject-无重复", () => {
       ...options,
     });
 
-    expect(checkData.data).toStrictEqual({ injectTheme: "dark", injectStr: "string" });
+    expect(checkData.data.injectTheme).toBe("dark");
+
+    expect(checkData.data.injectStr).toBe("string");
   });
 });

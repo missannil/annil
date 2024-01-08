@@ -1,47 +1,75 @@
 import type { Func } from "hry-types/src/Misc/_api";
-import { BBeforeCreate } from "../../behaviors/BbeforeCreated";
-import { BComputedAndWatch } from "../../behaviors/BComputedAndWatch";
-import type { ComputedCache, Instance } from "../../behaviors/BComputedAndWatch/types";
-import { BStore } from "../../behaviors/BStore";
-import type { Assign } from "../../types/Assign";
-import type { WMComponent } from "../../types/OfficialTypeAlias";
-import { deepClone } from "../../utils/deepClone";
-import { INNERMARKER } from "../../utils/InnerMarker";
-import { isEmptyObject } from "../../utils/isEmptyObject";
-import { instanceConfig } from "../InstanceInject/instanceConfig";
-import type { RootComponentTrueOptions } from "../RootComponent";
-import type { ComputedConstraint } from "../RootComponent/Computed/ComputedConstraint";
+import { BBeforeCreate } from "../../../behaviors/BbeforeCreated";
+
+import type { Assign } from "../../../types/Assign";
+import type { WMComponent } from "../../../types/OfficialTypeAlias";
+import { deepClone } from "../../../utils/deepClone";
+import { INNERMARKER } from "../../../utils/InnerMarker";
+import { isEmptyObject } from "../../../utils/isEmptyObject";
+import { instanceConfig } from "../../InstanceInject/instanceConfig";
+import type { RootComponentTrueOptions } from "../../RootComponent";
+import type { ComputedConstraint } from "../../RootComponent/Computed/ComputedConstraint";
 import type {
   CustomEventConstraint,
   CustomEvents,
   FullCustomEvents,
-} from "../RootComponent/CustomEvents/CustomEventConstraint";
-import type { DataConstraint } from "../RootComponent/Data/DataConstraint";
-import type { EventsConstraint } from "../RootComponent/Events/EventsConstraint";
-import type { PageInstance } from "../RootComponent/Instance/RootComponentInstance";
-import type { LifetimesConstraint } from "../RootComponent/Lifetimes/LifetimesConstraint";
-import type { MethodsConstraint } from "../RootComponent/Methods/MethodsConstraint";
-import type { PageLifetimesOption } from "../RootComponent/PageLifetimes/PageLifetimesOption";
-import type { PropertiesConstraint } from "../RootComponent/Properties/PropertiesConstraint";
-import type { StoreConstraint } from "../RootComponent/Store/StoreConstraint";
-import type { SubComponentTrueOptions } from "../SubComponent";
-import type { DefineComponentOption } from ".";
+} from "../../RootComponent/CustomEvents/CustomEventConstraint";
+import type { DataConstraint } from "../../RootComponent/Data/DataConstraint";
+import type { EventsConstraint } from "../../RootComponent/Events/EventsConstraint";
+import type { ComponentInstance, PageInstance } from "../../RootComponent/Instance/RootComponentInstance";
+import type { LifetimesConstraint } from "../../RootComponent/Lifetimes/LifetimesConstraint";
+import type { MethodsConstraint } from "../../RootComponent/Methods/MethodsConstraint";
+import type { PageLifetimesOption } from "../../RootComponent/PageLifetimes/PageLifetimesOption";
+import type { PropertiesConstraint } from "../../RootComponent/Properties/PropertiesConstraint";
+import type { StoreConstraint } from "../../RootComponent/Store/StoreConstraint";
+import type { SubComponentTrueOptions } from "../../SubComponent";
+import type { DefineComponentOption } from "..";
+
+import { BStore } from "../../../behaviors/BStore";
+import { computedWatchHandle } from "./computedWatchHandle";
+
+import type { ComputedCache } from "./computedWatchHandle/initComputed";
+import { initStore } from "./initStore";
+
+type InstanceInnerFields = {
+  data: OptionsInnerFields["data"];
+  disposer: Record<string, Func>;
+} & OptionsInnerFields["methods"];
+
+export type Instance =
+  & (ComponentInstance | PageInstance)
+  & InstanceInnerFields;
+
 /**
  * 临时的函数配置项
  * 把根组件与子组件中配置类型为函数的相同字段配置收集在一起(数组)
  */
-export type FuncOptions = Record<"pageLifetimes" | "lifetimes" | "watch", Record<string, Func[]>>;
+export type FuncOptions = Record<"pageLifetimes" | "lifetimes" | "watch" | "observers", Record<string, Func[]>>;
+
+export type WatchOldValue = Record<string, unknown[]>;
+
+export type OptionsInnerFields = {
+  data: {
+    __computedStatus__?: "待更新" | "更新完毕";
+    __computedCache__?: ComputedCache;
+    __storeConfig__?: StoreConstraint;
+    __watchOldValue__?: WatchOldValue;
+  };
+  methods: {
+    disposer?: Record<string, Func>;
+    // computedHandle加入
+    __computedUpdater__?: Func;
+  };
+};
 
 /**
  * 最终传入原生Component的配置项
  */
 export type FinalOptionsOfComponent = {
-  data: DataConstraint;
+  data: DataConstraint & OptionsInnerFields["data"];
   observers: Record<string, Func>;
   behaviors: string[];
-  methods: MethodsConstraint & {
-    __computedInitCache__?: () => ComputedCache;
-  };
+  methods: MethodsConstraint & OptionsInnerFields["methods"];
   externalClasses: string[];
   pageLifetimes: PageLifetimesOption<false, object>["pageLifetimes"] & {};
   isPage?: boolean;
@@ -81,7 +109,7 @@ export function isPageCheck(isPage: boolean | undefined) {
  * 1. 使用wx.navigateTo传值的。这种情况无内置字段 option[INNERMARKER.url] 等于 undefined
  * 2. 使用插件提供的navigateTo传值。这种情况 INNERMARKER.url被load周期劫持函数解码后赋值INNERMARKER.url字段为本身,即option[INNERMARKER.url] 等于 INNERMARKER.url
  */
-/* istanbul ignore next: miniprogram-simulate(当前版本 1.6.1) 无法测试页面生命周期 */
+/* istanbul ignore next miniprogram-simulate(当前版本 1.6.1) 无法测试页面生命周期 */
 function onLoadReceivedDataHandle(
   this: PageInstance,
   option: Record<typeof INNERMARKER.url, string>,
@@ -107,7 +135,7 @@ function onLoadReceivedDataHandle(
  * 针对通过 navigateTo传过来的数据对组件load周期传入数据解析
  * @param option - option中的url是拼接了encodeURIComponent转码的data对象的,key为INNERMARKER.url
  */
-/* istanbul ignore next: miniprogram-simulate(当前版本 1.6.1) 无法测试load */
+/* istanbul ignore next miniprogram-simulate(当前版本 1.6.1) 无法测试load */
 function loadReceivedDataHandle(
   this: PageInstance,
   option: Record<typeof INNERMARKER.url, string>,
@@ -173,7 +201,7 @@ function _funcOptionsHandle(config: object, configList: Record<string, Func[]>) 
 /**
  * 把函数列表配置放入一个配置中循环一次运行
  */
-function funcOptionsHandle(
+function assignFuncOptions(
   finalOptionsForComponent: FinalOptionsOfComponent,
   isPage: boolean | undefined,
   funcOptions: FuncOptions,
@@ -198,14 +226,13 @@ function funcFieldsCollect(
   options: SubComponentTrueOptions | RootComponentTrueOptions,
   funcOptions: FuncOptions,
 ) {
-  for (const key in funcOptions) {
-    // key = "pageLifetimes" | "lifetimes" | "watch"
-    // @ts-ignore 隐式索引
-    if (options[key]) {
-      // @ts-ignore 隐式索引
-      for (const _key in options[key]) {
-        // @ts-ignore 隐式索引
-        (funcOptions[key][_key] ||= []).push(options[key][_key]);
+  let key: keyof FuncOptions;
+  for (key in funcOptions) {
+    const optionsKeyConfig = options[key];
+    if (optionsKeyConfig) {
+      for (const _key in optionsKeyConfig) {
+        // @ts-ignore
+        (funcOptions[key][_key] ||= []).push(optionsKeyConfig[_key]);
       }
     }
   }
@@ -241,7 +268,7 @@ function otherFieldsHandle(
 function eventsHandle(methods: FinalOptionsOfComponent["methods"], eventsConfig: EventsConstraint) {
   Object.assign(methods, eventsConfig);
 }
-function subComponentsHandle(
+function assignSubComponentsOption(
   componentOptions: FinalOptionsOfComponent,
   subComponents: SubComponentTrueOptions[],
   funcOptions: FuncOptions,
@@ -289,7 +316,7 @@ function customEventsHandle(
  * @param funcOptions  - 收集特殊配置对象字段
  * @param rootComponentOptions - 被收集的源配置对象
  */
-function collectRootComponentOption(
+function assignRootComponentOption(
   finalOptions: FinalOptionsOfComponent,
   funcOptions: FuncOptions,
   rootComponentOptions: RootComponentTrueOptions,
@@ -347,20 +374,23 @@ function merge<Target extends object, Source extends object>(target: Target, sou
  * @param subComponentsList -
  * @returns FinalOptionsForComponent
  */
-export function collectOptionsForComponent(
+export function assignOptions(
   defineComponentOption: DefineComponentOption,
 ): FinalOptionsOfComponent {
   const rootComponentOption = defineComponentOption.rootComponent;
-  const subComponentsList = defineComponentOption.subComponents;
-
-  const finalOptionsForComponent: FinalOptionsOfComponent = merge({ ...deepClone(instanceConfig.injectInfo) }, {
-    observers: {},
-    data: {},
-    methods: {},
-    behaviors: [BStore, BComputedAndWatch],
-    externalClasses: [],
-    pageLifetimes: {},
-  });
+  const subComponentsOption = defineComponentOption.subComponents;
+  // 注入injectInfo和给默认配置(便于后续判断)
+  const finalOptionsForComponent: FinalOptionsOfComponent = merge(
+    { ...deepClone(instanceConfig.injectInfo) },
+    {
+      observers: {},
+      data: {},
+      methods: {},
+      behaviors: [BStore],
+      externalClasses: [],
+      pageLifetimes: {},
+    },
+  );
 
   /**
    * 有些字段配置同时存在根组件和子组件当中(如pageLifetimes，lifetimes,watch字段), 且key相同值类型为函数。funcConfig对象用于收集这些配置为数组形式,最终再一起整合进finalOptionsForComponent配置中。即funcConfig是一个临时中介对象。
@@ -369,20 +399,30 @@ export function collectOptionsForComponent(
     pageLifetimes: {},
     lifetimes: {},
     watch: {},
+    observers: {},
   };
 
   if (rootComponentOption && !isEmptyObject(rootComponentOption)) {
-    collectRootComponentOption(finalOptionsForComponent, funcOptions, rootComponentOption);
+    // 把rootComponentOption配置并入finalOptionsForComponent,其中FuncOptions字段配置收集到funcOptions中
+    assignRootComponentOption(finalOptionsForComponent, funcOptions, rootComponentOption);
   }
 
-  if (subComponentsList && !isEmptyObject(subComponentsList)) {
-    subComponentsHandle(finalOptionsForComponent, subComponentsList, funcOptions);
+  if (subComponentsOption && !isEmptyObject(subComponentsOption)) {
+    // 把subComponentsList配置并入finalOptionsForComponent,其中FuncOptions字段配置收集到funcOptions中
+    assignSubComponentsOption(finalOptionsForComponent, subComponentsOption, funcOptions);
   }
+  // 把收集好的funcOptions并入finalOptionsForComponent
+  assignFuncOptions(finalOptionsForComponent, rootComponentOption?.isPage, funcOptions);
 
-  funcOptionsHandle(finalOptionsForComponent, rootComponentOption?.isPage, funcOptions);
+  // 配置与内部字段冲突验证
+  InternalFieldProtection(finalOptionsForComponent.methods, ["disposer", "__computedUpdater__"]);
 
-  InternalFieldProtection(finalOptionsForComponent.methods, ["disposer"]);
-
+  InternalFieldProtection(finalOptionsForComponent.data, [
+    "__computedStatus__",
+    "__computedCache__",
+    "__storeConfig__",
+    "__watchOldValue__",
+  ]);
   // 对页面传入参数进行处理 老框架劫持页面methods.onLoad,新框架劫持页面pageLifetimes.load
 
   finalOptionsForComponent.isPage
@@ -394,15 +434,22 @@ export function collectOptionsForComponent(
     [onLoadReceivedDataHandle],
   );
 
+  // 验证isPage字段是否配置正确
   hijack(
     finalOptionsForComponent.lifetimes!,
     "attached",
     [isPageCheck(rootComponentOption?.isPage)],
   );
 
+  // 页面时删除预设的虚拟组件字段
   finalOptionsForComponent.isPage
-    // 页面时删除预设的虚拟组件字段
     && finalOptionsForComponent.options && Reflect.deleteProperty(finalOptionsForComponent.options, "virtualHost");
+
+  // 初始化store数据到data并把store配置放入到data的__storeConfig__下
+  initStore(finalOptionsForComponent);
+
+  // 处理computed和watch配置
+  computedWatchHandle(finalOptionsForComponent);
 
   // BBeforeCreate在最后面,让BeforeCreate生命周期运行在最终建立组件时。
   finalOptionsForComponent.behaviors!.push(BBeforeCreate);

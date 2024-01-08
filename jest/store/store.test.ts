@@ -1,6 +1,7 @@
 import { load, render, sleep } from "miniprogram-simulate";
 import path from "path";
-import type { Instance } from "../../src/behaviors/BComputedAndWatch/types";
+import type { Instance } from "../../src/api/DefineComponent/assignOptions";
+
 describe("store-test", () => {
   const id = load(path.resolve(__dirname, "store"));
   const comp = render(id);

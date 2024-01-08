@@ -45,8 +45,8 @@ export type ObserversOption<TWatchData extends object, _WatchKeys extends keyof 
     // 不加NoInfer会导致只监控计算字段时错误
     NoInfer<
       & {
-        [k in _WatchKeys]?: (
-          newValue: ReadonlyDeep<TWatchData[k]>,
+        [k in _WatchKeys | "**"]?: (
+          newValue: k extends keyof TWatchData ? ReadonlyDeep<TWatchData[k]> : unknown,
         ) => void;
       }
       // 解决单独书写计算书写字段的报错(或许是:ts字面量约束检测提前计算属性key引起的错误提示)

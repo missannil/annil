@@ -1,4 +1,4 @@
-import { isEqual } from "../src/behaviors/BComputedAndWatch/isEqual";
+import { isEqual } from "../src/api/DefineComponent/assignOptions/computedWatchHandle/isEqual";
 describe("isEqual", () => {
   isEqual;
 

@@ -4,6 +4,13 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.5.11](https://github.com/missannil/annil/compare/v1.5.10...v1.5.11) (2024-01-08)
+
+
+### Bug Fixes
+
+* 去除__computedStatus__,修复observers中this.setData不触发 ([8296972](https://github.com/missannil/annil/commit/829697261f708089294a122a462dfc85ac9df911))
+
 ## [1.5.10](https://github.com/missannil/annil/compare/v1.5.9...v1.5.10) (2024-01-08)
 
 

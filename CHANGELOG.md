@@ -4,6 +4,13 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.5.10](https://github.com/missannil/annil/compare/v1.5.9...v1.5.10) (2024-01-08)
+
+
+### Bug Fixes
+
+* 同一组件多次复用时 computed和watch的问题 ([e996f10](https://github.com/missannil/annil/commit/e996f10369dc5fc64225f573a9f28c3c542c7226))
+
 ## [1.5.9](https://github.com/missannil/annil/compare/v1.5.8...v1.5.9) (2024-01-06)
 
 

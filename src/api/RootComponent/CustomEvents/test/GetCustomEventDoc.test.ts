@@ -9,7 +9,13 @@ import {
   type CapturePhaseComposedExpected,
   type CapturePhaseExpected,
 } from "./GetFullEventDoc.test";
-import { type ListExpected, type NullExpected, type StrExpected, type UnionStrExpected } from "./GetShortEventDoc.test";
+import {
+  type ListExpected,
+  type NullExpected,
+  type ObjExpected,
+  type StrExpected,
+  type UnionStrExpected,
+} from "./GetShortEventDoc.test";
 import { mock_customEvents } from "./normal.test";
 
 type Mock_CustomEventsDoc = GetCustomEventDoc<typeof mock_customEvents>;
@@ -20,6 +26,7 @@ export type Mock_CustomEventsDocExpected = {
   nothing: undefined;
   unionStr: UnionStrExpected;
   union: ListExpected;
+  obj: ObjExpected;
   bubbles: bubblesExpected;
   capturePhase: CapturePhaseExpected;
   bubbles_capturePhase: BubblesCapturePhaseExpected;

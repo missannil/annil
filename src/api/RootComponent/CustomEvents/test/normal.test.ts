@@ -1,5 +1,7 @@
 import { Checking, type Test } from "hry-types";
+import type { ReadonlyDeep } from "hry-types/src/Any/ReadonlyDeep";
 import { type DetailedType, RootComponent } from "../../../..";
+import type { Mock_User } from "../../Properties/test/normalRequired.test";
 import type { CustomEventConstraint, FullCustomEvents, ShortCustomeEvents } from "../CustomEventConstraint";
 import type {
   Bubbles,
@@ -19,6 +21,7 @@ export const mock_shortCustomEvents = {
   null: null,
   unionStr: String as DetailedType<"male" | "female">,
   union: [String, Number as DetailedType<0 | 1 | 2>, null],
+  obj: Object as DetailedType<Mock_User>,
 } satisfies Record<string, ShortCustomeEvents>;
 
 /**
@@ -68,6 +71,7 @@ type RootDoc = {
     nothing: undefined;
     unionStr: "male" | "female";
     union: string | 0 | 1 | 2 | null;
+    obj: ReadonlyDeep<Mock_User>;
     // 带options字段 通过联合类型加入。
     bubbles: string | Bubbles;
     capturePhase: null | Capture;
@@ -92,3 +96,22 @@ const rootDocNoFields = RootComponent()({});
 
 // 3. 无customEvents字段时,Doc中无customEvents字段
 Checking<typeof rootDocNoFields, {}, Test.Pass>;
+
+// 4 实例中的对象数组都是readOnlyDeep类型,可以传递给自定义做参数
+RootComponent()({
+  properties: {
+    obj: Object as DetailedType<Mock_User>,
+  },
+  data: {
+    obj1: {} as Mock_User,
+    _ddd: {} as Mock_User,
+  },
+  customEvents: mock_customEvents,
+  events: {
+    ddd() {
+      this.obj(this.data.obj!);
+
+      this.obj(this.data.obj1);
+    },
+  },
+});

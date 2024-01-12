@@ -2,8 +2,8 @@ import type { RootComponentInstance } from "../../RootComponent/Instance/RootCom
 
 export type SubInstance<
   TAllMethods extends object,
-  TData extends object,
+  TDataForSetData extends object,
   AllData extends object,
   AllCustomEventsDoc extends object,
   SubStoreDoc extends object,
-> = RootComponentInstance<false, TAllMethods, TData, AllData, AllCustomEventsDoc, SubStoreDoc>;
+> = RootComponentInstance<false, TAllMethods, TDataForSetData, AllData, AllCustomEventsDoc, SubStoreDoc>;

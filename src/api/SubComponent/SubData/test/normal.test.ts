@@ -65,3 +65,19 @@ SubComponent<{}, CompDoc>()({
     },
   },
 });
+
+// data建立的类型在setData时为组件类型
+SubComponent<{ data: { _num: number } }, CompDoc>()({
+  data: {
+    aaa_obj: null,
+  },
+  lifetimes: {
+    attached() {
+      Checking<typeof this.data.aaa_obj, ReadonlyDeep<Mock_User | null>, Test.Pass>;
+
+      this.setData({
+        aaa_obj: {} as Mock_User, // aaa_obj 类型为 Mock_User | null 而非 null
+      });
+    },
+  },
+});

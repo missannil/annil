@@ -11,7 +11,7 @@ import type { CustomSetData } from "./CustomSetData";
 export type RootComponentInstance<
   TIsPage extends boolean,
   TMethods extends object,
-  TData extends object,
+  TDataForSetData extends object,
   AllData extends object,
   CustomEventsDoc extends object,
   StoreDoc extends object,
@@ -21,7 +21,7 @@ export type RootComponentInstance<
   // 官方实例方法去除setData,因其类型宽泛
   & Omit<WMInstanceMethods<{}>, "setData">
   // 加入自定义setData方法
-  & CustomSetData<TData>
+  & CustomSetData<TDataForSetData>
   & IfExtends<{}, StoreDoc, unknown, {
     disposer: { [k in keyof StoreDoc]: IReactionDisposer };
   }>

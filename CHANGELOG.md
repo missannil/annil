@@ -4,6 +4,13 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.5.13](https://github.com/missannil/annil/compare/v1.5.12...v1.5.13) (2024-01-12)
+
+
+### Bug Fixes
+
+* 修改自定义事件detail类型为ReadOnlyDeep,以便调用时可传入实例中的data类型(都是ReadOnlyDeep的) ([428710e](https://github.com/missannil/annil/commit/428710ea84717c45361d1e6c9c7db46c693026a9))
+
 ## [1.5.12](https://github.com/missannil/annil/compare/v1.5.11...v1.5.12) (2024-01-12)
 
 

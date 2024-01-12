@@ -4,6 +4,13 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.5.12](https://github.com/missannil/annil/compare/v1.5.11...v1.5.12) (2024-01-12)
+
+
+### Bug Fixes
+
+* setData时data中的数据类型不是组件类型的错误 ([871ac43](https://github.com/missannil/annil/commit/871ac439d1786cb74fb752e353a1f953d11de780))
+
 ## [1.5.11](https://github.com/missannil/annil/compare/v1.5.10...v1.5.11) (2024-01-08)
 
 

@@ -1,8 +1,19 @@
-import { load, render, sleep } from "miniprogram-simulate";
+import { load, render } from "miniprogram-simulate";
+import { observable } from "mobx";
 import path from "path";
-import type { Instance } from "../../src/api/DefineComponent/assignOptions";
 
-describe("store-test", () => {
+export const storeUser = observable({
+  name: "zhao",
+  age: 20,
+  changeAge() {
+    this.age = this.age + 1;
+  },
+  changeName(name: string) {
+    this.name = name;
+  },
+});
+
+test("store数据初始化在attached周期", async () => {
   const id = load(path.resolve(__dirname, "store"));
   const comp = render(id);
 
@@ -10,25 +21,24 @@ describe("store-test", () => {
 
   comp.attach(parent);
 
-  type InstanceData = { age: number; aaa_name: string };
+  expect(comp.instance.data.age).toBe(21);
 
-  const instance = comp.instance as unknown as (Instance & { data: InstanceData });
+  expect(comp.instance.data.aaa_name).toBe("lili");
 
-  test("store数据初始化在attached周期", () => {
-    expect(instance.data.age).toBe(10);
+  // @ts-ignore
+  comp.instance.disposer["age"]();
 
-    expect(instance.data.aaa_name).toBe("zhao");
-  });
+  storeUser.changeAge();
 
-  test("store数据变化时自动setData(同步)", async () => {
-    await sleep(200);
+  expect(storeUser.age).toBe(22);
 
-    expect(instance.data.age).toBe(20);
-  });
+  expect(comp.instance.data.age).toBe(21);
 
-  test("实例方法disposer可取消对store变化的监控", async () => {
-    await sleep(400);
+  comp.detach();
 
-    expect(comp.instance.data.age).toBe(20);
-  });
+  storeUser.changeName("zhao");
+
+  expect(storeUser.name).toBe("zhao");
+
+  expect(comp.instance.data.aaa_name).toBe("lili");
 });

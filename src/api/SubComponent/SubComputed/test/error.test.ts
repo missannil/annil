@@ -48,3 +48,16 @@ SubComponent<{}, OnlyPropsCompDoc>()({
     },
   },
 });
+
+// 4 类型错误
+SubComponent<{}, OnlyPropsCompDoc>()({
+  data: {
+    aaa_isReady: false,
+  },
+  computed: {
+    // @ts-ignore 重复的字段
+    aaa_isReady() {
+      return true;
+    },
+  },
+});

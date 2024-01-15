@@ -1,9 +1,9 @@
 import type { V } from "hry-types";
 export type SubComputedOption<
   TComputed extends object,
-  legal extends Record<PropertyKey, unknown>,
+  legal extends PropertyKey,
 > = {
   computed?:
     & TComputed
-    & V.IllegalFieldValidator<TComputed, keyof legal, 0, "", "重复或无效的字段">;
+    & V.IllegalFieldValidator<TComputed, legal, 0, "", "重复或无效的字段">;
 };

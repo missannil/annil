@@ -62,3 +62,15 @@ DefineComponent({
   // @ts-expect-error 2 不能将类型“string”分配给类型“_SubComponentDoc”。
   subComponents: [subDoc],
 });
+
+// 3 错误的key检查
+
+SubComponent<Mock_RootDoc, Mock_CompDoc>()({
+  inherit: {
+    aaa_num: "required_num",
+    // @ts-expect-error 3.1 不存在于组件中的key给错误提示
+    xxx: "",
+    // @ts-expect-error 3.2 不存在于组件中的key给错误提示
+    aaa_xxx: "",
+  },
+});

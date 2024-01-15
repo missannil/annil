@@ -57,28 +57,28 @@ type Options<
   SubComputedDoc extends object,
   SubEventsDoc extends object,
   SubMethodsDoc extends object,
+  CompDocKeys extends PropertyKey = keyof CurrentCompDoc["properties"],
 > =
-  & SubInheritOption<TInherit, keyof CurrentCompDoc["properties"]>
+  & SubInheritOption<TInherit, CompDocKeys>
   & SubDataOption<
     TSubData,
-    Exclude<keyof CurrentCompDoc["properties"] | keyof Extra<Prefix>, (keyof InheritDoc)>,
+    Exclude<CompDocKeys | keyof Extra<Prefix>, (keyof InheritDoc)>,
     Prefix
   >
   & SubStoreOption<
     TSubStore,
-    Exclude<keyof CurrentCompDoc["properties"] | keyof Extra<Prefix>, (keyof (InheritDoc & SubDataDoc))>,
+    Exclude<CompDocKeys | keyof Extra<Prefix>, (keyof (InheritDoc & SubDataDoc))>,
     Prefix
   >
   & SubComputedOption<
     TSubComputed,
-    // AllRootDataDoc & SubDataDoc & SubDataDoc & SubComputedDoc,
     // 合法的配置
-    Omit<CurrentCompDoc["properties"], (keyof (InheritDoc & SubDataDoc & SubStoreDoc))>
+    Exclude<CompDocKeys | keyof Extra<Prefix>, (keyof (InheritDoc & SubDataDoc & SubStoreDoc))>
   >
   // 无需与根组件的events字段重复检测,因为根组件多了bubbles字段,一定不会重复
   & SubEventsOption<TEvents, SubEventsDoc, keyof SubEventsConstraint<CurrentCompDoc>>
   & SubMethodsOption<TSubMethods, Prefix, keyof (CurrentCompDoc["customEvents"] & SubEventsDoc)>
-  & SubPageLifetimesOption<IsPage, RootDoc["properties"] & {}>
+  & SubPageLifetimesOption<IsPage, NonNullable<RootDoc["properties"]>>
   & SubLifetimesOption
   & SubWatchOption<
     & SubComputedDoc
@@ -100,7 +100,7 @@ type Options<
       SubMethodsDoc & RootDoc["methods"],
       Replace<SubDataDoc, Required<CurrentCompDoc["properties"]>>,
       AllRootDataDoc & Replace<SubDataDoc & SubComputedDoc & SubStoreDoc, Required<CurrentCompDoc["properties"]>>,
-      RootDoc["customEvents"] & {},
+      NonNullable<RootDoc["customEvents"]>,
       SubStoreDoc
     >
   >;
@@ -130,8 +130,7 @@ type SubComponentConstructor<
   <
     TInherit extends InheritConstraint<AllRootDataDoc, CurrentCompDoc>,
     TSubData extends SubDataConstraint<
-      & Omit<Required<CurrentCompDoc["properties"]>, keyof InheritDoc>
-      & Extra<CurrentPrefix> // 加入特许字段 isReady
+      & Omit<Required<CurrentCompDoc["properties"]> & Extra<CurrentPrefix>, keyof InheritDoc>
       & Record<InnerFields<CurrentPrefix>, unknown> // 内部字段
     >,
     TSubStore extends SubStoreConstraint<
@@ -141,28 +140,40 @@ type SubComponentConstructor<
     TEvents extends SubEventsConstraint<CurrentCompDoc>,
     // 加默认值计算字段无提示且需要手写返回类型,不加watch无法对computed监控
     TSubComputed extends SubComputedConstraint<
-      & Omit<Required<CurrentCompDoc["properties"]>, keyof (InheritDoc & SubDataDoc & SubStoreDoc)>
-      & Extra<CurrentPrefix> // 加入特许字段 isReady
+      & Omit<
+        Required<CurrentCompDoc["properties"]> & Extra<CurrentPrefix>,
+        keyof (InheritDoc & SubDataDoc & SubStoreDoc)
+      >
       & Record<InnerFields<CurrentPrefix>, unknown> // 内部字段
-    > = {},
+    >,
     TSubMethods extends SubMethodsConstraint = {},
     InheritDoc extends object = IfExtends<InheritConstraint<AllRootDataDoc, CurrentCompDoc>, TInherit, {}, TInherit>,
     SubDataDoc extends object = IfExtends<
-      SubDataConstraint<Omit<Required<CurrentCompDoc["properties"]>, keyof InheritDoc>>,
+      SubDataConstraint<
+        & Omit<Required<CurrentCompDoc["properties"]> & Extra<CurrentPrefix>, keyof InheritDoc>
+        & Record<InnerFields<CurrentPrefix>, unknown>
+      >,
       TSubData,
       {},
       TSubData
     >,
     SubStoreDoc extends object = IfExtends<
-      SubStoreConstraint<Omit<Required<CurrentCompDoc["properties"]>, keyof (InheritDoc & SubDataDoc)>>,
+      SubStoreConstraint<
+        & Omit<Required<CurrentCompDoc["properties"]> & Extra<CurrentPrefix>, keyof (InheritDoc & SubDataDoc)>
+        & Record<InnerFields<CurrentPrefix>, unknown>
+      >,
       TSubStore,
       {},
-      { [k in keyof TSubStore]: ReturnType<TSubStore[k] & {}> }
+      { [k in keyof TSubStore]: ReturnType<NonNullable<TSubStore[k]>> }
     >,
     // 无效的计算
     SubComputedDoc extends object = IfExtends<
       SubComputedConstraint<
-        Omit<Required<CurrentCompDoc["properties"]>, keyof (InheritDoc & SubDataDoc & SubStoreDoc)>
+        & Omit<
+          Required<CurrentCompDoc["properties"]> & Extra<CurrentPrefix>,
+          keyof (InheritDoc & SubDataDoc & SubStoreDoc)
+        >
+        & Record<InnerFields<CurrentPrefix>, unknown> // 内部字段
       >,
       TSubComputed,
       {},
@@ -177,7 +188,7 @@ type SubComponentConstructor<
     SubMethodsDoc extends object = TSubMethods,
     // 缺失的必传字段(配置中inhrit,data,computed的字段不包含的必传字段)
     MissingRequiredField extends PropertyKey = Exclude<
-      RequiredKeys<CurrentCompDoc["properties"] & {}>,
+      RequiredKeys<NonNullable<CurrentCompDoc["properties"]>>,
       keyof (
         & InheritDoc
         & SubDataDoc
@@ -213,7 +224,7 @@ type SubComponentConstructor<
       SubEventsDoc,
       SubMethodsDoc
     >,
-  ): CreateSubComponentDoc<TOriginalCompDoc["customEvents"] & {}, SubEventsDoc, MissingRequiredField>;
+  ): CreateSubComponentDoc<NonNullable<TOriginalCompDoc["customEvents"]>, SubEventsDoc, MissingRequiredField>;
 };
 
 /**

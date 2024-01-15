@@ -27,7 +27,6 @@ SubComponent<{}, CompDoc>()({
   },
 });
 
-//
 SubComponent<{ data: { _num: number } }, CompDoc>()({
   inherit: {
     aaa_str: "wxml",
@@ -35,8 +34,19 @@ SubComponent<{ data: { _num: number } }, CompDoc>()({
     aaa_obj: "wxml",
   },
   data: {
-    // 3 CompDoc去除Inherit字段后为空时,可写内部字段
+    // 3 可写内部字段
     _aaa_str: "str",
+  },
+});
+
+//
+SubComponent<{ data: { _num: number } }, CompDoc>()({
+  inherit: {
+    aaa_str: "wxml",
+  },
+  data: {
+    // 4 可写isReady 特许字段 ExtraFields
+    aaa_isReady: false,
   },
 });
 

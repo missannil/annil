@@ -16,20 +16,22 @@ type DocA = ComponentDoc<{
 
 SubComponent<{}, DocA>()({
   store: {
+    // 1 可写组件字段
     aaa_str: () => user.name,
-
     aaa_num: () => user.age,
-    // 内部字段
-    // _aaa_ddd: () => user.age,
   },
 });
 
 SubComponent<{}, DocA, "a">()({
   store: {
-    aaaA_str: () => user.name,
+    // 2 可写内部字段
+    _aaaA_xxxxxx: () => user.age,
+  },
+});
 
-    aaaA_num: () => user.age,
-    // 内部字段
-    // _aaaA_ddd: () => user.age,
+SubComponent<{}, DocA, "a">()({
+  store: {
+    // 3 可写特许字段
+    aaaA_isReady: () => false,
   },
 });

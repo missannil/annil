@@ -4,6 +4,13 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.5.14](https://github.com/missannil/annil/compare/v1.5.13...v1.5.14) (2024-01-15)
+
+
+### Bug Fixes
+
+* subComponents的data字段和store字段加入isReady字段和内部字段 ([06a22e0](https://github.com/missannil/annil/commit/06a22e0faff21dbc1e96862f190b2af11db55603))
+
 ## [1.5.13](https://github.com/missannil/annil/compare/v1.5.12...v1.5.13) (2024-01-12)
 
 

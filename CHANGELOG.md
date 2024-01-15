@@ -4,6 +4,13 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.5.15](https://github.com/missannil/annil/compare/v1.5.14...v1.5.15) (2024-01-15)
+
+
+### Bug Fixes
+
+* subComputed约束 去除默认{} ([054cb48](https://github.com/missannil/annil/commit/054cb482cdc6c84e820d69d163b9cafe0c01de81))
+
 ## [1.5.14](https://github.com/missannil/annil/compare/v1.5.13...v1.5.14) (2024-01-15)
 
 

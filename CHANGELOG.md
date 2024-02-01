@@ -4,6 +4,13 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.6.0](https://github.com/missannil/annil/compare/v1.5.15...v1.6.0) (2024-02-01)
+
+
+### Features
+
+* 组件实例增加cloneData字段 ([a2bc52d](https://github.com/missannil/annil/commit/a2bc52de20649a735ec860cdaae2bb411028b5fe))
+
 ## [1.5.15](https://github.com/missannil/annil/compare/v1.5.14...v1.5.15) (2024-01-15)
 
 

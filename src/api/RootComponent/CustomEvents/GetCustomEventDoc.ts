@@ -1,4 +1,3 @@
-import type { ReadonlyDeep } from "hry-types/src/Any/ReadonlyDeep";
 import type { DetailedType } from "../../../types/DetailedType";
 import type { InferDetailedType } from "../../../types/InferDetailedType";
 import type {
@@ -9,8 +8,7 @@ import type {
 } from "./CustomEventConstraint";
 import type { AddTagForCustomEventsDoc } from "./CustomEventsTag";
 
-export type GetShortCustomEventsDoc<T extends ShortCustomeEvents> = T extends DetailedType
-  ? ReadonlyDeep<InferDetailedType<T>>
+export type GetShortCustomEventsDoc<T extends ShortCustomeEvents> = T extends DetailedType ? InferDetailedType<T>
   : T extends null ? null
   : T extends undefined ? undefined
   : T extends SimpleCustomeEventsList ? GetShortCustomEventsDoc<T[number]>

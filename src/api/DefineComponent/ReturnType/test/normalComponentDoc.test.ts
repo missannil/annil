@@ -197,3 +197,13 @@ const ComponetDoc = DefineComponent({
 });
 
 Checking<typeof ComponetDoc, {}, Test.Pass>;
+
+// 8 自定义事件文档类型与定义的类型相同
+const rootComponent8 = RootComponent()({
+  customEvents: {
+    // 减少商品
+    decrease: Object as DetailedType<Mock_User>,
+  },
+});
+
+Checking<(typeof rootComponent8)["customEvents"]["decrease"], Mock_User, Test.Pass>;

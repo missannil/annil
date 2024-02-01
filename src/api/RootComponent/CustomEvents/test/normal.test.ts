@@ -1,5 +1,4 @@
 import { Checking, type Test } from "hry-types";
-import type { ReadonlyDeep } from "hry-types/src/Any/ReadonlyDeep";
 import { type DetailedType, RootComponent } from "../../../..";
 import type { Mock_User } from "../../Properties/test/normalRequired.test";
 import type { CustomEventConstraint, FullCustomEvents, ShortCustomeEvents } from "../CustomEventConstraint";
@@ -71,7 +70,7 @@ type RootDoc = {
     nothing: undefined;
     unionStr: "male" | "female";
     union: string | 0 | 1 | 2 | null;
-    obj: ReadonlyDeep<Mock_User>;
+    obj: Mock_User;
     // 带options字段 通过联合类型加入。
     bubbles: string | Bubbles;
     capturePhase: null | Capture;

@@ -1,6 +1,5 @@
 import { Checking, type Test } from "hry-types";
 
-import type { ReadonlyDeep } from "hry-types/src/Any/ReadonlyDeep";
 import type { Mock_User } from "../../Properties/test/normalRequired.test";
 import type { GetShortCustomEventsDoc } from "../GetCustomEventDoc";
 import { mock_shortCustomEvents } from "./normal.test";
@@ -31,6 +30,6 @@ Checking<ListResult, ListExpected, Test.Pass>;
 
 type ObjResult = GetShortCustomEventsDoc<typeof mock_shortCustomEvents["obj"]>;
 
-export type ObjExpected = ReadonlyDeep<Mock_User>;
+export type ObjExpected = Mock_User;
 
 Checking<ObjResult, ObjExpected, Test.Pass>;

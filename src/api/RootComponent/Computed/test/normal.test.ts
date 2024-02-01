@@ -10,6 +10,7 @@ const RootDoc = RootComponent()({
   },
   data: {
     lastName: "lastName",
+    mock_User: {} as Mock_User,
   },
   store: {
     prefix: () => "hry-", // 模拟而已
@@ -30,17 +31,18 @@ const RootDoc = RootComponent()({
       // 3 this.data 类型是深度只读的
       Checking<
         typeof this.data,
-        ReadonlyDeep<
-          {
-            firstName: string;
-            lastName: string;
-            fullName: string;
-            user: Mock_User;
-            prefix: string;
-            id_fullName: string;
-            readOnly: "str";
-          } & IInjectData
-        >,
+        {
+          firstName: string;
+          lastName: string;
+          mock_User: Mock_User;
+          fullName: string;
+          user: Mock_User;
+          prefix: string;
+          id_fullName: string;
+          readOnly: "str";
+          injectStr: string;
+          injectTheme: "light" | "dark" | undefined;
+        },
         Test.Pass
       >;
 

@@ -25,7 +25,6 @@ SubComponent<{
   },
   data: {
     aaa_num: 20,
-    aaa_isReady: false,
   },
   store: {
     // @ts-expect-error 1 与 inherit 字段重复
@@ -34,9 +33,5 @@ SubComponent<{
     aaa_num: () => user.age,
     // @ts-expect-error 3 超出约束字段
     num: () => user.age,
-    // @ts-expect-error 4 于data字段重复
-    aaa_isReady() {
-      return false;
-    },
   },
 });

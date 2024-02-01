@@ -140,18 +140,5 @@ SubComponent<Root, $aaa>()({
     aaa_str(): string {
       return this.data.str;
     },
-
-    aaa_isReady() {
-      return false;
-    },
-  },
-});
-
-SubComponent<Root, $aaa>()({
-  computed: {
-    // 可以写isReady字段 ExtraFields
-    aaa_isReady() {
-      return false;
-    },
   },
 });

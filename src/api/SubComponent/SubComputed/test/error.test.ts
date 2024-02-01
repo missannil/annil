@@ -22,7 +22,7 @@ type OnlyPropsCompDoc = ComponentDoc<{
   };
 }>;
 
-// 2 去除inhrit和data字段后无组件字段约束时,写任何字段都报错
+// 2 去除inhrit和data字段后无组件字段约束时,只可写内部字段
 SubComponent<{}, OnlyPropsCompDoc>()({
   inherit: {
     aaa_str: "wxml",
@@ -31,8 +31,9 @@ SubComponent<{}, OnlyPropsCompDoc>()({
     aaa_num: 123,
   },
   computed: {
-    // @ts-expect-error ⚠️"重复或无效的字段"⚠️
     _aaa_xxx() {},
+    // @ts-expect-error 只可写内部字段
+    aaa_yyy() {},
   },
 });
 
@@ -45,19 +46,6 @@ SubComponent<{}, OnlyPropsCompDoc>()({
     // @ts-expect-error  类型错误
     aaa_num() {
       return "string";
-    },
-  },
-});
-
-// 4 类型错误
-SubComponent<{}, OnlyPropsCompDoc>()({
-  data: {
-    aaa_isReady: false,
-  },
-  computed: {
-    // @ts-ignore 重复的字段
-    aaa_isReady() {
-      return true;
     },
   },
 });

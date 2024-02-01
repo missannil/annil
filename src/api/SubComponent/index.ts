@@ -6,7 +6,7 @@ import type { ReplacePrefix } from "../../types/ReplacePrefix";
 import type { ComponentDoc } from "../DefineComponent/ReturnType/ComponentDoc";
 
 import type { Func } from "hry-types/src/Misc/Func";
-import type { Extra } from "../../types/Extra";
+
 import type { InnerFields } from "../../types/InnerData";
 import type { WMCompOtherOption } from "../../types/OfficialTypeAlias";
 import type { Replace } from "../../types/Replace";
@@ -62,18 +62,18 @@ type Options<
   & SubInheritOption<TInherit, CompDocKeys>
   & SubDataOption<
     TSubData,
-    Exclude<CompDocKeys | keyof Extra<Prefix>, (keyof InheritDoc)>,
-    Prefix
+    // 合法的配置
+    Exclude<CompDocKeys, (keyof InheritDoc)> | InnerFields<Prefix>
   >
   & SubStoreOption<
     TSubStore,
-    Exclude<CompDocKeys | keyof Extra<Prefix>, (keyof (InheritDoc & SubDataDoc))>,
-    Prefix
+    // 合法的配置
+    Exclude<CompDocKeys, (keyof (InheritDoc & SubDataDoc))> | InnerFields<Prefix>
   >
   & SubComputedOption<
     TSubComputed,
     // 合法的配置
-    Exclude<CompDocKeys | keyof Extra<Prefix>, (keyof (InheritDoc & SubDataDoc & SubStoreDoc))>
+    Exclude<CompDocKeys, (keyof (InheritDoc & SubDataDoc & SubStoreDoc))> | InnerFields<Prefix>
   >
   // 无需与根组件的events字段重复检测,因为根组件多了bubbles字段,一定不会重复
   & SubEventsOption<TEvents, SubEventsDoc, keyof SubEventsConstraint<CurrentCompDoc>>
@@ -130,18 +130,18 @@ type SubComponentConstructor<
   <
     TInherit extends InheritConstraint<AllRootDataDoc, CurrentCompDoc>,
     TSubData extends SubDataConstraint<
-      & Omit<Required<CurrentCompDoc["properties"]> & Extra<CurrentPrefix>, keyof InheritDoc>
+      & Omit<Required<CurrentCompDoc["properties"]>, keyof InheritDoc>
       & Record<InnerFields<CurrentPrefix>, unknown> // 内部字段
     >,
     TSubStore extends SubStoreConstraint<
-      & Omit<Required<CurrentCompDoc["properties"]> & Extra<CurrentPrefix>, keyof (InheritDoc & SubDataDoc)>
+      & Omit<Required<CurrentCompDoc["properties"]>, keyof (InheritDoc & SubDataDoc)>
       & Record<InnerFields<CurrentPrefix>, unknown> // 内部字段
     >,
     TEvents extends SubEventsConstraint<CurrentCompDoc>,
     // 加默认值计算字段无提示且需要手写返回类型,不加watch无法对computed监控
     TSubComputed extends SubComputedConstraint<
       & Omit<
-        Required<CurrentCompDoc["properties"]> & Extra<CurrentPrefix>,
+        Required<CurrentCompDoc["properties"]>,
         keyof (InheritDoc & SubDataDoc & SubStoreDoc)
       >
       & Record<InnerFields<CurrentPrefix>, unknown> // 内部字段
@@ -150,7 +150,7 @@ type SubComponentConstructor<
     InheritDoc extends object = IfExtends<InheritConstraint<AllRootDataDoc, CurrentCompDoc>, TInherit, {}, TInherit>,
     SubDataDoc extends object = IfExtends<
       SubDataConstraint<
-        & Omit<Required<CurrentCompDoc["properties"]> & Extra<CurrentPrefix>, keyof InheritDoc>
+        & Omit<Required<CurrentCompDoc["properties"]>, keyof InheritDoc>
         & Record<InnerFields<CurrentPrefix>, unknown>
       >,
       TSubData,
@@ -159,7 +159,7 @@ type SubComponentConstructor<
     >,
     SubStoreDoc extends object = IfExtends<
       SubStoreConstraint<
-        & Omit<Required<CurrentCompDoc["properties"]> & Extra<CurrentPrefix>, keyof (InheritDoc & SubDataDoc)>
+        & Omit<Required<CurrentCompDoc["properties"]>, keyof (InheritDoc & SubDataDoc)>
         & Record<InnerFields<CurrentPrefix>, unknown>
       >,
       TSubStore,
@@ -170,7 +170,7 @@ type SubComponentConstructor<
     SubComputedDoc extends object = IfExtends<
       SubComputedConstraint<
         & Omit<
-          Required<CurrentCompDoc["properties"]> & Extra<CurrentPrefix>,
+          Required<CurrentCompDoc["properties"]>,
           keyof (InheritDoc & SubDataDoc & SubStoreDoc)
         >
         & Record<InnerFields<CurrentPrefix>, unknown> // 内部字段

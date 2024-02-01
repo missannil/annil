@@ -25,13 +25,6 @@ SubComponent<{}, DocA>()({
 SubComponent<{}, DocA, "a">()({
   store: {
     // 2 可写内部字段
-    _aaaA_xxxxxx: () => user.age,
-  },
-});
-
-SubComponent<{}, DocA, "a">()({
-  store: {
-    // 3 可写特许字段
-    aaaA_isReady: () => false,
+    _aaaA_xxx: () => user.age,
   },
 });

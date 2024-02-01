@@ -4,6 +4,7 @@ import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersecti
 import type { IReactionDisposer } from "mobx";
 
 import type { Assign } from "../../../types/Assign";
+import type { ComputeObject } from "../../../types/ComputeObj";
 import type { WMComponentInstance, WMInstanceMethods, WMPageInstance } from "../../../types/OfficialTypeAlias";
 import type { IInjectData, IInjectMethods } from "../../InstanceInject/instanceConfig";
 import type { CustomEventMethods } from "./CustomEventMethods";
@@ -15,6 +16,7 @@ export type RootComponentInstance<
   AllData extends object,
   CustomEventsDoc extends object,
   StoreDoc extends object,
+  instanceData = ComputeObject<Assign<IInjectData, ComputeIntersection<AllData>>>,
 > =
   // 官方实例属性is  options  dataset等
   & IfExtends<false, TIsPage, WMComponentInstance, WMPageInstance>
@@ -26,7 +28,8 @@ export type RootComponentInstance<
     disposer: { [k in keyof StoreDoc]: IReactionDisposer };
   }>
   & Assign<IInjectMethods, TMethods & CustomEventMethods<CustomEventsDoc>>
-  & { data: ReadonlyDeep<Assign<IInjectData, ComputeIntersection<AllData>>> };
+  & { data: ReadonlyDeep<instanceData> }
+  & { cloneData: ComputeObject<Assign<IInjectData, ComputeIntersection<AllData>>> };
 
 export type ComponentInstance = RootComponentInstance<false, {}, {}, {}, {}, {}>;
 

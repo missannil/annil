@@ -1,4 +1,4 @@
-import type { V } from "hry-types";
+import type { G } from "hry-types";
 
 export type DataOption<TData extends object, PropertiesKeys extends PropertyKey> = {
   /**
@@ -17,5 +17,5 @@ export type DataOption<TData extends object, PropertiesKeys extends PropertyKey>
    */
   data?:
     & TData
-    & V.DuplicateFieldValidator<TData, PropertiesKeys, "与properties字段重复">;
+    & G.DuplicateFieldValidator<TData, PropertiesKeys, "与properties字段重复">;
 };

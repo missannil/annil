@@ -9,10 +9,10 @@ import type { RequiredSingle, RequiredType, RequiredUnion } from "../PropertiesC
 /**
  * 共用测试对象类型
  */
-export type Mock_User = {
-  id: string;
+export interface Mock_User {
+  readonly id: string;
   age?: number;
-};
+}
 
 /**
  * 共用测试对象类型

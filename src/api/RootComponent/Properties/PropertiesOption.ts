@@ -1,4 +1,4 @@
-import type { V } from "hry-types";
+import type { G } from "hry-types";
 import type { Validators } from "../../../types/Validators";
 import type { PropertiesConstraint } from "./PropertiesConstraint";
 import type { PropertiesValueValidator } from "./PropertiesValueValidator";
@@ -21,6 +21,6 @@ export type PropertiesOption<
     & Validators<[
       PropertiesValueValidator<TProperties>,
       // 放在最后一个，正常返回不是unknown 而是Record<string,unknown>
-      V.IllegalFieldValidator<TProperties, "value" | "type" | "optionalTypes", 1>,
+      G.IllegalFieldValidator<TProperties, "value" | "type" | "optionalTypes", 1>,
     ]>;
 };

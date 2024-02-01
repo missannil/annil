@@ -1,4 +1,4 @@
-import type { V } from "hry-types";
+import type { G } from "hry-types";
 
 export type SubInheritOption<TInherit extends object, legalKeys extends PropertyKey> = {
   /**
@@ -8,7 +8,7 @@ export type SubInheritOption<TInherit extends object, legalKeys extends Property
    */
   inherit?:
     & TInherit
-    & V.IllegalFieldValidator<
+    & G.IllegalFieldValidator<
       TInherit,
       legalKeys,
       0,

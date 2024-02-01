@@ -2,7 +2,11 @@ import type { DuplicateFieldValidator } from "hry-types/src/Generic/DuplicateFie
 
 import type { ComputedConstraint } from "./ComputedConstraint";
 
-export type ComputedOption<TComputed extends ComputedConstraint, CompareKeys extends PropertyKey> = {
+export type ComputedOption<
+  TComputed extends ComputedConstraint,
+  CompareKeys extends PropertyKey,
+  Instance extends object,
+> = {
   /**
    * computed字段, [类型约束ComputedConstraint](ComputedConstraint.ts)
    * @remarks
@@ -28,5 +32,6 @@ export type ComputedOption<TComputed extends ComputedConstraint, CompareKeys ext
    */
   computed?:
     & TComputed
+    & ThisType<Instance>
     & DuplicateFieldValidator<TComputed, CompareKeys>;
 };

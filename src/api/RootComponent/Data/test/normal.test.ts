@@ -14,6 +14,8 @@ const RootDoc = RootComponent()({
   },
   methods: {
     foo() {
+      this.cloneData.num = 123;
+
       Checking<
         typeof this.data,
         ReadonlyDeep<{ gender: Gender; num: number; _innernalFields: number } & IInjectData>,

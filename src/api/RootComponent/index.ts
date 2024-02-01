@@ -5,7 +5,7 @@ import type { ComputeIntersection } from "hry-types/src/Object/_api";
 import type { ComputeObject } from "../../types/ComputeObj";
 import type { WMCompOtherOption } from "../../types/OfficialTypeAlias";
 import type { ComponentDoc } from "../DefineComponent/ReturnType/ComponentDoc";
-import type { IInjectStore } from "../InstanceInject/instanceConfig";
+import type { IInjectData, IInjectStore } from "../InstanceInject/instanceConfig";
 import type { ComputedConstraint } from "./Computed/ComputedConstraint";
 import type { ComputedOption } from "./Computed/ComputedOption";
 import type { GetComputedDoc } from "./Computed/GetComputedDoc";
@@ -55,7 +55,11 @@ type RootComponentOptions<
   & CustomEventsOption<TCustomEvents, keyof EventsDoc>
   & DataOption<TData, keyof PropertiesDoc>
   & StoreOption<TStore, keyof (PropertiesDoc & DataDoc)>
-  & ComputedOption<TComputed, keyof (PropertiesDoc & DataDoc & StoreDoc)>
+  & ComputedOption<
+    TComputed,
+    keyof (PropertiesDoc & DataDoc & StoreDoc),
+    { data: ComputeObject<DataDoc & Required<PropertiesDoc> & StoreDoc & ComputedDoc & IInjectData> }
+  >
   & PageLifetimesOption<TIsPage, PropertiesDoc>
   & LifetimesOption
   & WatchOption<

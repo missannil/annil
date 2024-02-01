@@ -1,4 +1,4 @@
-import type { V } from "hry-types";
+import type { G } from "hry-types";
 import type { StoreConstraint } from "./StoreConstraint";
 
 export type StoreOption<TStore extends StoreConstraint, TDuplicateKeys extends PropertyKey> = {
@@ -16,5 +16,5 @@ export type StoreOption<TStore extends StoreConstraint, TDuplicateKeys extends P
    */
   store?:
     & TStore
-    & V.DuplicateFieldValidator<TStore, TDuplicateKeys, "字段重复">;
+    & G.DuplicateFieldValidator<TStore, TDuplicateKeys, "字段重复">;
 };

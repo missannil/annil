@@ -1,6 +1,5 @@
 import type { Func } from "hry-types/src/Misc/_api";
 import { BBeforeCreate } from "../../../behaviors/BbeforeCreated";
-
 import type { Assign } from "../../../types/Assign";
 import type { WMComponent } from "../../../types/OfficialTypeAlias";
 import { deepClone } from "../../../utils/deepClone";
@@ -34,6 +33,7 @@ import { initStore } from "./initStore";
 type InstanceInnerFields = {
   data: OptionsInnerFields["data"];
   disposer: Record<string, Func>;
+  cloneData: OptionsInnerFields["data"];
 } & OptionsInnerFields["methods"];
 
 export type Instance =
@@ -101,6 +101,13 @@ export function isPageCheck(isPage: boolean | undefined) {
   };
 }
 
+function addCloneDataToInstance(this: Instance) {
+  this.cloneData = new Proxy(this.data, {
+    get: <T extends object>(target: T, key: keyof T) => {
+      return deepClone(target)[key];
+    },
+  });
+}
 /**
  * 原生Component会对传入的对象字段匹配的properties字段setData赋值。不符合字段或Page时不会赋值。
  * 此函数为给实例setData赋值,默认传递值与properties相符(ts类型安全)。
@@ -437,6 +444,12 @@ export function assignOptions(
     finalOptionsForComponent.lifetimes!,
     "attached",
     [isPageCheck(rootComponentOption?.isPage)],
+  );
+
+  hijack(
+    finalOptionsForComponent.lifetimes!,
+    "created",
+    [addCloneDataToInstance],
   );
 
   // 页面时删除预设的虚拟组件字段

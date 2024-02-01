@@ -10,11 +10,11 @@ RootComponent()({
   },
   computed: {
     // @ts-expect-error '与properties字段重复'
-    str() {
+    str(): string {
       return "与properties字段重复";
     },
     // @ts-expect-error "与data字段重复"
-    num() {
+    num(): string {
       return "与data字段重复";
     },
   },

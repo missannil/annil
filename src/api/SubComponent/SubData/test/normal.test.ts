@@ -39,17 +39,6 @@ SubComponent<{ data: { _num: number } }, CompDoc>()({
   },
 });
 
-//
-SubComponent<{ data: { _num: number } }, CompDoc>()({
-  inherit: {
-    aaa_str: "wxml",
-  },
-  data: {
-    // 4 可写isReady 特许字段 ExtraFields
-    aaa_isReady: false,
-  },
-});
-
 SubComponent<{}, CompDoc>()({
   data: {
     aaa_str: "a",

@@ -14,10 +14,8 @@
     "prepare": "husky install",
     "lint": "eslint . --fix && npm run fmt",
     "fmt": "dprint fmt",
-    "test:jest": "jest --watch",
-    "test:type": "tsc --watch",
-    "type": "npm run test:type",
-    "jest": "npm run test:jest",
+    "type": "tsc --watch",
+    "jest": "jest --watch",
     "build": "tsc -p tsconfig.build.json"
   },
   "devDependencies": {
@@ -28,6 +26,7 @@
     "commitlint": "^17.6.5",
     "eslint": "^8.54.0",
     "eslint-plugin-tsdoc": "^0.2.17",
+    "hry-types": "^0.18.1",
     "husky": "^8.0.3",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
@@ -54,7 +53,6 @@
   "author": "missannil",
   "license": "MIT",
   "peerDependencies": {
-    "hry-types": "^0.17.0",
     "miniprogram-api-typings": "^3.12.2"
   }
 }

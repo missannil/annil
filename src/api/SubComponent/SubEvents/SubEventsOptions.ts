@@ -1,4 +1,4 @@
-import type { V } from "hry-types";
+import type { G } from "hry-types";
 
 export type SubEventsOption<TSubEvents, SubEventsDoc extends object, legalKeys extends PropertyKey> = {
   /**
@@ -8,5 +8,5 @@ export type SubEventsOption<TSubEvents, SubEventsDoc extends object, legalKeys e
    */
   events?:
     & TSubEvents
-    & V.IllegalFieldValidator<SubEventsDoc, legalKeys>;
+    & G.IllegalFieldValidator<SubEventsDoc, legalKeys>;
 };

@@ -1,4 +1,4 @@
-import type { V } from "hry-types";
+import type { G } from "hry-types";
 import type { PrefixValidator } from "hry-types/src/Generic/PrefixValidator";
 import type { SubMethodsConstraint } from "./SubMethodsConstraint";
 
@@ -13,5 +13,5 @@ export type SubMethodsOption<
   methods?:
     & TSubMethods
     & PrefixValidator<TSubMethods, TPrefix>
-    & V.DuplicateFieldValidator<TSubMethods, ExcludedKeys>;
+    & G.DuplicateFieldValidator<TSubMethods, ExcludedKeys>;
 };

@@ -1,3 +1,4 @@
+import { deepClone } from "../../../../utils/deepClone";
 import type { ComputedDependence } from "./computedUpdater";
 
 export function deepProxy(
@@ -6,16 +7,8 @@ export function deepProxy(
   basePath: string[] = [],
 ): object {
   const handler = {
-    get(target: object, prop: string) {
-      // // 得到原始的对象 在unwrap时使用
-      // console.log(target, prop);
-
-      if (prop === "__rawObject__") return target;
-      // @ts-ignore 隐式索引
+    get<T extends object>(target: T, prop: keyof T & string) {
       const val = target[prop];
-
-      // console.log("获取依赖", prop, val);
-
       // 依赖长度不为0时 去重
       if (basePath.length !== 0) {
         // 依赖去重
@@ -30,7 +23,7 @@ export function deepProxy(
 
       // console.log(prop, val,'in');
 
-      dependences.push({ paths: curPath, val: unwrap(val) });
+      dependences.push({ paths: curPath, val: deepClone(val) });
 
       // 自身方法或原型属性不代理
       if (!Object.prototype.hasOwnProperty.call(target, prop) || typeof val === "function") {
@@ -42,25 +35,10 @@ export function deepProxy(
 
       return deepProxy(val, dependences, curPath);
     },
-    /* istanbul ignore next */
     set(_target: object, prop: string) {
       throw Error(`${prop}字段是只读的`);
     },
   };
 
   return new Proxy(data, handler);
-}
-
-export function unwrap(wrapped: any): unknown {
-  // 非引用值 直接返回
-  if (typeof wrapped !== "object" || wrapped === null) {
-    return wrapped;
-  }
-  // 是引用值 取原值
-  const originalValue = wrapped.__rawObject__;
-  if (originalValue) {
-    wrapped = originalValue;
-  }
-
-  return wrapped;
 }

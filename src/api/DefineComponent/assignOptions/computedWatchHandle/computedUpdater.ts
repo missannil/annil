@@ -1,6 +1,6 @@
+import { deepClone } from "../../../../utils/deepClone";
 import type { Instance } from "..";
-
-import { deepProxy, unwrap } from "./data-tracer";
+import { deepProxy } from "./data-tracer";
 import { getPathsValue } from "./getPathsValue";
 
 import { isEqual } from "./isEqual";
@@ -27,7 +27,7 @@ export function computedUpdater(this: Instance, isUpdated = false): boolean {
 
       // 更新值不会立即再次进入**函数,而是当前**函数运行完毕后触发**函数,
       this.setData({
-        [key]: unwrap(newValue),
+        [key]: deepClone(newValue),
       });
 
       isUpdated = true;

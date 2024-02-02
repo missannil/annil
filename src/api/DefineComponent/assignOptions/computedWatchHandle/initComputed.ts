@@ -1,8 +1,9 @@
 import type { Func } from "hry-types/src/Misc/Func";
 import type { FinalOptionsOfComponent } from "..";
 
+import { deepClone } from "../../../../utils/deepClone";
 import type { ComputedDependence } from "./computedUpdater";
-import { deepProxy, unwrap } from "./data-tracer";
+import { deepProxy } from "./data-tracer";
 
 type ItemCache = {
   dependences: ComputedDependence[];
@@ -41,7 +42,7 @@ export function getItemCache(
       // 去重 避免 如: ` age(){ return this.data.xxx.num + this.data.xxx.str + this.data.xxx} ` 造成的多个依赖相同情况。应就要一个 xxx
       dependences: uniqueDependences(dependences),
       method: computedFunc,
-      value: unwrap(initValue),
+      value: deepClone(initValue),
     };
   } else {
     /**

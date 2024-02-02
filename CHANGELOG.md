@@ -4,6 +4,14 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.6.1](https://github.com/missannil/annil/compare/v1.6.0...v1.6.1) (2024-02-02)
+
+
+### Bug Fixes
+
+* 修正自定义事件文档类型,去除readonlyDeep ([b4d329b](https://github.com/missannil/annil/commit/b4d329b8c1b90407fd714fa42784c2dcb0c705f8))
+* 用deepClone代替unwarp以修复计算属性返回数据包含代理对象 ([38cc56a](https://github.com/missannil/annil/commit/38cc56a477a8adcaaf73f4cbef44cd8b701a175d))
+
 ## [1.6.0](https://github.com/missannil/annil/compare/v1.5.15...v1.6.0) (2024-02-01)
 
 

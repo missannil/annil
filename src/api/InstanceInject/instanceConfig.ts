@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-member-accessibility */
 
+import type { IfEquals } from "hry-types/src/Any/IfEquals";
+import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
 import type { ReturnTypeInObject } from "hry-types/src/Object/ReturnTypeInObject";
 import type { WMComponentOption } from "../../types/OfficialTypeAlias";
 import type { DataConstraint } from "../RootComponent/Data/DataConstraint";
@@ -19,9 +21,16 @@ interface BaseInjectInfo {
 export interface IInjectInfo extends BaseInjectInfo {
 }
 
-export type IInjectData = IInjectInfo["data"] & ReturnTypeInObject<IInjectInfo["store"]>;
+export type IInjectAllData = IfEquals<
+  {},
+  injectData & IInjectStore,
+  {},
+  ComputeIntersection<injectData & IInjectStore>
+>;
 
-export type IInjectStore = StoreConstraint extends IInjectInfo["store"] ? unknown
+type injectData = DataConstraint extends IInjectInfo["data"] ? {} : IInjectInfo["data"];
+
+export type IInjectStore = StoreConstraint extends IInjectInfo["store"] ? {}
   : ReturnTypeInObject<IInjectInfo["store"]>;
 
 export type IInjectMethods = IInjectInfo["methods"];

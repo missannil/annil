@@ -1,8 +1,8 @@
 import { Checking, type Test } from "hry-types";
-import type { ReadonlyDeep } from "hry-types/src/Any/_api";
 import type { ComponentDoc } from "../../../DefineComponent/ReturnType/ComponentDoc";
 
-import type { IInjectData } from "../../../InstanceInject/instanceConfig";
+import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
+import type { IInjectAllData } from "../../../InstanceInject/instanceConfig";
 import type { Mock_User } from "../../../RootComponent/Properties/test/normalRequired.test";
 import { SubComponent } from "../..";
 
@@ -51,13 +51,13 @@ SubComponent<{}, CompDoc>()({
       // 4 this.data中的data配置数据
       Checking<
         typeof this.data,
-        ReadonlyDeep<
+        ComputeIntersection<
           {
             _aaa_str: string;
             aaa_str: "a" | "b";
             aaa_num: number;
             aaa_obj: Mock_User | null;
-          } & IInjectData
+          } & IInjectAllData
         >,
         Test.Pass
       >;
@@ -72,7 +72,7 @@ SubComponent<{ data: { _num: number } }, CompDoc>()({
   },
   lifetimes: {
     attached() {
-      Checking<typeof this.data.aaa_obj, ReadonlyDeep<Mock_User | null>, Test.Pass>;
+      Checking<typeof this.data.aaa_obj, Mock_User | null, Test.Pass>;
 
       this.setData({
         aaa_obj: {} as Mock_User, // aaa_obj 类型为 Mock_User | null 而非 null

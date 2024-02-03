@@ -1,6 +1,6 @@
 import { Checking, type Test } from "hry-types";
-import type { ReadonlyDeep } from "hry-types/src/Any/_api";
-import type { IInjectData } from "../../../InstanceInject/instanceConfig";
+import type { ComputeIntersection } from "hry-types/src/Object/_api";
+import type { IInjectAllData } from "../../../InstanceInject/instanceConfig";
 import { RootComponent } from "../..";
 import type { Mock_User } from "../../Properties/test/normalRequired.test";
 
@@ -31,18 +31,18 @@ const RootDoc = RootComponent()({
       // 3 this.data 类型是深度只读的
       Checking<
         typeof this.data,
-        {
-          firstName: string;
-          lastName: string;
-          mock_User: Mock_User;
-          fullName: string;
-          user: Mock_User;
-          prefix: string;
-          id_fullName: string;
-          readOnly: "str";
-          injectStr: string;
-          injectTheme: "light" | "dark" | undefined;
-        },
+        ComputeIntersection<
+          {
+            firstName: string;
+            lastName: string;
+            mock_User: Mock_User;
+            fullName: string;
+            user: Mock_User;
+            prefix: string;
+            id_fullName: string;
+            readOnly: "str";
+          } & IInjectAllData
+        >,
         Test.Pass
       >;
 
@@ -71,7 +71,7 @@ const noComputedFieldDoc = RootComponent()({
   methods: {
     M1() {
       // 5.1 无computed,this.data中为{}
-      Checking<typeof this.data, ReadonlyDeep<IInjectData>, Test.Pass>;
+      Checking<typeof this.data, IInjectAllData, Test.Pass>;
     },
   },
 });
@@ -86,7 +86,7 @@ const EmptyComputedFieldDoc = RootComponent()({
   methods: {
     M1() {
       // 6.1 computed为{},this.data中为{}
-      Checking<typeof this.data, ReadonlyDeep<IInjectData>, Test.Pass>;
+      Checking<typeof this.data, IInjectAllData, Test.Pass>;
     },
   },
 });

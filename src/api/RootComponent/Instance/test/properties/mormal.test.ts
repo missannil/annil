@@ -1,7 +1,7 @@
 import { Checking, type Test } from "hry-types";
-import type { ReadonlyDeep } from "hry-types/src/Any/ReadonlyDeep";
+import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
 import { type DetailedType, RootComponent } from "../../../../..";
-import type { IInjectData } from "../../../../InstanceInject/instanceConfig";
+import type { IInjectAllData } from "../../../../InstanceInject/instanceConfig";
 
 // 组件时
 RootComponent()({
@@ -17,7 +17,12 @@ RootComponent()({
       // 组件实例对象格外添加null类型
       Checking<
         typeof this.data,
-        ReadonlyDeep<{ optionalObj: { name: string } | null; obj: object | null } & IInjectData>,
+        ComputeIntersection<
+          {
+            optionalObj: { name: string } | null;
+            obj: object | null;
+          } & IInjectAllData
+        >,
         Test.Pass
       >;
     },
@@ -44,7 +49,7 @@ RootComponent()({
       }, Test.Pass>;
 
       // 页面实例对象不额外添加null
-      Checking<typeof this.data.optionalObj, ReadonlyDeep<{ name: string }>, Test.Pass>;
+      Checking<typeof this.data.optionalObj, { name: string }, Test.Pass>;
 
       // 页面实例对象不额外添加null
       Checking<typeof this.data.obj, object, Test.Pass>;

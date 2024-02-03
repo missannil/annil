@@ -1,5 +1,5 @@
 import { Checking, type Test } from "hry-types";
-import type { ReadonlyDeep } from "hry-types/src/Any/ReadonlyDeep";
+
 import { type DetailedType, RootComponent, SubComponent } from "../../../..";
 import type { OptionalType } from "../../../RootComponent/Properties/PropertiesConstraint";
 import {
@@ -63,26 +63,16 @@ SubComponent<Root, { properties: { aaa_num: number } }>()({
 
       Checking<boolean, typeof oldValue, Test.Pass>;
     },
-    arr(newValue, oldValue) {
-      newValue; // readonly ReadonlyDeep<unknown>[]
 
-      oldValue; // readonly ReadonlyDeep<unknown>[]
-
-      // ts中很多不是错误的错误,写 typeof newValue 结果是错误
-      Checking<unknown[], typeof newValue, Test.Fail>;
-
-      // ts中很多不是错误的错误,写 readonly ReadonlyDeep<unknown>[] 结果是正确的
-      Checking<readonly unknown[], readonly ReadonlyDeep<unknown>[], Test.Pass>;
-    },
     obj(newValue, oldValue) {
       Checking<object, typeof newValue, Test.Pass>;
 
       Checking<object | null, typeof oldValue, Test.Pass>;
     },
     tuple(newValue, oldValue) {
-      Checking<readonly [string, number, boolean], typeof newValue, Test.Pass>;
+      Checking<[string, number, boolean], typeof newValue, Test.Pass>;
 
-      Checking<readonly [string, number, boolean], typeof oldValue, Test.Pass>;
+      Checking<[string, number, boolean], typeof oldValue, Test.Pass>;
     },
     union_str(newValue, oldValue) {
       Checking<"male" | "female", typeof newValue, Test.Pass>;
@@ -100,14 +90,14 @@ SubComponent<Root, { properties: { aaa_num: number } }>()({
       Checking<false | true, typeof oldValue, Test.Pass>;
     },
     union_arr(newValue, oldValue) {
-      Checking<readonly number[] | readonly string[], typeof newValue, Test.Pass>;
+      Checking<number[] | string[], typeof newValue, Test.Pass>;
 
-      Checking<readonly number[] | readonly string[], typeof oldValue, Test.Pass>;
+      Checking<number[] | string[], typeof oldValue, Test.Pass>;
     },
     union_obj(newValue, oldValue) {
-      Checking<ReadonlyDeep<Mock_User | Mock_Cart>, typeof newValue, Test.Pass>;
+      Checking<Mock_User | Mock_Cart, typeof newValue, Test.Pass>;
 
-      Checking<ReadonlyDeep<Mock_User | Mock_Cart | null>, typeof oldValue, Test.Pass>;
+      Checking<Mock_User | Mock_Cart | null, typeof oldValue, Test.Pass>;
     },
     // 必传多类型联合
     union_str_num_bool(newValue, oldValue) {
@@ -121,9 +111,9 @@ SubComponent<Root, { properties: { aaa_num: number } }>()({
       Checking<0 | 1 | 2 | "male" | "female", typeof oldValue, Test.Pass>;
     },
     union_mockUser_num(newValue, oldValue) {
-      Checking<ReadonlyDeep<number | Mock_User>, typeof newValue, Test.Pass>;
+      Checking<number | Mock_User, typeof newValue, Test.Pass>;
 
-      Checking<ReadonlyDeep<number | Mock_User | null>, typeof oldValue, Test.Pass>;
+      Checking<number | Mock_User | null, typeof oldValue, Test.Pass>;
     },
     // 可选字段
     optional_gender(newValue, oldValue) {
@@ -137,9 +127,9 @@ SubComponent<Root, { properties: { aaa_num: number } }>()({
       Checking<number, typeof oldValue, Test.Pass>;
     },
     optional_obj(newValue, oldValue) {
-      Checking<ReadonlyDeep<Mock_User>, typeof newValue, Test.Pass>;
+      Checking<Mock_User, typeof newValue, Test.Pass>;
 
-      Checking<ReadonlyDeep<Mock_User | null>, typeof oldValue, Test.Pass>;
+      Checking<Mock_User | null, typeof oldValue, Test.Pass>;
     },
     // 对象的二段key
     "optional_obj.age"(newValue, oldValue) {
@@ -148,9 +138,9 @@ SubComponent<Root, { properties: { aaa_num: number } }>()({
       Checking<number | undefined, typeof oldValue, Test.Pass>;
     },
     "optional_obj.**"(newValue, oldValue) {
-      Checking<ReadonlyDeep<Mock_User>, typeof newValue, Test.Pass>;
+      Checking<Mock_User, typeof newValue, Test.Pass>;
 
-      Checking<ReadonlyDeep<Mock_User | null>, typeof oldValue, Test.Pass>;
+      Checking<Mock_User | null, typeof oldValue, Test.Pass>;
     },
     "optional_obj.id"(newValue, oldValue) {
       Checking<string, typeof newValue, Test.Pass>;

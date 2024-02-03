@@ -95,22 +95,3 @@ const rootDocNoFields = RootComponent()({});
 
 // 3. 无customEvents字段时,Doc中无customEvents字段
 Checking<typeof rootDocNoFields, {}, Test.Pass>;
-
-// 4 实例中的对象数组都是readOnlyDeep类型,可以传递给自定义做参数
-RootComponent()({
-  properties: {
-    obj: Object as DetailedType<Mock_User>,
-  },
-  data: {
-    obj1: {} as Mock_User,
-    _ddd: {} as Mock_User,
-  },
-  customEvents: mock_customEvents,
-  events: {
-    ddd() {
-      this.obj(this.data.obj!);
-
-      this.obj(this.data.obj1);
-    },
-  },
-});

@@ -1,8 +1,8 @@
 import { Checking, type Test } from "hry-types";
-import type { ReadonlyDeep } from "hry-types/src/Any/_api";
 import type { ComponentDoc } from "../../../DefineComponent/ReturnType/ComponentDoc";
 
-import type { IInjectData } from "../../../InstanceInject/instanceConfig";
+import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
+import type { IInjectAllData } from "../../../InstanceInject/instanceConfig";
 import type { Mock_User } from "../../../RootComponent/Properties/test/normalRequired.test";
 import type { RootComponentDoc } from "../../../RootComponent/RootComponentDoc";
 import { SubComponent } from "../..";
@@ -55,7 +55,7 @@ SubComponent<RootDoc, CompDoc>()({
       // this.data
       Checking<
         typeof this.data,
-        ReadonlyDeep<
+        ComputeIntersection<
           {
             // RootData
             Pstr: string;
@@ -65,7 +65,7 @@ SubComponent<RootDoc, CompDoc>()({
             Cnum: number;
             // 自身Data类型与CompDoc类型相同
             aaa_str: string;
-          } & IInjectData
+          } & IInjectAllData
         >,
         Test.Pass
       >;

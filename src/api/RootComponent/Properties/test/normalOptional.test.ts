@@ -1,7 +1,7 @@
 import { Checking, type Test } from "hry-types";
-import type { ReadonlyDeep } from "hry-types/src/Any/_api";
+import type { ComputeIntersection } from "hry-types/src/Object/_api";
 import type { DetailedType } from "../../../../types/DetailedType";
-import type { IInjectData } from "../../../InstanceInject/instanceConfig";
+import type { IInjectAllData } from "../../../InstanceInject/instanceConfig";
 import { RootComponent } from "../..";
 import { type Mock_User } from "./normalRequired.test";
 
@@ -48,7 +48,7 @@ const OptionalDoc = RootComponent()({
       // 1. 内部this.data中的类型(去除可选)
       Checking<
         typeof this.data,
-        ReadonlyDeep<
+        ComputeIntersection<
           {
             optional_num: number;
             optional_gender: "male" | "female";
@@ -57,7 +57,7 @@ const OptionalDoc = RootComponent()({
             optional_objOrNull: Mock_User | null;
             optional_union: string | number;
             optional_arr: string[];
-          } & IInjectData
+          } & IInjectAllData
         >,
         Test.Pass
       >;

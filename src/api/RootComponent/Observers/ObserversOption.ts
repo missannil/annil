@@ -1,4 +1,3 @@
-import type { ReadonlyDeep } from "hry-types/src/Any/_api";
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { IsPureObject } from "hry-types/src/Any/IsPureObject";
 import type { NoInfer } from "hry-types/src/Generic/NoInfer";
@@ -20,15 +19,13 @@ type AddFieldsOfObject<
 > = {
   [k in secondKeys]?: (
     // @ts-ignore
-    newValue: ReadonlyDeep<
-      IfExtends<
-        getLastKeys<k>,
-        "**",
-        // @ts-ignore
-        TWatchData[getFirstKeys<k>],
-        // @ts-ignore
-        NonNullable<(Exclude<TWatchData[getFirstKeys<k>], null>)[getLastKeys<k>]>
-      >
+    newValue: IfExtends<
+      getLastKeys<k>,
+      "**",
+      // @ts-ignore
+      TWatchData[getFirstKeys<k>],
+      // @ts-ignore
+      NonNullable<(Exclude<TWatchData[getFirstKeys<k>], null>)[getLastKeys<k>]>
     >,
   ) => void;
 };
@@ -46,7 +43,7 @@ export type ObserversOption<TWatchData extends object, _WatchKeys extends keyof 
     NoInfer<
       & {
         [k in _WatchKeys | "**"]?: (
-          newValue: k extends keyof TWatchData ? ReadonlyDeep<TWatchData[k]> : unknown,
+          newValue: k extends keyof TWatchData ? TWatchData[k] : unknown,
         ) => void;
       }
       // 解决单独书写计算书写字段的报错(或许是:ts字面量约束检测提前计算属性key引起的错误提示)

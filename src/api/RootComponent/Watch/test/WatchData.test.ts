@@ -1,6 +1,5 @@
 import { Checking, type Test } from "hry-types";
 
-import type { ReadonlyDeep } from "hry-types/src/Any/_api";
 import { observable } from "mobx";
 import { RootComponent } from "../..";
 import type { Mock_User } from "../../Properties/test/normalRequired.test";
@@ -29,9 +28,9 @@ RootComponent()({
       Checking<number, typeof oldValue, Test.Pass>;
     },
     obj(newValue, oldValue) {
-      Checking<ReadonlyDeep<Mock_User>, typeof newValue, Test.Pass>;
+      Checking<Mock_User, typeof newValue, Test.Pass>;
 
-      Checking<ReadonlyDeep<Mock_User>, typeof oldValue, Test.Pass>;
+      Checking<Mock_User, typeof oldValue, Test.Pass>;
     },
     reactiveNumber(newValue: number, oldValue) {
       Checking<number, typeof newValue, Test.Pass>;
@@ -44,9 +43,9 @@ RootComponent()({
       Checking<"male" | "female", typeof oldValue, Test.Pass>;
     },
     reactiveUser(newValue, oldValue) {
-      Checking<ReadonlyDeep<Mock_User>, typeof newValue, Test.Pass>;
+      Checking<Mock_User, typeof newValue, Test.Pass>;
 
-      Checking<ReadonlyDeep<Mock_User>, typeof oldValue, Test.Pass>;
+      Checking<Mock_User, typeof oldValue, Test.Pass>;
     },
   },
 });

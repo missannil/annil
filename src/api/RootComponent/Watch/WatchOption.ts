@@ -1,4 +1,3 @@
-import type { ReadonlyDeep } from "hry-types/src/Any/_api";
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { IsPureObject } from "hry-types/src/Any/IsPureObject";
 import type { NoInfer } from "hry-types/src/Generic/NoInfer";
@@ -20,27 +19,22 @@ type AddFieldsOfObject<
 > = {
   [k in secondKeys]?: (
     // @ts-ignore
-    newValue: ReadonlyDeep<
-      IfExtends<
-        getLastKeys<k>,
-        "**",
-        // @ts-ignore
-        Exclude<TWatchData[getFirstKeys<k>], null>,
-        // @ts-ignore
-        NonNullable<(Exclude<TWatchData[getFirstKeys<k>], null>)[getLastKeys<k>]>
-      >
+    newValue: IfExtends<
+      getLastKeys<k>,
+      "**",
+      // @ts-ignore
+      Exclude<TWatchData[getFirstKeys<k>], null>,
+      // @ts-ignore
+      NonNullable<(Exclude<TWatchData[getFirstKeys<k>], null>)[getLastKeys<k>]>
     >,
-    oldValue: ReadonlyDeep<
-      IfExtends<
-        getLastKeys<k>,
-        "**",
-        // @ts-ignore
-        TWatchData[getFirstKeys<k>],
-        // @ts-ignore
-        (Exclude<TWatchData[getFirstKeys<k>], null>)[getLastKeys<k>]
-      >
+    oldValue: IfExtends<
+      getLastKeys<k>,
+      "**",
+      // @ts-ignore
+      TWatchData[getFirstKeys<k>],
+      // @ts-ignore
+      (Exclude<TWatchData[getFirstKeys<k>], null>)[getLastKeys<k>]
     >,
-    // ReadonlyDeep<(Exclude<TWatchData[getFirstKeys<k>], null>)[getLastKeys<k>]>,
   ) => void;
 };
 
@@ -57,9 +51,9 @@ export type WatchOption<TWatchData extends object, _WatchKeys extends keyof TWat
     NoInfer<
       & {
         [k in _WatchKeys]?: (
-          // newValue 去除null 深度只读
-          newValue: ReadonlyDeep<Exclude<TWatchData[k], null>>,
-          oldValue: ReadonlyDeep<TWatchData[k]>,
+          // newValue 去除null
+          newValue: Exclude<TWatchData[k], null>,
+          oldValue: TWatchData[k],
         ) => void;
       }
       // 解决单独书写计算书写字段的报错(猜测是:ts字面量约束检测提前计算属性key引起的错误提示)

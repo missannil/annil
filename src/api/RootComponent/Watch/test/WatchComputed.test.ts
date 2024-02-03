@@ -1,5 +1,5 @@
 import { Checking, type Test } from "hry-types";
-import type { ReadonlyDeep } from "hry-types/src/Any/_api";
+
 import type { DetailedType } from "../../../../types/DetailedType";
 import { RootComponent } from "../..";
 import type { Mock_User } from "../../Properties/test/normalRequired.test";
@@ -29,10 +29,10 @@ RootComponent()({
 
       Checking<number, typeof oldValue, Test.Pass>;
     },
-    Cobj(newValue: ReadonlyDeep<Mock_User>, oldValue: ReadonlyDeep<Mock_User> | null) {
-      Checking<ReadonlyDeep<Mock_User>, typeof newValue, Test.Pass>;
+    Cobj(newValue: Mock_User, oldValue: Mock_User | null) {
+      Checking<Mock_User, typeof newValue, Test.Pass>;
 
-      Checking<ReadonlyDeep<Mock_User> | null, typeof oldValue, Test.Pass>;
+      Checking<Mock_User | null, typeof oldValue, Test.Pass>;
     },
   },
 });

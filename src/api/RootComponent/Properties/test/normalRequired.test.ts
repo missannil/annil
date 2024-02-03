@@ -1,8 +1,7 @@
 import { Checking, type Test } from "hry-types";
+import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
 import type { DetailedType } from "../../../../types/DetailedType";
-
-import type { ReadonlyDeep } from "hry-types/src/Any/_api";
-import type { IInjectData } from "../../../InstanceInject/instanceConfig";
+import type { IInjectAllData } from "../../../InstanceInject/instanceConfig";
 import { RootComponent } from "../..";
 import type { RequiredSingle, RequiredType, RequiredUnion } from "../PropertiesConstraint";
 
@@ -92,10 +91,11 @@ const RequiredDoc = RootComponent()({
   methods: {
     foo() {
       // 1 this.data中的类型(对象类型加null)
-      Checking<typeof this.data, ReadonlyDeep<RequiredTypeExpected & IInjectData>, Test.Pass>;
+      Checking<typeof this.data, ComputeIntersection<RequiredTypeExpected & IInjectAllData>, Test.Pass>;
     },
   },
 });
+
 /**
  * 2 properties配置为必传类型时预期文档类型(与this.data一致)
  */

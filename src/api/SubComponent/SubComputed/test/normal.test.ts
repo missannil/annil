@@ -1,8 +1,8 @@
 import { Checking, type Test } from "hry-types";
-import type { ReadonlyDeep } from "hry-types/src/Any/_api";
 import type { ComponentDoc } from "../../../DefineComponent/ReturnType/ComponentDoc";
 
-import type { IInjectData } from "../../../InstanceInject/instanceConfig";
+import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
+import type { IInjectAllData } from "../../../InstanceInject/instanceConfig";
 import type { Mock_User } from "../../../RootComponent/Properties/test/normalRequired.test";
 import { SubComponent } from "../..";
 
@@ -81,7 +81,7 @@ SubComponent<Root, OnlyPropsCompDoc>()({
       // 5 this.data
       Checking<
         typeof this.data,
-        ReadonlyDeep<
+        ComputeIntersection<
           {
             num: number;
             user: User | null;
@@ -92,7 +92,7 @@ SubComponent<Root, OnlyPropsCompDoc>()({
             aaa_num123: 123;
             aaa_str: "a" | "b";
             aaa_obj: Mock_User | null;
-          } & IInjectData
+          } & IInjectAllData
         >,
         Test.Pass
       >;
@@ -105,7 +105,7 @@ SubComponent<Root, OnlyPropsCompDoc>()({
       // 5 this.data 深度只读
       Checking<
         typeof this.data,
-        ReadonlyDeep<
+        ComputeIntersection<
           {
             num: number;
             user: User | null;
@@ -116,7 +116,7 @@ SubComponent<Root, OnlyPropsCompDoc>()({
             aaa_num123: 123;
             aaa_str: "a" | "b";
             aaa_obj: Mock_User | null;
-          } & IInjectData
+          } & IInjectAllData
         >,
         Test.Pass
       >;

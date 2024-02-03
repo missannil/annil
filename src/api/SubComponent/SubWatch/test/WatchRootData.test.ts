@@ -1,6 +1,5 @@
 import { Checking, type Test } from "hry-types";
 
-import type { ReadonlyDeep } from "hry-types/src/Any/_api";
 import type { ComponentDoc } from "../../../DefineComponent/ReturnType/ComponentDoc";
 
 import type { Mock_User } from "../../../RootComponent/Properties/test/normalRequired.test";
@@ -66,24 +65,24 @@ SubComponent<RootDoc, CompDoc>()({
       Checking<string | number, typeof oldValue, Test.Pass>;
     },
     required_obj(newValue, oldValue) {
-      Checking<ReadonlyDeep<Mock_User>, typeof newValue, Test.Pass>;
+      Checking<Mock_User, typeof newValue, Test.Pass>;
 
-      Checking<ReadonlyDeep<Mock_User | null>, typeof oldValue, Test.Pass>;
+      Checking<Mock_User | null, typeof oldValue, Test.Pass>;
     },
     optional_obj(newValue, oldValue) {
-      Checking<ReadonlyDeep<TestObj>, typeof newValue, Test.Pass>;
+      Checking<TestObj, typeof newValue, Test.Pass>;
 
-      Checking<ReadonlyDeep<TestObj>, typeof oldValue, Test.Pass>;
+      Checking<TestObj, typeof oldValue, Test.Pass>;
     },
     "optional_obj.**"(newValue, oldValue) {
-      Checking<ReadonlyDeep<TestObj>, typeof newValue, Test.Pass>;
+      Checking<TestObj, typeof newValue, Test.Pass>;
 
-      Checking<ReadonlyDeep<TestObj>, typeof oldValue, Test.Pass>;
+      Checking<TestObj, typeof oldValue, Test.Pass>;
     },
     "optional_obj.subObj"(newValue, oldValue) {
-      Checking<ReadonlyDeep<Mock_User>, typeof newValue, Test.Pass>;
+      Checking<Mock_User, typeof newValue, Test.Pass>;
 
-      Checking<ReadonlyDeep<Mock_User>, typeof oldValue, Test.Pass>;
+      Checking<Mock_User, typeof oldValue, Test.Pass>;
     },
     "required_obj.age"(newValue, oldValue) {
       Checking<number, typeof newValue, Test.Pass>;
@@ -104,9 +103,9 @@ SubComponent<RootDoc, CompDoc>()({
       Checking<string, typeof oldValue, Test.Pass>;
     },
     arr(newValue, oldValue) {
-      Checking<readonly string[], typeof newValue, Test.Pass>;
+      Checking<string[], typeof newValue, Test.Pass>;
 
-      Checking<readonly string[], typeof oldValue, Test.Pass>;
+      Checking<string[], typeof oldValue, Test.Pass>;
     },
 
     literal_str(newValue, oldValue) {

@@ -101,13 +101,13 @@ export function isPageCheck(isPage: boolean | undefined) {
   };
 }
 
-function addCloneDataToInstance(this: Instance) {
-  this.cloneData = new Proxy(this.data, {
-    get: <T extends object>(target: T, key: keyof T) => {
-      return deepClone(target)[key];
-    },
-  });
-}
+// function addCloneDataToInstance(this: Instance) {
+//   this.cloneData = new Proxy(this.data, {
+//     get: <T extends object>(target: T, key: keyof T) => {
+//       return deepClone(target)[key];
+//     },
+//   });
+// }
 /**
  * 原生Component会对传入的对象字段匹配的properties字段setData赋值。不符合字段或Page时不会赋值。
  * 此函数为给实例setData赋值,默认传递值与properties相符(ts类型安全)。
@@ -446,11 +446,11 @@ export function assignOptions(
     [isPageCheck(rootComponentOption?.isPage)],
   );
 
-  hijack(
-    finalOptionsForComponent.lifetimes!,
-    "created",
-    [addCloneDataToInstance],
-  );
+  // hijack(
+  //   finalOptionsForComponent.lifetimes!,
+  //   "created",
+  //   [addCloneDataToInstance],
+  // );
 
   // 页面时删除预设的虚拟组件字段
   finalOptionsForComponent.isPage

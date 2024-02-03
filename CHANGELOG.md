@@ -4,6 +4,13 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.6.2](https://github.com/missannil/annil/compare/v1.6.1...v1.6.2) (2024-02-03)
+
+
+### Bug Fixes
+
+* 去除this.data、observer参数,watch参数的readonlyDeep类型 ([4df6fd1](https://github.com/missannil/annil/commit/4df6fd117e573980293e609dc422c2d5f4a91c32))
+
 ## [1.6.1](https://github.com/missannil/annil/compare/v1.6.0...v1.6.1) (2024-02-02)
 
 

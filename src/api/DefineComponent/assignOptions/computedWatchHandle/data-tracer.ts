@@ -8,28 +8,24 @@ export function deepProxy(
 ): object {
   const handler = {
     get<T extends object>(target: T, prop: keyof T & string) {
+      if (prop === "__original__") {
+        return target;
+      }
       const val = target[prop];
-      // 依赖长度不为0时 去重
+
+      // val不为undefined(依赖还为初始化的其他计算属性)且非自身属性或函数不再返回代理。 (如 this.data.arr.slice(),slice不属于自身属性,小程序允许data子字段为函数的情况,也不代理)
+      if ((val !== undefined) && (!Object.prototype.hasOwnProperty.call(target, prop) || typeof val === "function")) {
+        // val有不是函数的情况么？
+        return (val as Function).bind(target);
+      }
+      // 依赖长度不为0时径依赖去重(只留最后一个路径),比如 return this.data.obj.user.name  去重得到的是最后1个路径 ['obj','user','name'] , 不去重则3个依赖路径了 ['obj'], ['obj','user'],['obj','user','name'],在这里去重效率高些,外部去重时还要再次遍历
       if (basePath.length !== 0) {
-        // 依赖去重
-        const lastDependences = dependences[dependences.length - 1]; // 倒数第一个是当前依赖。2022 at(-1)
-        // 只留最后一个路径。比如  return this.data.obj.user.name  得到的是最后1个路径 ['obj','user','name'] 减少无效依赖,提高性能。 而非3个  ['obj'], ['obj','user'],['obj','user','name']
-        if (lastDependences.paths.toString() === basePath.toString()) {
-          // console.log('删除', lastDependences)
-          dependences.pop();
-        }
+        dependences.pop();
       }
       const curPath = basePath.concat(prop);
 
-      // console.log(prop, val,'in');
+      dependences.push({ paths: curPath, val });
 
-      dependences.push({ paths: curPath, val: deepClone(val) });
-
-      // 自身方法或原型属性不代理
-      if (!Object.prototype.hasOwnProperty.call(target, prop) || typeof val === "function") {
-        // 原型链上的属性不代理,函数加bind。如 this.data.arr.slice()  this.data.arr.forEach(...)
-        return typeof val === "function" ? val.bind(target) : val;
-      }
       // 非对象不代理
       if (typeof val !== "object" || val === null) return val;
 
@@ -41,4 +37,12 @@ export function deepProxy(
   };
 
   return new Proxy(data, handler);
+}
+
+export function getProxyOriginalValue<T extends { __original__?: string }>(value: T): unknown {
+  if (typeof value !== "object" || value === null || !value.__original__) {
+    return value;
+  } else {
+    return deepClone(value.__original__);
+  }
 }

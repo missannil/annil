@@ -1,6 +1,5 @@
-import { deepClone } from "../../../../utils/deepClone";
 import type { Instance } from "..";
-import { deepProxy } from "./data-tracer";
+import { deepProxy, getProxyOriginalValue } from "./data-tracer";
 import { getPathsValue } from "./getPathsValue";
 
 import { isEqual } from "./isEqual";
@@ -23,11 +22,13 @@ export function computedUpdater(this: Instance, isUpdated = false): boolean {
     }
     if (changed) {
       const newDependences: ComputedDependence[] = [];
-      const newValue = itemCache.method.call({ data: deepProxy(this.data, newDependences) });
+      let newValue = itemCache.method.call({ data: deepProxy(this.data, newDependences) });
 
       // 更新值不会立即再次进入**函数,而是当前**函数运行完毕后触发**函数,
+      newValue = getProxyOriginalValue(newValue);
+
       this.setData({
-        [key]: deepClone(newValue),
+        [key]: newValue,
       });
 
       isUpdated = true;

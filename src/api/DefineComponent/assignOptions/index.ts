@@ -27,7 +27,7 @@ import type { DefineComponentOption } from "..";
 import { BStore } from "../../../behaviors/BStore";
 import { computedWatchHandle } from "./computedWatchHandle";
 
-import type { ComputedCache } from "./computedWatchHandle/initComputed";
+import type { ComputedCache } from "./computedWatchHandle/initComputedAndGetCache";
 import { initStore } from "./initStore";
 
 type InstanceInnerFields = {

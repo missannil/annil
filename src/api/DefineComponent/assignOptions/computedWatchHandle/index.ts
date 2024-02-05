@@ -2,7 +2,7 @@ import type { Func } from "hry-types/src/Misc/Func";
 import { computedUpdater } from "./computedUpdater";
 import { getPathsValue } from "./getPathsValue";
 import { getPropertiesValue } from "./getPropertiesValue";
-import { initComputed } from "./initComputed";
+import { initComputedAndGetCache } from "./initComputedAndGetCache";
 import { isEqual } from "./isEqual";
 
 import { deepClone } from "../../../../utils/deepClone";
@@ -25,25 +25,29 @@ function initWatchOldValue(data: FinalOptionsOfComponent["data"], watchConfig: o
   return watchOldValue;
 }
 export function computedWatchHandle(options: FinalOptionsOfComponent) {
-  // 计算属性初始化
+  // 计算属性初始化和首次依赖收集
   const computedConfig = options.computed;
   const rawPropertiesValue = getPropertiesValue(options.properties);
   if (computedConfig && !isEmptyObject(computedConfig)) {
     // 此时store已经初始化数据到data了
 
-    const __computedInitCache__ = initComputed(options, computedConfig, { ...options.data, ...rawPropertiesValue });
+    const __computedInitCache__ = initComputedAndGetCache(options, computedConfig, {
+      ...options.data,
+      ...rawPropertiesValue,
+    });
 
+    // 缓存放入data中
     options.data.__computedCache__ = __computedInitCache__;
 
+    // 计算属性更新函数放入methods中 要做冲突判断,避免用户定义了同名methods字段
     options.methods.__computedUpdater__ = computedUpdater;
-    //    // 把计算属性缓存从方法中带入到实例中,在created周期加入实例后删除
-    //    methodOpt.__computedInitCache__ = () => computedCache;
   }
   const observersConfig = options.observers;
   // 通过observers加入`**`字段来触发计算属性更新
   const originalFunc = observersConfig["**"] as Func | undefined;
 
   observersConfig["**"] = function(this: Instance): undefined {
+    // 任何setData都会触发计算属性更新(可能依赖数据并没变化)
     this.__computedUpdater__?.();
 
     originalFunc && originalFunc.call(this);

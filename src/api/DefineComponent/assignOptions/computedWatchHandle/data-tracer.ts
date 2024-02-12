@@ -18,8 +18,8 @@ export function deepProxy(
         // val有不是函数的情况么？
         return (val as Function).bind(target);
       }
-      // 依赖长度不为0时径依赖去重(只留最后一个路径),比如 return this.data.obj.user.name  去重得到的是最后1个路径 ['obj','user','name'] , 不去重则3个依赖路径了 ['obj'], ['obj','user'],['obj','user','name'],在这里去重效率高些,外部去重时还要再次遍历
-      if (basePath.length !== 0) {
+      // 依赖长度不为0时径依赖去重(只留最后一个路径),比如 return this.data.obj.user.name  去重得到的是最后1个路径 ['obj','user','name'] , 不去重则3个依赖路径了 ['obj'], ['obj','user'],['obj','user','name'],在这里去重效率高些,外部去重时还要再次遍历,加"dependences[dependences.length - 1].paths.toString() === basePath.toString()"这判断是有可能遇到` this.data.obj[this.data.id].list`的情况,这种情况下,第一个依赖是obj,第二个依赖是id,因为依赖不是一个路径连续向下的,所以不能去重。
+      if (basePath.length !== 0 && dependences[dependences.length - 1].paths.toString() === basePath.toString()) {
         dependences.pop();
       }
       const curPath = basePath.concat(prop);

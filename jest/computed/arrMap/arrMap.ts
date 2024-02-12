@@ -45,6 +45,9 @@ const rootComponent = RootComponent()({
   },
   lifetimes: {
     attached() {
+      // @ts-ignore
+      console.log(this.data.__computedCache__);
+
       store.changedList([1, 2, 3]);
     },
   },

@@ -4,6 +4,13 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.6.4](https://github.com/missannil/annil/compare/v1.6.3...v1.6.4) (2024-02-12)
+
+
+### Bug Fixes
+
+* comouted属性初始化依赖去重bug,并添加更新时去重 ([f228e55](https://github.com/missannil/annil/commit/f228e551dce65d97450b9a1aa3c7b3d3eb3e8199))
+
 ## [1.6.3](https://github.com/missannil/annil/compare/v1.6.2...v1.6.3) (2024-02-05)
 
 

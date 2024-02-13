@@ -3,7 +3,6 @@ import { deepProxy, getProxyOriginalValue } from "./data-tracer";
 import { getPathsValue } from "./getPathsValue";
 
 import { isEqual } from "./isEqual";
-import { uniqueDependences } from "./uniqueDependences";
 export type ComputedDependence = { paths: string[]; val: unknown };
 
 export function computedUpdater(this: Instance, isUpdated = false): boolean {
@@ -35,7 +34,7 @@ export function computedUpdater(this: Instance, isUpdated = false): boolean {
       isUpdated = true;
 
       // 更新依赖,去重
-      this.data.__computedCache__[key].dependences = uniqueDependences(newDependences);
+      this.data.__computedCache__[key].dependences = newDependences;
 
       // 有一个计算属性更新就重新更新所有计算互相,避免后置依赖导致前置依赖错误
       return computedUpdater.call(this, isUpdated);

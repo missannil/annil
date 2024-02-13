@@ -3,7 +3,6 @@ import type { FinalOptionsOfComponent } from "..";
 
 import type { ComputedDependence } from "./computedUpdater";
 import { deepProxy, getProxyOriginalValue } from "./data-tracer";
-import { uniqueDependences } from "./uniqueDependences";
 
 type ItemCache = {
   dependences: ComputedDependence[];
@@ -65,7 +64,7 @@ export function initComputedAndGetCache(
       initAllData[key] = initValue;
 
       computedCache[key] = {
-        dependences: uniqueDependences(dependences),
+        dependences,
         method: computedFunc,
         value: initValue,
       };

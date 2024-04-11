@@ -54,3 +54,14 @@ SubComponent<Mock_RootDoc, Mock_CompDoc>()({
     aaa_obj1: "" as "required_obj" | "optional_obj" | "wxml",
   },
 });
+
+// 3 value为数组时,表示多个字段的联合类型
+
+SubComponent<Mock_RootDoc, Mock_CompDoc>()({
+  inherit: {
+    aaa_num: ["optional_literal_num", "required_num"],
+    aaa_str: ["literal_str", "str"],
+    aaa_obj: "" as "required_obj" | "optional_obj" | ["required_obj" | "optional_obj"] | "wxml",
+    aaa_obj1: "" as "required_obj" | "optional_obj" | ["required_obj" | "optional_obj"] | "wxml",
+  },
+});

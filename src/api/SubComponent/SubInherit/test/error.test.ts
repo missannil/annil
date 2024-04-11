@@ -74,3 +74,11 @@ SubComponent<Mock_RootDoc, Mock_CompDoc>()({
     aaa_xxx: "",
   },
 });
+// 4 数组时类型错误
+
+SubComponent<Mock_RootDoc, Mock_CompDoc>()({
+  inherit: {
+    // @ts-expect-error
+    aaa_num: ["optional_lit1eral_num", "require1d_num"],
+  },
+});

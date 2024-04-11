@@ -4,6 +4,13 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.7.0](https://github.com/missannil/annil/compare/v1.6.5...v1.7.0) (2024-04-11)
+
+
+### Features
+
+* subComponent的inherit字段加入数组类型,表示联合类型 ([a7930ff](https://github.com/missannil/annil/commit/a7930ff1abe18579bff6f1746911c2f30274325b))
+
 ## [1.6.5](https://github.com/missannil/annil/compare/v1.6.4...v1.6.5) (2024-02-13)
 
 

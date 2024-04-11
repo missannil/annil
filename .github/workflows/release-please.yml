@@ -27,6 +27,10 @@ jobs:
                   release-type: node
                   #包名称
                   package-name: annil
+            - name: Print outputs
+              run: |
+                  echo "Release created: ${{ steps.release.outputs.release_created }}"
+                  echo "Version: ${{ steps.release.outputs.version }}"
 
     # 构建和发布
     build-and-publish:

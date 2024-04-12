@@ -4,6 +4,13 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.7.1](https://github.com/missannil/annil/compare/v1.7.0...v1.7.1) (2024-04-12)
+
+
+### Bug Fixes
+
+* 1.7.0action发布时npm密钥过期问题 ([0ad71b9](https://github.com/missannil/annil/commit/0ad71b96aaa02668a4052cd57ea2ff8c46598107))
+
 ## [1.7.0](https://github.com/missannil/annil/compare/v1.6.5...v1.7.0) (2024-04-11)
 
 

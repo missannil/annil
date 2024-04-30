@@ -1,5 +1,4 @@
 /* eslint-disable complexity */
-import { deepClone } from "../../../../utils/deepClone";
 import type { ComputedDependence } from "./computedUpdater";
 import { uniqueDependences } from "./uniqueDependences";
 
@@ -15,12 +14,10 @@ export function deepProxy(
       }
       const val = target[prop];
 
-      // 如 this.data.arr.slice(),`slice`不属于自身属性不代理,不加入依赖。但不包含小程序data子字段为函数的情况)
-      if (typeof val === "function" && (!Object.prototype.hasOwnProperty.call(target, prop))) {
-        // val有不是函数的情况么？
-        return (val as Function).bind(target);
+      // 自身没有但原型链上有的属性不收集依赖
+      if (prop in target && !target.hasOwnProperty(prop)) {
+        return typeof val === "function" ? val.bind(target) : val;
       }
-
       dependences = uniqueDependences(dependences, basePath, prop);
 
       const curPath = basePath.concat(prop);
@@ -40,10 +37,17 @@ export function deepProxy(
   return new Proxy(data, handler);
 }
 
-export function getProxyOriginalValue<T extends { __original__?: string }>(value: T): unknown {
-  if (typeof value !== "object" || value === null || !value.__original__) {
+export function getProxyOriginalValue(value: any): any {
+  if (typeof value !== "object" || value === null) {
     return value;
-  } else {
-    return deepClone(value.__original__);
   }
+  if (value.__original__) return value.__original__;
+
+  const ret = Array.isArray(value) ? [] : {};
+  for (const key in value) {
+    // @ts-ignore 隐式索引
+    ret[key] = getProxyOriginalValue(value[key]);
+  }
+
+  return ret;
 }

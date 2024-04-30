@@ -21,7 +21,7 @@ export type Swiper = CreateComponentDoc<"swiper", {
      * 是否显示面板指示点
      * @defaultValue false
      */
-    indicator_dots?: boolean;
+    indicatorDots?: boolean;
 
     /**
      * 指示点颜色

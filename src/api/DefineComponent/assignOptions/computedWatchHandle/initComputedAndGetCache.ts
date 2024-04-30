@@ -15,7 +15,7 @@ type ComputedId = string;
 export type ComputedCache = Record<ComputedId, ItemCache>;
 
 /**
- * 如果依赖列表某项的首个字段值为undefined并且字段为其他计算属性字段 返回false(即被依赖的计算字段写在了依赖他的计算字段后面), 否则返回true表示依赖有效。
+ * 如果依赖列表某项的首个字段值为undefined并且字段为其他计算属性字段(即被依赖的计算字段写在了依赖他的计算字段后面) 返回false, 否则返回true表示依赖有效。
  */
 function isValidDependences(dependences: ComputedDependence[], computedKeys: string[]): boolean {
   for (const { paths: path, val } of dependences) {

@@ -14,16 +14,16 @@ SubComponent<{ events: { a: string } }, Wm.View>()({
  */
 SubComponent<{ events: { a: string } }, Wm.View>()({
   data: {
-    view_style: "",
+    view_hoverClass: " h-100",
   },
   watch: {
-    view_style(newValue, oldValue) { // ok
+    view_hoverClass(newValue, oldValue) { // ok
       newValue;
 
       oldValue;
     },
     // @ts-expect-error 超出约束字段错误
-    view_XXstyle() {
+    view_xxxhoverClass() {
     },
   },
 });

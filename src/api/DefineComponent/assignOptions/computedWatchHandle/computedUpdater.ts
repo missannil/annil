@@ -1,5 +1,6 @@
 import type { Instance } from "..";
 import { deepProxy, getProxyOriginalValue } from "./data-tracer";
+import { removeSubDependences } from "./dependencesOptimize";
 import { getPathsValue } from "./getPathsValue";
 
 import { isEqual } from "./isEqual";
@@ -22,19 +23,17 @@ export function computedUpdater(this: Instance, isUpdated = false): boolean {
     }
     if (changed) {
       const newDependences: ComputedDependence[] = [];
-      let newValue = itemCache.method.call({ data: deepProxy(this.data, newDependences) });
+      const newValue = itemCache.method.call({ data: deepProxy(this.data, newDependences) });
 
       // 更新值不会立即再次进入**函数,而是当前**函数运行完毕后触发**函数,
-      newValue = getProxyOriginalValue(newValue);
-
       this.setData({
-        [key]: newValue,
+        [key]: getProxyOriginalValue(newValue),
       });
 
       isUpdated = true;
 
-      // 更新依赖,去重
-      this.data.__computedCache__[key].dependences = newDependences;
+      // 更新依赖(优化)
+      this.data.__computedCache__[key].dependences = removeSubDependences(newDependences);
 
       // 有一个计算属性更新就重新更新所有计算互相,避免后置依赖导致前置依赖错误
       return computedUpdater.call(this, isUpdated);

@@ -1,6 +1,6 @@
 /* eslint-disable complexity */
 import type { ComputedDependence } from "./computedUpdater";
-import { uniqueDependences } from "./uniqueDependences";
+import { removePreviousDependence } from "./dependencesOptimize";
 
 export function deepProxy(
   data: object,
@@ -18,7 +18,7 @@ export function deepProxy(
       if (prop in target && !target.hasOwnProperty(prop)) {
         return typeof val === "function" ? val.bind(target) : val;
       }
-      dependences = uniqueDependences(dependences, basePath, prop);
+      removePreviousDependence(dependences, basePath);
 
       const curPath = basePath.concat(prop);
 

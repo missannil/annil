@@ -10,7 +10,7 @@ const rootComponent = RootComponent()({
   computed: {
     list(): any[] {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { obj, id } = this.data;
+      // const { obj, id } = this.data;
 
       return this.data.obj[this.data.id]?.list || [];
     },

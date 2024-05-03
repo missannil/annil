@@ -4,6 +4,13 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.7.3](https://github.com/missannil/annil/compare/v1.7.2...v1.7.3) (2024-05-03)
+
+
+### Bug Fixes
+
+* 优化计算属性依赖 ([017ad55](https://github.com/missannil/annil/commit/017ad55d0bc3edcc2cdeec68474adba766da57b7))
+
 ## [1.7.2](https://github.com/missannil/annil/compare/v1.7.1...v1.7.2) (2024-04-30)
 
 

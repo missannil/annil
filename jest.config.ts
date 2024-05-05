@@ -20,7 +20,7 @@ export const config = {
     "<rootDir>/jest/**/*.test.ts",
   ],
   transform: {
-    "\\.ts?$": "ts-jest", // 添加的
+    "\\.ts$": "ts-jest", // 添加的
   },
   coverageReporters: ["text", "text-summary"],
   coverageThreshold: {

@@ -4,6 +4,13 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.7.4](https://github.com/missannil/annil/compare/v1.7.3...v1.7.4) (2024-06-30)
+
+
+### Bug Fixes
+
+* jest.config.ts的transform项修复,update typescript version from 5.3.2 to 5.5.2 ([00e221c](https://github.com/missannil/annil/commit/00e221ca37b042f042715b26dd5d158c0671a30e))
+
 ## [1.7.3](https://github.com/missannil/annil/compare/v1.7.2...v1.7.3) (2024-05-03)
 
 

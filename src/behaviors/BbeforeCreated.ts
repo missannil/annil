@@ -1,4 +1,5 @@
 import type { FinalOptionsOfComponent } from "../api/DefineComponent/assignOptions";
+import { assertNonNullable } from "../utils/assertNonNullable";
 
 export const BBeforeCreate = Behavior({
   // @ts-ignore
@@ -6,8 +7,10 @@ export const BBeforeCreate = Behavior({
     options: Omit<FinalOptionsOfComponent, "customEvents" | "store" | "events" | "computed">,
   ) {
     // 触发beforeCreate生命周期函数  options.lifetimes在之前被赋值过默认{}所以！
-    const beforeCreateFunc = options.lifetimes!.beforeCreate;
+    const beforeCreateFunc = assertNonNullable(options.lifetimes).beforeCreate;
 
-    beforeCreateFunc && beforeCreateFunc(options);
+    if (beforeCreateFunc) {
+      beforeCreateFunc.call(undefined, options);
+    }
   },
 });

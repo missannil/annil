@@ -19,28 +19,28 @@ describe("watch-computed", () => {
 
     // 根组件 observers 和 watch
 
-    expect(comp.data["observersUser"]).toStrictEqual([newUser]);
+    expect(comp.data.observersUser).toStrictEqual([newUser]);
 
-    expect(comp.data["watchUser"]).toStrictEqual([newUser, oldUser]);
+    expect(comp.data.watchUser).toStrictEqual([newUser, oldUser]);
     // 子组件 observers 和 watch
 
-    expect(comp.data["observersSubUser"]).toStrictEqual([newUser]);
+    expect(comp.data.observersSubUser).toStrictEqual([newUser]);
 
-    expect(comp.data["watchSubUser"]).toStrictEqual([newUser, oldUser]);
+    expect(comp.data.watchSubUser).toStrictEqual([newUser, oldUser]);
   });
 
   test("observers和watch带**的触发,不带的不触发", async () => {
     await sleep(100);
 
     // 不带**的同上次触发结果
-    expect(comp.data["observersUser"]).toStrictEqual([newUser]);
+    expect(comp.data.observersUser).toStrictEqual([newUser]);
 
-    expect(comp.data["watchUser"]).toStrictEqual([newUser, oldUser]);
+    expect(comp.data.watchUser).toStrictEqual([newUser, oldUser]);
 
     // 子字段监控的是计算属性,计算属性setData是整体对象,所以这里会改变
-    expect(comp.data["observersSubUser"]).toStrictEqual([newUser40]);
+    expect(comp.data.observersSubUser).toStrictEqual([newUser40]);
 
-    expect(comp.data["watchSubUser"]).toStrictEqual([newUser40, newUser]);
+    expect(comp.data.watchSubUser).toStrictEqual([newUser40, newUser]);
 
     // 带**的 age 等于 40
     expect(comp.data["observersUser.**"]).toStrictEqual([newUser40]);

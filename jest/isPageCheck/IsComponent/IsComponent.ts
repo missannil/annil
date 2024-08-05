@@ -12,6 +12,7 @@ const rootComponent = RootComponent()({
     },
   },
 });
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const compA = DefineComponent({
   name: "compA",
   rootComponent,

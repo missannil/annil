@@ -45,39 +45,46 @@ SubComponent<RootDoc, CompDoc>()({
   },
   watch: {
     aaa_num(newValue: number, oldValue: number) {
-      Checking<number, typeof newValue, Test.Pass>;
+      void oldValue;
+      Checking<number, typeof newValue, Test.Pass>();
 
-      Checking<number, typeof oldValue, Test.Pass>;
+      Checking<number, typeof oldValue, Test.Pass>();
     },
     aaa_str(newValue: string, oldValue: string) {
-      Checking<string, typeof newValue, Test.Pass>;
+      void oldValue;
+      Checking<string, typeof newValue, Test.Pass>();
 
-      Checking<string, typeof oldValue, Test.Pass>;
+      Checking<string, typeof oldValue, Test.Pass>();
     },
     aaa_bool(newValue: boolean, oldValue: boolean) {
-      Checking<boolean, typeof newValue, Test.Pass>;
+      void oldValue;
+      Checking<boolean, typeof newValue, Test.Pass>();
 
-      Checking<boolean, typeof oldValue, Test.Pass>;
+      Checking<boolean, typeof oldValue, Test.Pass>();
     },
     aaa_obj(newValue: Mock_User, oldValue: Mock_User | null) {
-      Checking<Mock_User, typeof newValue, Test.Pass>;
+      void oldValue;
+      Checking<Mock_User, typeof newValue, Test.Pass>();
 
-      Checking<Mock_User | null, typeof oldValue, Test.Pass>;
+      Checking<Mock_User | null, typeof oldValue, Test.Pass>();
     },
     "aaa_obj.**"(newValue: Mock_User, oldValue: Mock_User | null) {
-      Checking<Mock_User, typeof newValue, Test.Pass>;
+      void oldValue;
+      Checking<Mock_User, typeof newValue, Test.Pass>();
 
-      Checking<Mock_User | null, typeof oldValue, Test.Pass>;
+      Checking<Mock_User | null, typeof oldValue, Test.Pass>();
     },
     "aaa_obj.id"(newValue: string, oldValue: string) {
-      Checking<string, typeof newValue, Test.Pass>;
+      void oldValue;
+      Checking<string, typeof newValue, Test.Pass>();
 
-      Checking<string, typeof oldValue, Test.Pass>;
+      Checking<string, typeof oldValue, Test.Pass>();
     },
     "aaa_obj.age"(newValue: number, oldValue: number) {
-      Checking<number, typeof newValue, Test.Pass>;
+      void oldValue;
+      Checking<number, typeof newValue, Test.Pass>();
 
-      Checking<number, typeof oldValue, Test.Pass>;
+      Checking<number, typeof oldValue, Test.Pass>();
     },
   },
 });

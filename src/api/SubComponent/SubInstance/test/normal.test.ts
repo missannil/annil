@@ -45,15 +45,19 @@ SubComponent<RootDoc, CompDoc>()({
   },
   computed: {},
   methods: {
-    aaa_SubM() {},
+    aaa_SubM() {
+      void 0;
+    },
   },
   events: {
-    aaa_num() {},
+    aaa_num() {
+      void 0;
+    },
   },
   lifetimes: {
     created() {
       // this.data
-      Checking<
+      void Checking<
         typeof this.data,
         ComputeIntersection<
           {
@@ -71,11 +75,11 @@ SubComponent<RootDoc, CompDoc>()({
       >;
 
       // this.Methods 可调用自身和RootDoc中的methods方法,其他不可以
-      Checking<typeof this.RootM, () => number, Test.Pass>;
+      void Checking<typeof this.RootM, () => number, Test.Pass>;
 
-      Checking<typeof this.RootCus, (detail: string) => void, Test.Pass>;
+      void Checking<typeof this.RootCus, (detail: string) => void, Test.Pass>;
 
-      Checking<typeof this.aaa_SubM, () => void, Test.Pass>;
+      void Checking<typeof this.aaa_SubM, () => void, Test.Pass>;
 
       // 其他官方字段 ...
     },

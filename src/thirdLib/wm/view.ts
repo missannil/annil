@@ -1,6 +1,7 @@
-import type { CreateComponentDoc } from "../../types/CreateComponentDoc";
+import type { CreateComponentType } from "../../types/CreateComponentType";
+import type { BaseEvents } from "./baseEvents";
 
-export type View = CreateComponentDoc<"view", {
+export type View = CreateComponentType<"view", {
   properties: {
     /**
      * 指定按下去的样式类。当 hover-class="none" 时，没有点击态效果
@@ -23,4 +24,5 @@ export type View = CreateComponentDoc<"view", {
      */
     hoverStayTime?: number;
   };
+  customEvents: BaseEvents;
 }>;

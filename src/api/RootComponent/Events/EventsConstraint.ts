@@ -61,7 +61,7 @@ type GetAllSubCustomEventsConstraint<
   >
 >;
 
-type BaseEvent = Record<string, (e: WMBaseEvent) => any>;
+type BaseEvent = Record<string, (e: WMBaseEvent) => unknown>;
 
 /**
  * events字段约束 由自身事件和冒泡的子组件事件组成。带前缀是子组件事件,带后缀(_catch)表示阻止冒泡

@@ -1,6 +1,6 @@
-import type { CreateComponentDoc } from "../../types/CreateComponentDoc";
+import type { CreateComponentType } from "../../types/CreateComponentType";
 
-export type Button = CreateComponentDoc<"button", {
+export type Button = CreateComponentType<"button", {
   properties: {
     /**
      * 标识符

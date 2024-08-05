@@ -25,14 +25,16 @@ RootComponent()({
   },
   watch: {
     CNum(newValue: number, oldValue: number) {
-      Checking<number, typeof newValue, Test.Pass>;
+      void oldValue;
+      void Checking<number, typeof newValue, Test.Pass>;
 
-      Checking<number, typeof oldValue, Test.Pass>;
+      void Checking<number, typeof oldValue, Test.Pass>;
     },
     Cobj(newValue: Mock_User, oldValue: Mock_User | null) {
-      Checking<Mock_User, typeof newValue, Test.Pass>;
+      void oldValue;
+      void Checking<Mock_User, typeof newValue, Test.Pass>;
 
-      Checking<Mock_User | null, typeof oldValue, Test.Pass>;
+      void Checking<Mock_User | null, typeof oldValue, Test.Pass>;
     },
   },
 });

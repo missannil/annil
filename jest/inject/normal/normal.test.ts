@@ -4,6 +4,8 @@ import { instanceConfig } from "../../../src";
 
 export const checkData = {
   options: {} as object | undefined,
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: {} as any,
 };
 

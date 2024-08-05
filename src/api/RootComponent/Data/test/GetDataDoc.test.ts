@@ -22,11 +22,11 @@ type Test1Expected = {
   str: string;
 };
 
-Checking<Test1, Test1Expected, Test.Pass>;
+void Checking<Test1, Test1Expected, Test.Pass>;
 
 // 测试空对象
 type Test4 = GetDataDoc<{}>;
 
 type Test4Expected = {};
 
-Checking<Test4, Test4Expected, Test.Pass>;
+void Checking<Test4, Test4Expected, Test.Pass>;

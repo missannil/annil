@@ -4,14 +4,22 @@ import { RootComponent } from "../..";
  */
 RootComponent()({
   pageLifetimes: {
-    show() {},
-    hide() {},
-    resize() {},
+    show() {
+      void 0;
+    },
+    hide() {
+      void 0;
+    },
+    resize() {
+      void 0;
+    },
     load(props) {
-      props;
+      void props;
     },
     // @ts-expect-error 1 错误的声明周期
-    xxx() {},
+    xxx() {
+      void 0;
+    },
   },
 });
 
@@ -22,9 +30,11 @@ RootComponent()({
   isPage: true,
   pageLifetimes: {
     onLoad(props) {
-      props;
+      void props;
     },
     // @ts-expect-error 2 错误的声明周期
-    xxx() {},
+    xxx() {
+      void 0;
+    },
   },
 });

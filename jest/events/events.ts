@@ -8,6 +8,7 @@ const subA = SubComponent<Root, CompDoc>()({
   },
   events: {
     compA_str() {
+      void 0;
     },
   },
 });
@@ -20,6 +21,7 @@ const rootComponent = RootComponent()({
   },
   events: {
     onTap() {
+      void 0;
     },
   },
   lifetimes: {

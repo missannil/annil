@@ -91,11 +91,11 @@ const RequiredDoc = RootComponent()({
   methods: {
     foo() {
       // 1 this.data中的类型(对象类型加null)
-      Checking<typeof this.data, ComputeIntersection<RequiredTypeExpected & IInjectAllData>, Test.Pass>;
+      void Checking<typeof this.data, ComputeIntersection<RequiredTypeExpected & IInjectAllData>, Test.Pass>;
     },
   },
 });
-
+void RequiredDoc;
 /**
  * 2 properties配置为必传类型时预期文档类型(与this.data一致)
  */
@@ -104,4 +104,4 @@ export type RequiredDocExpected = {
   methods: { foo: () => void };
 };
 
-Checking<typeof RequiredDoc, RequiredDocExpected, Test.Pass>;
+void Checking<typeof RequiredDoc, RequiredDocExpected, Test.Pass>;

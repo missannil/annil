@@ -1,8 +1,8 @@
-import type { CreateComponentDoc } from "../../types/CreateComponentDoc";
+import type { CreateComponentType } from "../../types/CreateComponentType";
 
 type Position = "top" | "bottom" | "left" | "right";
 
-export type Popup = CreateComponentDoc<"popup", {
+export type Popup = CreateComponentType<"popup", {
   properties: {
     /**
      *  是否显示弹出层

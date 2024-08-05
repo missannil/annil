@@ -28,7 +28,7 @@ const SubDoc = SubComponent<{}, CompDoc>()({
     aaa_str: "string",
   },
 });
-
+void SubDoc;
 // 返回穿透的自定义事件,并去除了前缀
 type SubDocExpect = {
   bubblesComposed: number | BubblesComposed;
@@ -36,4 +36,4 @@ type SubDocExpect = {
   bubblesCaptrueComposed: number | BubblesCaptureComposed;
 };
 
-Checking<typeof SubDoc, SubDocExpect, Test.Pass>;
+Checking<typeof SubDoc, SubDocExpect, Test.Pass>();

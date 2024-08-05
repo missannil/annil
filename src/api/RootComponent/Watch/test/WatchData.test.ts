@@ -5,7 +5,7 @@ import { RootComponent } from "../..";
 import type { Mock_User } from "../../Properties/test/normalRequired.test";
 
 const obj = observable({
-  gender: <"male" | "female"> "male",
+  gender: "male" as "male" | "female",
 });
 
 /**
@@ -23,29 +23,33 @@ RootComponent()({
   },
   watch: {
     num(newValue, oldValue) {
-      Checking<number, typeof newValue, Test.Pass>;
+      void oldValue;
+      void Checking<number, typeof newValue, Test.Pass>;
 
-      Checking<number, typeof oldValue, Test.Pass>;
+      void Checking<number, typeof oldValue, Test.Pass>;
     },
     obj(newValue, oldValue) {
-      Checking<Mock_User, typeof newValue, Test.Pass>;
+      void oldValue;
+      void Checking<Mock_User, typeof newValue, Test.Pass>;
 
-      Checking<Mock_User, typeof oldValue, Test.Pass>;
+      void Checking<Mock_User, typeof oldValue, Test.Pass>;
     },
     reactiveNumber(newValue: number, oldValue) {
-      Checking<number, typeof newValue, Test.Pass>;
-
-      Checking<number, typeof oldValue, Test.Pass>;
+      void oldValue;
+      void Checking<number, typeof newValue, Test.Pass>;
+      void Checking<number, typeof oldValue, Test.Pass>;
     },
     reactiveLiteral(newValue, oldValue) {
-      Checking<"male" | "female", typeof newValue, Test.Pass>;
+      void oldValue;
+      void Checking<"male" | "female", typeof newValue, Test.Pass>;
 
-      Checking<"male" | "female", typeof oldValue, Test.Pass>;
+      void Checking<"male" | "female", typeof oldValue, Test.Pass>;
     },
     reactiveUser(newValue, oldValue) {
-      Checking<Mock_User, typeof newValue, Test.Pass>;
+      void oldValue;
+      void Checking<Mock_User, typeof newValue, Test.Pass>;
 
-      Checking<Mock_User, typeof oldValue, Test.Pass>;
+      void Checking<Mock_User, typeof oldValue, Test.Pass>;
     },
   },
 });

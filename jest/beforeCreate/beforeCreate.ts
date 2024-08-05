@@ -1,7 +1,10 @@
 import { DefineComponent, RootComponent, SubComponent } from "../../src";
 import { mock_beforeCreate } from "./beforeCreate.test";
 
-type User = { name: string; age: number };
+interface User {
+  name: string;
+  age: number;
+}
 
 const sub = SubComponent<Root, { properties: { aaa_num: number; aaa_user: User | null } }>()({
   data: {

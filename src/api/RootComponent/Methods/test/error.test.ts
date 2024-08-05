@@ -6,7 +6,7 @@ import { RootComponent } from "../..";
 RootComponent()({
   events: {
     eventField() {
-      1;
+      void 0;
     },
   },
   customEvents: {
@@ -15,11 +15,11 @@ RootComponent()({
   methods: {
     // @ts-expect-error "⚠️与events字段重复⚠️"
     eventField() {
-      1;
+      void 0;
     },
     // @ts-expect-error "⚠️与customEvents字段重复⚠️"
     customField() {
-      2;
+      void 0;
     },
   },
 });
@@ -30,7 +30,7 @@ RootComponent()({
 RootComponent()({
   methods: {
     M1() {
-      1;
+      void 0;
     },
 
     M2() {

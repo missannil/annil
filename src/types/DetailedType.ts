@@ -12,4 +12,4 @@
  * });
  * ```
  */
-export type DetailedType<T = unknown> = { (): T } | { new(...arg: any[]): T };
+export type DetailedType<T = unknown> = (() => T) | (new(...arg: unknown[]) => T);

@@ -1,6 +1,6 @@
-import type { CreateComponentDoc } from "../../types/CreateComponentDoc";
+import type { CreateComponentType } from "../../types/CreateComponentType";
 
-export type Textarea = CreateComponentDoc<"textarea", {
+export type Textarea = CreateComponentType<"textarea", {
   properties: {
     /**
      * 输入框的内容

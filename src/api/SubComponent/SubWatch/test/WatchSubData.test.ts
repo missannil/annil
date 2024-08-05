@@ -28,19 +28,22 @@ SubComponent<{}, CompDoc>()({
   },
   watch: {
     aaa_str(newValue, oldValue) {
-      Checking<"123", typeof newValue, Test.Pass>;
+      void oldValue;
+      void Checking<"123", typeof newValue, Test.Pass>;
 
-      Checking<"123", typeof oldValue, Test.Pass>;
+      void Checking<"123", typeof oldValue, Test.Pass>;
     },
     aaa_num(newValue, oldValue) {
-      Checking<number, typeof newValue, Test.Pass>;
+      void oldValue;
+      void Checking<number, typeof newValue, Test.Pass>;
 
-      Checking<number, typeof oldValue, Test.Pass>;
+      void Checking<number, typeof oldValue, Test.Pass>;
     },
     _aaa_other(newValue, oldValue) {
-      Checking<number, typeof newValue, Test.Pass>;
+      void oldValue;
+      void Checking<number, typeof newValue, Test.Pass>;
 
-      Checking<number, typeof oldValue, Test.Pass>;
+      void Checking<number, typeof oldValue, Test.Pass>;
     },
   },
 });

@@ -1,6 +1,9 @@
 import { DefineComponent, type DetailedType, RootComponent, SubComponent } from "../../../src";
 
-type User = { name: string; age: number };
+interface User {
+  name: string;
+  age: number;
+}
 
 const sub = SubComponent<Root, { properties: { aaa_num: number; aaa_user: User | null } }>()({
   data: {
@@ -46,6 +49,7 @@ const rootComponent = RootComponent()({
     },
     // @ts-ignore 模拟user传入null情形。不愿多写一个测试了
     "user.xxx"() {
+      void 0;
     },
   },
 });

@@ -88,54 +88,52 @@ type RootComponentOptions<
     >
   >;
 
-type RootComponentConstructor<TComponentDocList extends ComponentDoc[]> = {
-  <
-    // TEvents 不能有默认值 {} 会引起事件参数类型(e)失效
-    TEvents extends EventsConstraint<TComponentDocList>,
-    TIsPage extends boolean = false,
-    const TProperties extends PropertiesConstraint = {},
-    TData extends object = {},
-    TStore extends StoreConstraint = {},
-    TComputed extends ComputedConstraint = {},
-    // 页面时自定义事件无意义
-    TCustomEvents extends IfExtends<TIsPage, false, CustomEventConstraint, EmptyObject> = {},
-    TMethods extends MethodsConstraint = {},
-    EventsDoc extends object = IfExtends<EventsConstraint<TComponentDocList>, TEvents, {}, TEvents>,
-    CustomEventsDoc extends object = GetCustomEventDoc<TCustomEvents>,
-    PropertiesDoc extends object = GetPropertiesDoc<TProperties, TIsPage>,
-    DataDoc extends object = TData,
-    StoreDoc extends object = GetStoreDoc<TStore>,
-    ComputedDoc extends object = GetComputedDoc<TComputed>,
-  >(
-    options: RootComponentOptions<
-      TEvents,
-      TIsPage,
-      TCustomEvents,
-      TMethods,
-      TProperties,
-      TData,
-      TStore,
-      TComputed,
-      // TObservers,
-      EventsDoc,
-      CustomEventsDoc,
-      PropertiesDoc,
-      DataDoc,
-      StoreDoc,
-      ComputedDoc
-    >,
-  ): // 返回类型 satisfies RootComponentDoc
-  ComputeIntersection<
-    & IfExtends<TIsPage, false, {}, { isPage: true }>
-    & IfExtends<EmptyObject, PropertiesDoc, {}, { properties: PropertiesDoc }>
-    & IfExtends<EmptyObject, DataDoc, {}, { data: DataDoc }>
-    & IfExtends<EmptyObject, StoreDoc, {}, { store: ComputeObject<StoreDoc> }>
-    & IfExtends<EmptyObject, ComputedDoc, {}, { computed: ComputedDoc }>
-    & IfExtends<EmptyObject, TMethods, {}, { methods: TMethods }>
-    & IfExtends<EmptyObject, EventsDoc, {}, { events: EventsDoc }>
-    & IfExtends<EmptyObject, CustomEventsDoc, {}, { customEvents: ComputeObject<CustomEventsDoc> }>
-  >;
-};
+type RootComponentConstructor<TComponentDocList extends ComponentDoc[]> = <
+  // TEvents 不能有默认值 {} 会引起事件参数类型(e)失效
+  TEvents extends EventsConstraint<TComponentDocList>,
+  TIsPage extends boolean = false,
+  const TProperties extends PropertiesConstraint = {},
+  TData extends object = {},
+  TStore extends StoreConstraint = {},
+  TComputed extends ComputedConstraint = {},
+  // 页面时自定义事件无意义
+  TCustomEvents extends IfExtends<TIsPage, false, CustomEventConstraint, EmptyObject> = {},
+  TMethods extends MethodsConstraint = {},
+  EventsDoc extends object = IfExtends<EventsConstraint<TComponentDocList>, TEvents, {}, TEvents>,
+  CustomEventsDoc extends object = GetCustomEventDoc<TCustomEvents>,
+  PropertiesDoc extends object = GetPropertiesDoc<TProperties, TIsPage>,
+  DataDoc extends object = TData,
+  StoreDoc extends object = GetStoreDoc<TStore>,
+  ComputedDoc extends object = GetComputedDoc<TComputed>,
+>(
+  options: RootComponentOptions<
+    TEvents,
+    TIsPage,
+    TCustomEvents,
+    TMethods,
+    TProperties,
+    TData,
+    TStore,
+    TComputed,
+    // TObservers,
+    EventsDoc,
+    CustomEventsDoc,
+    PropertiesDoc,
+    DataDoc,
+    StoreDoc,
+    ComputedDoc
+  >,
+) => // 返回类型 satisfies RootComponentDoc
+ComputeIntersection<
+  & IfExtends<TIsPage, false, {}, { isPage: true }>
+  & IfExtends<EmptyObject, PropertiesDoc, {}, { properties: PropertiesDoc }>
+  & IfExtends<EmptyObject, DataDoc, {}, { data: DataDoc }>
+  & IfExtends<EmptyObject, StoreDoc, {}, { store: ComputeObject<StoreDoc> }>
+  & IfExtends<EmptyObject, ComputedDoc, {}, { computed: ComputedDoc }>
+  & IfExtends<EmptyObject, TMethods, {}, { methods: TMethods }>
+  & IfExtends<EmptyObject, EventsDoc, {}, { events: EventsDoc }>
+  & IfExtends<EmptyObject, CustomEventsDoc, {}, { customEvents: ComputeObject<CustomEventsDoc> }>
+>;
 
 export function RootComponent<
   // TComponentDocList泛型为了给events字段提供类型约束
@@ -143,6 +141,7 @@ export function RootComponent<
 >(): RootComponentConstructor<
   TComponentDocList
 > {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (options: any) => options;
 }
 

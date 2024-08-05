@@ -8,9 +8,9 @@ RootComponent()({
     },
 
     M2(str: string) {
-      Checking<typeof this.M1, () => 1, Test.Pass>;
+      void Checking<typeof this.M1, () => 1, Test.Pass>;
 
-      Checking<typeof this.M2, (str: string) => string, Test.Pass>;
+      void Checking<typeof this.M2, (str: string) => string, Test.Pass>;
 
       return str;
     },

@@ -14,7 +14,7 @@ const RootDoc = RootComponent()({
     },
   },
 });
-
+void RootDoc;
 type RootDocExpected = {
   methods: {
     num: () => 1;
@@ -22,4 +22,4 @@ type RootDocExpected = {
   };
 };
 
-Checking<typeof RootDoc, RootDocExpected, Test.Pass>;
+void Checking<typeof RootDoc, RootDocExpected, Test.Pass>;

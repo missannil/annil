@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { DefineComponent, RootComponent } from "../../../src";
 
 const rootComponent = RootComponent()({
@@ -14,7 +15,7 @@ const rootComponent = RootComponent()({
     readonlyDeep() {
       try {
         this.data.obj.user.address.city = "shanghai";
-      } catch (error) {
+      } catch {
         return "error";
       }
 

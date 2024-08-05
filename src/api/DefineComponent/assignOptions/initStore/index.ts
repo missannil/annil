@@ -3,6 +3,7 @@ import type { FinalOptionsOfComponent } from "..";
 export function initStore(finalOptionsForComponent: FinalOptionsOfComponent) {
   const storeConfig = finalOptionsForComponent.store;
   if (storeConfig) {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const { toJS } = require("mobx") as typeof mobx;
     for (const key in storeConfig) {
       finalOptionsForComponent.data[key] = toJS(storeConfig[key]());

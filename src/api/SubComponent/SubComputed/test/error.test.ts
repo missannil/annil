@@ -31,9 +31,13 @@ SubComponent<{}, OnlyPropsCompDoc>()({
     aaa_num: 123,
   },
   computed: {
-    _aaa_xxx() {},
+    _aaa_xxx() {
+      void 0;
+    },
     // @ts-expect-error 只可写内部字段
-    aaa_yyy() {},
+    aaa_yyy() {
+      void 0;
+    },
   },
 });
 

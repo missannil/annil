@@ -10,8 +10,6 @@ export type SubInheritOption<TInherit extends object, legalKeys extends Property
     & TInherit
     & G.IllegalFieldValidator<
       TInherit,
-      legalKeys,
-      0,
-      ""
+      legalKeys
     >;
 };

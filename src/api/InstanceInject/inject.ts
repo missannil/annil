@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { observable, runInAction } from "mobx";
 
 // 注入的响应式数据;

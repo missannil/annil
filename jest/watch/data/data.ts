@@ -1,10 +1,13 @@
 import { DefineComponent, RootComponent, SubComponent } from "../../../src";
 
-type User = { name: string; age: number };
+interface User {
+  name: string;
+  age: number;
+}
 
 const sub = SubComponent<Root, { properties: { sub_num: number; sub_user: User | null } }>()({
   data: {
-    sub_num: <number> 123,
+    sub_num: 123 as number,
     sub_user: { name: "zhao", age: 20 },
   },
   watch: {
@@ -40,7 +43,7 @@ type Root = typeof rootComponent;
 const rootComponent = RootComponent()({
   data: {
     num: 123,
-    user: <User> { name: "zhao", age: 20 },
+    user: { name: "zhao", age: 20 } as User,
   },
   watch: {
     num(a, b) {

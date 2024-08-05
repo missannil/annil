@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-member-accessibility */
-
 import type { IfEquals } from "hry-types/src/Any/IfEquals";
 import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
 import type { ReturnTypeInObject } from "hry-types/src/Object/ReturnTypeInObject";
@@ -17,7 +15,6 @@ interface BaseInjectInfo {
   behaviors?: string[];
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface IInjectInfo extends BaseInjectInfo {
 }
 
@@ -44,7 +41,7 @@ class InstanceConfig {
     return this.info.injectInfo;
   }
   public setInjectInfo(info: IInjectInfo | undefined) {
-    info && (this.info.injectInfo = info);
+    if (info) this.info.injectInfo = info;
   }
 }
 

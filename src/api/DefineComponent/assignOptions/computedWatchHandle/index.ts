@@ -5,6 +5,7 @@ import { getPropertiesValue } from "./getPropertiesValue";
 import { initComputedAndGetCache } from "./initComputedAndGetCache";
 import { isEqual } from "./isEqual";
 
+import { assertNonNullable } from "../../../../utils/assertNonNullable";
 import { deepClone } from "../../../../utils/deepClone";
 import { isEmptyObject } from "../../../../utils/isEmptyObject";
 import type { FinalOptionsOfComponent, Instance } from "..";
@@ -50,7 +51,7 @@ export function computedWatchHandle(options: FinalOptionsOfComponent) {
     // 任何setData都会触发计算属性更新(可能依赖数据并没变化)
     this.__computedUpdater__?.();
 
-    originalFunc && originalFunc.call(this);
+    originalFunc?.call(this);
   };
 
   // watch handle
@@ -68,9 +69,9 @@ export function computedWatchHandle(options: FinalOptionsOfComponent) {
 
       // 在监控多个数据时,参数是多个值
       observersConfig[key] = function(this: Instance, ...newValue: unknown[]) {
-        originObserversHandle && originObserversHandle.call(this, ...newValue);
+        originObserversHandle?.call(this, ...newValue);
 
-        const watchOldValue = this.data.__watchOldValue__!;
+        const watchOldValue = assertNonNullable(this.data.__watchOldValue__);
         const oldValue = watchOldValue[key];
 
         if (isEqual(newValue, oldValue)) return;

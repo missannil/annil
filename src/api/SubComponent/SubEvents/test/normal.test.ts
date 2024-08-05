@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { Checking, type Test } from "hry-types";
 import type { Wm } from "../../../../thirdLib";
 
@@ -53,11 +55,11 @@ const sub1 = SubComponent<{}, CompDoc>()({
   },
 });
 
-type Sub1Expected = {
+interface Sub1Expected {
   BubblesComposed: string | BubblesComposed;
   CapturePhaseComposed: string | CaptureComposed;
   BubblesCapturePhaseComposed: string | BubblesCaptureComposed;
-};
+}
 
 // 1.2 Composed事件会被返回
 Checking<typeof sub1, Sub1Expected, Test.Pass>;

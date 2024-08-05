@@ -7,9 +7,10 @@ import { SubComponent } from "../..";
 SubComponent<{}, { properties: { aaa_num: number } }>()({
   watch: {
     injectTheme(newValue, oldValue) {
-      Checking<"dark" | "light" | undefined, typeof newValue, Test.Pass>;
+      void Checking<"dark" | "light" | undefined, typeof newValue, Test.Pass>;
 
-      Checking<"dark" | "light" | undefined, typeof oldValue, Test.Pass>;
+      void Checking<"dark" | "light" | undefined, typeof oldValue, Test.Pass>;
+      void oldValue;
     },
   },
 });

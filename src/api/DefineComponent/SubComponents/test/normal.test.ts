@@ -1035,8 +1035,8 @@ const aaa = DefineComponent({
     A,
   ],
 });
-
-Checking<typeof aaa, {
+void aaa;
+void Checking<typeof aaa, {
   customEvents: {
     test_a: string | number | boolean | Composed;
     test_b: string | number | Composed;

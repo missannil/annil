@@ -4,12 +4,11 @@ const rootComponent = RootComponent()({
   data: {
     obj: {
       a: { list: [1, 2, 3] },
-    } as Record<string, { list: any[] } | undefined>,
+    } as Record<string, { list: number[] } | undefined>,
     id: "0",
   },
   computed: {
-    list(): any[] {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    list(): number[] {
       // const { obj, id } = this.data;
 
       return this.data.obj[this.data.id]?.list || [];

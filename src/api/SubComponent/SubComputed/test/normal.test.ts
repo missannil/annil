@@ -10,9 +10,12 @@ type OnlyCustomCompDoc = ComponentDoc<{
   customEvents: { aaa_str: string };
 }>;
 
-type User = { name: string; age: number };
+interface User {
+  name: string;
+  age: number;
+}
 
-type Root = {
+interface Root {
   properties: {
     num: number;
     user?: User | null;
@@ -26,7 +29,7 @@ type Root = {
   computed: {
     bool: boolean;
   };
-};
+}
 
 type $aaa = ComponentDoc<
   { properties: { aaa_str: string; aaa_user: User | null; aaa_num: number; aaa_age: number } }
@@ -76,10 +79,8 @@ SubComponent<Root, OnlyPropsCompDoc>()({
       return "a";
     },
     aaa_obj() {
-      this.data;
-
       // 5 this.data
-      Checking<
+      void Checking<
         typeof this.data,
         ComputeIntersection<
           {
@@ -103,7 +104,7 @@ SubComponent<Root, OnlyPropsCompDoc>()({
   lifetimes: {
     attached() {
       // 5 this.data 深度只读
-      Checking<
+      void Checking<
         typeof this.data,
         ComputeIntersection<
           {

@@ -16,7 +16,7 @@ import {
   type StrExpected,
   type UnionStrExpected,
 } from "./GetShortEventDoc.test";
-import { mock_customEvents } from "./normal.test";
+import { type mock_customEvents } from "./normal.test";
 
 type Mock_CustomEventsDoc = GetCustomEventDoc<typeof mock_customEvents>;
 
@@ -35,4 +35,4 @@ export type Mock_CustomEventsDocExpected = {
   bubbles_capturePhase_composed: BubblesCapturePhaseComposedExpected;
 };
 
-Checking<Mock_CustomEventsDoc, Mock_CustomEventsDocExpected, Test.Pass>;
+void Checking<Mock_CustomEventsDoc, Mock_CustomEventsDocExpected, Test.Pass>;

@@ -12,3 +12,4 @@
 dist
 project.private.config.json
 !jest.config.js
+!eslint.config.js

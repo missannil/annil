@@ -49,7 +49,7 @@ SubComponent<{}, CompDoc>()({
   methods: {
     aaa_1() {
       // 4 this.data中的data配置数据
-      Checking<
+      void Checking<
         typeof this.data,
         ComputeIntersection<
           {
@@ -72,7 +72,7 @@ SubComponent<{ data: { _num: number } }, CompDoc>()({
   },
   lifetimes: {
     attached() {
-      Checking<typeof this.data.aaa_obj, Mock_User | null, Test.Pass>;
+      void Checking<typeof this.data.aaa_obj, Mock_User | null, Test.Pass>;
 
       this.setData({
         aaa_obj: {} as Mock_User, // aaa_obj 类型为 Mock_User | null 而非 null

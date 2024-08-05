@@ -1,27 +1,22 @@
 {
   "compilerOptions": {
     "lib": ["ES2022", "DOM"], // jest中用到了DOM类型
-    "target": "ES2017",
+    "target": "ES2022",
     "module": "ES2022",
+    "moduleResolution": "Node",
+    "skipLibCheck": true, // 跳过声明文件的类型检查(.d.ts),你引用的依然会检查, 默认false(不跳过)。
+    "esModuleInterop": true, // 默认false. 兼容非ES模块引用的写法(如 import fs from 'fs').
+    "allowSyntheticDefaultImports": true, // 默认false. 允许从没有设置默认导出的模块中默认导入。
     "strict": true,
+    "noEmit": true, // 不生成输出文件。
+    // "resolveJsonModule": true, // 允许导入json模块。
+    // "experimentalDecorators": true, // 启用装饰器,如@observable 小程序当前还不支持
     "strictFunctionTypes": false, // e: Dataset<{ id: string }>会报错。
-    "exactOptionalPropertyTypes": true, // 带有?标志的属性类型不在包含undefined
-    "skipLibCheck": true, // 跳过声明文件的类型检查(.d.ts),除了你引用的, 默认false(不跳过)。
-    "moduleResolution": "Bundler", // 模块解析策略 //5.0 新值 bundler
-    "noImplicitAny": true, // 不允许隐式的any类型
-    "esModuleInterop": true, // 默认false 将 CommonJS/AMD/UMD 模块视为类似于 ES6 模块,jest需要。
-    "removeComments": true, // 去除注释
-    "noEmit": true,
-    "noImplicitReturns": true, // 隐式函数返回
-    "forceConsistentCasingInFileNames": true, // 区分文件名的大小写
-    // "noUnusedLocals": true, // 报告未使用局部变量的错误
-    // "noUnusedParameters": false, // 报告函数中未使用参数的错误
-    // "suppressImplicitAnyIndexErrors": true, // 为true关闭隐式索引错误,但很激进,建议使用@ts-ignore
+    "forceConsistentCasingInFileNames": true,
+    "exactOptionalPropertyTypes": true, // 带有?标志的属性类型不在包含undefined类型
+    "noImplicitReturns": true, // 当启用时,TypeScript会检查函数中的所有代码路径，以确保它们返回值
     "isolatedModules": true, // 模块化(.ts文件必须有导入或导出) 默认false
-    "preserveValueImports": true, // 引入类型加type
-    "ignoreDeprecations": "5.0",
-    // "verbatimModuleSyntax": true, // 强制导入类型前缀type检测,在vscode中设置"typescript.preferences.preferTypeOnlyAutoImports":true
-    // 默认加载所有@types下的包 types指定具体的包,其他拒绝。包含上级目录
+    // "verbatimModuleSyntax": true, // 5.0后新增配置,替代preserveValueImports。
     "types": ["hry-types", "mobx", "jest", "miniprogram-api-typings"]
   },
   "include": ["**/*.ts"]

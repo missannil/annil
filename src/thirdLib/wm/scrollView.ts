@@ -1,7 +1,7 @@
 import type { EmptyObject } from "hry-types/src/Misc/EmptyObject";
-import type { CreateComponentDoc } from "../../types/CreateComponentDoc";
+import type { CreateComponentType } from "../../types/CreateComponentType";
 
-export type ScrollView = CreateComponentDoc<"scrollView", {
+export type ScrollView = CreateComponentType<"scrollView", {
   properties: {
     // 允许横向滚动
     scroll_x?: boolean;

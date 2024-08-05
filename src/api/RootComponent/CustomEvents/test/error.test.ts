@@ -38,7 +38,7 @@ RootComponent()({
 RootComponent()({
   events: {
     aaa() {
-      1;
+      void 0;
     },
   },
   customEvents: {
@@ -85,7 +85,7 @@ RootComponent()({
 RootComponent()({
   events: {
     aaa() {
-      1;
+      void 0;
     },
   },
   customEvents: {

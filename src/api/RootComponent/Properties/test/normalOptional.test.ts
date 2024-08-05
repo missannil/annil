@@ -46,7 +46,7 @@ const OptionalDoc = RootComponent()({
   methods: {
     foo() {
       // 1. 内部this.data中的类型(去除可选)
-      Checking<
+      void Checking<
         typeof this.data,
         ComputeIntersection<
           {
@@ -64,7 +64,7 @@ const OptionalDoc = RootComponent()({
     },
   },
 });
-
+void OptionalDoc;
 type OptionalDocExpected = {
   // 2. 预期返回类型 key为可选(带`?`)
   properties: {
@@ -81,7 +81,7 @@ type OptionalDocExpected = {
   };
 };
 
-Checking<typeof OptionalDoc, OptionalDocExpected, Test.Pass>;
+void Checking<typeof OptionalDoc, OptionalDocExpected, Test.Pass>;
 
 // properties 使用DetailedType时,接受interface类型
 interface Foo {
@@ -98,7 +98,7 @@ RootComponent()({
   },
   computed: {
     ddd() {
-      this.data.user?.name;
+      void this.data.user?.name;
     },
   },
 });

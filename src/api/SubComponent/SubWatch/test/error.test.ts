@@ -5,7 +5,9 @@ import { SubComponent } from "../..";
 SubComponent<{ events: { a: string } }, Wm.View>()({
   watch: {
     // @ts-expect-error 无可监控字段时，约束为EmptyObject,不可写任何字段
-    nothing() {},
+    nothing() {
+      void 0;
+    },
   },
 });
 
@@ -18,12 +20,11 @@ SubComponent<{ events: { a: string } }, Wm.View>()({
   },
   watch: {
     view_hoverClass(newValue, oldValue) { // ok
-      newValue;
-
-      oldValue;
+      console.log(newValue, oldValue);
     },
     // @ts-expect-error 超出约束字段错误
     view_xxxhoverClass() {
+      // do something
     },
   },
 });

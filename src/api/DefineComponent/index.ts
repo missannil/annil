@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
 
 import type { RootComponentDoc } from "../RootComponent/RootComponentDoc";
@@ -22,24 +23,22 @@ type RootOptions<
   & RootComponentOption<TRootComponentDoc>
   & SubComponentsOption<TSubComponentTuple>;
 
-interface DefineComponentConstructor {
-  <
-    TRootComponentDoc extends RootComponentDoc = {},
-    TSubComponentTuple extends SubComponentDoc[] = [],
-    TName extends string = "",
-    TPath extends Path = "/",
-  >(
-    options: RootOptions<TRootComponentDoc, TSubComponentTuple, TName, TPath>,
-  ): // ReturnType 为  PageDoc or ComponentDoc
-  IfExtends<
-    "",
-    TName,
-    // 生成页面文档
-    CreatePageDoc<TRootComponentDoc, TPath>,
-    // 生成组件文档
-    CreateComponentDoc<TRootComponentDoc, TName, TSubComponentTuple>
-  >;
-}
+type DefineComponentConstructor = <
+  TRootComponentDoc extends RootComponentDoc = {},
+  TSubComponentTuple extends SubComponentDoc[] = [],
+  TName extends string = "",
+  TPath extends Path = "/",
+>(
+  options: RootOptions<TRootComponentDoc, TSubComponentTuple, TName, TPath>,
+) => // ReturnType 为  PageDoc or ComponentDoc
+IfExtends<
+  "",
+  TName,
+  // 生成页面文档
+  CreatePageDoc<TRootComponentDoc, TPath>,
+  // 生成组件文档
+  CreateComponentDoc<TRootComponentDoc, TName, TSubComponentTuple>
+>;
 
 export type DefineComponentOption = {
   name?: string;

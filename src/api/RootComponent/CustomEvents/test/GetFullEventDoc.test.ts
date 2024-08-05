@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { Checking, type Test } from "hry-types";
 import type {
   Bubbles,
@@ -9,7 +10,7 @@ import type {
 } from "../CustomEventsTag";
 
 import type { GetFullCustomEventsDoc } from "../GetCustomEventDoc";
-import { mock_fullCustomEvents } from "./normal.test";
+import { type mock_fullCustomEvents } from "./normal.test";
 
 // bubbles
 type bubblesResult = GetFullCustomEventsDoc<typeof mock_fullCustomEvents["bubbles"]>;

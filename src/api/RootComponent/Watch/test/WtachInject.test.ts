@@ -7,9 +7,10 @@ import { RootComponent } from "../..";
 RootComponent()({
   watch: {
     injectTheme(newValue, oldValue) {
-      Checking<"dark" | "light" | undefined, typeof newValue, Test.Pass>;
+      void oldValue;
+      void Checking<"dark" | "light" | undefined, typeof newValue, Test.Pass>;
 
-      Checking<"dark" | "light" | undefined, typeof oldValue, Test.Pass>;
+      void Checking<"dark" | "light" | undefined, typeof oldValue, Test.Pass>;
     },
   },
 });

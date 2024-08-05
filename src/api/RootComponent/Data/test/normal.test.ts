@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { Checking, type Test } from "hry-types";
 import type { IInjectAllData } from "../../../InstanceInject/instanceConfig";
 import { RootComponent } from "../..";
@@ -12,7 +13,7 @@ const EmptyDataRootDoc = RootComponent()({
     },
   },
 });
-
+void EmptyDataRootDoc;
 // 3.2 data为空对象时 返回文档中无data字段
 Checking<typeof EmptyDataRootDoc, { methods: { M1: () => void } }, Test.Pass>;
 
@@ -27,6 +28,6 @@ const noDataRootDoc = RootComponent()({
     },
   },
 });
-
+void noDataRootDoc;
 // 4.2 data为空对象时 返回文档中无data字段
 Checking<typeof noDataRootDoc, { methods: { M1: () => void } }, Test.Pass>;

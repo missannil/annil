@@ -1,18 +1,18 @@
-import type { CreateComponentDoc } from "../../types/CreateComponentDoc";
+import type { CreateComponentType } from "../../types/CreateComponentType";
 
 type CssVar<T extends string = string> = `var(--${T}-${string})`;
 
 type Color = `rgba(${number}, ${number}, ${number}, ${number})` | `#${number}` | CssVar<"color">;
 
-type ChangeEventDetail = {
+interface ChangeEventDetail {
   current: number;
   currentItemId: string;
   source: "touch" | "" | "autoplay";
-};
+}
 
 type AnimationfinishEventDetail = ChangeEventDetail;
 
-export type Swiper = CreateComponentDoc<"swiper", {
+export type Swiper = CreateComponentType<"swiper", {
   properties: {
     list: unknown[];
     class?: string;

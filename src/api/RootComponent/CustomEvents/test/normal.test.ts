@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { Checking, type Test } from "hry-types";
 import { type DetailedType, RootComponent } from "../../../..";
 import type { Mock_User } from "../../Properties/test/normalRequired.test";

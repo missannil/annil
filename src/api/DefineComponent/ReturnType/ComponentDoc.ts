@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 type PrefixKeys = `${string}_${string}`;
 
 type _ComponentDoc = {

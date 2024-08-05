@@ -17,8 +17,12 @@ type CompDoc = ComponentDoc<{
 // methods字段同组件前缀
 SubComponent<RootDoc, CompDoc>()({
   methods: {
-    aaa_xxx() {},
-    aaa_yyy() {},
+    aaa_xxx() {
+      void 0;
+    },
+    aaa_yyy() {
+      void 0;
+    },
     // ...
   },
 });

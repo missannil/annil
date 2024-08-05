@@ -50,9 +50,9 @@ const rootComponent = RootComponent()({
   computed: {
     CforCoverage() {
       // 为了营造多个依赖字段去触发依赖去重而写。去重时依赖为 ["forCoverage.user.","forCoverage.user.user.age."]  initComputed.ts的79-81行
-      this.data.forCoverage?.user;
+      void this.data.forCoverage?.user;
 
-      this.data.forCoverage?.user.user.age;
+      void this.data.forCoverage?.user.user.age;
 
       return 123;
     },
@@ -80,9 +80,9 @@ const rootComponent = RootComponent()({
     },
     // 1 计算属性可引用properties选传字段 对象类型加入null(异步对象数据默认null)。
     CoptionalUser() {
-      this.data.optionalUser?.name;
+      void this.data.optionalUser?.name;
 
-      this.data.optionalUser;
+      void this.data.optionalUser;
 
       return this.data.optionalUser;
     },
@@ -98,6 +98,7 @@ const rootComponent = RootComponent()({
       setTimeout(() => {
         this.setData({
           requiredUser: { name: "zhao", age: 20 },
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } as any);
       }, 200);
 
@@ -105,6 +106,7 @@ const rootComponent = RootComponent()({
       setTimeout(() => {
         this.setData({
           "optionalUser.age": 50,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } as any);
       }, 300);
 
@@ -115,6 +117,7 @@ const rootComponent = RootComponent()({
       setTimeout(() => {
         this.setData({
           optionalUser: null,
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } as any);
       }, 1000);
     },

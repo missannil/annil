@@ -9,6 +9,7 @@ const rootComponent = RootComponent()({
     },
   },
 });
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const index = DefineComponent({
   path: "/pages/index/index",
   rootComponent,

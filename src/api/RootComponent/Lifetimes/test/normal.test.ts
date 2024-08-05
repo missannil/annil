@@ -8,22 +8,27 @@ RootComponent()({
   lifetimes: {
     // 新增声明周期可用于查看或拓展配置文件
     beforeCreate(opitons) {
-      Checking<typeof this, void, Test.Pass>;
+      void Checking<typeof this, undefined, Test.Pass>;
 
-      opitons;
+      void opitons;
     },
     created() {
+      void 0;
     },
     attached() {
+      void 0;
     },
     ready() {
+      void 0;
     },
     detached() {
+      void 0;
     },
     error(err) {
-      err.message;
+      void err.message;
     },
     moved() {
+      void 0;
     },
   },
 });

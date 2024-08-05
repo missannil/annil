@@ -1,4 +1,5 @@
 import { DefineComponent, RootComponent } from "../../src";
+import { assertNonNullable } from "../../src/utils/assertNonNullable";
 import { tempObj } from "./deleteVirtualHostWhenIsPage.test";
 
 const rootComponent = RootComponent()({
@@ -9,7 +10,7 @@ const rootComponent = RootComponent()({
   },
   lifetimes: {
     beforeCreate(options) {
-      tempObj.result = options.options!.virtualHost ?? true;
+      tempObj.result = assertNonNullable(options.options).virtualHost ?? true;
     },
     created() {
       // 模拟页面给 is和route假值。因为isPageCheck是根据is和route来的。
@@ -23,3 +24,4 @@ const index = DefineComponent({
   // subComponents:[]
 });
 export type $Index = typeof index;
+void index;

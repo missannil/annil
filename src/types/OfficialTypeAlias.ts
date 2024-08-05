@@ -6,7 +6,7 @@ export type WMCustomEvent<
   CurrentTargetDataset extends object = object,
   TargetDataset extends object = CurrentTargetDataset,
 > = WechatMiniprogram.CustomEvent<
-  // @ts-ignore
+  // @ts-ignore  官方的类型定义有问题
   Detail,
   Mark,
   CurrentTargetDataset,
@@ -75,33 +75,33 @@ export type WMCompOtherOption = WechatMiniprogram.Component.OtherOption;
 
 export type WMPageLifetimes = WechatMiniprogram.Page.ILifetime;
 
-export declare namespace WMComponent {
-  interface Options {
-    /**
-     * [启用多slot支持](https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/wxml-wxss.html#组件wxml的slot)
-     */
-    multipleSlots?: boolean;
-    /**
-     * 原始文档 [组件样式隔离](https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/wxml-wxss.html#组件样式隔离)
-     * @deprecated glass-easel框架下被废弃  [兼容文档](https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/glass-easel/migration.html#JSON-%E9%85%8D%E7%BD%AE)
-     */
-    addGlobalClass?: boolean;
-    /**
-     * [组件样式隔离](https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/wxml-wxss.html#组件样式隔离)
-     */
-    styleIsolation?:
-      | "isolated"
-      | "apply-shared"
-      | "shared"
-      | "page-isolated"
-      | "page-apply-shared"
-      | "page-shared";
-    /**
-     * [纯数据字段](https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/pure-data.html) 是一些不用于界面渲染的 data 字段，可以用于提升页面更新性能。从小程序基础库版本 2.8.2 开始支持。
-     */
-    pureDataPattern?: RegExp;
-    /**
-     * [虚拟化组件节点](https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/wxml-wxss.html#%E8%99%9A%E6%8B%9F%E5%8C%96%E7%BB%84%E4%BB%B6%E8%8A%82%E7%82%B9) 使自定义组件内部的第一层节点由自定义组件本身完全决定。从小程序基础库版本 [`2.11.2`](https://developers.weixin.qq.com/miniprogram/dev/framework/compatibility.html) 开始支持 */
-    virtualHost?: boolean;
-  }
-}
+// export declare namespace WMComponent {
+//   interface Options {
+//     /**
+//      * [启用多slot支持](https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/wxml-wxss.html#组件wxml的slot)
+//      */
+//     multipleSlots?: boolean;
+//     /**
+//      * 原始文档 [组件样式隔离](https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/wxml-wxss.html#组件样式隔离)
+//      * @deprecated glass-easel框架下被废弃  [兼容文档](https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/glass-easel/migration.html#JSON-%E9%85%8D%E7%BD%AE)
+//      */
+//     addGlobalClass?: boolean;
+//     /**
+//      * [组件样式隔离](https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/wxml-wxss.html#组件样式隔离)
+//      */
+//     styleIsolation?:
+//       | "isolated"
+//       | "apply-shared"
+//       | "shared"
+//       | "page-isolated"
+//       | "page-apply-shared"
+//       | "page-shared";
+//     /**
+//      * [纯数据字段](https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/pure-data.html) 是一些不用于界面渲染的 data 字段，可以用于提升页面更新性能。从小程序基础库版本 2.8.2 开始支持。
+//      */
+//     pureDataPattern?: RegExp;
+//     /**
+//      * [虚拟化组件节点](https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/wxml-wxss.html#%E8%99%9A%E6%8B%9F%E5%8C%96%E7%BB%84%E4%BB%B6%E8%8A%82%E7%82%B9) 使自定义组件内部的第一层节点由自定义组件本身完全决定。从小程序基础库版本 [`2.11.2`](https://developers.weixin.qq.com/miniprogram/dev/framework/compatibility.html) 开始支持 */
+//     virtualHost?: boolean;
+//   }
+// }

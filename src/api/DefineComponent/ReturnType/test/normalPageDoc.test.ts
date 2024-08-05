@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Checking, type Test } from "hry-types";
 import { type DetailedType, RootComponent } from "../../../..";
 
@@ -37,7 +38,7 @@ type CompDocOnlyPropertiesExpected = {
   };
 };
 
-Checking<typeof compDocOnlyProperties, CompDocOnlyPropertiesExpected, Test.Pass>;
+void Checking<typeof compDocOnlyProperties, CompDocOnlyPropertiesExpected, Test.Pass>;
 
 // 2 页面类型不受subComponents是[never,never]时影响
 const whenSubIsAllNever = DefineComponent({
@@ -46,4 +47,4 @@ const whenSubIsAllNever = DefineComponent({
   subComponents: [{} as never, {} as never],
 });
 
-Checking<typeof whenSubIsAllNever, CompDocOnlyPropertiesExpected, Test.Pass>;
+void Checking<typeof whenSubIsAllNever, CompDocOnlyPropertiesExpected, Test.Pass>;

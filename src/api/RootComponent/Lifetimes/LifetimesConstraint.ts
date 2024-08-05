@@ -9,6 +9,6 @@ export type LifetimesConstraint = // 官方组件生命周期
       /**
        * 建立组件时的真正配置对象
        */
-      beforeCreate?: (this: void, options: FinalOptionsOfComponent) => void;
+      beforeCreate?: (this: undefined, options: FinalOptionsOfComponent) => void;
     }
   >;

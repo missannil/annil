@@ -1,11 +1,14 @@
 import { DefineComponent, RootComponent } from "../../../src";
 
-type User = { name: string; age: number };
+interface User {
+  name: string;
+  age: number;
+}
 
 const rootComponent = RootComponent()({
   data: {
     num: 123,
-    obj: <User> { name: "zhao", age: 20 },
+    obj: { name: "zhao", age: 20 } as User,
     valueList: [],
   },
   computed: {

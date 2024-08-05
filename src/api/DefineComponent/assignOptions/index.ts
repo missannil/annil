@@ -1,7 +1,7 @@
 import type { Func } from "hry-types/src/Misc/_api";
 import { BBeforeCreate } from "../../../behaviors/BbeforeCreated";
 import type { Assign } from "../../../types/Assign";
-import type { WMComponent } from "../../../types/OfficialTypeAlias";
+
 import { deepClone } from "../../../utils/deepClone";
 import { INNERMARKER } from "../../../utils/InnerMarker";
 import { isEmptyObject } from "../../../utils/isEmptyObject";
@@ -27,6 +27,7 @@ import type { DefineComponentOption } from "..";
 import { BStore } from "../../../behaviors/BStore";
 import { computedWatchHandle } from "./computedWatchHandle";
 
+import { assertNonNullable } from "../../../utils/assertNonNullable";
 import type { ComputedCache } from "./computedWatchHandle/initComputedAndGetCache";
 import { initStore } from "./initStore";
 
@@ -72,7 +73,7 @@ export type FinalOptionsOfComponent = {
   externalClasses: string[];
   pageLifetimes: PageLifetimesOption<false, object>["pageLifetimes"] & {};
   isPage?: boolean;
-  options?: WMComponent.Options;
+  options?: WechatMiniprogram.Component.ComponentOptions;
   properties?: PropertiesConstraint;
   store?: StoreConstraint;
   computed?: ComputedConstraint;
@@ -132,6 +133,7 @@ function onLoadReceivedDataHandle(
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
   delete option[INNERMARKER.url];
 
   this.setData(option);
@@ -171,10 +173,10 @@ function hijack<T extends FinalOptionsOfComponent[keyof FinalOptionsOfComponent]
   const originalFunc: Func | undefined = config[field];
 
   // @ts-ignore 隐式索引
-  config[field] = function(...args: any[]) {
+  config[field] = function(...args: unknown[]) {
     before.forEach(func => func.call(this, ...args));
 
-    originalFunc && originalFunc.apply(this, args);
+    if (originalFunc) originalFunc.apply(this, args);
 
     // after.forEach(func => func.call(this, ...args));
   };
@@ -214,16 +216,18 @@ function assignFuncOptions(
 ) {
   if (isPage) {
     // 页面时 生命周期方法(即 on 开头的方法),(https://developers.weixin.qq.com/miniprogram/dev/framework/custom-component/component.html)
-    !(isEmptyObject(funcOptions.pageLifetimes))
-      && _funcOptionsHandle(finalOptionsForComponent.methods, funcOptions.pageLifetimes);
+    if (!isEmptyObject(funcOptions.pageLifetimes)) {
+      _funcOptionsHandle(finalOptionsForComponent.methods, funcOptions.pageLifetimes);
+    }
   } else {
     // 组件时
-    !(isEmptyObject(funcOptions.pageLifetimes))
-      && _funcOptionsHandle(finalOptionsForComponent.pageLifetimes, funcOptions.pageLifetimes);
+    if (!isEmptyObject(funcOptions.pageLifetimes)) {
+      _funcOptionsHandle(finalOptionsForComponent.pageLifetimes, funcOptions.pageLifetimes);
+    }
   }
-  funcOptions.lifetimes && _funcOptionsHandle(finalOptionsForComponent.lifetimes ||= {}, funcOptions.lifetimes);
+  if (funcOptions.lifetimes) _funcOptionsHandle(finalOptionsForComponent.lifetimes ||= {}, funcOptions.lifetimes);
 
-  funcOptions.watch && _funcOptionsHandle(finalOptionsForComponent.watch ||= {}, funcOptions.watch);
+  if (funcOptions.watch) _funcOptionsHandle(finalOptionsForComponent.watch ||= {}, funcOptions.watch);
 }
 /**
  * 把配置为函数的字段方法收集到funcOptions中
@@ -280,7 +284,7 @@ function assignSubComponentsOption(
   funcOptions: FuncOptions,
 ) {
   subComponents.forEach((subOption) => {
-    subOption.events && eventsHandle(componentOptions.methods, subOption.events);
+    if (subOption.events) eventsHandle(componentOptions.methods, subOption.events);
 
     funcFieldsCollect(subOption, funcOptions);
 
@@ -327,9 +331,9 @@ function assignRootComponentOption(
   funcOptions: FuncOptions,
   rootComponentOptions: RootComponentTrueOptions,
 ) {
-  rootComponentOptions.customEvents && customEventsHandle(finalOptions.methods, rootComponentOptions.customEvents);
+  if (rootComponentOptions.customEvents) customEventsHandle(finalOptions.methods, rootComponentOptions.customEvents);
 
-  rootComponentOptions.events && eventsHandle(finalOptions.methods, rootComponentOptions.events);
+  if (rootComponentOptions.events) eventsHandle(finalOptions.methods, rootComponentOptions.events);
 
   funcFieldsCollect(rootComponentOptions, funcOptions);
 
@@ -430,8 +434,9 @@ export function assignOptions(
   ]);
   // 对页面传入参数进行处理 老框架劫持页面methods.onLoad,新框架劫持页面pageLifetimes.load
 
-  finalOptionsForComponent.isPage
-    && hijack(finalOptionsForComponent.pageLifetimes, "load", [loadReceivedDataHandle]);
+  if (finalOptionsForComponent.isPage) {
+    hijack(finalOptionsForComponent.pageLifetimes, "load", [loadReceivedDataHandle]);
+  }
 
   hijack(
     finalOptionsForComponent.methods,
@@ -441,7 +446,7 @@ export function assignOptions(
 
   // 验证isPage字段是否配置正确
   hijack(
-    finalOptionsForComponent.lifetimes!,
+    assertNonNullable(finalOptionsForComponent.lifetimes),
     "attached",
     [isPageCheck(rootComponentOption?.isPage)],
   );
@@ -453,8 +458,9 @@ export function assignOptions(
   // );
 
   // 页面时删除预设的虚拟组件字段
-  finalOptionsForComponent.isPage
-    && finalOptionsForComponent.options && Reflect.deleteProperty(finalOptionsForComponent.options, "virtualHost");
+  if (finalOptionsForComponent.isPage && finalOptionsForComponent.options) {
+    Reflect.deleteProperty(finalOptionsForComponent.options, "virtualHost");
+  }
 
   // 初始化store数据到data并把store配置放入到data的__storeConfig__下
   initStore(finalOptionsForComponent);
@@ -463,7 +469,7 @@ export function assignOptions(
   computedWatchHandle(finalOptionsForComponent);
 
   // BBeforeCreate在最后面,让BeforeCreate生命周期运行在最终建立组件时。
-  finalOptionsForComponent.behaviors!.push(BBeforeCreate);
+  finalOptionsForComponent.behaviors.push(BBeforeCreate);
 
   return finalOptionsForComponent;
 }

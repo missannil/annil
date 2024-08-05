@@ -3,9 +3,9 @@ import { type IInjectInfo, instanceConfig } from "./api/InstanceInject/instanceC
 import { navigateTo } from "./api/navigateTo";
 import { RootComponent } from "./api/RootComponent";
 import { SubComponent } from "./api/SubComponent";
+import type { CreateComponentType } from "./types/CreateComponentType";
 import type { DetailedType } from "./types/DetailedType";
 import type { DocAssign } from "./types/DocAssign";
-import type { GenerateDoc } from "./types/GenerateDoc";
 import type { ParamsEqual } from "./types/TwoParamsEqual";
 export type { Vant, Wm } from "./thirdLib";
 
@@ -20,10 +20,10 @@ export type {
 } from "./types/OfficialTypeAlias";
 
 export {
+  type CreateComponentType,
   DefineComponent,
   type DetailedType,
   type DocAssign,
-  type GenerateDoc,
   type IInjectInfo,
   instanceConfig,
   navigateTo,

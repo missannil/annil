@@ -3,7 +3,9 @@ import { RootComponent } from "../..";
 RootComponent()({
   watch: {
     // @ts-expect-error 无可监控字段时，约束为EmptyObject,即不可写任何字段
-    xxx() {},
+    xxx() {
+      void 0;
+    },
   },
 });
 
@@ -25,7 +27,7 @@ RootComponent()({
   watch: {
     // @ts-expect-error otherFields不在约束字段(num,str,Cnum)中
     otherFields() {
-      1;
+      void 0;
     },
   },
 });

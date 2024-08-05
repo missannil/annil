@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Checking, type Test } from "hry-types";
 import type { ComputeIntersection } from "hry-types/src/Object/_api";
 import type { IInjectAllData } from "../../../InstanceInject/instanceConfig";

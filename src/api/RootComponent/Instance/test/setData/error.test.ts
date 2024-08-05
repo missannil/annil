@@ -7,7 +7,7 @@ RootComponent()({
   data: {
     str: "str",
     num: 123,
-    literal: <456 | 789> 456,
+    literal: 456 as 456 | 789,
     bool: true,
     arr: [1, 2, 3],
     obj: { num: 1, str: "str" },

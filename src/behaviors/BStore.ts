@@ -7,6 +7,7 @@ export const BStore = Behavior({
       const storeConfig = this.data.__storeConfig__;
       if (!storeConfig) return;
 
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
       const { comparer, reaction, toJS } = require("mobx") as typeof mobx;
 
       this.disposer = {};

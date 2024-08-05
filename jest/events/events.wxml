@@ -1,3 +1,11 @@
-<view class="events" data-id="events" bind:tap="onTap">{{id}}</view>
+<view
+	class="events"
+	data-id="events"
+	bind:tap="onTap"
+>{{id}}</view>
 
-
+<subA
+	num="{{compA_num}}"
+	user="{{compA_user}}"
+	bind:str="compA_str"
+></subA>

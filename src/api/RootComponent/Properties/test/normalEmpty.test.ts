@@ -10,13 +10,13 @@ const emptyObj = RootComponent()({
   methods: {
     foo() {
       // 1 this.data 为注入数据类型
-      Checking<typeof this.data, IInjectAllData, Test.Pass>;
+      void Checking<typeof this.data, IInjectAllData, Test.Pass>;
     },
   },
 });
-
+void emptyObj;
 // 2 返回文档类型无properties字段
-Checking<typeof emptyObj, {
+void Checking<typeof emptyObj, {
   methods: {
     foo(): void;
   };
@@ -29,13 +29,13 @@ const noProperties = RootComponent()({
   methods: {
     foo() {
       // 3 this.data 为注入数据类型
-      Checking<typeof this.data, IInjectAllData, Test.Pass>;
+      void Checking<typeof this.data, IInjectAllData, Test.Pass>;
     },
   },
 });
-
+void noProperties;
 // 4 返回文档类型无properties字段
-Checking<typeof noProperties, {
+void Checking<typeof noProperties, {
   methods: {
     foo(): void;
   };

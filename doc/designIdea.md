@@ -11,12 +11,13 @@
    export type Age = 16 | 17 | 18;
    const rootComponent = RootComponent()({ // 切记 两次调用
      properties: {
-       gender: Object as DetailedType<Gender>, // 必传属性
-       age: { // 选传属性
+       gender: String as DetailedType<Gender>, // 必传属性 以constructor形式定义
+       age: { // 选传属性带有value字段
          type: Number as DetailedType<Age>,
-         value: 16, // 有字段检测和类型检测
+         value: 16, // 提供字段检测和类型检测
        },
      },
+     // 定义triggerEvent事件
      customEvents: {
        tap: String as DetailedType<Gender>,
      },
@@ -116,7 +117,7 @@
    // }
    ```
 
-   > 从上面示例可以看出,annil是为ts而生(设计),每个组件(页面)都有自己的类型(好比组件文档,所以也叫组件文档类型)。在复杂组件(页面)中构建子组件代码逻辑时,SubComonent函数需要您输入根组件的类型(泛型参数一)和要构建的组件类型(泛型参数二),这样SubComonent函数会在您配置选项字段时给您字段提示和类型检测,在解决命名冲突和依赖混乱问题的同时,也解耦了组件逻辑代码,从而提高代码可读性和易拓展性。理解了设计思想,annil同样适用js开发,但缺失了ts具有的类型提示和类型检测功能。
+   > 从上面示例可以看出,annil是为ts而生(设计),每个组件(页面)都有自己的类型(好比组件文档)。在复杂组件(页面)中构建子组件代码逻辑时,SubComonent函数需要您输入根组件的类型(泛型参数一)和要构建的组件类型(泛型参数二),这样SubComonent函数会在您配置选项字段时给您字段提示和类型检测,在解决命名冲突和依赖混乱问题的同时,也解耦了组件逻辑代码,从而提高代码可读性和易拓展性。
 
 3. **组件复用同一组件**
 
@@ -126,22 +127,20 @@
 
    ```html
    <!-- demo.wxml -->
-   <view id="A">
-     <baseComp gender="{{baseCompA_gender}}" tap="baseCompA_tap"/>
-   </view>
-   <view id="B">
-     <baseComp gender="{{baseCompInB_gender}}" tap="baseCompInB_tap"/>
-   </view>
+
+     <baseComp id="baseCompA" gender="{{baseCompA_gender}}" tap="baseCompA_tap"/>
+
+     <baseComp id="baseCompB" gender="{{baseCompInB_gender}}" tap="baseCompInB_tap"/>
    ```
 
    ```ts
    import { DefineComponent, type DetailedType, RootComponent } from "annil";
    import type { $BaseComp, Gender } from "path/to/baseComp";
 
-   // SubComponent的第三个泛型输入为字段后缀,会以大驼峰形式加在组件前缀后面
-   const baseCompA = SubComponent<Root, $BaseComp, "a">()({
+   // SubComponent的第三个泛型输入为字段后缀,会以大驼峰形式加在组件前缀后面,
+   const baseCompA = SubComponent<Root, $BaseComp, "aaa">()({
      data: {
-       baseCompA_gender: "female",
+       baseCompAaa_gender: "female",
      },
      events: {
        baseCompA_tap(e) {
@@ -151,12 +150,12 @@
        },
      },
    });
-   const baseCompInB = SubComponent<Root, $BaseComp, "inB">()({
+   const baseCompBbb = SubComponent<Root, $BaseComp, "bbb">()({
      data: {
-       baseCompInB_gender: "male",
+       baseCompBbb_gender: "male",
      },
      events: {
-       baseCompInB_tap(e) {
+       baseCompBbb_tap(e) {
          const gender = e.detail;
 
          this.rootMethods(gender);

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { Checking, type Test } from "hry-types";
 import type {
   CurrentTargetDataset,
@@ -8,6 +10,7 @@ import type {
   WMBaseEvent,
   WMCustomEvent,
 } from "../../../../types/OfficialTypeAlias";
+import { assertNonNullable } from "../../../../utils/assertNonNullable";
 import type { ComponentDoc } from "../../../DefineComponent/ReturnType/ComponentDoc";
 import { RootComponent } from "../..";
 import type { Bubbles, Capture } from "../../CustomEvents/CustomEventsTag";
@@ -39,7 +42,7 @@ RootComponent()({
     ) {
       Checking<typeof e.detail.detailData, string, Test.Pass>;
 
-      const markData = e.mark!.markData;
+      const markData = assertNonNullable(e.mark).markData;
 
       Checking<typeof markData, { id: string }, Test.Pass>;
 
@@ -53,7 +56,7 @@ RootComponent()({
     },
     // 2.3 通过Mark定义mark类型
     ccc(e: Mark<{ id: string }>) {
-      const markId = e.mark!.id;
+      const markId = e.mark.id;
 
       Checking<typeof markId, string, Test.Pass>;
     },

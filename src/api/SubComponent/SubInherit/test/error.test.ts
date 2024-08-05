@@ -55,7 +55,7 @@ const subDoc = SubComponent<Mock_RootDoc, Mock_CompDoc>()({
   },
 });
 
-Checking<typeof subDoc, SubComponentDoc, Test.Fail>;
+void Checking<typeof subDoc, SubComponentDoc, Test.Fail>;
 
 DefineComponent({
   name: "xxx",
@@ -78,7 +78,7 @@ SubComponent<Mock_RootDoc, Mock_CompDoc>()({
 
 SubComponent<Mock_RootDoc, Mock_CompDoc>()({
   inherit: {
-    // @ts-expect-error
+    // @ts-expect-error   取消了数组类型,之前的版本允许数组类型表示三元表达式
     aaa_num: ["optional_lit1eral_num", "require1d_num"],
   },
 });

@@ -9,16 +9,20 @@ RootComponent()({
   },
   observers: {
     obj(a) {
-      Checking<typeof a, User | null, Test.Pass>;
+      void a;
+      void Checking<typeof a, User | null, Test.Pass>;
     },
     "obj.**"(a) {
-      Checking<typeof a, User | null, Test.Pass>;
+      void a;
+      void Checking<typeof a, User | null, Test.Pass>;
     },
     "obj.age"(a) {
-      Checking<typeof a, number, Test.Pass>;
+      void a;
+      void Checking<typeof a, number, Test.Pass>;
     },
     "obj.name"(a) {
-      Checking<typeof a, string, Test.Pass>;
+      void a;
+      void Checking<typeof a, string, Test.Pass>;
     },
   },
 });

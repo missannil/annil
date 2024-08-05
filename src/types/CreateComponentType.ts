@@ -1,12 +1,9 @@
-import type { IfExtends } from "hry-types/src/Any/IfExtends";
-import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
+import type { IfExtends } from "hry-types/src/Any/_api";
+import type { ComputeIntersection } from "hry-types/src/Object/_api";
 import type { ComponentDoc } from "../api/DefineComponent/ReturnType/ComponentDoc";
 import type { AddPrefix } from "./AddPrefix";
 
-/**
- * 生成组件文档类型
- */
-export type GenerateDoc<TName extends string, T extends ComponentDoc> = ComputeIntersection<
+export type CreateComponentType<TName extends string, T extends ComponentDoc> = ComputeIntersection<
   & IfExtends<
     unknown,
     T["properties"],

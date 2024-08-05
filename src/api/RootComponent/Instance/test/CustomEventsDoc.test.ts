@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { Checking, type Test } from "hry-types";
 import type { DetailedType } from "../../../..";
 import { RootComponent } from "../..";

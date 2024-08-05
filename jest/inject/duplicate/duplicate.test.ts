@@ -5,6 +5,7 @@ import { BBeforeCreate } from "../../../src/behaviors/BbeforeCreated";
 import { BStore } from "../../../src/behaviors/BStore";
 export const checkData = {
   options: {} as object | undefined,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: {} as any,
   behaviors: [] as string[],
 };

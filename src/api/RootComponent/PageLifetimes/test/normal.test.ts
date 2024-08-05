@@ -8,14 +8,20 @@ import type { Mock_User } from "../../Properties/test/normalRequired.test";
  */
 RootComponent()({
   pageLifetimes: {
-    hide() {},
-    resize(size) {
-      Checking<typeof size, WechatMiniprogram.Page.IResizeOption, Test.Pass>;
+    hide() {
+      void 0;
     },
-    show() {},
+    resize(size) {
+      void size;
+      void Checking<typeof size, WechatMiniprogram.Page.IResizeOption, Test.Pass>;
+    },
+    show() {
+      void 0;
+    },
     // 1 glass-easel(最低版本库3.0.2)支持的周期函数
     load(obj) {
-      Checking<typeof obj, object | undefined, Test.Pass>;
+      void obj;
+      void Checking<typeof obj, object | undefined, Test.Pass>;
     },
   },
 });
@@ -41,7 +47,8 @@ RootComponent()({
   pageLifetimes: {
     // 3 重写onLoad周期参数props的类型(同页面properties定义类型).
     onLoad(props) {
-      Checking<
+      void props;
+      void Checking<
         typeof props,
         {
           union?: Mock_User;

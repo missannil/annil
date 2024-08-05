@@ -26,9 +26,11 @@ type CompDoc1 = ComponentDoc<{
 SubComponent<{}, CompDoc1>()({
   events: {
     aaa_str(e) { // ok
-      e;
+      void e;
     },
     // @ts-expect-error 非法字段
-    aaa_other() {},
+    aaa_other() {
+      void 0;
+    },
   },
 });

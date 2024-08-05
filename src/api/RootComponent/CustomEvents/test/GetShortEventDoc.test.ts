@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import { Checking, type Test } from "hry-types";
 
 import type { Mock_User } from "../../Properties/test/normalRequired.test";
 import type { GetShortCustomEventsDoc } from "../GetCustomEventDoc";
-import { mock_shortCustomEvents } from "./normal.test";
+import { type mock_shortCustomEvents } from "./normal.test";
 
 type StrResult = GetShortCustomEventsDoc<typeof mock_shortCustomEvents["str"]>;
 

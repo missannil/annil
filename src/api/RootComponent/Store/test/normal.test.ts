@@ -12,13 +12,13 @@ const storeDoc = RootComponent()({
     userAge: () => user.age,
   },
 });
-
-type StoreDocExpected = {
+void storeDoc;
+interface StoreDocExpected {
   store: {
     userName: string;
     userAge: number;
   };
-};
+}
 
 // 返回类型为函数返回类型
-Checking<typeof storeDoc, StoreDocExpected, Test.Pass>;
+void Checking<typeof storeDoc, StoreDocExpected, Test.Pass>;

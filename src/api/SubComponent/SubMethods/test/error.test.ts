@@ -25,7 +25,9 @@ type CompDoc = ComponentDoc<{
 SubComponent<RootDoc, CompDoc>()({
   methods: {
     // @ts-expect-error 1.1 前缀错误
-    xxx_yyy() {},
+    xxx_yyy() {
+      void 0;
+    },
   },
 });
 
@@ -33,13 +35,17 @@ SubComponent<RootDoc, CompDoc>()({
 SubComponent<RootDoc, CompDoc>()({
   events: {
     aaa_str_catch() {
+      void 0;
     },
   },
   methods: {
     // @ts-expect-error 2.1 与组件自定义事件字段重复
-    aaa_str() {},
+    aaa_str() {
+      void 0;
+    },
     // @ts-expect-error 2.2 与events字段重复
     aaa_str_catch() {
+      void 0;
     },
   },
 });

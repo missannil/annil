@@ -26,7 +26,7 @@ test("store数据初始化在attached周期", async () => {
   expect(comp.instance.data.aaa_name).toBe("lili");
 
   // @ts-ignore
-  comp.instance.disposer["age"]();
+  comp.instance.disposer.age();
 
   storeUser.changeAge();
 

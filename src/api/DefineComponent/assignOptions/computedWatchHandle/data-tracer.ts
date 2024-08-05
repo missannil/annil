@@ -1,4 +1,3 @@
-/* eslint-disable complexity */
 import type { ComputedDependence } from "./computedUpdater";
 import { removePreviousDependence } from "./dependencesOptimize";
 
@@ -15,7 +14,7 @@ export function deepProxy(
       const val = target[prop];
 
       // 自身没有但原型链上有的属性不收集依赖
-      if (prop in target && !target.hasOwnProperty(prop)) {
+      if (prop in target && !Object.prototype.hasOwnProperty.call(target, prop)) {
         return typeof val === "function" ? val.bind(target) : val;
       }
       removePreviousDependence(dependences, basePath);
@@ -37,7 +36,7 @@ export function deepProxy(
   return new Proxy(data, handler);
 }
 
-export function getProxyOriginalValue(value: any): any {
+export function getProxyOriginalValue(value: { __original__?: unknown }): unknown {
   if (typeof value !== "object" || value === null) {
     return value;
   }

@@ -12,3 +12,4 @@ const compA = DefineComponent({
   rootComponent,
 });
 export type $CompA = typeof compA;
+void compA;

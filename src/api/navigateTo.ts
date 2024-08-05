@@ -57,7 +57,7 @@ export function navigateTo<TPageDoc extends PageDoc = never>(
   option: NoInfer<NavigateToOption<TPageDoc>>,
 ) {
   // @ts-ignore 隐式索引
-  if (!option["data"]) {
+  if (!option.data) {
     return wx.navigateTo(option);
   } else {
     return wx.navigateTo(

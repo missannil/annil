@@ -1,5 +1,3 @@
-/* eslint-disable complexity */
-
 function isSameType(a: object, b: object) {
   return Object.prototype.toString.call(a) === Object.prototype.toString.call(b);
 }
@@ -10,6 +8,7 @@ function isSameSize(a: object, b: object) {
 }
 
 // 定义一个辅助函数，用于判断两个函数的代码是否相同
+// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 function isSameCode(a: Function, b: Function) {
   // 去除空格比较函数字符串
   return a.toString().split(" ").join("") === b.toString().split(" ").join("");
@@ -46,6 +45,7 @@ export function isEqual(a: unknown, b: unknown) {
 
   // 如果两个值是函数类型，再判断它们的代码是否相同
   if (typeof a === "function") {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
     return isSameCode(a, b as Function);
   }
 

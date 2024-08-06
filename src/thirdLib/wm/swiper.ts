@@ -14,8 +14,13 @@ type AnimationfinishEventDetail = ChangeEventDetail;
 
 export type Swiper = CreateComponentType<"swiper", {
   properties: {
-    list: unknown[];
+    /**
+     * @description class
+     */
     class?: string;
+    /**
+     * @description style
+     */
     style?: string;
     /**
      * 是否显示面板指示点

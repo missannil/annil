@@ -3,6 +3,8 @@ import type { CreateComponentType } from "../../types/CreateComponentType";
 
 export type ScrollView = CreateComponentType<"scrollView", {
   properties: {
+    class?: string;
+    style?: string;
     // 允许横向滚动
     scroll_x?: boolean;
     // 允许纵向滚动

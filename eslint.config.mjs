@@ -8,10 +8,17 @@ export default tseslint.config(
   ...tseslint.configs.strict,
   ...tseslint.configs.stylistic,
   {
+    languageOptions: {
+      globals: {
+        // 为什么不好使
+        definitionFilter: true,
+      },
+    },
     ignores: ["./commitlint.config.cjs"],
     rules: {
       "@typescript-eslint/no-empty-object-type": 0,
       "@typescript-eslint/consistent-type-definitions": 0,
+      "@typescript-eslint/no-unused-vars": 1,
       "@typescript-eslint/ban-ts-comment": [
         "error",
         {

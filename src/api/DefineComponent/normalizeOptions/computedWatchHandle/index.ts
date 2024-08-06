@@ -8,17 +8,14 @@ import { isEqual } from "./isEqual";
 import { assertNonNullable } from "../../../../utils/assertNonNullable";
 import { deepClone } from "../../../../utils/deepClone";
 import { isEmptyObject } from "../../../../utils/isEmptyObject";
-import type { FinalOptionsOfComponent, Instance } from "..";
+import type { Instance } from "../../../RootComponent/Instance/RootComponentInstance";
+import type { FinalOptionsOfComponent } from "..";
 
 type WatchOldValue = Record<string, unknown[]>;
 
 function initWatchOldValue(data: FinalOptionsOfComponent["data"], watchConfig: object): WatchOldValue {
   const watchOldValue = {};
   for (const key in watchConfig) {
-    // watchOldValue[key] = deepClone(getPathsValue(data, key));
-
-    // watchOldValue[key] = getPathsValue(data, key);
-
     // @ts-ignore 隐式索引
     watchOldValue[key] = deepClone(getPathsValue(data, key));
   }
@@ -30,7 +27,7 @@ export function computedWatchHandle(options: FinalOptionsOfComponent) {
   const computedConfig = options.computed;
   const rawPropertiesValue = getPropertiesValue(options.properties);
   if (computedConfig && !isEmptyObject(computedConfig)) {
-    // 此时store已经初始化数据到data了
+    // 此时store已经初始化数据到data了(__storeConfig__)
 
     const __computedInitCache__ = initComputedAndGetCache(options, computedConfig, {
       ...options.data,

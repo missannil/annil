@@ -1,4 +1,4 @@
-import type { Instance } from "..";
+import type { Instance } from "../../../RootComponent/Instance/RootComponentInstance";
 import { deepProxy, getProxyOriginalValue } from "./data-tracer";
 import { removeSubDependences } from "./dependencesOptimize";
 import { getPathsValue } from "./getPathsValue";

@@ -1,8 +1,3 @@
-// import type { Extends } from "hry-types/src/Any/Extends";
-// import type { IfExtends } from "hry-types/src/Any/IfExtends";
-// import type { GetPropertiesDuplicatedKeys } from "../../../types/GetPropertiesDuplicatedKeys";
-// import type { Shift } from "../../../types/Shift";
-// import type { UnionToComma } from "../../../types/UnionToComma.test";
 import type { SubComponentDoc } from "../../SubComponent/SubComponentDoc";
 
 /**

@@ -1,6 +1,10 @@
 import type mobx from "mobx";
-import type { Instance } from "../api/DefineComponent/assignOptions";
+import type { Instance } from "../api/RootComponent/Instance/RootComponentInstance";
 
+/**
+ * 在created生命周期中,初始化 store数据(__storeConfig__)到data中
+ * 在detached生命周期中,清除store数据
+ */
 export const BStore = Behavior({
   lifetimes: {
     created(this: Instance) {
@@ -9,9 +13,8 @@ export const BStore = Behavior({
 
       // eslint-disable-next-line @typescript-eslint/no-require-imports
       const { comparer, reaction, toJS } = require("mobx") as typeof mobx;
-
+      // 存储reaction的disposer 需要冲突字段验证
       this.disposer = {};
-
       for (const key in storeConfig) {
         // 添加响应式逻辑
         this.disposer[key] = reaction(

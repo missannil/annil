@@ -2,9 +2,11 @@ import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
 import type { IReactionDisposer } from "mobx";
 
+import type { Func } from "hry-types/src/Misc/Func";
 import type { Assign } from "../../../types/Assign";
 import type { ComputeObject } from "../../../types/ComputeObj";
 import type { WMComponentInstance, WMInstanceMethods, WMPageInstance } from "../../../types/OfficialTypeAlias";
+import type { OptionsInnerFields } from "../../DefineComponent/normalizeOptions";
 import type { IInjectAllData, IInjectMethods } from "../../InstanceInject/instanceConfig";
 import type { CustomEventMethods } from "./CustomEventMethods";
 import type { CustomSetData } from "./CustomSetData";
@@ -33,3 +35,10 @@ export type RootComponentInstance<
 export type ComponentInstance = RootComponentInstance<false, {}, {}, {}, {}, {}>;
 
 export type PageInstance = RootComponentInstance<true, {}, {}, {}, {}, {}>;
+
+type InstanceInnerFields = {
+  data: OptionsInnerFields["data"];
+  disposer: Record<string, Func>;
+  cloneData: OptionsInnerFields["data"];
+} & OptionsInnerFields["methods"];
+export type Instance = (ComponentInstance | PageInstance) & InstanceInnerFields;

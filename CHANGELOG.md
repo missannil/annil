@@ -4,6 +4,13 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.7.5-beta.0](https://github.com/missannil/annil/compare/v1.7.5-beta.0...v1.7.5-beta.0) (2024-08-06)
+
+
+### Miscellaneous Chores
+
+* 测试自定义3 ([b25df03](https://github.com/missannil/annil/commit/b25df0368785499537405415072e48ea842893c7))
+
 ## [1.7.5-beta.0](https://github.com/missannil/annil/compare/v1.7.4...v1.7.5-beta.0) (2024-08-06)
 
 

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-import { isEqual } from "../src/api/DefineComponent/assignOptions/computedWatchHandle/isEqual";
+import { isEqual } from "../src/api/DefineComponent/normalizeOptions/computedWatchHandle/isEqual";
 describe("isEqual", () => {
   isEqual;
 

@@ -7,7 +7,9 @@ const subA = SubComponent<typeof rootComponent, { properties: { aaa_name: string
   },
   lifetimes: {
     attached() {
+      console.log("subA attached", 1111111111111111);
       storeUser.changeName("lili");
+      console.log("subA attached", this.data.aaa_name);
     },
   },
 });

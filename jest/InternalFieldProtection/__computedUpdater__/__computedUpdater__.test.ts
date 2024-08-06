@@ -11,7 +11,7 @@ describe("内部字段保护", () => {
       comp.attach(parent);
     } catch (error) {
       // @ts-ignore
-      expect(error.message).toBe("__computedUpdater__已被内部字段占用");
+      expect(error.message).toBe("methods配置中的__computedUpdater__字段已被内部字段占用");
     }
   });
 });

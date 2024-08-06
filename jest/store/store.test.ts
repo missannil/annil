@@ -13,7 +13,7 @@ export const storeUser = observable({
   },
 });
 
-test("store数据初始化在attached周期", async () => {
+test("store数据初始化在created周期", async () => {
   const id = load(path.resolve(__dirname, "store"));
   const comp = render(id);
 

@@ -1,10 +1,10 @@
 import { load, render, sleep } from "miniprogram-simulate";
 import path from "path";
-import type { ComputedDependence } from "../../../src/api/DefineComponent/assignOptions/computedWatchHandle/computedUpdater";
+import type { ComputedDependence } from "../../../src/api/DefineComponent/normalizeOptions/computedWatchHandle/computedUpdater";
 
 import {
   removeSubDependences,
-} from "../../../src/api/DefineComponent/assignOptions/computedWatchHandle/dependencesOptimize";
+} from "../../../src/api/DefineComponent/normalizeOptions/computedWatchHandle/dependencesOptimize";
 import { user } from "../../common";
 
 const id = load(path.resolve(__dirname, "filterDependences")); // 此处必须传入绝对路径

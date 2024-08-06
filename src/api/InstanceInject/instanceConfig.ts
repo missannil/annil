@@ -8,6 +8,7 @@ import type { StoreConstraint } from "../RootComponent/Store/StoreConstraint";
 
 // 利用继承的多态性 使得IInjectInfo类型可由使用者外部定义
 interface BaseInjectInfo {
+  [key: string]: unknown;
   options?: WMComponentOption;
   methods?: MethodsConstraint;
   data?: DataConstraint;

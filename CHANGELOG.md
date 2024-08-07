@@ -4,6 +4,13 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.7.5-beta.4](https://github.com/missannil/annil/compare/v1.7.5-beta-3...v1.7.5-beta.4) (2024-08-07)
+
+
+### Miscellaneous Chores
+
+* 小程序不支持2022打包 ([#187](https://github.com/missannil/annil/issues/187)) ([8e2bd2c](https://github.com/missannil/annil/commit/8e2bd2c074d0870b9c45631feb214e6e460565eb))
+
 ## [1.7.5-beta-3](https://github.com/missannil/annil/compare/v1.7.5-beta.0...v1.7.5-beta-3) (2024-08-06)
 
 

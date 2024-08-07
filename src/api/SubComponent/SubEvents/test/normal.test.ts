@@ -4,7 +4,7 @@ import { Checking, type Test } from "hry-types";
 import type { Wm } from "../../../../thirdLib";
 
 import type { Detail, Mark, WMBaseEvent } from "../../../..";
-import type { ComponentDoc } from "../../../DefineComponent/ReturnType/ComponentDoc";
+import type { ComponentType } from "../../../DefineComponent/ReturnType/ComponentType";
 import type {
   Bubbles,
   BubblesCapture,
@@ -16,7 +16,7 @@ import type {
 import type { Mock_User } from "../../../RootComponent/Properties/test/normalRequired.test";
 import { SubComponent } from "../..";
 
-type CompDoc = ComponentDoc<{
+type CompDoc = ComponentType<{
   customEvents: {
     aaa_str: string;
     aaa_bubbles: string | Bubbles;

@@ -4,7 +4,7 @@ import type { Func } from "hry-types/src/Misc/Func";
 import type { ComputeIntersection } from "hry-types/src/Object/_api";
 import type { ComputeObject } from "../../types/ComputeObj";
 import type { WMCompOtherOption } from "../../types/OfficialTypeAlias";
-import type { ComponentDoc } from "../DefineComponent/ReturnType/ComponentDoc";
+import type { ComponentType } from "../DefineComponent/ReturnType/ComponentType";
 import type { IInjectAllData, IInjectStore } from "../InstanceInject/instanceConfig";
 import type { ComputedConstraint } from "./Computed/ComputedConstraint";
 import type { ComputedOption } from "./Computed/ComputedOption";
@@ -88,7 +88,7 @@ type RootComponentOptions<
     >
   >;
 
-type RootComponentConstructor<TComponentDocList extends ComponentDoc[]> = <
+type RootComponentConstructor<TComponentDocList extends ComponentType[]> = <
   // TEvents 不能有默认值 {} 会引起事件参数类型(e)失效
   TEvents extends EventsConstraint<TComponentDocList>,
   TIsPage extends boolean = false,
@@ -137,7 +137,7 @@ ComputeIntersection<
 
 export function RootComponent<
   // TComponentDocList泛型为了给events字段提供类型约束
-  TComponentDocList extends ComponentDoc[] = [],
+  TComponentDocList extends ComponentType[] = [],
 >(): RootComponentConstructor<
   TComponentDocList
 > {

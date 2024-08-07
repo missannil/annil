@@ -1,5 +1,5 @@
 import { Checking, type Test } from "hry-types";
-import type { ComponentDoc } from "../../../DefineComponent/ReturnType/ComponentDoc";
+import type { ComponentType } from "../../../DefineComponent/ReturnType/ComponentType";
 import type {
   Bubbles,
   BubblesCaptureComposed,
@@ -9,7 +9,7 @@ import type {
 } from "../../../RootComponent/CustomEvents/CustomEventsTag";
 import { SubComponent } from "../..";
 
-type CompDoc = ComponentDoc<{
+type CompDoc = ComponentType<{
   properties: {
     aaa_str: string;
   };

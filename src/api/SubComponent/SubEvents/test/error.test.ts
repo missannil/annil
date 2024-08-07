@@ -1,8 +1,8 @@
-import type { ComponentDoc } from "../../../DefineComponent/ReturnType/ComponentDoc";
+import type { ComponentType } from "../../../DefineComponent/ReturnType/ComponentType";
 import type { Bubbles } from "../../../RootComponent/CustomEvents/CustomEventsTag";
 import { SubComponent } from "../..";
 
-type CompDoc = ComponentDoc<{
+type CompDoc = ComponentType<{
   properties: {
     aaa_str: string;
   };
@@ -16,7 +16,7 @@ SubComponent<{}, CompDoc>()({
   },
 });
 
-type CompDoc1 = ComponentDoc<{
+type CompDoc1 = ComponentType<{
   customEvents: {
     aaa_str: string | Bubbles;
   };

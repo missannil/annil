@@ -1,14 +1,14 @@
 import type { Contains } from "hry-types/src/Any/Contains";
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { Detail, WMBaseEvent } from "../../../types/OfficialTypeAlias";
-import type { ComponentDoc } from "../../DefineComponent/ReturnType/ComponentDoc";
+import type { ComponentType } from "../../DefineComponent/ReturnType/ComponentType";
 import type { Bubbles, Capture, CustomEventsTags } from "../../RootComponent/CustomEvents/CustomEventsTag";
 
 /**
  * 把组件事件类型转为函数类型,冒泡事件捕获事件会多一个加后缀(_catch)的key,表示阻止事件冒泡和捕获。
  */
 export type SubEventsConstraint<
-  CompDoc extends ComponentDoc,
+  CompDoc extends ComponentType,
 > = {
   [
     k in keyof CompDoc["customEvents"] as Contains<CompDoc["customEvents"][k], Bubbles | Capture> extends true

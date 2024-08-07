@@ -11,7 +11,7 @@ import type {
   WMCustomEvent,
 } from "../../../../types/OfficialTypeAlias";
 import { assertNonNullable } from "../../../../utils/assertNonNullable";
-import type { ComponentDoc } from "../../../DefineComponent/ReturnType/ComponentDoc";
+import type { ComponentType } from "../../../DefineComponent/ReturnType/ComponentType";
 import { RootComponent } from "../..";
 import type { Bubbles, Capture } from "../../CustomEvents/CustomEventsTag";
 
@@ -34,13 +34,13 @@ RootComponent()({
     // 2.1 通过WMCustomEvent定义detai,mark,CurrentTargetDataset,targetDataset数据类型
     customA(
       e: WMCustomEvent<
-        { detailData: string },
+        string,
         { markData: { id: string } },
         { currentTargetDatasetData: string },
         { targetDatasetData: number }
       >,
     ) {
-      Checking<typeof e.detail.detailData, string, Test.Pass>;
+      Checking<typeof e.detail, string, Test.Pass>;
 
       const markData = assertNonNullable(e.mark).markData;
 
@@ -71,7 +71,7 @@ RootComponent()({
   },
 });
 
-type ComponentDocA = ComponentDoc<{
+type ComponentDocA = ComponentType<{
   properties: {
     aaa_str: string;
   };
@@ -81,7 +81,7 @@ type ComponentDocA = ComponentDoc<{
   };
 }>;
 
-type ComponentDocB = ComponentDoc<{
+type ComponentDocB = ComponentType<{
   customEvents: {
     bbb_str: string;
     bbb_num: number | Capture;

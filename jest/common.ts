@@ -1,11 +1,11 @@
-import type { ComponentDoc } from "../src/api/DefineComponent/ReturnType/ComponentDoc";
+import type { ComponentType } from "../src/api/DefineComponent/ReturnType/ComponentType";
 
 export interface User {
   name: string;
   age?: number;
 }
 
-export type CompDoc = ComponentDoc<
+export type CompDoc = ComponentType<
   { properties: { compA_num: number; compA_user?: User | null }; customEvents: { compA_str: string } }
 >;
 

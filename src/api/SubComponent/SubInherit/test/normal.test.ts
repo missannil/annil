@@ -1,4 +1,4 @@
-import type { ComponentDoc } from "../../../DefineComponent/ReturnType/ComponentDoc";
+import type { ComponentType } from "../../../DefineComponent/ReturnType/ComponentType";
 import type { RootComponentDoc } from "../../../RootComponent/RootComponentDoc";
 import { SubComponent } from "../..";
 
@@ -23,7 +23,7 @@ type Mock_RootDoc = RootComponentDoc<{
   };
 }>;
 
-type Mock_CompDoc = ComponentDoc<{
+type Mock_CompDoc = ComponentType<{
   properties: {
     aaa_num: number;
     aaa_literal_num: 123 | 456;

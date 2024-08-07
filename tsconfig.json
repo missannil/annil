@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "lib": ["ES2022", "DOM"], // jest中用到了DOM类型
-    "target": "ES2022",
+    "target": "ES2017",
     "module": "ES2022",
     "moduleResolution": "Node",
     "skipLibCheck": true, // 跳过声明文件的类型检查(.d.ts),你引用的依然会检查, 默认false(不跳过)。

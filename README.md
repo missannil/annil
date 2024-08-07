@@ -54,9 +54,9 @@ annil(安奈儿)是微信小程序原生开发插件。她会让你获得新的�
 
   第三方组件库一般都是以文档的形式对组件说明,插件提供了泛型[CreateComponentType](./src/types/CreateComponentType.ts),可根据组件文档快速书写组件类型,使第三方组件融入组件构建模型,后续会陆续添加原生(Wm)和常用第三方组件库(Vant)类型。
 
-- **示例Demo及设计思想**
+<!-- - **示例Demo及设计思想**
 
-  请参考[设计思想](./doc/designIdea.md)
+  请参考[设计思想](./doc/designIdea.md) -->
 
 ### 安装
 
@@ -109,8 +109,11 @@ annil(安奈儿)是微信小程序原生开发插件。她会让你获得新的�
        "lib": ["ES2022"],
        "skipLibCheck": true,
        "strict": true,
-       "strictFunctionTypes": false, // 解决给事件参数e重定义类型报错的问题
-       "types": ["miniprogram-api-typings"]
+       "types": [
+         "hry-types",
+         "mobx",
+         "miniprogram-api-typings"
+       ]
      }
      // ...
    }

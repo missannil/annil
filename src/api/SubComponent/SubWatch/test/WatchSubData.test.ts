@@ -1,8 +1,8 @@
 import { Checking, type Test } from "hry-types";
-import type { ComponentDoc } from "../../../DefineComponent/ReturnType/ComponentDoc";
+import type { ComponentType } from "../../../DefineComponent/ReturnType/ComponentType";
 import { SubComponent } from "../..";
 
-type CompDoc = ComponentDoc<{
+type CompDoc = ComponentType<{
   properties: {
     aaa_str: string;
     aaa_num: number;

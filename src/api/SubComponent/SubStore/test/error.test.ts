@@ -1,13 +1,13 @@
 import { observable } from "mobx";
 
-import type { ComponentDoc } from "../../../DefineComponent/ReturnType/ComponentDoc";
+import type { ComponentType } from "../../../DefineComponent/ReturnType/ComponentType";
 import { SubComponent } from "../..";
 const user = observable({
   name: "zhao",
   age: 20,
 });
 
-type DocA = ComponentDoc<{
+type DocA = ComponentType<{
   properties: {
     aaa_str: string;
     aaa_num: number;

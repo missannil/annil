@@ -2,7 +2,7 @@
 import type { IfExtends } from "hry-types/src/Any/_api";
 import type { Select } from "hry-types/src/Object/_api";
 import type { Detail, WMBaseEvent } from "../../../types/OfficialTypeAlias";
-import type { ComponentDoc } from "../../DefineComponent/ReturnType/ComponentDoc";
+import type { ComponentType } from "../../DefineComponent/ReturnType/ComponentType";
 import type { CustomEventsDoc } from "../CustomEvents/CustomEventsDoc";
 import type {
   Bubbles,
@@ -18,9 +18,9 @@ type FilterNormalFields<O extends object> = Select<O, Bubbles | Capture, "contai
 
 // 获取冒泡或捕获的事件
 type GetBubblesOrCaptureEventsFromCompDoc<
-  ComponentDocList extends ComponentDoc[],
+  ComponentDocList extends ComponentType[],
   Result extends CustomEventsDoc = {},
-> = ComponentDocList extends [infer Head extends ComponentDoc, ...infer Rest extends ComponentDoc[]]
+> = ComponentDocList extends [infer Head extends ComponentType, ...infer Rest extends ComponentType[]]
   ? GetBubblesOrCaptureEventsFromCompDoc<
     Rest,
     Result & (FilterNormalFields<Head["customEvents"] & {}>)
@@ -50,7 +50,7 @@ type TransformCustomEventsDocTypeToFunctionTypeAndAddSuffix<T extends CustomEven
 
 // 所有子组件自定义事件(过滤掉非冒泡或捕获)的key加入后缀并把值(detail)转换为函数类型
 type GetAllSubCustomEventsConstraint<
-  ComponentDocList extends ComponentDoc[],
+  ComponentDocList extends ComponentType[],
   AllCustomEvents extends CustomEventsDoc = GetBubblesOrCaptureEventsFromCompDoc<ComponentDocList>,
 > = IfExtends<
   {},
@@ -66,7 +66,7 @@ type BaseEvent = Record<string, (e: WMBaseEvent) => unknown>;
 /**
  * events字段约束 由自身事件和冒泡的子组件事件组成。带前缀是子组件事件,带后缀(_catch)表示阻止冒泡
  */
-export type EventsConstraint<ComponentDocList extends ComponentDoc[] = []> = IfExtends<
+export type EventsConstraint<ComponentDocList extends ComponentType[] = []> = IfExtends<
   [],
   ComponentDocList,
   BaseEvent,

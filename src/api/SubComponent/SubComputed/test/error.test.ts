@@ -1,7 +1,7 @@
-import type { ComponentDoc } from "../../../DefineComponent/ReturnType/ComponentDoc";
+import type { ComponentType } from "../../../DefineComponent/ReturnType/ComponentType";
 import { SubComponent } from "../..";
 
-type OnlyCustomCompDoc = ComponentDoc<{
+type OnlyCustomCompDoc = ComponentType<{
   customEvents: { aaa_str: string };
 }>;
 
@@ -15,7 +15,7 @@ SubComponent<{}, OnlyCustomCompDoc>()({
   },
 });
 
-type OnlyPropsCompDoc = ComponentDoc<{
+type OnlyPropsCompDoc = ComponentType<{
   properties: {
     aaa_str: "a" | "b";
     aaa_num?: number;

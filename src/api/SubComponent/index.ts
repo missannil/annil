@@ -7,7 +7,7 @@ import type { InnerFields } from "../../types/InnerData";
 import type { WMCompOtherOption } from "../../types/OfficialTypeAlias";
 import type { Replace } from "../../types/Replace";
 import type { ReplacePrefix } from "../../types/ReplacePrefix";
-import type { ComponentDoc } from "../DefineComponent/ReturnType/ComponentDoc";
+import type { ComponentType } from "../DefineComponent/ReturnType/ComponentType";
 import type { IInjectStore } from "../InstanceInject/instanceConfig";
 import type { ComputedConstraint } from "../RootComponent/Computed/ComputedConstraint";
 import type { DataConstraint } from "../RootComponent/Data/DataConstraint";
@@ -40,7 +40,7 @@ import type { SubWatchOption } from "./SubWatch/SubWatchOption";
 type Options<
   RootDoc extends RootComponentDoc,
   IsPage extends boolean,
-  CurrentCompDoc extends ComponentDoc,
+  CurrentCompDoc extends ComponentType,
   Prefix extends string,
   AllRootDataDoc extends object,
   TInherit extends object,
@@ -105,14 +105,14 @@ type Options<
 
 type SubComponentConstructor<
   TRootDoc extends RootComponentDoc,
-  TOriginalCompDoc extends ComponentDoc,
+  TOriginalCompDoc extends ComponentType,
   // 补充的前缀
   TSupplementalPrefix extends string = "",
   IsPage extends boolean = TRootDoc["isPage"] extends true ? true : false,
   // 重构子组件的前缀
   CurrentPrefix extends string = `${GetComponentPrefix<TOriginalCompDoc>}${Capitalize<TSupplementalPrefix>}`,
   // 更新原始文档的前缀为Prefix
-  CurrentCompDoc extends ComponentDoc = IfExtends<
+  CurrentCompDoc extends ComponentType = IfExtends<
     TSupplementalPrefix,
     "",
     TOriginalCompDoc,
@@ -229,7 +229,7 @@ type SubComponentConstructor<
  */
 export function SubComponent<
   RootDoc extends RootComponentDoc,
-  CompDoc extends ComponentDoc,
+  CompDoc extends ComponentType,
   Prefix extends string = "",
 >(): IfExtends<EmptyObject, CompDoc, (opt: EmptyObject) => never, SubComponentConstructor<RootDoc, CompDoc, Prefix>> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

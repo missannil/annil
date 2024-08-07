@@ -1,4 +1,4 @@
-import type { ComponentDoc } from "../../../DefineComponent/ReturnType/ComponentDoc";
+import type { ComponentType } from "../../../DefineComponent/ReturnType/ComponentType";
 import type { RootComponentDoc } from "../../../RootComponent/RootComponentDoc";
 import { SubComponent } from "../..";
 
@@ -8,7 +8,7 @@ type RootDoc = RootComponentDoc<{
   };
 }>;
 
-type CompDoc = ComponentDoc<{
+type CompDoc = ComponentType<{
   customEvents: {
     aaa_str: string;
   };

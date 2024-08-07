@@ -1,5 +1,5 @@
 import { Checking, type Test } from "hry-types";
-import type { ComponentDoc } from "../../../DefineComponent/ReturnType/ComponentDoc";
+import type { ComponentType } from "../../../DefineComponent/ReturnType/ComponentType";
 
 import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
 import type { IInjectAllData } from "../../../InstanceInject/instanceConfig";
@@ -30,7 +30,7 @@ type RootDoc = RootComponentDoc<{
   };
 }>;
 
-type CompDoc = ComponentDoc<{
+type CompDoc = ComponentType<{
   properties: {
     aaa_str: string;
   };

@@ -1,12 +1,12 @@
 // import { Checking, type Test } from "hry-types";
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { EmptyObject } from "hry-types/src/Misc/EmptyObject";
-import type { ComponentDoc } from "../api/DefineComponent/ReturnType/ComponentDoc";
+import type { ComponentType } from "../api/DefineComponent/ReturnType/ComponentType";
 
 /**
  * 提取文档前缀名
  */
-export type GetComponentPrefix<TComponentDoc extends ComponentDoc> = EmptyObject extends TComponentDoc ? never
+export type GetComponentPrefix<TComponentDoc extends ComponentType> = EmptyObject extends TComponentDoc ? never
   : keyof IfExtends<
     unknown,
     TComponentDoc["properties"],

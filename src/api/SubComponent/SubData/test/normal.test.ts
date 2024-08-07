@@ -1,12 +1,12 @@
 import { Checking, type Test } from "hry-types";
-import type { ComponentDoc } from "../../../DefineComponent/ReturnType/ComponentDoc";
+import type { ComponentType } from "../../../DefineComponent/ReturnType/ComponentType";
 
 import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
 import type { IInjectAllData } from "../../../InstanceInject/instanceConfig";
 import type { Mock_User } from "../../../RootComponent/Properties/test/normalRequired.test";
 import { SubComponent } from "../..";
 
-type CompDoc = ComponentDoc<{
+type CompDoc = ComponentType<{
   properties: {
     aaa_str: "a" | "b";
     aaa_num?: number;

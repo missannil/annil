@@ -1,8 +1,8 @@
 import type { Func } from "hry-types/src/Misc/_api";
-import { instanceConfig } from "../../..";
 import { BBeforeCreate } from "../../../behaviors/BbeforeCreated";
 import { BStore } from "../../../behaviors/BStore";
 import { isEmptyObject } from "../../../utils/isEmptyObject";
+import { instanceConfig } from "../../InstanceInject/instanceConfig";
 import type { ComputedConstraint } from "../../RootComponent/Computed/ComputedConstraint";
 import type { DataConstraint } from "../../RootComponent/Data/DataConstraint";
 import type { LifetimesConstraint } from "../../RootComponent/Lifetimes/LifetimesConstraint";

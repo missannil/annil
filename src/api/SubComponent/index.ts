@@ -15,7 +15,7 @@ import type { EventsConstraint } from "../RootComponent/Events/EventsConstraint"
 import type { LifetimesConstraint } from "../RootComponent/Lifetimes/LifetimesConstraint";
 import type { MethodsConstraint } from "../RootComponent/Methods/MethodsConstraint";
 import type { PageLifetimesOption } from "../RootComponent/PageLifetimes/PageLifetimesOption";
-import type { RootComponentDoc } from "../RootComponent/RootComponentDoc";
+import type { RootComponentType } from "../RootComponent/RootComponentType";
 import type { StoreConstraint } from "../RootComponent/Store/StoreConstraint";
 import type { GetSubComputedDoc } from "./SubComputed/GetSubComputedDoc";
 import type { SubComputedConstraint } from "./SubComputed/SubComputedConstraint";
@@ -38,7 +38,7 @@ import type { SubStoreOption } from "./SubStore/SubStoreOption";
 import type { SubWatchOption } from "./SubWatch/SubWatchOption";
 
 type Options<
-  RootDoc extends RootComponentDoc,
+  RootDoc extends RootComponentType,
   IsPage extends boolean,
   CurrentCompDoc extends ComponentType,
   Prefix extends string,
@@ -104,7 +104,7 @@ type Options<
   >;
 
 type SubComponentConstructor<
-  TRootDoc extends RootComponentDoc,
+  TRootDoc extends RootComponentType,
   TOriginalCompDoc extends ComponentType,
   // 补充的前缀
   TSupplementalPrefix extends string = "",
@@ -228,7 +228,7 @@ type SubComponentConstructor<
  * @returns `(options:) => SubComponentDoc`
  */
 export function SubComponent<
-  RootDoc extends RootComponentDoc,
+  RootDoc extends RootComponentType,
   CompDoc extends ComponentType,
   Prefix extends string = "",
 >(): IfExtends<EmptyObject, CompDoc, (opt: EmptyObject) => never, SubComponentConstructor<RootDoc, CompDoc, Prefix>> {

@@ -20,7 +20,7 @@ RootComponent()({
 
 - **isPage**
 
-  是否可选: 页面时必需为true,组件时可选
+  是否可选: 组件为页面时值应true,组件时可不写或为false
 
   类型:boolean
 
@@ -38,7 +38,7 @@ RootComponent()({
 
   默认: { }
 
-  说明: js开发时同原生Component的properties选项。ts开发时,字段类型不允许null,对象配置去除observer字段,可通过as [DetailedType](../../src/types/DetailedType.ts)定义任意类型,有字段检测和value类型检测。
+  说明: 字段类型不允许null,对象配置去除observer字段,可通过as [DetailedType](../../src/types/DetailedType.ts)定义任意类型,有字段检测和value类型检测。
 
   示例:
 

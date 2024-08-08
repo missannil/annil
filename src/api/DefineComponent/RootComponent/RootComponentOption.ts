@@ -1,9 +1,9 @@
-import type { RootComponentDoc } from "../../RootComponent/RootComponentDoc";
+import type { RootComponentType } from "../../RootComponent/RootComponentType";
 
 /**
  * DefineComponent API`rootComponent`字段配置
  */
-export type RootComponentOption<TRootComponent extends RootComponentDoc> = {
+export type RootComponentOption<TRootComponent extends RootComponentType> = {
   /**
    * 根组件配置
    */

@@ -16,8 +16,8 @@ import type {
 import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
 import type { PropertiesConstraint } from "../../../RootComponent/Properties/PropertiesConstraint";
 import type { Mock_User } from "../../../RootComponent/Properties/test/normalRequired.test";
-import type { RootComponentDoc } from "../../../RootComponent/RootComponentDoc";
-import type { SubComponentDoc } from "../../../SubComponent/SubComponentDoc";
+import type { RootComponentType } from "../../../RootComponent/RootComponentType";
+import type { SubComponentType } from "../../../SubComponent/SubComponentType";
 import { DefineComponent } from "../..";
 
 const properties = {
@@ -123,7 +123,7 @@ const compDoc = DefineComponent({
 
 Checking<typeof compDoc, ComputeIntersection<CompOnlyCustomEventsExpected & OnlyPropertiesExpected>, Test.Pass>;
 
-type SubA = SubComponentDoc<{
+type SubA = SubComponentType<{
   str: string | Bubbles | Composed;
   num: number | Capture | Composed;
   null: null | Bubbles | Capture | Composed;
@@ -145,7 +145,7 @@ type customEventsRootDocExpect = {
 
 Checking<typeof customEventsRootDoc, customEventsRootDocExpect, Test.Pass>;
 
-type SubB = SubComponentDoc<{
+type SubB = SubComponentType<{
   str: number | Bubbles | Composed;
   num: string | Capture | Composed;
   null: boolean | Bubbles | Capture | Composed;
@@ -168,7 +168,7 @@ type WhenSameKeyOfCustomEventsRootDocExpect = {
 
 Checking<typeof WhenSameKeyOfCustomEventsRootDoc, WhenSameKeyOfCustomEventsRootDocExpect, Test.Pass>;
 
-type RootDocCatch = RootComponentDoc<{
+type RootDocCatch = RootComponentType<{
   events: {
     aaa_str_bubbles_catch: () => void;
   };

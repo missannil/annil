@@ -4,6 +4,13 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.7.5](https://github.com/missannil/annil/compare/v1.7.5-beta.4...v1.7.5) (2024-08-08)
+
+
+### Miscellaneous Chores
+
+* 更改README,SubComponentDoc-&gt;SubComponentType,RootComponentDoc->RootComponentType ([073d273](https://github.com/missannil/annil/commit/073d2733f5b15923d67f3a04a7a15902f73a9205))
+
 ## [1.7.5-beta.4](https://github.com/missannil/annil/compare/v1.7.5-beta-3...v1.7.5-beta.4) (2024-08-07)
 
 

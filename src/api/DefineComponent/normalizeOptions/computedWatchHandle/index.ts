@@ -1,9 +1,9 @@
 import type { Func } from "hry-types/src/Misc/Func";
+import { deepEqual } from "../../../../utils/deepEqual";
 import { computedUpdater } from "./computedUpdater";
 import { getPathsValue } from "./getPathsValue";
 import { getPropertiesValue } from "./getPropertiesValue";
 import { initComputedAndGetCache } from "./initComputedAndGetCache";
-import { isEqual } from "./isEqual";
 
 import { assertNonNullable } from "../../../../utils/assertNonNullable";
 import { deepClone } from "../../../../utils/deepClone";
@@ -71,7 +71,7 @@ export function computedWatchHandle(options: FinalOptionsOfComponent) {
         const watchOldValue = assertNonNullable(this.data.__watchOldValue__);
         const oldValue = watchOldValue[key];
 
-        if (isEqual(newValue, oldValue)) return;
+        if (deepEqual(newValue, oldValue)) return;
         watchOldValue[key] = deepClone(newValue);
 
         watchHadle.call(this, ...newValue, ...oldValue);

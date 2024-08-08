@@ -1,9 +1,9 @@
+import { deepEqual } from "../../../../utils/deepEqual";
 import type { Instance } from "../../../RootComponent/Instance/RootComponentInstance";
 import { deepProxy, getProxyOriginalValue } from "./data-tracer";
 import { removeSubDependences } from "./dependencesOptimize";
 import { getPathsValue } from "./getPathsValue";
 
-import { isEqual } from "./isEqual";
 export type ComputedDependence = { paths: string[]; val: unknown };
 
 export function computedUpdater(this: Instance, isUpdated = false): boolean {
@@ -15,7 +15,7 @@ export function computedUpdater(this: Instance, isUpdated = false): boolean {
       const curVal = getPathsValue(this.data, dep.paths.join("."))[0];
 
       // 检查依赖是否更新
-      if (!isEqual(curVal, dep.val)) {
+      if (!deepEqual(curVal, dep.val)) {
         changed = true;
 
         break;

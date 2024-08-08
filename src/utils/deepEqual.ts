@@ -30,14 +30,13 @@ function isSamePattern(a: RegExp, b: RegExp) {
  * 两个函数使用toString()比较
  * 支持Date,RegExp
  */
-export function isEqual(a: unknown, b: unknown) {
+export function deepEqual(a: unknown, b: unknown) {
   // 如果两个值是原始类型或null，直接用Object.is比较
   if (a === null || b === null || typeof a !== "object" || typeof b !== "object") {
     if (typeof a !== "function" || typeof b !== "function") {
       return Object.is(a, b);
     }
   }
-
   // 如果两个值是对象类型，先判断它们的类型、构造函数和属性数量是否相同
   if (!isSameType(a, b) || a.constructor !== b.constructor || !isSameSize(a, b)) {
     return false;
@@ -67,7 +66,7 @@ export function isEqual(a: unknown, b: unknown) {
   for (const key of keysA) {
     if (keysB.includes(key)) {
       // @ts-ignore
-      if (!isEqual(a[key], b[key])) {
+      if (!deepEqual(a[key], b[key])) {
         return false;
       }
     } else {

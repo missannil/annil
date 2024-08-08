@@ -1,8 +1,8 @@
 import type { ComponentType } from "../../../DefineComponent/ReturnType/ComponentType";
-import type { RootComponentDoc } from "../../../RootComponent/RootComponentDoc";
+import type { RootComponentType } from "../../../RootComponent/RootComponentType";
 import { SubComponent } from "../..";
 
-type RootDoc = RootComponentDoc<{
+type RootDoc = RootComponentType<{
   methods: {
     Mstr: () => string;
   };

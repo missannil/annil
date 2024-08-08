@@ -1,8 +1,8 @@
 import type { View } from "../../../../thirdLib/wm";
-import type { RootComponentDoc } from "../../../RootComponent/RootComponentDoc";
+import type { RootComponentType } from "../../../RootComponent/RootComponentType";
 import { SubComponent } from "../..";
 
-type RootDoc = RootComponentDoc<{
+type RootDoc = RootComponentType<{
   events: {
     RootE1: () => string;
   };

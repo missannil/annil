@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 type PrefixKeys = `${string}_${string}`;
 
 type _ComponentType = {
-  properties?: Record<PrefixKeys, any>;
-  customEvents?: Record<PrefixKeys, any>;
+  properties?: Record<PrefixKeys, unknown>;
+  customEvents?: Record<PrefixKeys, unknown>;
 };
 
 type Error = "{ properties?: Record<PrefixKeys, any>; customEvents?: Record<PrefixKeys, any>;}";

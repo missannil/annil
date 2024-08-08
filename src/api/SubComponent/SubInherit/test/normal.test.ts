@@ -1,11 +1,11 @@
 import type { ComponentType } from "../../../DefineComponent/ReturnType/ComponentType";
-import type { RootComponentDoc } from "../../../RootComponent/RootComponentDoc";
+import type { RootComponentType } from "../../../RootComponent/RootComponentType";
 import { SubComponent } from "../..";
 
 /**
  * inherit字段最终会在选项中删除,它用ts开发类型检测。
  */
-type Mock_RootDoc = RootComponentDoc<{
+type Mock_RootDoc = RootComponentType<{
   properties: {
     required_num: number;
     optional_literal_num?: 123 | 456 | 789;

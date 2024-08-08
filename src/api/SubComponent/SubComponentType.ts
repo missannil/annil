@@ -1,7 +1,7 @@
 import type { SelectKeys } from "hry-types/src/Object/_api";
 import type { Composed, CustomEventsTags } from "../RootComponent/CustomEvents/CustomEventsTag";
 
-type _SubComponentDoc = {
+type _SubComponentType = {
   [k in string]:
     | string
     | number
@@ -15,7 +15,7 @@ type _SubComponentDoc = {
 };
 
 type _Validator<O, ErrKeys = Exclude<keyof O, SelectKeys<O, Composed, "contains->">>> = [ErrKeys] extends [never]
-  ? _SubComponentDoc
+  ? _SubComponentType
   : `${ErrKeys & string} 不是穿透事件`;
 
 /**
@@ -27,4 +27,4 @@ type _Validator<O, ErrKeys = Exclude<keyof O, SelectKeys<O, Composed, "contains-
  * };
  * ```
  */
-export type SubComponentDoc<O extends _Validator<O> = _SubComponentDoc> = O;
+export type SubComponentType<O extends _Validator<O> = _SubComponentType> = O;

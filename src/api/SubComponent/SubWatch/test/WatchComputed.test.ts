@@ -1,10 +1,10 @@
 import { Checking, type Test } from "hry-types";
 import type { ComponentType } from "../../../DefineComponent/ReturnType/ComponentType";
 import type { Mock_User } from "../../../RootComponent/Properties/test/normalRequired.test";
-import type { RootComponentDoc } from "../../../RootComponent/RootComponentDoc";
+import type { RootComponentType } from "../../../RootComponent/RootComponentType";
 import { SubComponent } from "../..";
 
-type RootDoc = RootComponentDoc<{
+type RootDoc = RootComponentType<{
   properties: {
     obj: Mock_User | null;
   };

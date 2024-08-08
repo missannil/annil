@@ -49,9 +49,9 @@ DefineComponent({
 
 **字段说明**
 
-1. rootComponent字段类型为([RootComponentDoc](../../src\api\RootComponent\RootComponentDoc.ts)),即RootComponent接口返回类型
+1. rootComponent字段类型为([RootComponentType](../../src\api\RootComponent\RootComponentType.ts)),即RootComponent函数返回类型
 
-2. subComponents字段类型为([SubComponentDoc](../../src\api\SubComponent\SubComponentDoc.ts)[ ]),即SubComponent接口返回的类型数组
+2. subComponents字段类型为([SubComponentType](../../src\api\SubComponent\SubComponentType.ts)[ ]),即SubComponent函数返回的类型列表
 
 3. path或name字段(js开发可忽略)
 

@@ -1,7 +1,7 @@
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { RootComponentTrueOptions } from "../RootComponent";
-import type { RootComponentDoc } from "../RootComponent/RootComponentDoc";
-import type { SubComponentDoc } from "../SubComponent/SubComponentDoc";
+import type { RootComponentType } from "../RootComponent/RootComponentType";
+import type { SubComponentType } from "../SubComponent/SubComponentType";
 import type { NameOrPathOption } from "./NameOrPage/NameOrPathOption";
 import { normalizeOptions } from "./normalizeOptions";
 import type { CreateComponentDoc } from "./ReturnType/CreateComponentDoc";
@@ -11,8 +11,8 @@ import type { SubComponentsOption } from "./SubComponents/SubComponentsOption";
 export type Path = `/${string}`;
 
 type RootOptions<
-  TRootComponentDoc extends RootComponentDoc,
-  TSubComponentTuple extends SubComponentDoc[],
+  TRootComponentDoc extends RootComponentType,
+  TSubComponentTuple extends SubComponentType[],
   TName extends string,
   TPath extends Path,
 > =
@@ -21,8 +21,8 @@ type RootOptions<
   & SubComponentsOption<TSubComponentTuple>;
 
 type DefineComponentConstructor = <
-  TRootComponentDoc extends RootComponentDoc = {},
-  TSubComponentTuple extends SubComponentDoc[] = [],
+  TRootComponentDoc extends RootComponentType = {},
+  TSubComponentTuple extends SubComponentType[] = [],
   TName extends string = "",
   TPath extends Path = "/",
 >(
@@ -41,7 +41,7 @@ export type DefineComponentOption = {
   name?: string;
   path?: string;
   rootComponent?: RootComponentTrueOptions;
-  subComponents?: SubComponentDoc[];
+  subComponents?: SubComponentType[];
 };
 
 /**

@@ -1,11 +1,11 @@
 import { Checking, type Test } from "hry-types";
 import { DefineComponent } from "../../../DefineComponent";
 import type { ComponentType } from "../../../DefineComponent/ReturnType/ComponentType";
-import type { RootComponentDoc } from "../../../RootComponent/RootComponentDoc";
+import type { RootComponentType } from "../../../RootComponent/RootComponentType";
 import { SubComponent } from "../..";
-import type { SubComponentDoc } from "../../SubComponentDoc";
+import type { SubComponentType } from "../../SubComponentType";
 
-type Mock_RootDoc = RootComponentDoc<{
+type Mock_RootDoc = RootComponentType<{
   properties: {
     required_num: number;
     optional_literal_num?: 123 | 456 | 789;
@@ -55,7 +55,7 @@ const subDoc = SubComponent<Mock_RootDoc, Mock_CompDoc>()({
   },
 });
 
-void Checking<typeof subDoc, SubComponentDoc, Test.Fail>;
+void Checking<typeof subDoc, SubComponentType, Test.Fail>;
 
 DefineComponent({
   name: "xxx",

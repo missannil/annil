@@ -1,10 +1,10 @@
-import type { SubComponentDoc } from "../../SubComponent/SubComponentDoc";
+import type { SubComponentType } from "../../SubComponent/SubComponentType";
 
 /**
  * RootComponent API 的`subComponents`字段配置
  */
 export type SubComponentsOption<
-  TSubComponentTuple extends SubComponentDoc[],
+  TSubComponentTuple extends SubComponentType[],
 > = {
   /**
    * 子组件列表

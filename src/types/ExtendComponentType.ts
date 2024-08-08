@@ -19,7 +19,31 @@ type Validator<
 >;
 
 /**
- * 有时组件文档内部包含一些slot或基本组件,可通过ExtendComponentType泛型拓展组件类型
+ * 拓展组件类型
+ * @param TOriginalComponentType 原始组件类型
+ * @param TExtensionType 拓展类型
+ * @description 拓展类型必须与原始类型有相同的前缀
+ * @example
+ * ```ts
+ * type $CustomA = ExtendComponentType<
+ *  { properties: { aaa_num: number };
+ *   customEvents: { aaa_xxx: string }
+ *  },
+ *  { properties: { aaa_str: string };
+ *   customEvents: { aaa_yyy: string }
+ * }>;
+ *
+ * // 等同下面的类型
+ *  type $CustomA = {
+ *    properties: {
+ *      aaa_num: number;
+ *      aaa_str: string;
+ *    };
+ *    customEvents: {
+ *      aaa_xxx: string;
+ *      aaa_yyy: string;
+ *    };
+ * ```
  */
 export type ExtendComponentType<
   TOriginalComponentType extends ComponentType,

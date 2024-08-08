@@ -1,11 +1,11 @@
-import type { SubComponentDoc } from "../api/SubComponent/SubComponentDoc";
+import type { SubComponentType } from "../api/SubComponent/SubComponentType";
 
 // 获取元组中properties字段的重复keys
 export type GetPropertiesDuplicatedKeys<
-  O extends SubComponentDoc[],
+  O extends SubComponentType[],
   Comparekeys extends PropertyKey,
   Duplicatekey extends string = never,
-> = O extends [infer Head extends SubComponentDoc, ...infer Rest extends SubComponentDoc[]]
+> = O extends [infer Head extends SubComponentType, ...infer Rest extends SubComponentType[]]
   ? GetPropertiesDuplicatedKeys<
     Rest,
     Comparekeys | keyof Head["properties"],

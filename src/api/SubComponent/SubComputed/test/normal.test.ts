@@ -75,7 +75,7 @@ SubComponent<Root, OnlyPropsCompDoc>()({
     aaa_num123(): 123 {
       return 123;
     },
-    aaa_str(): "a" {
+    aaa_str() {
       return "a";
     },
     aaa_obj() {

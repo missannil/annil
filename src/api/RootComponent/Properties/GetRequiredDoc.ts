@@ -9,34 +9,20 @@ import type { RequiredSingle, RequiredType } from "./PropertiesConstraint";
  */
 export type GetRequiredDoc<
   TProperties extends Record<string, RequiredType>,
-  TIsPage extends boolean,
-> = {
+> // TIsPage extends boolean,
+ = {
   -readonly [k in keyof TProperties]: IfExtends<
     TProperties[k],
     // 非对象写法
     RequiredSingle,
-    IfExtends<
-      false,
-      TIsPage,
-      // 组件的对象类型加null
-      AddNullForObject<InferDetailedType<TProperties[k]>>,
-      // 页面的对象类型不加null
-      InferDetailedType<TProperties[k]>
-    >,
-    // 对象写法 RequiredUnion
-    IfExtends<
-      false,
-      TIsPage,
-      // 组件的对象类型加null
-      AddNullForObject<
-        // @ts-ignore TProperties[k] 必为 RequiredUnion
-        | InferDetailedType<TProperties[k]["type"]>
-        // @ts-ignore TProperties[k] 必为 RequiredUnion
-        | InferDetailedType<TProperties[k]["optionalTypes"][number]>
-      >,
-      // 页面的对象类型不加null
+    // 组件的对象类型加null
+    AddNullForObject<InferDetailedType<TProperties[k]>>,
+    // 组件的对象类型加null
+    AddNullForObject<
       // @ts-ignore TProperties[k] 必为 RequiredUnion
-      InferDetailedType<TProperties[k]["type"]> | InferDetailedType<TProperties[k]["optionalTypes"][number]>
+      | InferDetailedType<TProperties[k]["type"]>
+      // @ts-ignore TProperties[k] 必为 RequiredUnion
+      | InferDetailedType<TProperties[k]["optionalTypes"][number]>
     >
   >;
 };

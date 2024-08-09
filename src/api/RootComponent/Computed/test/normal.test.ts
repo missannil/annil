@@ -2,6 +2,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Checking, type Test } from "hry-types";
 import type { ComputeIntersection } from "hry-types/src/Object/_api";
+import type { User } from "../../../../../jest/common";
+import type { DetailedType } from "../../../../types/DetailedType";
 import type { IInjectAllData } from "../../../InstanceInject/instanceConfig";
 import { RootComponent } from "../..";
 import type { Mock_User } from "../../Properties/test/normalRequired.test";
@@ -94,3 +96,21 @@ const EmptyComputedFieldDoc = RootComponent()({
 });
 
 Checking<typeof EmptyComputedFieldDoc, { methods: { M1: () => void } }, Test.Pass>;
+RootComponent()({
+  isPage: true,
+  properties: {
+    optionalObj: {
+      type: Object,
+      value: {},
+    },
+    requiredObj: Object as DetailedType<User>,
+  },
+
+  pageLifetimes: {
+    onLoad(prop) {
+      Checking<typeof prop.optionalObj, object | undefined, true>;
+      Checking<typeof prop.requiredObj, User, true>;
+      Checking<typeof this.data.optionalObj, object, true>;
+    },
+  },
+});

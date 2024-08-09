@@ -1,6 +1,7 @@
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
 import type { WMCompPageLifetimes, WMPageLifetimes } from "../../../types/OfficialTypeAlias";
+import type { RemoveNullOfRequired } from "../../../types/RemoveNullOfRequired";
 
 export type PageLifetimesOption<TIsPage extends boolean, PropertiesDoc extends object> = IfExtends<
   TIsPage,
@@ -31,7 +32,8 @@ export type PageLifetimesOption<TIsPage extends boolean, PropertiesDoc extends o
          * 页面加载时触发。一个页面只会调用一次，可以在 onLoad 的参数中获取Properties定义的数据。
          */
         onLoad?: (
-          props: PropertiesDoc,
+          // 默认PropertiesDoc
+          props: RemoveNullOfRequired<PropertiesDoc>,
         ) => void | Promise<void>;
       }
     >;

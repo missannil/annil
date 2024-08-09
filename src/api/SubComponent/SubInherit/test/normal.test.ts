@@ -65,3 +65,17 @@ SubComponent<Mock_RootDoc, Mock_CompDoc>()({
     aaa_obj1: "" as "required_obj" | "optional_obj" | ["required_obj" | "optional_obj"] | "wxml",
   },
 });
+
+// 4. 实例上没有computed字段。
+SubComponent<{}, Mock_CompDoc>()({
+  computed: {
+    aaa_num() {
+      return 1;
+    },
+  },
+  methods: {
+    aaa_meA() {
+      console.log(this.data.aaa_num);
+    },
+  },
+});

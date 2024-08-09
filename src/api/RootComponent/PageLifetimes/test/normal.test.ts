@@ -1,6 +1,7 @@
 import { Checking, type Test } from "hry-types";
 import { type DetailedType, RootComponent } from "../../../..";
 
+import type { User } from "../../../../../jest/common";
 import type { Mock_User } from "../../Properties/test/normalRequired.test";
 
 /**
@@ -72,5 +73,30 @@ RootComponent()({
     // onShareTimeline
     // onTabItemTap
     // ...
+  },
+});
+// prop中必传对象没有null,但在实例中却需要有null
+RootComponent()({
+  isPage: true,
+  properties: {
+    optionalObj: {
+      type: Object,
+      value: {},
+    },
+    requiredObj: Object as DetailedType<User>,
+  },
+
+  pageLifetimes: {
+    onLoad(prop) {
+      void prop;
+      // 页面外部传值时没必要传null,组件时有需要的。
+      void Checking<typeof prop.requiredObj, User, true>;
+      // 虽然传值不应该是null,但由于实例建立时默认为null,所以实例类型加上null
+      void Checking<typeof this.data.requiredObj, User | null, true>;
+      // 页面传入的可选对象不需要null,有undefined
+      void Checking<typeof prop.optionalObj, object | undefined, true>;
+      // 实例中的可选对象不需要null,有默认值。
+      void Checking<typeof this.data.optionalObj, object, true>;
+    },
   },
 });

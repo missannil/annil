@@ -2,13 +2,14 @@ import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { EmptyObject } from "hry-types/src/Misc/EmptyObject";
 import type { Func } from "hry-types/src/Misc/Func";
 import type { RequiredKeys } from "hry-types/src/Object/RequiredKeys";
+import type { ComputeObject } from "../../types/ComputeObj";
 import type { GetComponentPrefix } from "../../types/GetComponentPrefix";
 import type { InnerFields } from "../../types/InnerData";
 import type { WMCompOtherOption } from "../../types/OfficialTypeAlias";
 import type { Replace } from "../../types/Replace";
 import type { ReplacePrefix } from "../../types/ReplacePrefix";
 import type { ComponentType } from "../DefineComponent/ReturnType/ComponentType";
-import type { IInjectStore } from "../InstanceInject/instanceConfig";
+import type { IInjectAllData, IInjectStore } from "../InstanceInject/instanceConfig";
 import type { ComputedConstraint } from "../RootComponent/Computed/ComputedConstraint";
 import type { DataConstraint } from "../RootComponent/Data/DataConstraint";
 import type { EventsConstraint } from "../RootComponent/Events/EventsConstraint";
@@ -71,7 +72,12 @@ type Options<
   & SubComputedOption<
     TSubComputed,
     // 合法的配置
-    Exclude<CompDocKeys, (keyof (InheritDoc & SubDataDoc & SubStoreDoc))> | InnerFields<Prefix>
+    Exclude<CompDocKeys, (keyof (InheritDoc & SubDataDoc & SubStoreDoc))> | InnerFields<Prefix>,
+    {
+      data: ComputeObject<
+        AllRootDataDoc & Replace<SubComputedDoc, Required<CurrentCompDoc["properties"]>> & IInjectAllData
+      >;
+    }
   >
   // 无需与根组件的events字段重复检测,因为根组件多了bubbles字段,一定不会重复
   & SubEventsOption<TEvents, SubEventsDoc, keyof SubEventsConstraint<CurrentCompDoc>>

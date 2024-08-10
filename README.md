@@ -23,7 +23,7 @@
 
 ### 简介
 
-annil(安奈儿)是微信小程序原生开发插件。她会让你获得新的开发体验,提高代码质量和开发效率。
+annil(安奈儿)是微信小程序原生开发插件。她会让你获得满意的开发体验,大大提高代码质量和开发效率。
 
 ### 特点
 
@@ -37,7 +37,7 @@ annil(安奈儿)是微信小程序原生开发插件。她会让你获得新的�
 
 - **组件类型概念**
 
-  新的组件构建API(DefineComponent)返回的类型叫组件类型,好比传统组件(UI)库为每个组件书写的使用文档,在做为子组件构建新组件(页面)时,子组件API(SubComponent)需要使用者传入组件类型,这样在书写配置字段时会得到完美的类型提示和检测。这样实现了一个页面中所有子组件之间的类型耦合,无论组件嵌套多少层,无论哪层组件数据类型发生改变,所有相关组件类型都会得到感知。当您增改、重构代码时,只要无类型报错(tsc --noEmit --watch)就不会有运行时报错的心智负担。
+  新的组件构建API(DefineComponent)返回的类型叫组件类型,好比传统组件(UI)库为每个组件书写的使用文档,在做为子组件构建新组件(页面)时,子组件API(SubComponent)需要使用者传入组件类型,这样在书写配置字段时会得到完美的类型提示和错误检测。这样实现了在一个页面中所有子组件之间的类型耦合,无论组件嵌套多少层,无论哪层组件数据类型发生改变,所有相关组件类型都会得到感知。当您增改、重构代码时,只要无类型报错(tsc --noEmit --watch)就不会有运行时报错的心智负担。
 
 - **高兼容性**
 
@@ -53,7 +53,7 @@ annil(安奈儿)是微信小程序原生开发插件。她会让你获得新的�
 
 - **vscode插件 `annil`**
 
-  当使用ts开发时,可安装vscode插件,会自动检测组件中`.wxml` 和 `.json`错误,并可一键修复。详情见 [插件市场](https://marketplace.visualstudio.com/items?itemName=missannil.vscode-annil)
+  当使用ts开发时,可安装vscode插件,会自动检测组件中`.wxml` 和 `.json`错误,并可一键修复,不必在书写wxml中自定义组件的属性和json文件的导入地址了。详情见 [插件市场](https://marketplace.visualstudio.com/items?itemName=missannil.vscode-annil)
 
 ### 安装
 
@@ -68,12 +68,12 @@ annil(安奈儿)是微信小程序原生开发插件。她会让你获得新的�
 - 可选
 
   ```bash
-  # 使用ts开发 hry-types为annil依赖的类型库
+  # 使用ts开发 hry-types为annil依赖的类型库。
   npm  --save-dev typescript hry-types miniprogram-api-typings
   ```
 
   ```bash
-  # 使用全局状态管理 当前为mobx6版本
+  # 使用状态管理 
   npm i mobx
   ```
 
@@ -98,7 +98,7 @@ annil(安奈儿)是微信小程序原生开发插件。她会让你获得新的�
    ```
 
    开发者工具左上部工具栏——工具——构建npm
-3. 配置tsconfig.json(使用ts开发时)
+3. tsconfig.json推荐配置(使用ts开发时)
 
 ```json
 {
@@ -108,6 +108,7 @@ annil(安奈儿)是微信小程序原生开发插件。她会让你获得新的�
     "skipLibCheck": true, // 跳过声明文件的类型检查(.d.ts)。
     "esModuleInterop": true, // 默认false. 兼容非ES模块引用的写法(如 import type mobx from 'mobx'等).
     "strict": true, // 启用严格模式
+    "exactOptionalPropertyTypes": true, // 带有?标志的属性类型不在包含undefined类型
     "noEmit": true, // 编译时不生成文件。
     "strictFunctionTypes": false, // 忽略函数参数逆变引起的问题
     "types": [

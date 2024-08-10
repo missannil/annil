@@ -11,6 +11,7 @@ function reactionRegister(this: Instance, storeConfig: Record<string, () => unkn
   this.disposer = {};
   for (const key in storeConfig) {
     const currentStoreValue = toJS(storeConfig[key]());
+    /* istanbul ignore next 没办法测试啊,在打开一个页面后退回,修改store,再打开相同页面是会出现store数据不准确的问题*/
     // @ts-ignore this.data[key]一定存在
     if (!deepEqual(currentStoreValue, this.data[key])) {
       unequalData[key] = currentStoreValue;
@@ -29,6 +30,7 @@ function reactionRegister(this: Instance, storeConfig: Record<string, () => unkn
     );
   }
   delete this.data.__storeConfig__;
+  /* istanbul ignore next  */
   if (!isEmptyObject(unequalData)) this.setData(unequalData);
 }
 

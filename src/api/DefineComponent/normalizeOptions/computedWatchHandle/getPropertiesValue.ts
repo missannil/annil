@@ -22,6 +22,7 @@ function getRequiredSingleValue(
     case Boolean:
       return false;
     default:
+      /* istanbul ignore next */
       throw Error(
         "properties字段类型只能为 String | Number | Array | Object | Boolean ",
       );

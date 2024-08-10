@@ -92,7 +92,7 @@ RootComponent()({
       // 页面外部传值时没必要传null,组件时有需要的。
       void Checking<typeof prop.requiredObj, User, true>;
       // 虽然传值不应该是null,但由于实例建立时默认为null,所以实例类型加上null
-      void Checking<typeof this.data.requiredObj, User | null, true>;
+      void Checking<typeof this.data.requiredObj, User, true>;
       // 页面传入的可选对象不需要null,有undefined
       void Checking<typeof prop.optionalObj, object | undefined, true>;
       // 实例中的可选对象不需要null,有默认值。

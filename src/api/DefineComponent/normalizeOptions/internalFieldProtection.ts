@@ -20,6 +20,7 @@ export function InternalFieldProtection(finalOptionsForComponent: FinalOptionsOf
   }
   for (const key of dataFieldKeys) {
     if (internalFiled.data.includes(key)) {
+      /* istanbul ignore next 同上*/
       throw Error(`data配置中的${key}字段已被内部字段占用`);
     }
   }

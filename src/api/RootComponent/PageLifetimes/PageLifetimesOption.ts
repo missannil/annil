@@ -1,5 +1,6 @@
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
+import type { ComputeObject } from "../../../types/ComputeObj";
 import type { WMCompPageLifetimes, WMPageLifetimes } from "../../../types/OfficialTypeAlias";
 import type { RemoveNullOfRequired } from "../../../types/RemoveNullOfRequired";
 
@@ -33,7 +34,7 @@ export type PageLifetimesOption<TIsPage extends boolean, PropertiesDoc extends o
          */
         onLoad?: (
           // 默认PropertiesDoc
-          props: RemoveNullOfRequired<PropertiesDoc>,
+          props: ComputeObject<RemoveNullOfRequired<PropertiesDoc>>,
         ) => void | Promise<void>;
       }
     >;

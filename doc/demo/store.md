@@ -1,16 +1,42 @@
 ### store字段
 
-1. store数据基于mobx生成的响应式数据。mobx6使用proxy而mobx4使用defineProperty做响应式,推荐使用最新的mobx,性能更好。
+1. store数据基于mobx生成的响应式数据。推荐使用最新的mobx,性能更好。
+
 2. store数据变化,通过深度比较,判定是否触发this.setData修改实例数据。
-3. 当发现数据变化没有符合预期时,应检测store数据是否为响应式数据(或许忘写了什么)
-4. store数据初始化在beforeCreated时,建立reaction在attached生命周期并会检查当前值是否和初始化时值是否一致,不一致立即setData一次,避免因为实例缓存,二次打开同一页面引起的数据不同步问题。
+
+3. 修改store数据,要使用store的内部方法才可以。
+
+4. 当发现数据变化没有符合预期时,应检测store数据是否为响应式数据(或许忘写了什么)
+
+5. store数据初始化在组件实例建立之前时,建立reaction在attached生命周期并会检查当前值是否和初始化时值是否一致,不一致立即setData一次,避免因为实例缓存,二次打开同一页面引起的数据不同步问题。
 
 #### 示例
 
 ```ts
-import { DefineComponent, RootComponent, SubComponent } from "annil";
+import {
+  DefineComponent,
+  type ExtendComponentType,
+  RootComponent,
+  SubComponent,
+} from "annil";
+import type { $TopNav } from "../../components/topNav/topNav";
 import { userStore } from "../../moudule/userStore";
-
+// 为TopNav组件添加solt的事件
+type $TopNavExtend = ExtendComponentType<
+  $TopNav,
+  { customEvents: { topNav_tap: null } }
+>;
+const topNav = SubComponent<Root, $TopNavExtend>()({
+  data: {
+    topNav_title: "store",
+    topNav_twTitle: " primary",
+  },
+  events: {
+    topNav_tap() {
+      wx.navigateBack();
+    },
+  },
+});
 // 子组件store的使用
 const subStore = SubComponent<Root, { properties: { sub_age: number } }>()({
   store: {
@@ -43,10 +69,10 @@ const rootComponent = RootComponent()({
     },
   },
 });
-const storeDemo = DefineComponent({
+const store = DefineComponent({
   path: "/pages/store/store",
   rootComponent,
-  subComponents: [subStore],
+  subComponents: [topNav, subStore],
 });
-export type $StoreDemo = typeof storeDemo;
+export type $Store = typeof store;
 ```

@@ -51,8 +51,8 @@ RootComponent()({
       }, Test.Pass>;
       // 页面可选对象不额外添加null
       Checking<typeof this.data.optionalObj, { name: string }, Test.Pass>;
-      // 页面必传对象有null
-      Checking<typeof this.data.obj, object | null, Test.Pass>;
+      // 页面必传对象没有null
+      Checking<typeof this.data.obj, object, Test.Pass>;
     },
   },
 });

@@ -27,6 +27,8 @@ annil(安奈儿)是微信小程序原生开发插件。她会给您更佳的开�
 
 ### 特点
 
+[代码片段](https://developers.weixin.qq.com/s/kRjkFlme7nTV)
+
 - **组件构建API功能更强大**
 
   新的组件构建API加入了[computed](./doc/demo/computed.md)、[watch](./doc/demo/watch.md)、[store](./doc/demo/store.md)(基于mobx的全局响应式数据)`等功能,使开发更便捷。
@@ -146,3 +148,7 @@ annil(安奈儿)是微信小程序原生开发插件。她会给您更佳的开�
 ### 更新日志
 
 [CHANGELOG](./CHANGELOG.md)
+
+### 讨论群
+
+加微信 missannil 请注明(annil)

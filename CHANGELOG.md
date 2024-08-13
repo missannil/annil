@@ -4,6 +4,13 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.7.7](https://github.com/missannil/annil/compare/v1.7.6...v1.7.7) (2024-08-13)
+
+
+### Bug Fixes
+
+* 修复SubComponent中计算属性无法获取data和store中数据的错误。 ([014a375](https://github.com/missannil/annil/commit/014a375de3ae657740b185b91f41e1215ef80ace))
+
 ## [1.7.6](https://github.com/missannil/annil/compare/v1.7.5...v1.7.6) (2024-08-10)
 
 

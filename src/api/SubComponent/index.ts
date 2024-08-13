@@ -75,7 +75,11 @@ type Options<
     Exclude<CompDocKeys, (keyof (InheritDoc & SubDataDoc & SubStoreDoc))> | InnerFields<Prefix>,
     {
       data: ComputeObject<
-        AllRootDataDoc & Replace<SubComputedDoc, Required<CurrentCompDoc["properties"]>> & IInjectAllData
+        & AllRootDataDoc
+        & Replace<SubComputedDoc, Required<CurrentCompDoc["properties"]>>
+        & SubStoreDoc
+        & SubDataDoc
+        & IInjectAllData
       >;
     }
   >

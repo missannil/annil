@@ -66,7 +66,7 @@ SubComponent<Root, OnlyPropsCompDoc>()({
     },
   },
 });
-
+// 3 computed字段的返回类型应为对应的文档类型,避免返回字面量类型导致与实际文档类型不符
 SubComponent<Root, OnlyPropsCompDoc>()({
   computed: {
     aaa_num() {
@@ -76,7 +76,7 @@ SubComponent<Root, OnlyPropsCompDoc>()({
       return 123;
     },
     aaa_str() {
-      return "a";
+      return "a"; // 默认下返回的类型是'a',但文档中是'a' | 'b'.所以要在this.data中处理
     },
     aaa_obj() {
       // 5 this.data
@@ -140,6 +140,23 @@ SubComponent<Root, $aaa>()({
     },
     aaa_str(): string {
       return this.data.str;
+    },
+  },
+});
+// 计算属性this.data可获取store和data的字段中文档中的字段和内部字段(_开头的字段)
+SubComponent<Root, $aaa>()({
+  data: {
+    aaa_age: 123,
+    _aaa_age1: 123,
+  },
+  store: {
+    aaa_str: () => "a",
+    _aaa_age: () => 123,
+  },
+  computed: {
+    aaa_num(): number {
+      const { aaa_age, _aaa_age1, _aaa_age, aaa_str } = this.data;
+      return aaa_age + _aaa_age1 + _aaa_age + aaa_str.length;
     },
   },
 });

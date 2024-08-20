@@ -231,7 +231,7 @@ type SubComponentConstructor<
     SubEventsDoc,
     SubMethodsDoc
   >,
-) => CreateSubComponentDoc<NonNullable<TOriginalCompDoc["customEvents"]>, SubEventsDoc, MissingRequiredField>;
+) => CreateSubComponentDoc<NonNullable<CurrentCompDoc["customEvents"]>, SubEventsDoc, MissingRequiredField>;
 
 /**
  * 子组件构建函数

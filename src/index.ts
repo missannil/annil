@@ -7,6 +7,16 @@ import type { CreateComponentType } from "./types/CreateComponentType";
 import type { DetailedType } from "./types/DetailedType";
 import type { ExtendComponentType } from "./types/ExtendComponentType";
 import type { ParamsEqual } from "./types/TwoParamsEqual";
+export type {
+  Bubbles,
+  BubblesCapture,
+  BubblesCaptureComposed,
+  BubblesComposed,
+  Capture,
+  CaptureComposed,
+  Composed,
+  CustomEventsTags,
+} from "./api/RootComponent/CustomEvents/CustomEventsTag";
 export type { Vant, Wm } from "./thirdLib";
 
 export type {

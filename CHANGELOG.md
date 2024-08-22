@@ -4,6 +4,13 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.7.8](https://github.com/missannil/annil/compare/v1.7.7...v1.7.8) (2024-08-22)
+
+
+### Bug Fixes
+
+* 当SubComponents组件有后缀时,阻止穿透(_catch)事件类型被返回的错误 ([deab409](https://github.com/missannil/annil/commit/deab409c1116d2e810cc018797b6c38061701f25))
+
 ## [1.7.7](https://github.com/missannil/annil/compare/v1.7.6...v1.7.7) (2024-08-13)
 
 

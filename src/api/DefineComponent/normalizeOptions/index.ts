@@ -1,6 +1,7 @@
 import type { Func } from "hry-types/src/Misc/_api";
 import { BBeforeCreate } from "../../../behaviors/BbeforeCreated";
 import { BStore } from "../../../behaviors/BStore";
+import { BthrottleDebounce } from "../../../behaviors/BthrottleDebounce";
 import { isEmptyObject } from "../../../utils/isEmptyObject";
 import { instanceConfig } from "../../InstanceInject/instanceConfig";
 import type { ComputedConstraint } from "../../RootComponent/Computed/ComputedConstraint";
@@ -25,12 +26,13 @@ import { sameFuncOptionsHandle } from "./sameFuncOptionsHandle";
 import { subComponentsOptionHandle } from "./subComponentsOptionHandle";
 
 export type WatchOldValue = Record<string, unknown[]>;
-
+export type ThrottleDebounce = Partial<Record<"throttle" | "debounce", Record<string, number>>>;
 export type OptionsInnerFields = {
   data: {
     __computedCache__?: ComputedCache;
     __storeConfig__?: StoreConstraint;
     __watchOldValue__?: WatchOldValue;
+    __throttleDebounce__?: ThrottleDebounce;
   };
   methods: {
     disposer?: Record<string, Func>;
@@ -78,7 +80,7 @@ export function normalizeOptions(
     data: {},
     methods: {},
     // 加入BStore,处理store字段的behavior
-    behaviors: [BStore],
+    behaviors: [BStore, BthrottleDebounce],
     externalClasses: [],
     pageLifetimes: {},
     isPage: false,
@@ -134,6 +136,7 @@ export function normalizeOptions(
 
   // 处理computed和watch配置
   computedWatchHandle(finalOptionsForComponent);
+  // 在rootComponentOptionHandle中保留了防抖节流配置,这里处理后,删除data.__throttleDebounce__字段
 
   // BBeforeCreate在最后面,让BeforeCreate生命周期运行在最终建立组件时。
   finalOptionsForComponent.behaviors.push(BBeforeCreate);

@@ -32,12 +32,12 @@ const rootComponent = RootComponent()({
         count: 2,
       });
 
-      console.log(this.data.count);
+      // console.log(this.data.count);
     },
   },
   observers: {
     "**"() {
-      console.log("为了覆盖率");
+      // console.log("为了覆盖率");
       // 为了覆盖率,计算属性无需更新时的代码 忽略
     },
   },

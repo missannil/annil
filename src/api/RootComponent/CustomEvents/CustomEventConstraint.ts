@@ -45,6 +45,28 @@ export type OptionsFieldsConfigOfCustomEvents =
 export type FullCustomEvents = {
   detail: ShortCustomeEvents;
   options: OptionsFieldsConfigOfCustomEvents;
+  debounce?: never;
+  throttle?: never;
+} | {
+  detail: ShortCustomeEvents;
+  options?: never;
+  debounce: number;
+  throttle?: never;
+} | {
+  detail: ShortCustomeEvents;
+  options?: never;
+  debounce?: never;
+  throttle: number;
+} | {
+  detail: ShortCustomeEvents;
+  options: OptionsFieldsConfigOfCustomEvents;
+  debounce?: never;
+  throttle: number;
+} | {
+  detail: ShortCustomeEvents;
+  options: OptionsFieldsConfigOfCustomEvents;
+  debounce: number;
+  throttle?: never;
 };
 
 export type CustomEvents = FullCustomEvents | ShortCustomeEvents;

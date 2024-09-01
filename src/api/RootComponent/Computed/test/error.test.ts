@@ -35,3 +35,16 @@ RootComponent()({
     },
   },
 });
+// 3 、实例上不存在的字段应该报错
+RootComponent()({
+  computed: {
+    str(): number {
+      // @ts-ignore 不存在的字段
+      return this.data.numd;
+    },
+    other(): string {
+      // @ts-ignore 不存在的字段
+      return this.func;
+    },
+  },
+});

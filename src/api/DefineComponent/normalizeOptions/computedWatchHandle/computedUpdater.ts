@@ -14,7 +14,7 @@ export function computedUpdater(this: Instance, isUpdated = false): boolean {
       // getPathsValue返回的是数组
       const curVal = getPathsValue(this.data, dep.paths.join("."))[0];
 
-      // 检查依赖是否更新
+      // 检查依赖是否改变了
       if (!deepEqual(curVal, dep.val)) {
         changed = true;
 

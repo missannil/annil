@@ -3,6 +3,7 @@ import path from "path";
 import { instanceConfig } from "../../../src";
 import { BBeforeCreate } from "../../../src/behaviors/BbeforeCreated";
 import { BStore } from "../../../src/behaviors/BStore";
+import { BthrottleDebounce } from "../../../src/behaviors/BthrottleDebounce";
 export const checkData = {
   options: {} as object | undefined,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -45,6 +46,6 @@ describe("inject数据被组件数据覆盖", () => {
 
     expect(checkData.data.injectStr).toBe("changed");
 
-    expect(checkData.behaviors).toStrictEqual([BStore, behavior, BBeforeCreate]);
+    expect(checkData.behaviors).toStrictEqual([BStore, BthrottleDebounce, behavior, BBeforeCreate]);
   });
 });

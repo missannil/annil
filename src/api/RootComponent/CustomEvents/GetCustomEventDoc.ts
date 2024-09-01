@@ -1,3 +1,4 @@
+import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { DetailedType } from "../../../types/DetailedType";
 import type { InferDetailedType } from "../../../types/InferDetailedType";
 import type {
@@ -16,7 +17,7 @@ export type GetShortCustomEventsDoc<T extends ShortCustomeEvents> = T extends De
 
 export type GetFullCustomEventsDoc<T extends FullCustomEvents> =
   | GetShortCustomEventsDoc<T["detail"]>
-  | AddTagForCustomEventsDoc<T["options"]>;
+  | IfExtends<unknown, T["options"], never, AddTagForCustomEventsDoc<T["options"] & {}>>;
 
 /**
  * 获取自定义事件的文档
@@ -40,6 +41,7 @@ export type GetCustomEventDoc<T extends CustomEventConstraint> =
         | GetShortCustomEventsDoc<T[k]["detail"]>
         // 为自定义事件模型加标记,方便识别
         // @ts-ignore T[k] 一定为 FullCustomEvents 类型
-        | AddTagForCustomEventsDoc<T[k]["options"]>;
+        // | AddTagForCustomEventsDoc<T[k]["options"]>;
+        | IfExtends<unknown, T[k]["options"], never, AddTagForCustomEventsDoc<T[k]["options"] & {}>>;
   }
 ;

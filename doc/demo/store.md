@@ -57,7 +57,7 @@ const rootComponent = RootComponent()({
   },
   watch: {
     userName: (newVal, oldVal) => {
-      console.log(2, "userName changed", newVal, oldVal); // 2 "userName changed" "zhang" "zhao"
+      // console.log(2, "userName changed", newVal, oldVal); // 2 "userName changed" "zhang" "zhao"
     },
   },
   lifetimes: {

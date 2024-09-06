@@ -4,6 +4,13 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.8.0](https://github.com/missannil/annil/compare/v1.7.8...v1.8.0) (2024-09-06)
+
+
+### Features
+
+* customEvents字段增加debounce和throttle字段,配置后自定义函数变为节流或防抖函数 ([1599797](https://github.com/missannil/annil/commit/15997975291ecbf484dd22e50974a213ea5c9f35))
+
 ## [1.7.8](https://github.com/missannil/annil/compare/v1.7.7...v1.7.8) (2024-08-22)
 
 

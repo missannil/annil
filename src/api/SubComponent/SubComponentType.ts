@@ -9,7 +9,8 @@ type _SubComponentType = {
     | boolean
     | symbol
     | null
-    | Record<string, unknown>
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    | Record<string, any>
     | unknown[]
     | CustomEventsTags;
 };

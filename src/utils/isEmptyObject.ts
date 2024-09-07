@@ -1,13 +1,14 @@
 /**
- * 判断一个值是否为空对象 `{}`
+ * 判断一个值是否为空的普通对象 `{}`
+ * 有symblo和非枚举属性的对象会返回 `false`
  */
-export function isEmptyObject(obj: object): boolean {
+export function isEmptyObject(value: unknown): boolean {
   if (
-    typeof obj !== "object" || obj === null || Array.isArray(obj) || obj instanceof Set || obj instanceof Map
-    || obj instanceof WeakSet || obj instanceof WeakMap
+    typeof value !== "object" || value === null || Array.isArray(value) || value instanceof Set || value instanceof Map
+    || value instanceof WeakSet || value instanceof WeakMap
   ) {
     return false;
   }
 
-  return Reflect.ownKeys(obj).length === 0;
+  return Reflect.ownKeys(value).length === 0;
 }

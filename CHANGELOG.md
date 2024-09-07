@@ -4,6 +4,13 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.8.1](https://github.com/missannil/annil/compare/v1.8.0...v1.8.1) (2024-09-07)
+
+
+### Bug Fixes
+
+* 1.8.0发布问题,加入throttleDebounce测试用例,优化computed,提高覆盖率,依赖优化 ([67cfc49](https://github.com/missannil/annil/commit/67cfc4909acce7f5d4fe2d58b2d3b1d54b81163e))
+
 ## [1.8.0](https://github.com/missannil/annil/compare/v1.7.8...v1.8.0) (2024-09-06)
 
 

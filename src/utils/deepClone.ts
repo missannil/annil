@@ -1,8 +1,8 @@
 /**
- * 深度克隆 函数相同 原型一致
+ * 数组和普通对象的深度克隆,原型相同
  */
 export function deepClone<T>(value: T): T {
-  if (typeof value !== "object" || value === null || value instanceof RegExp) {
+  if (typeof value !== "object" || value === null) {
     return value;
   }
 

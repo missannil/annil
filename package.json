@@ -17,24 +17,21 @@
     "tsc": "tsc --watch",
     "test": "jest --watch",
     "build": "tsc -p tsconfig.build.json",
-    "check": "eslint . --fix --max-warnings 0 && (dprint check || (dprint fmt && exit 1))"
+    "check": "eslint . --fix --max-warnings 0 && (dprint check || (dprint fmt && exit 1)) "
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^17.6.5",
-    "@eslint/js": "^9.8.0",
-    "@types/eslint__js": "^8.42.3",
     "@types/jest": "^29.5.5",
     "commitlint": "^17.6.5",
-    "eslint": "^9.8.0",
+    "eslint": "^9.10.0",
     "husky": "^8.0.3",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "miniprogram-simulate": "^1.6.1",
     "mobx": "^6.9.0",
-    "prettier": "^2.8.8",
     "ts-jest": "^29.1.1",
     "typescript": "^5.5.4",
-    "typescript-eslint": "^8.0.0"
+    "typescript-eslint": "^8.4.0"
   },
   "files": [
     "LICENSE",
@@ -53,6 +50,6 @@
   "license": "MIT",
   "peerDependencies": {
     "hry-types": "^0.18.1",
-    "miniprogram-api-typings": "^3.12.2"
+    "miniprogram-api-typings": "^3.12.3"
   }
 }

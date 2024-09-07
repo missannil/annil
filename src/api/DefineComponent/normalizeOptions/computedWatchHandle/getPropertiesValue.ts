@@ -6,7 +6,7 @@ import type {
 } from "../../../RootComponent/Properties/PropertiesConstraint";
 
 type PropertiesDefaultValue = "" | 0 | [] | null | false;
-
+/* istanbul ignore next */
 function getRequiredSingleValue(
   PropType: RequiredSingle,
 ): PropertiesDefaultValue {
@@ -34,12 +34,10 @@ function IsRequiredSingle(config: PropertiesTypes): config is RequiredSingle {
 function IsRequiredUnion(config: PropertiesTypes): config is RequiredUnion {
   return !Reflect.has(config, "value");
 }
-export function getPropertiesValue(propertiesOpt: PropertiesConstraint | undefined): object | undefined {
-  if (propertiesOpt === undefined) return;
+export function getPropertiesValue(propertiesOpt: PropertiesConstraint): object {
   const result = {};
   for (const key in propertiesOpt) {
     const config = propertiesOpt[key];
-
     if (IsRequiredSingle(config)) {
       // @ts-ignore 隐式索引
       result[key] = getRequiredSingleValue(config);

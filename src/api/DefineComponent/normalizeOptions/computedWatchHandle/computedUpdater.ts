@@ -1,6 +1,6 @@
 import { deepEqual } from "../../../../utils/deepEqual";
 import type { Instance } from "../../../RootComponent/Instance/RootComponentInstance";
-import { deepProxy, getProxyOriginalValue } from "./data-tracer";
+import { deepProxy, getOriginalValue } from "./data-tracer";
 import { removeSubDependences } from "./dependencesOptimize";
 import { getPathsValue } from "./getPathsValue";
 
@@ -24,10 +24,9 @@ export function computedUpdater(this: Instance, isUpdated = false): boolean {
     if (changed) {
       const newDependences: ComputedDependence[] = [];
       const newValue = itemCache.method.call({ data: deepProxy(this.data, newDependences) });
-
-      // 更新值不会立即再次进入**函数,而是当前**函数运行完毕后触发**函数,
+      // 更新值不会立即再次进入**函数,而是当前**函数运行完毕后触发**函数,\
       this.setData({
-        [key]: getProxyOriginalValue(newValue),
+        [key]: getOriginalValue(newValue),
       });
 
       isUpdated = true;

@@ -4,6 +4,13 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.8.2](https://github.com/missannil/annil/compare/v1.8.1...v1.8.2) (2024-09-07)
+
+
+### Bug Fixes
+
+* 优化_SubComponentType类型,避免接口或类的类型由于无签名照成的报错 ([ab97097](https://github.com/missannil/annil/commit/ab970972717b08138c8438825a1e19f7e3dd7c38))
+
 ## [1.8.1](https://github.com/missannil/annil/compare/v1.8.0...v1.8.1) (2024-09-07)
 
 

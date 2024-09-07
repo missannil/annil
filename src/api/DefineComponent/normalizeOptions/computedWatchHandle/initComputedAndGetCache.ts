@@ -2,7 +2,7 @@ import type { Func } from "hry-types/src/Misc/Func";
 import type { FinalOptionsOfComponent } from "..";
 
 import type { ComputedDependence } from "./computedUpdater";
-import { deepProxy, getProxyOriginalValue } from "./data-tracer";
+import { deepProxy, getOriginalValue } from "./data-tracer";
 import { removeSubDependences } from "./dependencesOptimize";
 
 type ItemCache = {
@@ -56,7 +56,7 @@ export function initComputedAndGetCache(
 
     // 验证依赖是否有效
     if (isValidDependences(dependences, uninitedkeys)) {
-      initValue = getProxyOriginalValue(initValue);
+      initValue = getOriginalValue(initValue);
 
       // 把计算属性初始值加入到options.data中
       options.data[key] = initValue;

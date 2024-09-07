@@ -18,6 +18,9 @@ const subA = SubComponent<Root, CompDoc>()({
     _compA_listMap() {
       return this.data.storeList.map((item) => item + 2);
     },
+    _compA_xxx() {
+      return this.data.storeList.length;
+    },
   },
 });
 
@@ -41,6 +44,9 @@ const rootComponent = RootComponent()({
     },
     listMap() {
       return this.data.storeList[0] + 1;
+    },
+    ddd() {
+      return this.data.storeList;
     },
   },
   lifetimes: {

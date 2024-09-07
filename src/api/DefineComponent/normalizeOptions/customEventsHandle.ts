@@ -36,6 +36,7 @@ export function customEventsHandle(
 ) {
   const methods = finalOptions.methods;
   const data = finalOptions.data;
+
   for (const key in customEventsConfig) {
     const customEventOptions = customEventsConfig[key];
     if (IsFullCustomEvents(customEventOptions)) {

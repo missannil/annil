@@ -2,7 +2,6 @@
 // @ts-check
 import eslint from "@eslint/js";
 import tseslint from "typescript-eslint";
-
 export default tseslint.config(
   eslint.configs.recommended,
   ...tseslint.configs.strict,
@@ -10,8 +9,7 @@ export default tseslint.config(
   {
     languageOptions: {
       globals: {
-        // 为什么不好使
-        definitionFilter: true,
+        // definitionFilter: true,
       },
     },
     ignores: ["./commitlint.config.cjs"],

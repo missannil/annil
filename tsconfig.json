@@ -17,7 +17,7 @@
     "noImplicitReturns": true, // 当启用时,TypeScript会检查函数中的所有代码路径，以确保它们返回值
     "isolatedModules": true, // 模块化(.ts文件必须有导入或导出) 默认false
     // "verbatimModuleSyntax": true, // 5.0后新增配置,替代preserveValueImports。
-    "types": ["hry-types", "mobx", "jest", "miniprogram-api-typings"]
+    "types": ["hry-types", "mobx", "jest", "miniprogram-api-typings", "node"] // 不添加node,tsconfig.build在编译时会报错:` Cannot find namespace 'NodeJS' ` (utils/debounce.ts中使用),也可在tsconfig.build中添加type字段,并带上node。
   },
   "include": ["**/*.ts"]
 }

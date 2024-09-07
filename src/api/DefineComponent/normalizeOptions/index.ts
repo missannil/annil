@@ -12,6 +12,7 @@ import type { PageLifetimesOption } from "../../RootComponent/PageLifetimes/Page
 import type { PropertiesConstraint } from "../../RootComponent/Properties/PropertiesConstraint";
 import type { StoreConstraint } from "../../RootComponent/Store/StoreConstraint";
 import type { DefineComponentOption } from "..";
+import { __throttleDebounce__FieldCheck } from "./__throttleDebounce__FieldCheck";
 import { computedWatchHandle } from "./computedWatchHandle";
 import type { ComputedCache } from "./computedWatchHandle/initComputedAndGetCache";
 import { hijack } from "./hijackHandle";
@@ -101,10 +102,15 @@ export function normalizeOptions(
     watch: {},
     observers: {},
   };
+
   if (rootComponentOption && !isEmptyObject(rootComponentOption)) {
+    // 验证配置中是否有内部字段__throttleDebounce__,有则报错,因为在rootComponentOptionHandle中会加入__throttleDebounce__字段到data中
+    __throttleDebounce__FieldCheck(rootComponentOption);
     rootComponentOptionHandle(finalOptionsForComponent, sameFuncOptions, rootComponentOption);
   }
   if (subComponentsOption && !isEmptyObject(subComponentsOption)) {
+    // 验证配置中是否有内部字段__throttleDebounce__,有则报错,因为在rootComponentOptionHandle中会加入__throttleDebounce__字段到data中
+    __throttleDebounce__FieldCheck(subComponentsOption);
     subComponentsOptionHandle(finalOptionsForComponent, subComponentsOption, sameFuncOptions);
   }
   sameFuncOptionsHandle(finalOptionsForComponent, rootComponentOption?.isPage, sameFuncOptions);

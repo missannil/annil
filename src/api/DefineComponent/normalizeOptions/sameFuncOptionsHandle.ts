@@ -31,7 +31,7 @@ export function sameFuncOptionsHandle(
       _sameFuncOptionsHandle(finalOptionsForComponent.pageLifetimes, funcOptions.pageLifetimes);
     }
   }
-  if (funcOptions.lifetimes) _sameFuncOptionsHandle(finalOptionsForComponent.lifetimes ||= {}, funcOptions.lifetimes);
+  if (funcOptions.lifetimes) _sameFuncOptionsHandle(finalOptionsForComponent.lifetimes, funcOptions.lifetimes);
 
-  if (funcOptions.watch) _sameFuncOptionsHandle(finalOptionsForComponent.watch ||= {}, funcOptions.watch);
+  if (funcOptions.watch) _sameFuncOptionsHandle(finalOptionsForComponent.watch, funcOptions.watch);
 }

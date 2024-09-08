@@ -160,3 +160,11 @@ SubComponent<Root, $aaa>()({
     },
   },
 });
+// computed中可写 额外字段 isReady
+SubComponent<{ data: { _num: number } }, $aaa>()({
+  computed: {
+    aaa_isReady() {
+      return true;
+    },
+  },
+});

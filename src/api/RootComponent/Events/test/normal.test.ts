@@ -10,7 +10,7 @@ import type {
   WMBaseEvent,
   WMCustomEvent,
 } from "../../../../types/OfficialTypeAlias";
-import { assertNonNullable } from "../../../../utils/assertNonNullable";
+import { nonNullable } from "../../../../utils/nonNullable";
 import type { ComponentType } from "../../../DefineComponent/ReturnType/ComponentType";
 import { RootComponent } from "../..";
 import type { Bubbles, Capture } from "../../CustomEvents/CustomEventsTag";
@@ -42,7 +42,7 @@ RootComponent()({
     ) {
       Checking<typeof e.detail, string, Test.Pass>;
 
-      const markData = assertNonNullable(e.mark).markData;
+      const markData = nonNullable(e.mark).markData;
 
       Checking<typeof markData, { id: string }, Test.Pass>;
 

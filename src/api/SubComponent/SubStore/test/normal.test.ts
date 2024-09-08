@@ -28,3 +28,9 @@ SubComponent<{}, DocA, "a">()({
     _aaaA_xxx: () => user.age,
   },
 });
+// store中可写 额外字段 isReady
+SubComponent<{ data: { _num: number } }, DocA, "a">()({
+  store: {
+    aaaA_isReady: () => false,
+  },
+});

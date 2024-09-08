@@ -5,9 +5,9 @@ import { getPathsValue } from "./getPathsValue";
 import { getPropertiesValue } from "./getPropertiesValue";
 import { initComputedAndGetCache } from "./initComputedAndGetCache";
 
-import { assertNonNullable } from "../../../../utils/assertNonNullable";
 import { deepClone } from "../../../../utils/deepClone";
 import { isEmptyObject } from "../../../../utils/isEmptyObject";
+import { nonNullable } from "../../../../utils/nonNullable";
 import type { Instance } from "../../../RootComponent/Instance/RootComponentInstance";
 import type { FinalOptionsOfComponent } from "..";
 
@@ -68,7 +68,7 @@ export function computedWatchHandle(options: FinalOptionsOfComponent) {
       observersConfig[key] = function(this: Instance, ...newValue: unknown[]) {
         originObserversHandle?.call(this, ...newValue);
 
-        const watchOldValue = assertNonNullable(this.data.__watchOldValue__);
+        const watchOldValue = nonNullable(this.data.__watchOldValue__);
         const oldValue = watchOldValue[key];
 
         if (deepEqual(newValue, oldValue)) return;

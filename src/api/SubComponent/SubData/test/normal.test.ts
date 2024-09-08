@@ -48,7 +48,7 @@ SubComponent<{}, CompDoc>()({
   },
   methods: {
     aaa_1() {
-      // 4 this.data中的data配置数据
+      // 4 this.data中的data配置数据类型应该与文档类型一致,比如aaa_str的类型为"a" | "b"而非string
       void Checking<
         typeof this.data,
         ComputeIntersection<
@@ -78,5 +78,11 @@ SubComponent<{ data: { _num: number } }, CompDoc>()({
         aaa_obj: {} as Mock_User, // aaa_obj 类型为 Mock_User | null 而非 null
       });
     },
+  },
+});
+// data中可写 额外字段 isReady
+SubComponent<{ data: { _num: number } }, CompDoc>()({
+  data: {
+    aaa_isReady: false,
   },
 });

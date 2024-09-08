@@ -5,7 +5,7 @@ import type { IfContains } from "hry-types/src/Any/IfContains";
  * @param value 类型中必须包含 null 或 undefined
  * @returns 去除 null 和 undefined 后的类型
  */
-export function assertNonNullable<T>(
+export function nonNullable<T>(
   value: IfContains<T, null | undefined, T, "参数类型必须包含 null 或 undefined">,
 ): NonNullable<T> {
   /* istanbul ignore next  */

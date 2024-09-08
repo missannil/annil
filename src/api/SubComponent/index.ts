@@ -3,6 +3,7 @@ import type { EmptyObject } from "hry-types/src/Misc/EmptyObject";
 import type { Func } from "hry-types/src/Misc/Func";
 import type { RequiredKeys } from "hry-types/src/Object/RequiredKeys";
 import type { ComputeObject } from "../../types/ComputeObj";
+import type { Extra } from "../../types/Extra";
 import type { GetComponentPrefix } from "../../types/GetComponentPrefix";
 import type { InnerFields } from "../../types/InnerData";
 import type { WMCompOtherOption } from "../../types/OfficialTypeAlias";
@@ -125,8 +126,8 @@ type SubComponentConstructor<
   CurrentCompDoc extends ComponentType = IfExtends<
     TSupplementalPrefix,
     "",
-    TOriginalCompDoc,
-    ReplacePrefix<TOriginalCompDoc, CurrentPrefix>
+    TOriginalCompDoc & { properties: Extra<CurrentPrefix> }, // 为文档增加格外字段
+    ReplacePrefix<TOriginalCompDoc & { properties: Extra<CurrentPrefix> }, CurrentPrefix> // 为文档增加格外字段
   >,
   AllRootDataDoc extends object =
     // rootDoc中的properties是带有可选的,这是为了给使用者(上层组件)提示,而在自身组件实例中并不存在可选状态,故加了Required,正因加了Required使得最终结果不可能为unknown而是`{}`,满足object约束

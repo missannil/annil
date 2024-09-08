@@ -4,6 +4,13 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.8.3](https://github.com/missannil/annil/compare/v1.8.2...v1.8.3) (2024-09-08)
+
+
+### Bug Fixes
+
+* 为subComponents内部组件类型增加 prefix_isReady?:boolean 字段。 ([e78041d](https://github.com/missannil/annil/commit/e78041d5f151d71c1d45652b0508aa4c2430ecde))
+
 ## [1.8.2](https://github.com/missannil/annil/compare/v1.8.1...v1.8.2) (2024-09-07)
 
 

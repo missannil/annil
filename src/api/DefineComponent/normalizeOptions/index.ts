@@ -19,6 +19,7 @@ import { hijack } from "./hijackHandle";
 import { isPageCheck } from "./hijackHandle/isPageCheck";
 import { loadReceivedDataHandle } from "./hijackHandle/loadReceivedDataHandle";
 import { onLoadReceivedDataHandle } from "./hijackHandle/onLoadReceivedDataHandle";
+import { pagePathCheck } from "./hijackHandle/pagePathCheck";
 import { initStore } from "./initStore";
 import { injectInfoHandler } from "./injectInfoHandler";
 import { InternalFieldProtection } from "./internalFieldProtection";
@@ -129,7 +130,7 @@ export function normalizeOptions(
   hijack(
     finalOptionsForComponent.lifetimes,
     "attached",
-    [isPageCheck(rootComponentOption?.isPage)],
+    [isPageCheck(rootComponentOption?.isPage), pagePathCheck(defineComponentOption.path)],
   );
 
   // 页面时删除预设的虚拟组件字段

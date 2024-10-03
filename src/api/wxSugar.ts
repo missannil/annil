@@ -65,3 +65,15 @@ export function navigateTo<TPageDoc extends PageDoc = never>(
     );
   }
 }
+export function redirectTo<TPageDoc extends PageDoc = never>(
+  option: NoInfer<NavigateToOption<TPageDoc>>,
+) {
+  // @ts-ignore 隐式索引
+  if (!option.data) {
+    return wx.redirectTo(option);
+  } else {
+    return wx.redirectTo(
+      _encodeURIComponent(option as NavigateToOption<TPageDoc> & { data: object }),
+    );
+  }
+}

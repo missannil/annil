@@ -1,8 +1,8 @@
 import { DefineComponent } from "./api/DefineComponent";
 import { type IInjectInfo, instanceConfig } from "./api/InstanceInject/instanceConfig";
-import { navigateTo } from "./api/navigateTo";
 import { RootComponent } from "./api/RootComponent";
 import { SubComponent } from "./api/SubComponent";
+import { navigateTo, redirectTo } from "./api/wxSugar";
 import type { CreateComponentType } from "./types/CreateComponentType";
 import type { DetailedType } from "./types/DetailedType";
 import type { ExtendComponentType } from "./types/ExtendComponentType";
@@ -40,6 +40,7 @@ export {
   instanceConfig,
   navigateTo,
   type ParamsEqual,
+  redirectTo,
   RootComponent,
   SubComponent,
 };

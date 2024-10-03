@@ -137,7 +137,7 @@ annil(安奈儿)是微信小程序原生开发插件。她会给您更佳的开�
 
 - **常用API**
 
-  [navigateTo](./doc/api/navigateTo.md)
+  [navigateTo](./doc/api/wxSugar.md)
 
 - 实用泛型
 

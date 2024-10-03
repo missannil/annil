@@ -11,7 +11,7 @@ export const config = {
   collectCoverageFrom: [
     "./src/**/*.ts",
     "!src/**/*.test.ts",
-    "!src/api/navigateTo.ts",
+    "!src/api/wxSugar.ts",
     "!src/api/DefineComponent/isPageCheck.ts",
     "!src/api/InstanceInject/inject.ts",
     "!src/thirdLib/**",

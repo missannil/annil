@@ -4,6 +4,18 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.9.0](https://github.com/missannil/annil/compare/v1.8.3...v1.9.0) (2024-10-23)
+
+
+### Features
+
+* api/navigateTo 改为wxSugar 增加导出redirectTo ([f5a6141](https://github.com/missannil/annil/commit/f5a61411fa903545de8460052ca3512923905388))
+
+
+### Bug Fixes
+
+* 增加对DefinedComponent 的 path字段检测(与实例的is比较) ([8460e4e](https://github.com/missannil/annil/commit/8460e4eb29ad21a2df7adf53bffeb4c887a122e9))
+
 ## [1.8.3](https://github.com/missannil/annil/compare/v1.8.2...v1.8.3) (2024-09-08)
 
 

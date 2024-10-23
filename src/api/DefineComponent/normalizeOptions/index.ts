@@ -2,6 +2,7 @@ import type { Func } from "hry-types/src/Misc/_api";
 import { BBeforeCreate } from "../../../behaviors/BbeforeCreated";
 import { BStore } from "../../../behaviors/BStore";
 import { BthrottleDebounce } from "../../../behaviors/BthrottleDebounce";
+import { applyDebounceAndThrottle } from "../../../utils/applyDebounceAndThrottle";
 import { isEmptyObject } from "../../../utils/isEmptyObject";
 import { instanceConfig } from "../../InstanceInject/instanceConfig";
 import type { ComputedConstraint } from "../../RootComponent/Computed/ComputedConstraint";
@@ -37,8 +38,6 @@ export type OptionsInnerFields = {
     __throttleDebounce__?: ThrottleDebounce;
   };
   methods: {
-    disposer?: Record<string, Func>;
-    // computedHandle加入
     __computedUpdater__?: Func;
   };
 };
@@ -56,7 +55,7 @@ export type FinalOptionsOfComponent = {
   data: DataConstraint & OptionsInnerFields["data"];
   observers: Record<string, Func>;
   behaviors: string[];
-  methods: MethodsConstraint & OptionsInnerFields["methods"];
+  methods: MethodsConstraint;
   externalClasses: string[];
   pageLifetimes: PageLifetimesOption<false, object>["pageLifetimes"] & {};
   isPage: boolean;
@@ -67,6 +66,7 @@ export type FinalOptionsOfComponent = {
   watch: Record<string, Func>;
   lifetimes: LifetimesConstraint;
 };
+
 /**
  * 把DefineComponentOption转化为原生Component API支持的配置
  * @param defineComponentOption
@@ -138,6 +138,8 @@ export function normalizeOptions(
     Reflect.deleteProperty(finalOptionsForComponent.options, "virtualHost");
   }
 
+  // 处理debounce和throttle前缀的方法配置
+  applyDebounceAndThrottle(finalOptionsForComponent.methods);
   // 初始化store数据到data并把store配置放入到data的__storeConfig__下为后续使用
   initStore(finalOptionsForComponent);
 

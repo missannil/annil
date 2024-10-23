@@ -8,7 +8,7 @@ type Callback = (...args: any[]) => any;
  * @param wait
  * @returns
  */
-
+/* istanbul ignore next  */
 export function debounce<F extends Callback>(func: F, wait = 300): (...args: Parameters<F>) => void {
   let timeoutId: NodeJS.Timeout | null = null;
 

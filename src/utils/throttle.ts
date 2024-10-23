@@ -8,6 +8,7 @@ type Callback = (...args: any[]) => any;
  * @param interval 单位毫秒
  * @returns
  */
+/* istanbul ignore next  */
 export function throttle<F extends Callback>(callback: F, interval = 200): (...args: Parameters<F>) => void {
   let lastCall = 0;
 

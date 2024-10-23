@@ -1,0 +1,13 @@
+<sub
+	bind:onTapDebounced="sub_onTapDebounced"
+	bind:onTapThrottled="sub_onTapThrottled"
+	id="sub"
+	debounced="{{sub_debounced}}"
+	throttle="{{sub_throttle}}"
+></sub>
+
+<view
+id="root"
+	bind:debounced="onTapDebounced"
+	bind:throttled="onTapThrottled"
+></view>

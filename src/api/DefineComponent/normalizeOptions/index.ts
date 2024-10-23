@@ -138,8 +138,9 @@ export function normalizeOptions(
     Reflect.deleteProperty(finalOptionsForComponent.options, "virtualHost");
   }
 
-  // 处理debounce和throttle前缀的方法配置
+  // 处理debounce和throttle前缀的方法(事件)配置
   applyDebounceAndThrottle(finalOptionsForComponent.methods);
+
   // 初始化store数据到data并把store配置放入到data的__storeConfig__下为后续使用
   initStore(finalOptionsForComponent);
 

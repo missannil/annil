@@ -11,13 +11,13 @@ type Callback = (...args: any[]) => any;
 export function throttle<F extends Callback>(callback: F, interval = 200): (...args: Parameters<F>) => void {
   let lastCall = 0;
 
-  return function(...args: Parameters<F>) {
+  return function(this: unknown, ...args: Parameters<F>) {
     const now = Date.now();
 
     if (now - lastCall >= interval) {
       lastCall = now;
 
-      callback(...args);
+      callback.call(this, ...args);
     }
   };
 }

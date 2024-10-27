@@ -47,7 +47,7 @@ function _encodeURIComponent(
 
   return Object.assign(result, option);
 }
-
+const backFuncs: (undefined | ((...args: unknown[]) => void))[] = [];
 /**
  * 页面onload参数中接受的数据值是传递的url解析后的字符串。例如:A页面通过`wx.navigateTo({url:'/pages/test/test?num=123&obj={"name":"zhao"}'})`
  * test页面onLoad(data)的参数data接受内容为` data = {num:"123",obj:"{"name":"zhao"}"}`即默认的url传的数据值为字符串,需要在接收时自行解析(JSON.parse)。且url采取ASCII编码只能接受0x20-0x7e区间的符号。无法使用一些特殊符号 如 ` :/?#[]@!$&'()*+,;= `。
@@ -55,7 +55,9 @@ function _encodeURIComponent(
  */
 export function navigateTo<TPageDoc extends PageDoc = never>(
   option: NoInfer<NavigateToOption<TPageDoc>>,
+  onBack?: (res: unknown) => void,
 ) {
+  backFuncs.push(onBack);
   // @ts-ignore 隐式索引
   if (!option.data) {
     return wx.navigateTo(option);
@@ -64,6 +66,32 @@ export function navigateTo<TPageDoc extends PageDoc = never>(
       _encodeURIComponent(option as NavigateToOption<TPageDoc> & { data: object }),
     );
   }
+}
+type WMNavigateBackOption = WechatMiniprogram.NavigateBackOption;
+type NavigateBackOption<Data> = WMNavigateBackOption & { data?: Data };
+
+/**
+ * @param options
+ * @returns
+ */
+export function navigateBack<Data, T extends NavigateBackOption<Data> = NavigateBackOption<Data>>(
+  options?: T,
+): WechatMiniprogram.PromisifySuccessResult<T, WMNavigateBackOption> {
+  const backFunc = backFuncs.pop();
+  if (backFunc) {
+    if (!options || options.data === undefined) {
+      throw new Error("navigateBack 需要带有data参数的配置对象,因为返回的组件需要data数据");
+    }
+    const data = options.data;
+    const complete = options.complete;
+    options.complete = (res) => {
+      backFunc(data);
+      if (complete) {
+        complete(res);
+      }
+    };
+  }
+  return wx.navigateBack(options);
 }
 export function redirectTo<TPageDoc extends PageDoc = never>(
   option: NoInfer<NavigateToOption<TPageDoc>>,

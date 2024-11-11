@@ -55,3 +55,10 @@ SubComponent<{}, OnlyPropsCompDoc>()({
     _aaa_xxx: 123, // ok 内部字段可写
   },
 });
+// 4 与root的数据字段重复
+SubComponent<{ data: { aaa_str: 123 } }, OnlyPropsCompDoc>()({
+  data: {
+    // @ts-expect-error 与root的data字段重复
+    aaa_str: "a",
+  },
+});

@@ -53,3 +53,36 @@ SubComponent<{}, OnlyPropsCompDoc>()({
     },
   },
 });
+// 4 与data的内部字段重复
+SubComponent<{}, OnlyPropsCompDoc>()({
+  data: {
+    _aaa_fff: 123,
+  },
+  computed: {
+    // @ts-expect-error 与data的内部字段重复
+    _aaa_fff(): number {
+      return 123;
+    },
+  },
+});
+// 5 与store的内部字段重复
+SubComponent<{}, OnlyPropsCompDoc>()({
+  store: {
+    _aaa_ccc: () => 123,
+  },
+  computed: {
+    // @ts-expect-error 与store的内部字段重复
+    _aaa_ccc(): number {
+      return 123;
+    },
+  },
+});
+// 6 与root字段重复
+SubComponent<{ data: { _aaa_ccc: 123 } }, OnlyPropsCompDoc>()({
+  computed: {
+    // @ts-expect-error 与store的内部字段重复
+    _aaa_ccc(): number {
+      return 123;
+    },
+  },
+});

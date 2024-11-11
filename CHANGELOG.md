@@ -4,6 +4,18 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.10.0](https://github.com/missannil/annil/compare/v1.9.0...v1.10.0) (2024-11-11)
+
+
+### Features
+
+* 增加原生组件类型  Wm.Map,增加API navigateBack ([a58fed1](https://github.com/missannil/annil/commit/a58fed110582a6f5edd0013f920a69769d08e1a8))
+
+
+### Bug Fixes
+
+* _SubComponentType 增加undefined类型,subComponent组件配置增加与root数据字段和彼此内部字段重复检测 ([eacc152](https://github.com/missannil/annil/commit/eacc152c7a8fe8953202fa53aff2742c0066dccc))
+
 ## [1.9.0](https://github.com/missannil/annil/compare/v1.8.3...v1.9.0) (2024-10-23)
 
 

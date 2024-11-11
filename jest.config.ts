@@ -15,6 +15,7 @@ export const config = {
     "!src/api/DefineComponent/isPageCheck.ts",
     "!src/api/InstanceInject/inject.ts",
     "!src/thirdLib/**",
+    "!src/utils/_utils.ts",
   ],
   testMatch: [
     "<rootDir>/jest/**/*.test.ts",

@@ -168,3 +168,15 @@ SubComponent<{ data: { _num: number } }, $aaa>()({
     },
   },
 });
+
+// computed中可写 内部字段
+SubComponent<{ data: { _num: number } }, $aaa>()({
+  computed: {
+    aaa_isReady() {
+      return true;
+    },
+    _aaa_ccc(): string {
+      return "123";
+    },
+  },
+});

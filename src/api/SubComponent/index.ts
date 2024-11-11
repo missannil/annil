@@ -38,7 +38,10 @@ import type { CreateSubComponentDoc } from "./SubReturnType/CreateSubComponentDo
 import type { SubStoreConstraint } from "./SubStore/SubStoreConstraint";
 import type { SubStoreOption } from "./SubStore/SubStoreOption";
 import type { SubWatchOption } from "./SubWatch/SubWatchOption";
-
+// type getLegalKeys<K> = K extends Exclude<CompDocKeys, (keyof (InheritDoc & SubDataDoc))> ? K
+//   : K extends keyof AllRootDataDoc ? never
+//   : K extends Extract<Exclude<keyof NoInfer<TSubStore>, keyof SubDataDoc>, InnerFields<Prefix>> ? K
+//   : never;
 type Options<
   RootDoc extends RootComponentType,
   IsPage extends boolean,
@@ -59,21 +62,68 @@ type Options<
   SubMethodsDoc extends object,
   CompDocKeys extends PropertyKey = keyof CurrentCompDoc["properties"],
 > =
-  & SubInheritOption<TInherit, CompDocKeys>
+  & SubInheritOption<
+    TInherit,
+    {
+      [k in keyof NoInfer<TInherit>]:
+        // 与根组件的数据字段重复的不合法
+        k extends keyof (AllRootDataDoc) ? never
+          // 继承CompDocKeys的字段合法
+          : k extends CompDocKeys ? k
+          : never;
+    }[keyof NoInfer<TInherit>]
+  >
   & SubDataOption<
     TSubData,
     // 合法的配置
-    Exclude<CompDocKeys, (keyof InheritDoc)> | InnerFields<Prefix>
+    {
+      [k in keyof NoInfer<TSubData>]:
+        // 与根组件和InheritDoc的数据字段重复的不合法
+        k extends keyof (AllRootDataDoc) ? never
+          // 继承剩余的Doc的字段合法
+          : k extends Exclude<CompDocKeys, (keyof (InheritDoc))> ? k
+          // 内部字段合法
+          : k extends InnerFields<Prefix> ? k
+          : never;
+    }[keyof NoInfer<TSubData>]
   >
   & SubStoreOption<
     TSubStore,
-    // 合法的配置
-    Exclude<CompDocKeys, (keyof (InheritDoc & SubDataDoc))> | InnerFields<Prefix>
+    {
+      [k in keyof NoInfer<TSubStore>]:
+        // 与根组件和DataDoc的数据字段重复的不合法(主要是验证内部字段)
+        k extends keyof (AllRootDataDoc & SubDataDoc) ? never
+          // 继承剩余Doc的字段合法
+          : k extends Exclude<CompDocKeys, (keyof (InheritDoc & SubDataDoc))> ? k
+          // 内部字段合法
+          : k extends InnerFields<Prefix> ? k
+          : never;
+    }[keyof NoInfer<TSubStore>]
   >
+  // 下面为之前的写法 不好与根组件的字段重复检测。
+
+  // // 合法的字段(继承组件类型的keys)
+  // | Exclude<CompDocKeys, (keyof (InheritDoc & SubDataDoc))>
+  // // 合法的内部字段(不与data重复的内部字段)
+  // | Extract<Exclude<keyof NoInfer<TSubStore>, keyof SubDataDoc>, InnerFields<Prefix>>
+  // 不与allData重复的字段
+  // | Exclude<keyof NoInfer<TSubStore>, keyof AllRootDataDoc>
+
   & SubComputedOption<
     TSubComputed,
-    // 合法的配置
-    Exclude<CompDocKeys, (keyof (InheritDoc & SubDataDoc & SubStoreDoc))> | InnerFields<Prefix>,
+    {
+      [k in keyof NoInfer<TSubComputed>]:
+        // 与根组件和DataDoc和SubStoreDoc的key重复的不合法(主要是验证内部字段)
+        k extends keyof (AllRootDataDoc & SubDataDoc & SubStoreDoc) ? never
+          // 继承剩余Doc的字段合法
+          : k extends Exclude<CompDocKeys, (keyof (InheritDoc & SubDataDoc & SubStoreDoc))> ? k
+          // 内部字段合法
+          : k extends InnerFields<Prefix> ? k
+          : never;
+    }[keyof NoInfer<TSubComputed>],
+    // 下面为之前的写法 不好与根组件的字段重复检测。
+    // | Exclude<CompDocKeys, (keyof (InheritDoc & SubDataDoc & SubStoreDoc))>
+    // | Extract<Exclude<keyof NoInfer<TSubComputed>, keyof (SubDataDoc & SubStoreDoc)>, InnerFields<Prefix>>,
     {
       data: ComputeObject<
         & AllRootDataDoc

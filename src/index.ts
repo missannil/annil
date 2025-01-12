@@ -1,6 +1,7 @@
 import { DefineComponent } from "./api/DefineComponent";
 import { type IInjectInfo, instanceConfig } from "./api/InstanceInject/instanceConfig";
 import { RootComponent } from "./api/RootComponent";
+import { SlotComponent } from "./api/SlotComponent";
 import { SubComponent } from "./api/SubComponent";
 import { navigateBack, navigateTo, redirectTo } from "./api/wxSugar";
 import type { CreateComponentType } from "./types/CreateComponentType";
@@ -43,5 +44,6 @@ export {
   type ParamsEqual,
   redirectTo,
   RootComponent,
+  SlotComponent,
   SubComponent,
 };

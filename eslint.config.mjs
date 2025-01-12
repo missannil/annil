@@ -14,6 +14,8 @@ export default tseslint.config(
     },
     ignores: ["./commitlint.config.cjs"],
     rules: {
+      "@typescript-eslint/no-unused-expressions": 1,
+      "@typescript-eslint/no-empty-function": 1,
       "@typescript-eslint/no-empty-object-type": 0,
       "@typescript-eslint/consistent-type-definitions": 0,
       "@typescript-eslint/no-unused-vars": 1,

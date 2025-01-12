@@ -57,6 +57,7 @@ export type WatchOption<TWatchData extends object, _WatchKeys extends keyof TWat
         ) => void;
       }
       // 解决单独书写计算书写字段的报错(猜测是:ts字面量约束检测提前计算属性key引起的错误提示)
+      // eslint-disable-next-line @typescript-eslint/consistent-indexed-object-style
       & {
         [k in _WatchKeys as never]: unknown;
       }

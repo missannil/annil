@@ -85,7 +85,8 @@ type Options<
           // 内部字段合法
           : k extends InnerFields<Prefix> ? k
           : never;
-    }[keyof NoInfer<TSubData>]
+    }[keyof NoInfer<TSubData>],
+    "子组件无需此字段或与Inherit字段重复"
   >
   & SubStoreOption<
     TSubStore,
@@ -282,7 +283,13 @@ type SubComponentConstructor<
     SubEventsDoc,
     SubMethodsDoc
   >,
-) => CreateSubComponentDoc<NonNullable<CurrentCompDoc["customEvents"]>, SubEventsDoc, MissingRequiredField>;
+) => CreateSubComponentDoc<
+  NonNullable<CurrentCompDoc["customEvents"]>,
+  SubEventsDoc,
+  MissingRequiredField,
+  ComputeObject<SubDataDoc & SubComputedDoc & SubStoreDoc>, // allDatas
+  SubMethodsDoc
+>;
 
 /**
  * 子组件构建函数
@@ -312,3 +319,4 @@ export type SubComponentTrueOptions = {
     | PageLifetimesOption<false, object>["pageLifetimes"]
     | PageLifetimesOption<true, object>["pageLifetimes"];
 };
+// export type SubComponentType =string

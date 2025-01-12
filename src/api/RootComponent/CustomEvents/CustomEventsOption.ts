@@ -3,7 +3,7 @@ import type { CustomEventConstraint } from "./CustomEventConstraint";
 
 export type CustomEventsOption<
   TCustomEvents extends CustomEventConstraint,
-  EventsKeys extends PropertyKey,
+  DuplicateFields extends PropertyKey,
 > = {
   /**
    * customEvents 定义组件的自定义事件 [类型约束](CustomEventConstraint.ts)
@@ -37,5 +37,5 @@ export type CustomEventsOption<
   customEvents?:
     & TCustomEvents
     & G.IllegalFieldValidator<TCustomEvents, "bubbles" | "composed" | "capturePhase", 1, "options">
-    & G.DuplicateFieldValidator<TCustomEvents, EventsKeys, "与events字段重复">;
+    & G.DuplicateFieldValidator<TCustomEvents, DuplicateFields, "字段重复">;
 };

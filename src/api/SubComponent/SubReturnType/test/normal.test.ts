@@ -31,9 +31,14 @@ const SubDoc = SubComponent<{}, CompDoc>()({
 void SubDoc;
 // 返回穿透的自定义事件,并去除了前缀
 type SubDocExpect = {
-  bubblesComposed: number | BubblesComposed;
-  captrueComposed: number | CaptureComposed;
-  bubblesCaptrueComposed: number | BubblesCaptureComposed;
+  composedEvents: {
+    bubblesComposed: number | BubblesComposed;
+    captrueComposed: number | CaptureComposed;
+    bubblesCaptrueComposed: number | BubblesCaptureComposed;
+  };
+  allDatas: {
+    aaa_str: "string";
+  };
 };
 
 Checking<typeof SubDoc, SubDocExpect, Test.Pass>();
@@ -56,7 +61,11 @@ const removeCatchedEvents = SubComponent<{}, CompDoc>()({
 });
 void removeCatchedEvents;
 // 返回穿透的自定义事件,并去除了前缀
-type RemoveSubDoc = never;
+type RemoveSubDoc = {
+  allDatas: {
+    aaa_str: "string";
+  };
+};
 
 Checking<typeof removeCatchedEvents, RemoveSubDoc, Test.Pass>();
 // 去除有后缀时,已经声明的穿透事件
@@ -78,6 +87,10 @@ const removeCatchedEventsOfSuffix = SubComponent<{}, CompDoc, "aa">()({
 });
 void removeCatchedEventsOfSuffix;
 // 返回穿透的自定义事件,并去除了前缀
-type RemoveCatchedEventsOfSuffix = never;
+type RemoveCatchedEventsOfSuffix = {
+  allDatas: {
+    aaaAa_str: "string";
+  };
+};
 
 Checking<typeof removeCatchedEventsOfSuffix, RemoveCatchedEventsOfSuffix, Test.Pass>();

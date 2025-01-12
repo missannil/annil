@@ -1,8 +1,8 @@
-import type { SelectKeys } from "hry-types/src/Object/_api";
-import type { Composed, CustomEventsTags } from "../RootComponent/CustomEvents/CustomEventsTag";
+import type { CustomEventsTags } from "../RootComponent/CustomEvents/CustomEventsTag";
 
 type _SubComponentType = {
-  [k in string]:
+  composedEvents?: Record<
+    string,
     | string
     | number
     | bigint
@@ -13,12 +13,15 @@ type _SubComponentType = {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     | Record<string, any>
     | unknown[]
-    | CustomEventsTags;
+    | CustomEventsTags
+  >;
+  allDatas?: Record<string, unknown>;
+  methods?: Record<string, unknown>;
 };
 
-type _Validator<O, ErrKeys = Exclude<keyof O, SelectKeys<O, Composed, "contains->">>> = [ErrKeys] extends [never]
-  ? _SubComponentType
-  : `${ErrKeys & string} 不是穿透事件`;
+// type _Validator<O, ErrKeys = Exclude<keyof O, SelectKeys<O, Composed, "contains->">>> = [ErrKeys] extends [never]
+//   ? _SubComponentType
+//   : `${ErrKeys & string} 不是穿透事件`;
 
 /**
  * SubComponent API 返回类型
@@ -29,4 +32,4 @@ type _Validator<O, ErrKeys = Exclude<keyof O, SelectKeys<O, Composed, "contains-
  * };
  * ```
  */
-export type SubComponentType<O extends _Validator<O> = _SubComponentType> = O;
+export type SubComponentType<O extends _SubComponentType = _SubComponentType> = O;

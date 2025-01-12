@@ -1,7 +1,10 @@
 import type { RootComponentTrueOptions } from "../../RootComponent";
-import type { SubComponentType } from "../../SubComponent/SubComponentType";
+import type { SlotComponentReturnType } from "../../SlotComponent/SlotComponentReturnType";
+import type { SubComponentTrueOptions } from "../../SubComponent";
 
-export function __throttleDebounce__FieldCheck(config: RootComponentTrueOptions | SubComponentType[]) {
+export function __throttleDebounce__FieldCheck(
+  config: RootComponentTrueOptions | SubComponentTrueOptions[] | SlotComponentReturnType[],
+) {
   if (Array.isArray(config)) {
     for (const subComponent of config) {
       __throttleDebounce__FieldCheck(subComponent);

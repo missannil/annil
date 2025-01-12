@@ -28,6 +28,7 @@ export type RootComponentInstance<
   & IfExtends<{}, StoreDoc, unknown, {
     disposer: { [k in keyof StoreDoc]: IReactionDisposer };
   }>
+  // 自身methods覆盖注入的methods
   & Assign<IInjectMethods, TMethods & CustomEventMethods<CustomEventsDoc>>
   & { data: instanceData };
 // & { cloneData: ComputeObject<Assign<IInjectData, ComputeIntersection<AllData>>> };

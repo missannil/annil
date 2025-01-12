@@ -4,11 +4,15 @@ import type { SubComponentType } from "../../../SubComponent/SubComponentType";
 import { DefineComponent } from "../..";
 
 const SubDocIsAny = {} as SubComponentType<{
-  a: number | Composed;
+  composedEvents: {
+    a: number | Composed;
+  };
 }>;
 
 const NonEmptyRootDoc = {} as SubComponentType<{
-  a: string | Bubbles | Composed;
+  composedEvents: {
+    a: string | Bubbles | Composed;
+  };
 }>;
 
 // 1 组件时
@@ -24,11 +28,11 @@ DefineComponent({
   subComponents: [SubDocIsAny, NonEmptyRootDoc],
 });
 
-const A = {} as { a: number | Composed; b: number | Composed };
+const A = {} as { composedEvents: { a: number | Composed; b: number | Composed } };
 
-const B = {} as { a: string | Composed; b: string | Composed };
+const B = {} as { composedEvents: { a: string | Composed; b: string | Composed } };
 
-const C = {} as { a: boolean | Composed; c: boolean | Composed };
+const C = {} as { composedEvents: { a: boolean | Composed; c: boolean | Composed } };
 
 const aaa = DefineComponent({
   name: "test",

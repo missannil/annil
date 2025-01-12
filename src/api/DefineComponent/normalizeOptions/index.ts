@@ -26,6 +26,7 @@ import { injectInfoHandler } from "./injectInfoHandler";
 import { InternalFieldProtection } from "./internalFieldProtection";
 import { rootComponentOptionHandle } from "./rootComponentOptionHandle";
 import { sameFuncOptionsHandle } from "./sameFuncOptionsHandle";
+import { slotComponentOptionHandle } from "./slotComponentsOptionHandle";
 import { subComponentsOptionHandle } from "./subComponentsOptionHandle";
 
 export type WatchOldValue = Record<string, unknown[]>;
@@ -76,7 +77,8 @@ export function normalizeOptions(
   defineComponentOption: DefineComponentOption,
 ): FinalOptionsOfComponent {
   const rootComponentOption = defineComponentOption.rootComponent;
-  const subComponentsOption = defineComponentOption.subComponents;
+  const subComponentsOptions = defineComponentOption.subComponents;
+  const slotComponentOptions = defineComponentOption.slotComponents;
   const finalOptionsForComponent: FinalOptionsOfComponent = injectInfoHandler({
     observers: {},
     data: {},
@@ -107,12 +109,18 @@ export function normalizeOptions(
   if (rootComponentOption && !isEmptyObject(rootComponentOption)) {
     // 验证配置中是否有内部字段__throttleDebounce__,有则报错,因为在rootComponentOptionHandle中会加入__throttleDebounce__字段到data中
     __throttleDebounce__FieldCheck(rootComponentOption);
-    rootComponentOptionHandle(finalOptionsForComponent, sameFuncOptions, rootComponentOption);
+    rootComponentOptionHandle(finalOptionsForComponent, rootComponentOption, sameFuncOptions);
   }
-  if (subComponentsOption && !isEmptyObject(subComponentsOption)) {
+  if (subComponentsOptions && subComponentsOptions.length !== 0) {
     // 验证配置中是否有内部字段__throttleDebounce__,有则报错,因为在rootComponentOptionHandle中会加入__throttleDebounce__字段到data中
-    __throttleDebounce__FieldCheck(subComponentsOption);
-    subComponentsOptionHandle(finalOptionsForComponent, subComponentsOption, sameFuncOptions);
+    __throttleDebounce__FieldCheck(subComponentsOptions);
+    subComponentsOptionHandle(finalOptionsForComponent, subComponentsOptions, sameFuncOptions);
+  }
+  if (slotComponentOptions && slotComponentOptions.length !== 0) {
+    __throttleDebounce__FieldCheck(slotComponentOptions);
+    slotComponentOptions.forEach((slotComponentOption) => {
+      slotComponentOptionHandle(finalOptionsForComponent, slotComponentOption, sameFuncOptions);
+    });
   }
   sameFuncOptionsHandle(finalOptionsForComponent, rootComponentOption?.isPage, sameFuncOptions);
 

@@ -55,11 +55,13 @@ const sub1 = SubComponent<{}, CompDoc>()({
   },
 });
 
-interface Sub1Expected {
-  BubblesComposed: string | BubblesComposed;
-  CapturePhaseComposed: string | CaptureComposed;
-  BubblesCapturePhaseComposed: string | BubblesCaptureComposed;
-}
+type Sub1Expected = {
+  composedEvents: {
+    BubblesComposed: string | BubblesComposed;
+    CapturePhaseComposed: string | CaptureComposed;
+    BubblesCapturePhaseComposed: string | BubblesCaptureComposed;
+  };
+};
 
 // 1.2 Composed事件会被返回
 Checking<typeof sub1, Sub1Expected, Test.Pass>;
@@ -77,7 +79,11 @@ const sub2 = SubComponent<{}, CompDoc>()({
 });
 
 // 2.2 返回没有被加后最(_catch)的Composed事件
-Checking<typeof sub2, { BubblesCapturePhaseComposed: string | BubblesCaptureComposed }, Test.Pass>;
+Checking<typeof sub2, {
+  composedEvents: {
+    BubblesCapturePhaseComposed: string | BubblesCaptureComposed;
+  };
+}, Test.Pass>;
 
 const sub3 = SubComponent<{}, CompDoc>()({
   events: {

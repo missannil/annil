@@ -124,9 +124,11 @@ const compDoc = DefineComponent({
 Checking<typeof compDoc, ComputeIntersection<CompOnlyCustomEventsExpected & OnlyPropertiesExpected>, Test.Pass>;
 
 type SubA = SubComponentType<{
-  str: string | Bubbles | Composed;
-  num: number | Capture | Composed;
-  null: null | Bubbles | Capture | Composed;
+  composedEvents: {
+    str: string | Bubbles | Composed;
+    num: number | Capture | Composed;
+    null: null | Bubbles | Capture | Composed;
+  };
 }>;
 
 const customEventsRootDoc = DefineComponent({
@@ -146,9 +148,11 @@ type customEventsRootDocExpect = {
 Checking<typeof customEventsRootDoc, customEventsRootDocExpect, Test.Pass>;
 
 type SubB = SubComponentType<{
-  str: number | Bubbles | Composed;
-  num: string | Capture | Composed;
-  null: boolean | Bubbles | Capture | Composed;
+  composedEvents: {
+    str: number | Bubbles | Composed;
+    num: string | Capture | Composed;
+    null: boolean | Bubbles | Capture | Composed;
+  };
 }>;
 
 //

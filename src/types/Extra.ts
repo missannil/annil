@@ -1,1 +1,1 @@
-export type Extra<Prefix extends string> = { [K in `${Prefix}_isReady`]?: boolean };
+export type Extra<Prefix extends string> = Partial<Record<`${Prefix}_isReady`, boolean>>;

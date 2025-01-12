@@ -61,6 +61,8 @@ jobs:
                   CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
             # 发布
             - run: |
+                if echo "${{ needs.release-please.outputs.version }}" | grep -q "alpha"; then
+                  npm publish --tag alpha
                 if echo "${{ needs.release-please.outputs.version }}" | grep -q "beta"; then
                   npm publish --tag beta
                 elif echo "${{ needs.release-please.outputs.version }}" | grep -q "dev"; then

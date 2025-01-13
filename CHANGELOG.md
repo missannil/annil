@@ -4,6 +4,18 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.11.0-alpha.2](https://github.com/missannil/annil/compare/v1.11.0-alpha.1...v1.11.0-alpha.2) (2025-01-13)
+
+
+### Miscellaneous Chores
+
+* publish ([52c4258](https://github.com/missannil/annil/commit/52c42589cd0e6c4a513f628b1caa79885b1f376a))
+
+
+### Continuous Integration
+
+* 修改test时长为默认 ([4fde68d](https://github.com/missannil/annil/commit/4fde68d332ab78fc784cb32c82b8c4c8682b956c))
+
 ## [1.11.0-alpha.1](https://github.com/missannil/annil/compare/v1.10.1...v1.11.0-alpha.1) (2025-01-13)
 
 

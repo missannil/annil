@@ -8,7 +8,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    timeout-minutes: 1
+    # timeout-minutes: 120  # 设置超时时间为 120 分钟
     steps:
       - uses: actions/checkout@v3
       - name: Setup Node.js

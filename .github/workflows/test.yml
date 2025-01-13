@@ -4,7 +4,7 @@ on:
   pull_request:
     branches:
       - main
-
+      
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -26,10 +26,4 @@ jobs:
       - name : test types  
         run:   npx tsc --noEmit
       - name: test coverage 
-        run: npx jest --coverage --config jest.config.ci.ts
-        # continue-on-error: true  # 即使测试覆盖率步骤失败，仍然继续执行后续步骤
-      - name: Upload coverage report to Actions Artifacts # 上传覆盖率报告到GitHub Actions Artifacts, 以便后续在发布时下载,避免重复生成
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-report
-          path: coverage
+        run: npx jest --coverage

@@ -11,7 +11,7 @@ permissions:
 # 工作流程
 jobs:
     # 更新release-please分支
-    release-please:
+    changelog-and-release:
         # 运行环境
         runs-on: ubuntu-latest
         outputs:
@@ -51,17 +51,12 @@ jobs:
             - run: npm i
               # 打包
             - run: npm run build
-              # 下载覆盖率报告
-            - name: Download coverage report from Actions Artifacts
-              uses: actions/download-artifact@v4
-              with:
-                name: coverage-report
-                path: coverage
+              # 生成覆盖率报告
+            - name: create coverage
+              run: npx jest --coverage --config jest.config.ci.ts
               # 上传覆盖率报告
             - name: Upload coverage reports to Codecov
               uses: codecov/codecov-action@v3
-              # with:
-              #   files: coverage/**/lcov.info
               env:
                   CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
             # 发布

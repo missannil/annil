@@ -51,19 +51,24 @@ jobs:
             - run: npm i
               # 打包
             - run: npm run build
-              # 生成覆盖率报告
-            - name: Generate coverage report
-              run: npx jest --coverage --config jest.config.ci.ts
+              # 下载覆盖率报告
+            - name: Download coverage report from Actions Artifacts
+              uses: actions/download-artifact@v4
+              with:
+                name: coverage-report
+                path: coverage
               # 上传覆盖率报告
             - name: Upload coverage reports to Codecov
               uses: codecov/codecov-action@v3
+              # with:
+              #   files: coverage/**/lcov.info
               env:
                   CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
             # 发布
             - run: |
                 if echo "${{ needs.release-please.outputs.version }}" | grep -q "alpha"; then
                   npm publish --tag alpha
-                if echo "${{ needs.release-please.outputs.version }}" | grep -q "beta"; then
+                elif echo "${{ needs.release-please.outputs.version }}" | grep -q "beta"; then
                   npm publish --tag beta
                 elif echo "${{ needs.release-please.outputs.version }}" | grep -q "dev"; then
                   npm publish --tag dev

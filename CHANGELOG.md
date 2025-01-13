@@ -4,6 +4,14 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.11.0-alpha.1](https://github.com/missannil/annil/compare/v1.10.1...v1.11.0-alpha.1) (2025-01-13)
+
+
+### Features
+
+* computedUpdater函数去除默认参数,修正Wm.Textarea类型 ([e32f965](https://github.com/missannil/annil/commit/e32f965f7cd21c0545c9eb87a8f8bd9de8d39327))
+* slotComponents ([273d4c6](https://github.com/missannil/annil/commit/273d4c60a26f5105fd336510fca603d704db917c))
+
 ## [1.10.1](https://github.com/missannil/annil/compare/v1.10.0...v1.10.1) (2024-11-11)
 
 

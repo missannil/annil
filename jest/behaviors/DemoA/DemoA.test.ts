@@ -9,7 +9,7 @@ describe("behaviors", () => {
   const parent = document.createElement("parent-wrapper"); // 创建挂载(父)节点
 
   test("behavior--由根到子组件", () => {
-    comp.attach(parent); // attach 到父亲节点上，此时会触发自定义组件的 attached 钩子
+    comp.attach(parent); // attach  到父亲节点上，此时会触发自定义组件的 attached 钩子
 
     expect(mockFn).toBeCalledTimes(3);
 

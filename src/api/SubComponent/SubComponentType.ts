@@ -1,3 +1,4 @@
+import type { Func } from "hry-types/src/Misc/_api";
 import type { CustomEventsTags } from "../RootComponent/CustomEvents/CustomEventsTag";
 
 type _SubComponentType = {
@@ -16,7 +17,8 @@ type _SubComponentType = {
     | CustomEventsTags
   >;
   allDatas?: Record<string, unknown>;
-  methods?: Record<string, unknown>;
+  methods?: Record<string, Func>;
+  events?: Record<string, Func>;
 };
 
 // type _Validator<O, ErrKeys = Exclude<keyof O, SelectKeys<O, Composed, "contains->">>> = [ErrKeys] extends [never]

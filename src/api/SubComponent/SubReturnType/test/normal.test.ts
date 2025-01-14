@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { Checking, type Test } from "hry-types";
 import type { ComponentType } from "../../../DefineComponent/ReturnType/ComponentType";
 import type {
@@ -48,14 +49,11 @@ const removeCatchedEvents = SubComponent<{}, CompDoc>()({
     aaa_str: "string",
   },
   events: {
-    aaa_bubblesCaptrueComposed_catch(e) {
-      console.log(e);
+    aaa_bubblesCaptrueComposed_catch() {
     },
-    aaa_bubblesComposed_catch(e) {
-      console.log(e);
+    aaa_bubblesComposed_catch() {
     },
-    aaa_captrueComposed_catch(e) {
-      console.log(e);
+    aaa_captrueComposed_catch() {
     },
   },
 });
@@ -64,6 +62,11 @@ void removeCatchedEvents;
 type RemoveSubDoc = {
   allDatas: {
     aaa_str: "string";
+  };
+  events: {
+    aaa_bubblesCaptrueComposed_catch(): void;
+    aaa_bubblesComposed_catch(): void;
+    aaa_captrueComposed_catch(): void;
   };
 };
 
@@ -74,15 +77,9 @@ const removeCatchedEventsOfSuffix = SubComponent<{}, CompDoc, "aa">()({
     aaaAa_str: "string",
   },
   events: {
-    aaaAa_bubblesCaptrueComposed_catch(e) {
-      console.log(e);
-    },
-    aaaAa_bubblesComposed_catch(e) {
-      console.log(e);
-    },
-    aaaAa_captrueComposed_catch(e) {
-      console.log(e);
-    },
+    aaaAa_bubblesCaptrueComposed_catch() {},
+    aaaAa_bubblesComposed_catch() {},
+    aaaAa_captrueComposed_catch() {},
   },
 });
 void removeCatchedEventsOfSuffix;
@@ -90,6 +87,11 @@ void removeCatchedEventsOfSuffix;
 type RemoveCatchedEventsOfSuffix = {
   allDatas: {
     aaaAa_str: "string";
+  };
+  events: {
+    aaaAa_bubblesCaptrueComposed_catch(): void;
+    aaaAa_bubblesComposed_catch(): void;
+    aaaAa_captrueComposed_catch(): void;
   };
 };
 

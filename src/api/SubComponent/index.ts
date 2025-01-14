@@ -283,13 +283,15 @@ type SubComponentConstructor<
     SubEventsDoc,
     SubMethodsDoc
   >,
-) => CreateSubComponentDoc<
+) => // SubComponentType<
+CreateSubComponentDoc<
   NonNullable<CurrentCompDoc["customEvents"]>,
   SubEventsDoc,
   MissingRequiredField,
   ComputeObject<SubDataDoc & SubComputedDoc & SubStoreDoc>, // allDatas
   SubMethodsDoc
->;
+> // >
+; // must satisfied SubComponentType
 
 /**
  * 子组件构建函数

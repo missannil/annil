@@ -16,7 +16,7 @@ export type CreateComponentDoc<
   AllPropertiesDoc extends unknown | object = TRootDoc["properties"],
   AllCustomEventsDoc extends unknown | object =
     & TRootDoc["customEvents"]
-    & GetCustomEventDocOfSubDoc<TSubComponentTuple[number]["composedEvents"] & {}>,
+    & GetCustomEventDocOfSubDoc<TSubComponentTuple[number]>,
   StopKeys extends string = GetStopKeys<TRootDoc["events"]>,
   FinalCustomEventDoc extends object = Omit<AllCustomEventsDoc, StopKeys>,
 > = ComputeIntersection<

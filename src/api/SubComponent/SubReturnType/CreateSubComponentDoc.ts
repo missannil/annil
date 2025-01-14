@@ -42,6 +42,7 @@ export type CreateSubComponentDoc<
 > = IfExtends<
   MissingRequiredField,
   never,
-  IfExtends<EmptyObject, SubCompDoc, {}, SubCompDoc>,
+  // SubComponent中计算属性字段函数若不写返回类型,可能会造成结果中没有计算属性字段类型,若没有其他字段,结果就为'{}',如果加入到DefineComponent的subComponents字段中会引起本来应该报错的组件(例如:'aaa组件缺少xxx必传字段')不报错。所以这里把结果为{}的情况替换为never。可以让组件类型为字符串时报错。
+  IfExtends<EmptyObject, SubCompDoc, never, SubCompDoc>,
   `缺少必传的字段${UnionToComma<MissingRequiredField & string>}`
 >;

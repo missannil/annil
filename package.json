@@ -31,7 +31,7 @@
     "miniprogram-simulate": "^1.6.1",
     "mobx": "^6.9.0",
     "ts-jest": "^29.1.1",
-    "typescript": "^5.5.4",
+    "typescript": "^5.7.3",
     "typescript-eslint": "^8.19.1"
   },
   "files": [

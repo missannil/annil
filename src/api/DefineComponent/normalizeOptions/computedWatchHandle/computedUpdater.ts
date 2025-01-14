@@ -2,16 +2,23 @@ import { deepEqual } from "../../../../utils/deepEqual";
 import type { Instance } from "../../../RootComponent/Instance/RootComponentInstance";
 import { deepProxy, getOriginalValue } from "./data-tracer";
 import { removeSubDependences } from "./dependencesOptimize";
-import { getPathsValue } from "./getPathsValue";
 export type ComputedDependence = { paths: string[]; val: unknown };
+
 export function computedUpdater(this: Instance): void {
   for (const key in this.data.__computedCache__) {
     const itemCache = this.data.__computedCache__[key];
     let changed = false;
-    for (const dep of itemCache.dependences) {
-      // getPathsValue返回的是数组
-      const curVal = getPathsValue(this.data, dep.paths.join("."))[0];
-      // 检查依赖是否改变
+    outLook: for (const dep of itemCache.dependences) {
+      let curVal: object | null = this.data;
+      for (const path of dep.paths) {
+        // 当前值为null时,直接跳出循环,并且认为依赖改变(说明之前的对象被赋值为null了,继续会报错)
+        if (curVal === null) {
+          changed = true;
+          break outLook;
+        }
+        curVal = (curVal as Record<string, object | null>)[path];
+      }
+      // 检查依赖值是否改变
       if (!deepEqual(curVal, dep.val)) {
         changed = true;
         break;

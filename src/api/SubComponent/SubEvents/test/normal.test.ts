@@ -61,6 +61,15 @@ type Sub1Expected = {
     CapturePhaseComposed: string | CaptureComposed;
     BubblesCapturePhaseComposed: string | BubblesCaptureComposed;
   };
+  events: {
+    aaa_str(e: Detail<string>): void;
+    aaa_bubbles(e: Detail<string>): void;
+    aaa_CapturePhase(e: Detail<string>): void;
+    aaa_BubblesCapturePhase(e: Detail<null>): void;
+    aaa_BubblesComposed(e: Detail<string>): void;
+    aaa_CapturePhaseComposed(e: Detail<string>): void;
+    aaa_BubblesCapturePhaseComposed(e: Detail<string>): void;
+  };
 };
 
 // 1.2 Composed事件会被返回
@@ -83,6 +92,10 @@ Checking<typeof sub2, {
   composedEvents: {
     BubblesCapturePhaseComposed: string | BubblesCaptureComposed;
   };
+  events: {
+    aaa_BubblesComposed_catch(e: Detail<string>): void;
+    aaa_CapturePhaseComposed_catch(e: Detail<string>): void;
+  };
 }, Test.Pass>;
 
 const sub3 = SubComponent<{}, CompDoc>()({
@@ -100,7 +113,13 @@ const sub3 = SubComponent<{}, CompDoc>()({
 });
 
 // 2.4 若Composed事件都被阻止则返回never
-Checking<typeof sub3, never, Test.Pass>;
+Checking<typeof sub3, {
+  events: {
+    aaa_BubblesComposed_catch(e: Detail<string>): void;
+    aaa_CapturePhaseComposed_catch(e: Detail<string>): void;
+    aaa_BubblesCapturePhaseComposed_catch(e: Detail<string>): void;
+  };
+}, Test.Pass>;
 
 // 3.1 基础组件基本事件参数为WMBaseEvent
 SubComponent<{}, Wm.View>()({

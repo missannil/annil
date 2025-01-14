@@ -13,6 +13,7 @@ import type { RootComponentType } from "../RootComponent/RootComponentType";
 import type { GetStoreDoc } from "../RootComponent/Store/GeTStoreDoc";
 import type { StoreConstraint } from "../RootComponent/Store/StoreConstraint";
 import type { WatchOption } from "../RootComponent/Watch/WatchOption";
+import type { SubComponentType } from "../SubComponent/SubComponentType";
 import type { GetSlotComputedDoc } from "./SlotComputed/GetSlotComputedDoc";
 import type { SlotComputedOption } from "./SlotComputed/SlotComputedOption";
 import type { SlotDataOption } from "./SlotData/SlotDataOption";
@@ -139,11 +140,7 @@ type SlotComponentConstructor<
     AllSuperEvents
   >,
 ) => never;
-type SubComponentType = {
-  allDatas?: Record<string, unknown>;
-  methods?: Record<string, () => unknown>;
-  events?: Record<string, () => unknown>;
-};
+
 export function SlotComponent<
   RootDoc extends RootComponentType,
   SubDoc extends SubComponentType,

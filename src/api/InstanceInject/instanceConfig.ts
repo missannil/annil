@@ -31,7 +31,7 @@ type injectData = DataConstraint extends IInjectInfo["data"] ? {} : IInjectInfo[
 export type IInjectStore = StoreConstraint extends IInjectInfo["store"] ? {}
   : ReturnTypeInObject<IInjectInfo["store"]>;
 
-export type IInjectMethods = IInjectInfo["methods"];
+export type IInjectMethods = MethodsConstraint extends IInjectInfo["methods"] ? {} : IInjectInfo["methods"];
 
 /**
  * 实例配置接口

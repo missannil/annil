@@ -37,10 +37,11 @@ export type CreateSubComponentDoc<
     & IfExtends<EmptyObject, ComposedEvents, {}, { composedEvents: ComposedEvents }>
     & IfExtends<EmptyObject, SubMethods, {}, { methods: SubMethods }>
     & IfExtends<EmptyObject, allDatas, {}, { allDatas: allDatas }>
+    & IfExtends<EmptyObject, SubEventsDoc, {}, { events: SubEventsDoc }>
   >,
 > = IfExtends<
   MissingRequiredField,
   never,
-  IfExtends<EmptyObject, SubCompDoc, never, SubCompDoc>,
+  IfExtends<EmptyObject, SubCompDoc, {}, SubCompDoc>,
   `缺少必传的字段${UnionToComma<MissingRequiredField & string>}`
 >;

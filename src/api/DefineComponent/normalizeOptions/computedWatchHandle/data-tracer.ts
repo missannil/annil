@@ -1,11 +1,16 @@
 import type { ComputedDependence } from "./computedUpdater";
 import { removePreviousDependence } from "./dependencesOptimize";
 
+// 判断属性字段是否为对象自身的属性
+function isOwnProp(target: object, prop: string) {
+  return Object.prototype.hasOwnProperty.call(target, prop);
+}
 export function deepProxy(
   data: object,
   dependences: ComputedDependence[],
   basePath: string[] = [],
 ): object {
+  let ignoreProxy = false;
   const handler = {
     get<T extends object>(target: T, prop: keyof T & string) {
       if (prop === "__original__") {
@@ -13,8 +18,8 @@ export function deepProxy(
       }
       const val = target[prop];
 
-      // 自身没有但原型链上有的属性不收集依赖,比如数组上的方法 slice map forEach
-      if (prop in target && !Object.prototype.hasOwnProperty.call(target, prop)) {
+      // 原型链上的属性不收集依赖,比如数组上的方法 slice map forEach 对象上的toString等
+      if ((val !== undefined && (isOwnProp(target, prop) === false)) || ignoreProxy) {
         return typeof val === "function" ? val.bind(target) : val; // : val 覆盖测试不到.
       }
       removePreviousDependence(dependences, basePath);
@@ -25,8 +30,18 @@ export function deepProxy(
 
       // 非对象不代理
       if (typeof val !== "object" || val === null) return val;
-      // console.log(val, typeof val);
       return deepProxy(val, dependences, curPath);
+    },
+    has(target: Record<string, unknown>, prop: string) {
+      removePreviousDependence(dependences, basePath);
+      const curPath = basePath.concat(prop);
+      dependences.push({ paths: curPath, val: target[prop] });
+      return Reflect.has(target, prop);
+    },
+    // 拦截Object.keys, Object.values, Object.entries时后续不收集依赖ignoreProxy=true
+    ownKeys(target: object) {
+      ignoreProxy = true;
+      return Reflect.ownKeys(target);
     },
     set(_target: object, prop: string) {
       throw Error(`${prop}字段是只读的`);

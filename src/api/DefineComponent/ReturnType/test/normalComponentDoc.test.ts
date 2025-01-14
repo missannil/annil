@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Checking, type Test } from "hry-types";
-import { type DetailedType, RootComponent } from "../../../..";
+import { type DetailedType, RootComponent, SubComponent } from "../../../..";
 import type { CustomEventConstraint } from "../../../RootComponent/CustomEvents/CustomEventConstraint";
 import type {
   Bubbles,
@@ -213,3 +213,25 @@ const rootComponent8 = RootComponent()({
 });
 
 Checking<(typeof rootComponent8)["customEvents"]["decrease"], Mock_User, Test.Pass>;
+
+const subA = SubComponent<RootComponentType, { properties: { subA_num: number } }>()({});
+// SubComponent中计算属性字段函数若不写返回值,会造成结果中没有计算属性字段类型,若没有其他字段,结果就为'{}'
+const subB = SubComponent<RootComponentType, { properties: { subB_str: string } }>()({
+  computed: {
+    subB_str() {
+      return this.data.injectStr;
+    },
+  },
+});
+const c = {};
+DefineComponent({
+  name: "test",
+  //  subA 应该报错 但当前不会报错,因为c的类型是{},引起subA不报错
+  subComponents: [subA, c],
+});
+
+DefineComponent({
+  name: "test",
+  // @ts-expect-error 缺少必传的字段subB_str 正常报错
+  subComponents: [subA, subB],
+});

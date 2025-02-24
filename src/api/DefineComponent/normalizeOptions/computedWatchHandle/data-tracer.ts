@@ -32,6 +32,7 @@ export function deepProxy(
       if (typeof val !== "object" || val === null) return val;
       return deepProxy(val, dependences, curPath);
     },
+    // 使用in操作符时处理
     has(target: Record<string, unknown>, prop: string) {
       removePreviousDependence(dependences, basePath);
       const curPath = basePath.concat(prop);

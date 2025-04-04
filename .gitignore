@@ -13,3 +13,6 @@ dist
 project.private.config.json
 !jest.config.js
 !eslint.config.js
+# macOS system files
+.DS_Store
+**/.DS_Store

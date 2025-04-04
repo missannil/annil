@@ -4,15 +4,15 @@ import type { EventsConstraint } from "../RootComponent/Events/EventsConstraint"
 import type { LifetimesConstraint } from "../RootComponent/Lifetimes/LifetimesConstraint";
 import type { MethodsConstraint } from "../RootComponent/Methods/MethodsConstraint";
 import type { PageLifetimesOption } from "../RootComponent/PageLifetimes/PageLifetimesOption";
-import type { SlotComputedConstraint } from "./SlotComputed/SlotComputedConstraint";
-import type { StoreConstraint } from "./SlotStore/SlotStoreConstraint";
+import type { ChunkComputedConstraint } from "./ChunkComputed/ChunkComputedConstraint";
+import type { ChunkStoreConstraint } from "./ChunkStore/ChunkStoreConstraint";
 
 export type SlotComponentReturnType = {
   data?: DataConstraint;
-  computed?: SlotComputedConstraint;
+  computed?: ChunkComputedConstraint;
   methods?: MethodsConstraint;
   events?: EventsConstraint;
-  store?: StoreConstraint;
+  store?: ChunkStoreConstraint;
   observers?: Record<string, Func>;
   watch?: Record<string, Func>;
   lifetimes?: LifetimesConstraint;

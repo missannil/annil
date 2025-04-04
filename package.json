@@ -39,7 +39,8 @@
     "CHANGELOG.md",
     "README.md",
     "src",
-    "dist"
+    "dist",
+    "tsconfig.json"
   ],
   "keywords": [
     "mini",

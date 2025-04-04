@@ -3,6 +3,7 @@ import type { FinalOptionsOfComponent } from "..";
 export function initStore(finalOptionsForComponent: FinalOptionsOfComponent) {
   const storeConfig = finalOptionsForComponent.store;
   if (storeConfig) {
+    // 使用  await import("mobx") 是异步的，用require是同步的，但ts会报错，所以用as typeof mobx断言类型
     // eslint-disable-next-line @typescript-eslint/no-require-imports
     const { toJS } = require("mobx") as typeof mobx;
     for (const key in storeConfig) {

@@ -1,6 +1,6 @@
 import type { Func } from "hry-types/src/Misc/_api";
 import { BBeforeCreate } from "../../../behaviors/BbeforeCreated";
-import { BStore } from "../../../behaviors/BStore";
+
 import { BthrottleDebounce } from "../../../behaviors/BthrottleDebounce";
 import { applyDebounceAndThrottle } from "../../../utils/applyDebounceAndThrottle";
 import { isEmptyObject } from "../../../utils/isEmptyObject";
@@ -14,19 +14,19 @@ import type { PropertiesConstraint } from "../../RootComponent/Properties/Proper
 import type { StoreConstraint } from "../../RootComponent/Store/StoreConstraint";
 import type { DefineComponentOption } from "..";
 import { __throttleDebounce__FieldCheck } from "./__throttleDebounce__FieldCheck";
-import { computedWatchHandle } from "./computedWatchHandle";
 import type { ComputedCache } from "./computedWatchHandle/initComputedAndGetCache";
+import { initStore } from "./handleStore/initStore";
 import { hijack } from "./hijackHandle";
 import { isPageCheck } from "./hijackHandle/isPageCheck";
 import { loadReceivedDataHandle } from "./hijackHandle/loadReceivedDataHandle";
 import { onLoadReceivedDataHandle } from "./hijackHandle/onLoadReceivedDataHandle";
 import { pagePathCheck } from "./hijackHandle/pagePathCheck";
-import { initStore } from "./initStore";
 import { injectInfoHandler } from "./injectInfoHandler";
 import { InternalFieldProtection } from "./internalFieldProtection";
 import { rootComponentOptionHandle } from "./rootComponentOptionHandle";
 import { sameFuncOptionsHandle } from "./sameFuncOptionsHandle";
-import { slotComponentOptionHandle } from "./slotComponentsOptionHandle";
+// import { slotComponentOptionHandle } from "./slotComponentsOptionHandle";
+import { disposeStore } from "./handleStore/disposeStore";
 import { subComponentsOptionHandle } from "./subComponentsOptionHandle";
 
 export type WatchOldValue = Record<string, unknown[]>;
@@ -34,7 +34,6 @@ export type ThrottleDebounce = Partial<Record<"throttle" | "debounce", Record<st
 export type OptionsInnerFields = {
   data: {
     __computedCache__?: ComputedCache;
-    __storeConfig__?: StoreConstraint;
     __watchOldValue__?: WatchOldValue;
     __throttleDebounce__?: ThrottleDebounce;
   };
@@ -78,13 +77,13 @@ export function normalizeOptions(
 ): FinalOptionsOfComponent {
   const rootComponentOption = defineComponentOption.rootComponent;
   const subComponentsOptions = defineComponentOption.subComponents;
-  const slotComponentOptions = defineComponentOption.slotComponents;
+  // const slotComponentOptions = defineComponentOption.slotComponents;
   const finalOptionsForComponent: FinalOptionsOfComponent = injectInfoHandler({
     observers: {},
     data: {},
     methods: {},
     // 加入BStore,处理store字段的behavior
-    behaviors: [BStore, BthrottleDebounce],
+    behaviors: [BthrottleDebounce],
     externalClasses: [],
     pageLifetimes: {},
     isPage: false,
@@ -116,12 +115,7 @@ export function normalizeOptions(
     __throttleDebounce__FieldCheck(subComponentsOptions);
     subComponentsOptionHandle(finalOptionsForComponent, subComponentsOptions, sameFuncOptions);
   }
-  if (slotComponentOptions && slotComponentOptions.length !== 0) {
-    __throttleDebounce__FieldCheck(slotComponentOptions);
-    slotComponentOptions.forEach((slotComponentOption) => {
-      slotComponentOptionHandle(finalOptionsForComponent, slotComponentOption, sameFuncOptions);
-    });
-  }
+
   sameFuncOptionsHandle(finalOptionsForComponent, rootComponentOption?.isPage, sameFuncOptions);
 
   // 配置与内部字段冲突验证
@@ -138,9 +132,18 @@ export function normalizeOptions(
   hijack(
     finalOptionsForComponent.lifetimes,
     "attached",
-    [isPageCheck(rootComponentOption?.isPage), pagePathCheck(defineComponentOption.path)],
+    [
+      isPageCheck(rootComponentOption?.isPage),
+      pagePathCheck(defineComponentOption.path),
+      initStore(finalOptionsForComponent),
+      // () => computedWatchHandle(finalOptionsForComponent),
+    ],
   );
-
+  hijack(
+    finalOptionsForComponent.lifetimes,
+    "detached",
+    [disposeStore],
+  );
   // 页面时删除预设的虚拟组件字段
   if (finalOptionsForComponent.isPage && finalOptionsForComponent.options) {
     Reflect.deleteProperty(finalOptionsForComponent.options, "virtualHost");
@@ -150,10 +153,10 @@ export function normalizeOptions(
   applyDebounceAndThrottle(finalOptionsForComponent.methods);
 
   // 初始化store数据到data并把store配置放入到data的__storeConfig__下为后续使用
-  initStore(finalOptionsForComponent);
+  // initStore(finalOptionsForComponent);
 
   // 处理computed和watch配置
-  computedWatchHandle(finalOptionsForComponent);
+  // computedWatchHandle(finalOptionsForComponent);
   // 在rootComponentOptionHandle中保留了防抖节流配置,这里处理后,删除data.__throttleDebounce__字段
 
   // BBeforeCreate在最后面,让BeforeCreate生命周期运行在最终建立组件时。

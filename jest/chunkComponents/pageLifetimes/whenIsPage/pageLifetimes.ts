@@ -27,7 +27,7 @@ const rootComponent = RootComponent()({
 const index = DefineComponent({
   path: "/pages/index/index",
   rootComponent,
-  slotComponents: [slot],
-  // subComponents:[]
+  // slotComponents: [slot],
+  subComponents: [slot],
 });
 export type $Index = typeof index;

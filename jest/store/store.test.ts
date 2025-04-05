@@ -3,17 +3,13 @@ import { observable } from "mobx";
 import path from "path";
 
 export const storeUser = observable({
-  name: "zhao",
   age: 20,
   changeAge() {
     this.age = this.age + 1;
   },
-  changeName(name: string) {
-    this.name = name;
-  },
 });
 
-test("store数据初始化在created周期", async () => {
+test("store数据初始化在attached周期", async () => {
   const id = load(path.resolve(__dirname, "store"));
   const comp = render(id);
 
@@ -21,24 +17,23 @@ test("store数据初始化在created周期", async () => {
 
   comp.attach(parent);
 
-  expect(comp.instance.data.age).toBe(21);
-
-  expect(comp.instance.data.aaa_name).toBe("lili");
-
-  // @ts-ignore
-  comp.instance.disposer.age();
-
+  expect(comp.instance.data.age).toBe(20);
+  expect(comp.instance.data.chunkAge).toBe(20);
+  expect(comp.instance.data.custom_age).toBe(20);
   storeUser.changeAge();
-
-  expect(storeUser.age).toBe(22);
-
   expect(comp.instance.data.age).toBe(21);
-
+  expect(comp.instance.data.chunkAge).toBe(21);
+  expect(comp.instance.data.custom_age).toBe(21);
+  //  @ts-ignore
+  comp.instance.disposer.age();
+  storeUser.changeAge();
+  expect(comp.instance.data.age).toBe(21);
+  expect(comp.instance.data.chunkAge).toBe(22);
+  expect(comp.instance.data.custom_age).toBe(22);
   comp.detach();
-
-  storeUser.changeName("zhao");
-
-  expect(storeUser.name).toBe("zhao");
-
-  expect(comp.instance.data.aaa_name).toBe("lili");
+  storeUser.changeAge();
+  expect(comp.instance.data.age).toBe(21);
+  expect(comp.instance.data.chunkAge).toBe(22);
+  expect(comp.instance.data.custom_age).toBe(22);
+  expect(Object.keys(comp.instance.disposer).length).toBe(0);
 });

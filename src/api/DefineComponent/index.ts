@@ -1,5 +1,4 @@
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
-import type { SlotComponentReturnType } from "../ChunkComponent/SlotComponentReturnType";
 import type { CustomComponentTrueOptions } from "../CustomComponent";
 import type { CustomComponentType } from "../CustomComponent/CustomComponentType";
 import type { RootComponentTrueOptions } from "../RootComponent";
@@ -15,23 +14,22 @@ export type Path = `/${string}`;
 type RootOptions<
   TRootComponentDoc extends RootComponentType,
   TSubComponentTuple extends CustomComponentType[],
-  TSlotComponents extends unknown[],
+  // TSlotComponents extends unknown[],
   TName extends string,
   TPath extends Path,
 > =
   & NameOrPathOption<TName, TPath, TRootComponentDoc["isPage"] & {}>
-  & { slotComponents?: TSlotComponents }
+  // & { slotComponents?: TSlotComponents }
   & RootComponentOption<TRootComponentDoc>
   & SubComponentsOption<TSubComponentTuple>;
 
 type DefineComponentConstructor = <
   TRootComponentDoc extends RootComponentType = {},
   TSubComponentTuple extends CustomComponentType[] = [],
-  TSlotComponents extends unknown[] = [],
   TName extends string = "",
   TPath extends Path = "/",
 >(
-  options: RootOptions<TRootComponentDoc, TSubComponentTuple, TSlotComponents, TName, TPath>,
+  options: RootOptions<TRootComponentDoc, TSubComponentTuple, TName, TPath>,
 ) => // ReturnType 为  PageDoc or ComponentDoc
 IfExtends<
   "",
@@ -47,7 +45,6 @@ export type DefineComponentOption = {
   path?: string;
   rootComponent?: RootComponentTrueOptions;
   subComponents?: CustomComponentTrueOptions[];
-  slotComponents?: SlotComponentReturnType[];
 };
 
 /**

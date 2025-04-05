@@ -88,8 +88,8 @@ const rootComponent = RootComponent()({
 const index = DefineComponent({
   path: "/pages/index/index",
   rootComponent,
-  subComponents: [subComp],
-  slotComponents: [slot],
+  subComponents: [subComp, slot],
+  // slotComponents: [],
 });
 export type $IndexSlot = {
   path: "/pages/index/index";

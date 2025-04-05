@@ -34,6 +34,6 @@ const rootComponent = RootComponent()({
 const index = DefineComponent({
   name: "compA",
   rootComponent,
-  slotComponents: [slot],
+  subComponents: [slot],
 });
 export type $Index = typeof index;

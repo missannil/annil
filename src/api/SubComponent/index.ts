@@ -9,6 +9,7 @@ import type { InnerFields } from "../../types/InnerData";
 import type { WMCompOtherOption } from "../../types/OfficialTypeAlias";
 import type { Replace } from "../../types/Replace";
 import type { ReplacePrefix } from "../../types/ReplacePrefix";
+import type { UnionToComma } from "../../types/UnionToComma.test";
 import type { ComponentType } from "../DefineComponent/ReturnType/ComponentType";
 import type { IInjectAllData, IInjectStore } from "../InstanceInject/instanceConfig";
 import type { ComputedConstraint } from "../RootComponent/Computed/ComputedConstraint";
@@ -34,7 +35,7 @@ import type { SubMethodsConstraint } from "./SubMethods/SubMethodsConstraint";
 import type { SubMethodsOption } from "./SubMethods/SubMethodsOption";
 import type { SubObserversOption } from "./SubObservers/SubObserversOption";
 import type { SubPageLifetimesOption } from "./SubPageLifetimes/SubPageLifetimesOption";
-import type { CreateSubComponentDoc } from "./SubReturnType/CreateSubComponentDoc";
+import type { CreatCustomComponentDoc } from "./SubReturnType/CreateSubComponentDoc";
 import type { SubStoreConstraint } from "./SubStore/SubStoreConstraint";
 import type { SubStoreOption } from "./SubStore/SubStoreOption";
 import type { SubWatchOption } from "./SubWatch/SubWatchOption";
@@ -283,15 +284,15 @@ type SubComponentConstructor<
     SubEventsDoc,
     SubMethodsDoc
   >,
-) => // SubComponentType<
-CreateSubComponentDoc<
-  NonNullable<CurrentCompDoc["customEvents"]>,
-  SubEventsDoc,
+) => IfExtends<
   MissingRequiredField,
-  ComputeObject<SubDataDoc & SubComputedDoc & SubStoreDoc>, // allDatas
-  SubMethodsDoc
-> // >
-; // must satisfied SubComponentType
+  never,
+  CreatCustomComponentDoc<
+    NonNullable<CurrentCompDoc["customEvents"]>,
+    SubEventsDoc
+  >,
+  `缺少必传的字段${UnionToComma<MissingRequiredField & string>}`
+>;
 
 /**
  * 子组件构建函数

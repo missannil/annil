@@ -1,4 +1,4 @@
-import type { SlotComponentReturnType } from "../../SlotComponent/SlotComponentReturnType";
+import type { SlotComponentReturnType } from "../../ChunkComponent/SlotComponentReturnType";
 import type { FinalOptionsOfComponent, SameFuncOptions } from ".";
 import { otherFieldsHandle } from "./otherFieldsHandle";
 import { sameFuncFieldsCollect } from "./sameFuncFieldsCollect";

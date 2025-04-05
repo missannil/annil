@@ -1,7 +1,7 @@
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
+import type { SlotComponentReturnType } from "../ChunkComponent/SlotComponentReturnType";
 import type { RootComponentTrueOptions } from "../RootComponent";
 import type { RootComponentType } from "../RootComponent/RootComponentType";
-import type { SlotComponentReturnType } from "../SlotComponent/SlotComponentReturnType";
 import type { SubComponentTrueOptions } from "../SubComponent";
 import type { SubComponentType } from "../SubComponent/SubComponentType";
 import type { NameOrPathOption } from "./NameOrPage/NameOrPathOption";

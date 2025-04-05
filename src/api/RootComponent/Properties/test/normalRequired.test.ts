@@ -73,17 +73,17 @@ type RequiredTypeExpected = {
   num: number;
   bool: boolean;
   arr: unknown[];
-  obj: object | null;
+  obj: object;
   tuple: [string, number, boolean];
   union_str: "male" | "female";
   union_num: 0 | 1 | 2;
   union_bool: boolean;
   union_arr: number[] | string[];
-  union_obj: Mock_User | Mock_Cart | null;
+  union_obj: Mock_User | Mock_Cart;
   union_str_num_bool: string | number | boolean;
   union_literalStr_Literalnum: 0 | 1 | 2 | "male" | "female";
-  union_mockUser_num: number | Mock_User | null;
-  union_num_mockUser: number | Mock_User | null;
+  union_mockUser_num: number | Mock_User;
+  union_num_mockUser: number | Mock_User;
 };
 
 const RequiredDoc = RootComponent()({

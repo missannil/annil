@@ -1,8 +1,8 @@
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
 import type { AddNullForObject } from "../../../types/AddNullForObject";
+import type { CustomComponentType } from "../../CustomComponent/CustomComponentType";
 import type { RootComponentType } from "../../RootComponent/RootComponentType";
-import type { SubComponentType } from "../../SubComponent/SubComponentType";
 import type { GetCustomEventDocOfSubDoc } from "./GetCustomEventDocOfSubDoc";
 
 // 获取RootComponetDoc中events字段类型阻止事件(后最为catch)的key `${ 组件前缀 }_${infer Key}_${ bubbles | capture }_catch`
@@ -11,7 +11,7 @@ type GetStopKeys<O> = { [k in keyof O]: k extends `${string}_${infer Key}_${stri
 export type CreateComponentDoc<
   TRootDoc extends RootComponentType,
   TName extends string,
-  TSubComponentTuple extends SubComponentType[],
+  TSubComponentTuple extends CustomComponentType[],
   // 获取RootDoc和SubComponent[]中所有的properties字段类型
   AllPropertiesDoc extends unknown | object = TRootDoc["properties"],
   AllCustomEventsDoc extends unknown | object =

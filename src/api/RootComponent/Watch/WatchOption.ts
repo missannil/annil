@@ -52,7 +52,7 @@ export type WatchOption<TWatchData extends object, _WatchKeys extends keyof TWat
       & {
         [k in _WatchKeys]?: (
           // newValue 去除null
-          newValue: Exclude<TWatchData[k], null>,
+          newValue: TWatchData[k],
           oldValue: TWatchData[k],
         ) => void;
       }

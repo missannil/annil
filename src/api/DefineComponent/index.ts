@@ -1,9 +1,9 @@
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { SlotComponentReturnType } from "../ChunkComponent/SlotComponentReturnType";
+import type { SubComponentTrueOptions } from "../CustomComponent";
+import type { CustomComponentType } from "../CustomComponent/CustomComponentType";
 import type { RootComponentTrueOptions } from "../RootComponent";
 import type { RootComponentType } from "../RootComponent/RootComponentType";
-import type { SubComponentTrueOptions } from "../SubComponent";
-import type { SubComponentType } from "../SubComponent/SubComponentType";
 import type { NameOrPathOption } from "./NameOrPage/NameOrPathOption";
 import { normalizeOptions } from "./normalizeOptions";
 import type { CreateComponentDoc } from "./ReturnType/CreateComponentDoc";
@@ -14,7 +14,7 @@ export type Path = `/${string}`;
 
 type RootOptions<
   TRootComponentDoc extends RootComponentType,
-  TSubComponentTuple extends SubComponentType[],
+  TSubComponentTuple extends CustomComponentType[],
   TSlotComponents extends unknown[],
   TName extends string,
   TPath extends Path,
@@ -26,7 +26,7 @@ type RootOptions<
 
 type DefineComponentConstructor = <
   TRootComponentDoc extends RootComponentType = {},
-  TSubComponentTuple extends SubComponentType[] = [],
+  TSubComponentTuple extends CustomComponentType[] = [],
   TSlotComponents extends unknown[] = [],
   TName extends string = "",
   TPath extends Path = "/",

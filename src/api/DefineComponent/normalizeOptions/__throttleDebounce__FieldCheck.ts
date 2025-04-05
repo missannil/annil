@@ -1,6 +1,6 @@
 import type { SlotComponentReturnType } from "../../ChunkComponent/SlotComponentReturnType";
+import type { SubComponentTrueOptions } from "../../CustomComponent";
 import type { RootComponentTrueOptions } from "../../RootComponent";
-import type { SubComponentTrueOptions } from "../../SubComponent";
 
 export function __throttleDebounce__FieldCheck(
   config: RootComponentTrueOptions | SubComponentTrueOptions[] | SlotComponentReturnType[],

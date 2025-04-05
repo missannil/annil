@@ -1,4 +1,4 @@
-import type { SubComponentTrueOptions } from "../../SubComponent";
+import type { SubComponentTrueOptions } from "../../CustomComponent";
 import type { FinalOptionsOfComponent, SameFuncOptions } from ".";
 import { otherFieldsHandle } from "./otherFieldsHandle";
 import { sameFuncFieldsCollect } from "./sameFuncFieldsCollect";

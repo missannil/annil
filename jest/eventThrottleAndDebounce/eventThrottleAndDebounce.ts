@@ -1,7 +1,7 @@
-import { DefineComponent, RootComponent, SubComponent } from "../../src";
+import { CustomComponent, DefineComponent, RootComponent } from "../../src";
 import type { CompDoc } from "../common";
 
-const subA = SubComponent<Root, CompDoc>()({
+const subA = CustomComponent<Root, CompDoc>()({
   data: {
     compA_num: 123,
     compA_user: { name: "zhao" },

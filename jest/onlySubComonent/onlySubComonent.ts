@@ -1,11 +1,11 @@
-import { DefineComponent, SubComponent } from "../../src";
+import { CustomComponent, DefineComponent } from "../../src";
 
-const subA = SubComponent<{}, { properties: { aaa_num: number } }>()({
+const subA = CustomComponent<{}, { properties: { aaa_num: number } }>()({
   data: {
     aaa_num: 123,
   },
 });
-const subA2 = SubComponent<{}, { properties: { aaa_num: number } }, "2">()({
+const subA2 = CustomComponent<{}, { properties: { aaa_num: number } }, "2">()({
   data: {
     aaa2_num: 123,
   },

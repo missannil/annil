@@ -50,7 +50,7 @@ ChunkComponent<Mock_RootDoc, "zzz">()({
     // watch RootDoc字段
     optional_obj(newValue, oldValue) {
       void oldValue;
-      void Checking<object, typeof newValue, true>;
+      void Checking<object | null, typeof newValue, true>;
 
       void Checking<object | null, typeof oldValue, true>;
     },

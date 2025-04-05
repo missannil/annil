@@ -2,11 +2,11 @@ import {
   type Bubbles,
   ChunkComponent,
   type CreateComponentType,
+  CustomComponent,
   DefineComponent,
   isEmptyObject,
   type ParamsEqual,
   RootComponent,
-  SubComponent,
 } from "../../../src";
 import type { User } from "../../common";
 const slot = ChunkComponent<Root, "slot">()({
@@ -41,7 +41,7 @@ type Mock_SubComponent = CreateComponentType<"xxx", {
     onTap: string | Bubbles;
   };
 }>;
-const subComp = SubComponent<Root, Mock_SubComponent>()({
+const subComp = CustomComponent<Root, Mock_SubComponent>()({
   data: {
     xxx_num: 1,
     xxx_user: null,

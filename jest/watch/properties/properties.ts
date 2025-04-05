@@ -1,11 +1,11 @@
-import { DefineComponent, type DetailedType, RootComponent, SubComponent } from "../../../src";
+import { CustomComponent, DefineComponent, type DetailedType, RootComponent } from "../../../src";
 
 interface User {
   name: string;
   age: number;
 }
 
-const sub = SubComponent<Root, { properties: { aaa_num: number; aaa_user: User | null } }>()({
+const sub = CustomComponent<Root, { properties: { aaa_num: number; aaa_user: User | null } }>()({
   data: {
     aaa_num: 123,
     aaa_user: { name: "zhao", age: 20 },

@@ -1,5 +1,5 @@
+import type { SubComponentTrueOptions } from "../../CustomComponent";
 import type { RootComponentTrueOptions } from "../../RootComponent";
-import type { SubComponentTrueOptions } from "../../SubComponent";
 import type { SameFuncOptions } from ".";
 
 /**

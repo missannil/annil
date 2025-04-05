@@ -53,7 +53,7 @@ const OptionalDoc = RootComponent()({
             optional_num: number;
             optional_gender: "male" | "female";
             optional_tuple: [number, string, boolean];
-            optional_obj: Mock_User | null;
+            optional_obj: Mock_User;
             optional_objOrNull: Mock_User | null;
             optional_union: string | number;
             optional_arr: string[];
@@ -71,7 +71,7 @@ type OptionalDocExpected = {
     optional_num?: number;
     optional_gender?: "male" | "female";
     optional_tuple?: [number, string, boolean];
-    optional_obj?: Mock_User | null;
+    optional_obj?: Mock_User;
     optional_objOrNull?: Mock_User | null;
     optional_union?: string | number;
     optional_arr?: string[];

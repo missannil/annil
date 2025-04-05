@@ -1,7 +1,7 @@
-import { DefineComponent, RootComponent, SubComponent } from "../../../src";
+import { CustomComponent, DefineComponent, RootComponent } from "../../../src";
 import { user } from "./whenIsComponent.test";
 
-const subA = SubComponent<Root, { properties: { subA_num: number } }>()({
+const subA = CustomComponent<Root, { properties: { subA_num: number } }>()({
   data: {
     subA_num: 100,
   },

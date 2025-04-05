@@ -21,8 +21,8 @@ RootComponent()({
         typeof this.data,
         ComputeIntersection<
           {
-            optionalObj: { name: string } | null;
-            obj: object | null;
+            optionalObj: { name: string };
+            obj: object;
           } & IInjectAllData
         >,
         Test.Pass

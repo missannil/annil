@@ -1,5 +1,5 @@
 import { observable } from "mobx";
-import { DefineComponent, RootComponent, SubComponent } from "../../../src";
+import { CustomComponent, DefineComponent, RootComponent } from "../../../src";
 import { type CompDoc } from "../../common";
 type User = {
   name: string;
@@ -17,7 +17,7 @@ const obj1 = observable({
     age: 30,
   } as User,
 });
-const subA = SubComponent<Root, CompDoc>()({
+const subA = CustomComponent<Root, CompDoc>()({
   data: {
     compA_num: 0,
   },

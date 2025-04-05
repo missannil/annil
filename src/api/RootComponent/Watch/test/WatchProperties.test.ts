@@ -65,7 +65,7 @@ RootComponent()({
       void oldValue;
       void Checking<object, typeof newValue, Test.Pass>;
 
-      void Checking<object | null, typeof oldValue, Test.Pass>;
+      void Checking<object, typeof oldValue, Test.Pass>;
     },
     tuple(newValue, oldValue) {
       void oldValue;
@@ -101,7 +101,7 @@ RootComponent()({
       void oldValue;
       void Checking<Mock_User | Mock_Cart, typeof newValue, Test.Pass>;
 
-      void Checking<Mock_User | Mock_Cart | null, typeof oldValue, Test.Pass>;
+      void Checking<Mock_User | Mock_Cart, typeof oldValue, Test.Pass>;
     },
     // 必传多类型联合
     union_str_num_bool(newValue, oldValue) {
@@ -120,7 +120,7 @@ RootComponent()({
       void oldValue;
       void Checking<number | Mock_User, typeof newValue, Test.Pass>;
 
-      void Checking<number | Mock_User | null, typeof oldValue, Test.Pass>;
+      void Checking<number | Mock_User, typeof oldValue, Test.Pass>;
     },
     // 可选字段
     optional_gender(newValue, oldValue) {
@@ -139,7 +139,7 @@ RootComponent()({
       void oldValue;
       void Checking<Mock_User, typeof newValue, Test.Pass>;
 
-      void Checking<Mock_User | null, typeof oldValue, Test.Pass>;
+      void Checking<Mock_User, typeof oldValue, Test.Pass>;
     },
     // 对象的二段key
     "optional_obj.age"(newValue, oldValue) {
@@ -152,13 +152,19 @@ RootComponent()({
       void oldValue;
       void Checking<Mock_User, typeof newValue, Test.Pass>;
 
-      void Checking<Mock_User | null, typeof oldValue, Test.Pass>;
+      void Checking<Mock_User, typeof oldValue, Test.Pass>;
     },
     "optional_obj.id"(newValue, oldValue) {
       void oldValue;
       void Checking<string, typeof newValue, Test.Pass>;
 
       void Checking<string, typeof oldValue, Test.Pass>;
+    },
+    optional_objOrNull(newValue, oldValue) {
+      void oldValue;
+      void Checking<Mock_User | null, typeof newValue, Test.Pass>;
+
+      void Checking<Mock_User | null, typeof oldValue, Test.Pass>;
     },
   },
 });

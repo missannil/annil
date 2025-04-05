@@ -1,6 +1,6 @@
-import { DefineComponent, RootComponent, SubComponent } from "../../src";
+import { CustomComponent, DefineComponent, RootComponent } from "../../src";
 
-const sub = SubComponent<
+const sub = CustomComponent<
   Root,
   {
     properties: { sub_debounced: number; sub_throttle: number };

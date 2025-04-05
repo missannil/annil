@@ -1,5 +1,5 @@
 import { observable } from "mobx";
-import { DefineComponent, type DetailedType, RootComponent, SubComponent } from "../../../src";
+import { CustomComponent, DefineComponent, type DetailedType, RootComponent } from "../../../src";
 import { type CompDoc, type User, user } from "../../common";
 
 const store = observable({
@@ -10,7 +10,7 @@ const store = observable({
   },
 });
 
-const subA = SubComponent<Root, CompDoc>()({
+const subA = CustomComponent<Root, CompDoc>()({
   computed: {
     // 5 可引用根组件properties、data和计算字段
     compA_num(): number {

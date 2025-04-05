@@ -1,5 +1,5 @@
 import { observable } from "mobx";
-import { DefineComponent, RootComponent, SubComponent } from "../../../src";
+import { CustomComponent, DefineComponent, RootComponent } from "../../../src";
 import { type CompDoc } from "../../common";
 
 const store = observable({
@@ -10,7 +10,7 @@ const store = observable({
   },
 });
 
-const subA = SubComponent<Root, CompDoc>()({
+const subA = CustomComponent<Root, CompDoc>()({
   data: {
     compA_num: 0,
   },

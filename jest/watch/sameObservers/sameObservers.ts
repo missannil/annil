@@ -1,4 +1,4 @@
-import { DefineComponent, RootComponent, SubComponent } from "../../../src";
+import { CustomComponent, DefineComponent, RootComponent } from "../../../src";
 import { newUser, oldUser } from "./sameObservers.test";
 
 interface User {
@@ -6,7 +6,7 @@ interface User {
   age: number;
 }
 
-const sub = SubComponent<Root, { properties: { sub_user: User | null } }>()({
+const sub = CustomComponent<Root, { properties: { sub_user: User | null } }>()({
   computed: {
     sub_user(): User {
       return this.data.user;

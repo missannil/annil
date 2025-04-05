@@ -1,7 +1,7 @@
-import { DefineComponent, RootComponent, SubComponent } from "../../src";
+import { CustomComponent, DefineComponent, RootComponent } from "../../src";
 import { storeUser } from "./store.test";
 
-const subA = SubComponent<typeof rootComponent, { properties: { aaa_name: string } }>()({
+const subA = CustomComponent<typeof rootComponent, { properties: { aaa_name: string } }>()({
   store: {
     aaa_name: () => storeUser.name,
   },

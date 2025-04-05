@@ -4,7 +4,7 @@ import type { ChunkComputedConstraint } from "./ChunkComputedConstraint";
 export type ChunkComputedOption<
   TComputed extends ChunkComputedConstraint,
   CompareKeys extends PropertyKey,
-  Instance extends object,
+  // Instance extends object,
   TPrefix extends string,
 > = {
   /**
@@ -32,7 +32,7 @@ export type ChunkComputedOption<
    */
   computed?:
     & TComputed
-    & ThisType<Instance>
+    // & ThisType<Instance>
     & DuplicateFieldValidator<TComputed, CompareKeys>
     & G.KeyValidator<TComputed, `${TPrefix}_${string}` | `_${TPrefix}_${string}`>;
 };

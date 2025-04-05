@@ -1,6 +1,6 @@
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { SlotComponentReturnType } from "../ChunkComponent/SlotComponentReturnType";
-import type { SubComponentTrueOptions } from "../CustomComponent";
+import type { CustomComponentTrueOptions } from "../CustomComponent";
 import type { CustomComponentType } from "../CustomComponent/CustomComponentType";
 import type { RootComponentTrueOptions } from "../RootComponent";
 import type { RootComponentType } from "../RootComponent/RootComponentType";
@@ -46,7 +46,7 @@ export type DefineComponentOption = {
   name?: string;
   path?: string;
   rootComponent?: RootComponentTrueOptions;
-  subComponents?: SubComponentTrueOptions[];
+  subComponents?: CustomComponentTrueOptions[];
   slotComponents?: SlotComponentReturnType[];
 };
 

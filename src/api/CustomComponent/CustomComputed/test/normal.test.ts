@@ -180,3 +180,28 @@ CustomComponent<{ data: { _num: number } }, $aaa>()({
     },
   },
 });
+
+// computed中可以使用this实例 之前只能使用this.data字段
+type Custom = { type: "custom"; xxx: string };
+type Chunk = { type: "chunk"; yyy: number };
+type Union = Custom | Chunk;
+CustomComponent<{ data: { _num: number }; methods: { IsChunk: (union: Union) => union is Chunk } }, $aaa>()({
+  data: {
+    _aaa_union: { type: "custom", xxx: "123" } as Union,
+  },
+  computed: {
+    _aaa_count(): string | number {
+      const { _aaa_union } = this.data;
+      return this.aaa_isCustom(_aaa_union) ? _aaa_union.xxx : _aaa_union.yyy;
+    },
+    _aaa_isChunk(): boolean {
+      const { _aaa_union } = this.data;
+      return this.IsChunk(_aaa_union);
+    },
+  },
+  methods: {
+    aaa_isCustom(union: Union): union is Custom {
+      return union.type === "custom";
+    },
+  },
+});

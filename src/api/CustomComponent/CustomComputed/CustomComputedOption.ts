@@ -2,10 +2,10 @@ import type { G } from "hry-types";
 export type CustomComputedOption<
   TComputed extends object,
   legal extends PropertyKey,
-  Instance extends object,
-> = {
+> // Instance extends object,
+ = {
   computed?:
     & TComputed
-    & ThisType<Instance>
+    // & ThisType<Instance>
     & G.IllegalFieldValidator<TComputed, legal, 0, "", "重复或无效的字段">;
 };

@@ -1,5 +1,4 @@
 import type { IfExtends } from "hry-types/src/Any/_api";
-import type { ComputeObject } from "../../types/ComputeObj";
 import type { WMCompOtherOption } from "../../types/OfficialTypeAlias";
 import type { IInjectAllData, IInjectMethods, IInjectStore } from "../InstanceInject/instanceConfig";
 import type { GetComputedDoc } from "../RootComponent/Computed/GetComputedDoc";
@@ -42,7 +41,7 @@ type ChunkComponentOptions<
   & ChunkComputedOption<
     TComputed,
     keyof (TData & StoreDoc & RootDatas & IInjectAllData),
-    { data: ComputeObject<TData & StoreDoc & RootDatas & ComputedDoc & IInjectAllData> },
+    // { data: ComputeObject<TData & StoreDoc & RootDatas & ComputedDoc & IInjectAllData> },
     Prefix
   >
   & ChunkEventsOption<

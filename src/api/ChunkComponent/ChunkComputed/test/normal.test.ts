@@ -76,3 +76,11 @@ ChunkComponent<{ data: { _num: number }; methods: { IsChunk: (union: Union) => u
     },
   },
 });
+// 2
+ChunkComponent<{}>()({
+  computed: {
+    xxx(): string {
+      return "";
+    },
+  },
+});

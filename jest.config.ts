@@ -18,7 +18,9 @@ export const config = {
     "!src/utils/_utils.ts",
   ],
   testMatch: [
-    "<rootDir>/jest/**/*.test.ts",
+    "<rootDir>/jest/watch/**/*.test.ts",
+    "<rootDir>/jest/computed/**/*.test.ts",
+    "<rootDir>/jest/store/**/*.test.ts",
   ],
   transform: {
     "\\.ts$": "ts-jest", // 添加的

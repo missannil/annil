@@ -1,22 +1,7 @@
-import { observable } from "mobx";
 import { CustomComponent, DefineComponent, RootComponent } from "../../../src";
 import { type CompDoc } from "../../common";
-type User = {
-  name: string;
-  age?: number;
-};
-const obj = observable({
-  user: {
-    name: "zhao",
-    age: 30,
-  } as User,
-});
-const obj1 = observable({
-  user: {
-    name: "zhao",
-    age: 30,
-  } as User,
-});
+import { obj, obj1 } from "./methodsOfPrototype.test";
+
 const subA = CustomComponent<Root, CompDoc>()({
   data: {
     compA_num: 0,
@@ -48,17 +33,6 @@ const rootComponent = RootComponent()({
     },
     values() {
       return Object.values(this.data.user1);
-    },
-  },
-
-  lifetimes: {
-    attached() {
-      setTimeout(() => {
-        obj.user = { name: "zhao" };
-      }, 200);
-      setTimeout(() => {
-        obj1.user = { name: "zhao" };
-      }, 300);
     },
   },
 });

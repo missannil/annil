@@ -6,21 +6,23 @@ import type { FinalOptionsOfComponent } from ".";
  */
 export function otherFieldsHandle(
   finalOptions: FinalOptionsOfComponent,
-  rootComponentOptions: RootComponentTrueOptions,
+  rootComponentOptions: Omit<RootComponentTrueOptions, "customEvents" | "events">,
 ) {
-  for (const key in rootComponentOptions) {
-    // @ts-ignore 隐式索引
+  let key: keyof Omit<RootComponentTrueOptions, "customEvents" | "events">;
+  for (key in rootComponentOptions) {
     const config = rootComponentOptions[key];
-    if (Array.isArray(config) === true) {
-      //  "behaviors" || "externalClasses"是数组
-      // @ts-ignore 只有 behaviors 和 externalClasses, 且都默认为[]
-      finalOptions[key].push(...config);
+    if (config === undefined) continue;
+    if (key === "behaviors") {
+      finalOptions[key].push(...config as string[]);
     } else if (typeof config === "object") {
-      // @ts-ignore 隐式索引
-      Object.assign(finalOptions[key] ||= {}, config);
+      // @ts-ignore
+      finalOptions[key] = finalOptions[key] || {};
+      // @ts-ignore
+      Object.assign(finalOptions[key], config);
+    } else if (typeof config === "boolean") {
+      finalOptions[key as "isPage"] = config;
     } else {
-      // 函数字段有 根组件有 `export` 子组件无此字段
-      // @ts-ignore 隐式索引
+      // console.warn(`选项的${key}字段,无特殊处理`);
       finalOptions[key] = config;
     }
   }

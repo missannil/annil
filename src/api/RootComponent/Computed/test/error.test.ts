@@ -25,7 +25,7 @@ RootComponent()({
   computed: {
     // @ts-expect-error  相互引用
     str() {
-      // @ts-ignore 相互引用
+      // @ts-expect-error 相互引用
       return this.data.num;
     },
     // @ts-expect-error 相互引用
@@ -39,11 +39,11 @@ RootComponent()({
 RootComponent()({
   computed: {
     str(): number {
-      // @ts-ignore 不存在的字段
+      // @ts-expect-error 不存在的字段
       return this.data.numd;
     },
     other(): string {
-      // @ts-ignore 不存在的字段
+      // @ts-expect-error 不存在的字段
       return this.func;
     },
   },

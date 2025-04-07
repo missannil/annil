@@ -1,4 +1,4 @@
-import { CustomComponent, DefineComponent, RootComponent } from "../../../src";
+import { CustomComponent, DefineComponent, type DetailedType, RootComponent } from "../../../src";
 
 interface User {
   name: string;
@@ -29,10 +29,14 @@ const sub = CustomComponent<Root, { properties: { sub_num: number; sub_user: Use
 type Root = typeof rootComponent;
 
 const rootComponent = RootComponent()({
-  data: {
-    num: 123,
-    user: { name: "zhao", age: 20 } as User,
+  properties: {
+    user: Object as DetailedType<User>, // user: { name: "zhao", age: 20 } as U
+    num: {
+      type: Number,
+      value: 123,
+    },
   },
+
   computed: {
     rootNum() {
       return this.data.num;
@@ -41,32 +45,24 @@ const rootComponent = RootComponent()({
       return this.data.user;
     },
   },
+
   watch: {
-    rootNum(a: number, b: number) {
+    num(a: number, b: number) {
       // @ts-ignore
       this.data["root-watch-num"] = [a, b];
+    },
+    rootNum(a: number, b: number) {
+      // @ts-ignore
+      this.data["root-watch-rootNum"] = [a, b];
     },
     rootUser(a: User, b: User) {
       // @ts-ignore
       this.data["root-watch-user"] = [a, b];
     },
-    "rootUser.name"(a: string, b: string) {
+    // @ts-ignore
+    "rootUser.name,num"(a: string, b: string, c: number, d: number) {
       // @ts-ignore
-      this.data["root-watch-rootUser.name"] = [a, b];
-    },
-  },
-  lifetimes: {
-    attached() {
-      this.setData({
-        num: 456,
-        user: { name: "lili", age: 30 },
-      });
-
-      setTimeout(() => {
-        this.setData({
-          "user.name": "zhao",
-        });
-      }, 0);
+      this.data["root-watch-rootUser.name,num"] = [a, b, c, d];
     },
   },
 });

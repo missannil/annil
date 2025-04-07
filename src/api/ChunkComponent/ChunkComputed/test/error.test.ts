@@ -23,9 +23,9 @@ ChunkComponent<Mock_RootDoc, "bbb">()({
   },
 });
 // 2 与root字段重复
-ChunkComponent<{ data: { bbb_xxx: number } }, "bbb">()({
+ChunkComponent<{ data: { bbb_xxx: number } }>()({
   computed: {
-    // @ts-expect-error '与root字段重复'
+    // @ts-expect-error '重复字段'
     bbb_xxx(): string {
       return "与root字段重复";
     },

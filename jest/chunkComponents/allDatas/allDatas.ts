@@ -79,7 +79,6 @@ const rootComponent = RootComponent()({
   lifetimes: {
     created() {
       // 模拟页面给 is 因为path是根据is验证的。
-      // @ts-ignore
       this.is = this.route = "pages/index/index";
     },
   },

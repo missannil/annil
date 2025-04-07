@@ -1,5 +1,6 @@
 import type { G } from "hry-types";
-import type { DuplicateFieldValidator } from "hry-types/src/Generic/DuplicateFieldValidator";
+import type { Validators } from "../../../types/Validators";
+import type { ValidatorPrefix } from "../ChunkData/validatePrefix";
 import type { ChunkComputedConstraint } from "./ChunkComputedConstraint";
 export type ChunkComputedOption<
   TComputed extends ChunkComputedConstraint,
@@ -33,6 +34,13 @@ export type ChunkComputedOption<
   computed?:
     & TComputed
     // & ThisType<Instance>
-    & DuplicateFieldValidator<TComputed, CompareKeys>
-    & G.KeyValidator<TComputed, `${TPrefix}_${string}` | `_${TPrefix}_${string}`>;
+
+    // & DuplicateFieldValidator<TComputed, CompareKeys>
+    // & G.KeyValidator<TComputed, `${TPrefix}_${string}` | `_${TPrefix}_${string}`>;
+    & Validators<
+      [
+        G.DuplicateFieldValidator<TComputed, CompareKeys, "字段重复">,
+        ValidatorPrefix<TComputed, TPrefix>,
+      ]
+    >;
 };

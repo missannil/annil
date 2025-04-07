@@ -27,12 +27,19 @@ import { rootComponentOptionHandle } from "./rootComponentOptionHandle";
 import { sameFuncOptionsHandle } from "./sameFuncOptionsHandle";
 // import { slotComponentOptionHandle } from "./slotComponentsOptionHandle";
 import { disposeStore } from "./handleStore/disposeStore";
+import { initComputed } from "./initComputed";
+import { computedUpdater } from "./initComputed/computedUpdater";
 import { subComponentsOptionHandle } from "./subComponentsOptionHandle";
-
+import { watchHandler } from "./watchHandler";
+// 因为watch字段可能有多个变量,所以在这里定义的value是一个数组
 export type WatchOldValue = Record<string, unknown[]>;
 export type ThrottleDebounce = Partial<Record<"throttle" | "debounce", Record<string, number>>>;
 export type OptionsInnerFields = {
   data: {
+    __storeInited__?: boolean;
+    __computed__?: boolean;
+    __computedInitializing__?: boolean;
+    __computedInited__?: boolean;
     __computedCache__?: ComputedCache;
     __watchOldValue__?: WatchOldValue;
     __throttleDebounce__?: ThrottleDebounce;
@@ -82,7 +89,6 @@ export function normalizeOptions(
     observers: {},
     data: {},
     methods: {},
-    // 加入BStore,处理store字段的behavior
     behaviors: [BthrottleDebounce],
     externalClasses: [],
     pageLifetimes: {},
@@ -127,16 +133,26 @@ export function normalizeOptions(
   }
 
   hijack(finalOptionsForComponent.methods, "onLoad", [onLoadReceivedDataHandle]);
+  // 只要properties不为空且传入的字段在properties中,就会在attached周期之前先触发observers["**"]事件一次
+  hijack(finalOptionsForComponent.observers, "**", [
+    initStore(finalOptionsForComponent.store),
+    initComputed(finalOptionsForComponent.computed, finalOptionsForComponent.watch),
+    computedUpdater,
+  ]);
 
-  // 验证isPage字段是否配置正确
   hijack(
     finalOptionsForComponent.lifetimes,
     "attached",
     [
+      // 验证isPage字段是否配置正确
       isPageCheck(rootComponentOption?.isPage),
       pagePathCheck(defineComponentOption.path),
-      initStore(finalOptionsForComponent),
-      // () => computedWatchHandle(finalOptionsForComponent),
+      initStore(finalOptionsForComponent.store),
+      initComputed(finalOptionsForComponent.computed, finalOptionsForComponent.watch),
+      function() {
+        // @ts-ignore
+        this.data.__attached__ = true;
+      },
     ],
   );
   hijack(
@@ -155,8 +171,8 @@ export function normalizeOptions(
   // 初始化store数据到data并把store配置放入到data的__storeConfig__下为后续使用
   // initStore(finalOptionsForComponent);
 
-  // 处理computed和watch配置
-  // computedWatchHandle(finalOptionsForComponent);
+  // 处理watch配置,注意的是 oldValue中的计算属性初始赋值在计算属性初始化完毕后。
+  watchHandler(finalOptionsForComponent);
   // 在rootComponentOptionHandle中保留了防抖节流配置,这里处理后,删除data.__throttleDebounce__字段
 
   // BBeforeCreate在最后面,让BeforeCreate生命周期运行在最终建立组件时。
@@ -164,3 +180,18 @@ export function normalizeOptions(
 
   return finalOptionsForComponent;
 }
+
+/**
+ * computed设计逻辑
+ * 在之前的设计中,计算属性的初始化发生在beforeCreate阶段,通过通过监控observers["**"]来触发计算属性的更新。
+ * 有一些问题如下:
+ *   1. 如果依赖属性是properties的情况下(实际上大多数时候都是)初始化时的数据是无意义的,因为beforeCreate阶段properties数据还没传入。
+ * 如果想节省调用(可减少组件渲染时间),应该在properties数据传入后再初始化计算属性,且让初始化时发生的setData不引起watch和observers的响应。什么时候properties已经传入呢?那就是挂载阶段,可是小程序只有attached钩子,只能通过observers["**"]的第一次触发模拟attach周期(只要传入了properties字段定义的属性那么,observers.**就好比attach周期了,会在attached周期之前触发）。需要注意的是如果没有定义properties字段或者传入的属性不在properties中,那么observers["**"]就不会在attached之前触发,所以在attached阶段要做一次检测,如果没有初始化计算属性,就在这个周期中初始化计算属性。
+ * 在计算属性初始化函数中,要检测this.data.__computedCache__是否存在,如果存在就表示已经初始化过了,否则初始化计算属性,并把__initializing__设置为true。这样就可以避免在初始化计算属性时用到setData时,引起watch和observers的触发(watch的回调在执行前判断__initializing__,如果为false才执行)。
+ * 还有一个问题就是watch的oldValue,在watch的初始化函数中只针对不包含计算属性的path进行赋值,这样不影响非计算属性的监控。在计算属性初始化完毕后,再对包含计算属性的path进行赋值。这样oldValue的值才是正确的。这样可避免在observers.path中使用计算属性而报错。
+ *
+ * 整体实现思路:
+ * 1. 劫持observers["**"]事件,在observers["**"]触发时,看data.__computedCache__是否存在,如果不存在,就初始化计算属性。并把data.__computedCache__赋值为true。
+ * 2. 劫持attached事件,在attached阶段,如果data.__computedCache__不存在,就初始化计算属性。并把data.__computedCache__赋值为true。
+ * 这样j
+ */

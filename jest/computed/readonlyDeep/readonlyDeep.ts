@@ -21,6 +21,14 @@ const rootComponent = RootComponent()({
 
       return this.data.obj;
     },
+    setId() {
+      try {
+        this.id = "annil";
+      } catch {
+        return "error setting id";
+      }
+      return this.id;
+    },
   },
 });
 const readonlyDeep = DefineComponent({

@@ -4,6 +4,13 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.12.0-alpha.5](https://github.com/missannil/annil/compare/v1.12.0-alpha.4...v1.12.0-alpha.5) (2025-04-08)
+
+
+### Code Refactoring
+
+* 重构 watch store computed 加入ChunkComponent SubComponent改为CustomComponent ([#236](https://github.com/missannil/annil/issues/236)) ([188853e](https://github.com/missannil/annil/commit/188853e17242e27ba5e50d5cfd513607ac674287))
+
 ## [1.12.0-alpha.4](https://github.com/missannil/annil/compare/v1.11.1-alpha.4...v1.12.0-alpha.4) (2025-02-24)
 
 

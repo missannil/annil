@@ -25,6 +25,10 @@
 
 annil(安奈儿)是微信小程序原生开发插件。她会给您更佳的开发体验,大大提高代码质量和开发效率。
 
+1. subComponent 第二个参数 可以为字符串
+2. 计算属性要不要支持this.
+3. solt组件去除
+
 ### 特点
 
 [代码片段](https://developers.weixin.qq.com/s/kRjkFlme7nTV)

@@ -2,11 +2,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Checking, type Test } from "hry-types";
 import type { ComputeIntersection } from "hry-types/src/Object/_api";
-import type { User } from "../../../../../jest/common";
-import type { DetailedType } from "../../../../types/DetailedType";
+
 import type { IInjectAllData } from "../../../InstanceInject/instanceConfig";
 import { RootComponent } from "../..";
 import type { Mock_User } from "../../Properties/test/normalRequired.test";
+type User = {
+  name: string;
+  age?: number;
+};
 
 const RootDoc = RootComponent()({
   properties: {
@@ -96,21 +99,26 @@ const EmptyComputedFieldDoc = RootComponent()({
 });
 
 Checking<typeof EmptyComputedFieldDoc, { methods: { M1: () => void } }, Test.Pass>;
-RootComponent()({
-  isPage: true,
-  properties: {
-    optionalObj: {
-      type: Object,
-      value: {},
-    },
-    requiredObj: Object as DetailedType<User>,
-  },
 
-  pageLifetimes: {
-    onLoad(prop) {
-      Checking<typeof prop.optionalObj, object | undefined, true>;
-      Checking<typeof prop.requiredObj, User, true>;
-      Checking<typeof this.data.optionalObj, object, true>;
+type Custom = { type: "custom"; xxx: string };
+type Chunk = { type: "chunk"; yyy: number };
+type Union = Custom | Chunk;
+/**
+ *  6 计算属性可以使用实例上的方法和属性
+ */
+RootComponent()({
+  data: {
+    union: { type: "custom", xxx: "123" } as Union,
+  },
+  computed: {
+    count(): string | number {
+      const { union } = this.data;
+      return this.isCustom(union) ? union.xxx : union.yyy;
+    },
+  },
+  methods: {
+    isCustom(union: Union): union is Custom {
+      return union.type === "custom";
     },
   },
 });

@@ -10,8 +10,7 @@ describe("内部字段保护", () => {
 
       comp.attach(parent);
     } catch (error) {
-      // @ts-ignore
-      expect(error.message).toBe("data配置中的__computedCache__字段已被内部字段占用");
+      expect((error as Error).message).toBe("data配置中的__computedCache__字段已被内部字段占用");
     }
   });
 });

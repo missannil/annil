@@ -1,4 +1,5 @@
 import type { IInjectInfo } from "../../..";
+import type { InjectKey } from "../../InstanceInject/instanceConfig";
 import type { FinalOptionsOfComponent } from ".";
 /**
  * 把injectInfo字段合并到finalOptionsForComponent
@@ -14,23 +15,22 @@ function mergeOptions(
   injectInfo: IInjectInfo,
 ): FinalOptionsOfComponent {
   for (const key in injectInfo) {
-    const injectVal = injectInfo[key];
+    const isInjectKey = key as InjectKey;
+    const injectVal = injectInfo[isInjectKey];
+
     if (key in finalOptionsForComponent) {
-      // @ts-ignore
-      const originalVal = finalOptionsForComponent[key];
-      switch (key) {
+      const renamedKey = key as keyof FinalOptionsOfComponent;
+      const originalVal = finalOptionsForComponent[renamedKey];
+      switch (isInjectKey) {
         case "behaviors":
-          {
-            // @ts-ignore behaviors 是数组类型
-            finalOptionsForComponent[key].push(...injectVal);
-          }
+          finalOptionsForComponent["behaviors"].push(...injectVal as string[]);
+
           break;
 
         default:
-          {
-            // @ts-ignore 覆盖目标
-            finalOptionsForComponent[key] = Object.assign(originalVal, injectVal);
-          }
+          // @ts-ignore
+          finalOptionsForComponent[renamedKey] = Object.assign(originalVal, injectVal);
+
           break;
       }
     } else {

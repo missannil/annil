@@ -1,9 +1,8 @@
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
+import type { CustomComponentTrueOptions } from "../CustomComponent";
+import type { CustomComponentType } from "../CustomComponent/CustomComponentType";
 import type { RootComponentTrueOptions } from "../RootComponent";
 import type { RootComponentType } from "../RootComponent/RootComponentType";
-import type { SlotComponentReturnType } from "../SlotComponent/SlotComponentReturnType";
-import type { SubComponentTrueOptions } from "../SubComponent";
-import type { SubComponentType } from "../SubComponent/SubComponentType";
 import type { NameOrPathOption } from "./NameOrPage/NameOrPathOption";
 import { normalizeOptions } from "./normalizeOptions";
 import type { CreateComponentDoc } from "./ReturnType/CreateComponentDoc";
@@ -14,24 +13,23 @@ export type Path = `/${string}`;
 
 type RootOptions<
   TRootComponentDoc extends RootComponentType,
-  TSubComponentTuple extends SubComponentType[],
-  TSlotComponents extends unknown[],
+  TSubComponentTuple extends CustomComponentType[],
+  // TSlotComponents extends unknown[],
   TName extends string,
   TPath extends Path,
 > =
   & NameOrPathOption<TName, TPath, TRootComponentDoc["isPage"] & {}>
-  & { slotComponents?: TSlotComponents }
+  // & { slotComponents?: TSlotComponents }
   & RootComponentOption<TRootComponentDoc>
   & SubComponentsOption<TSubComponentTuple>;
 
 type DefineComponentConstructor = <
   TRootComponentDoc extends RootComponentType = {},
-  TSubComponentTuple extends SubComponentType[] = [],
-  TSlotComponents extends unknown[] = [],
+  TSubComponentTuple extends CustomComponentType[] = [],
   TName extends string = "",
   TPath extends Path = "/",
 >(
-  options: RootOptions<TRootComponentDoc, TSubComponentTuple, TSlotComponents, TName, TPath>,
+  options: RootOptions<TRootComponentDoc, TSubComponentTuple, TName, TPath>,
 ) => // ReturnType 为  PageDoc or ComponentDoc
 IfExtends<
   "",
@@ -46,8 +44,7 @@ export type DefineComponentOption = {
   name?: string;
   path?: string;
   rootComponent?: RootComponentTrueOptions;
-  subComponents?: SubComponentTrueOptions[];
-  slotComponents?: SlotComponentReturnType[];
+  subComponents?: CustomComponentTrueOptions[];
 };
 
 /**

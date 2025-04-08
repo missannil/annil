@@ -1,8 +1,8 @@
+import { ChunkComponent } from "./api/ChunkComponent";
+import { CustomComponent } from "./api/CustomComponent";
 import { DefineComponent } from "./api/DefineComponent";
 import { type IInjectInfo, instanceConfig } from "./api/InstanceInject/instanceConfig";
 import { RootComponent } from "./api/RootComponent";
-import { SlotComponent } from "./api/SlotComponent";
-import { SubComponent } from "./api/SubComponent";
 import { navigateBack, navigateTo, redirectTo } from "./api/wxSugar";
 import type { CreateComponentType } from "./types/CreateComponentType";
 import type { DetailedType } from "./types/DetailedType";
@@ -33,7 +33,9 @@ export type {
 } from "./types/OfficialTypeAlias";
 
 export {
+  ChunkComponent,
   type CreateComponentType,
+  CustomComponent,
   DefineComponent,
   type DetailedType,
   type ExtendComponentType,
@@ -44,6 +46,4 @@ export {
   type ParamsEqual,
   redirectTo,
   RootComponent,
-  SlotComponent,
-  SubComponent,
 };

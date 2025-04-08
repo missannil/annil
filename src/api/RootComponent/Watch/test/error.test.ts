@@ -1,3 +1,4 @@
+import type { DetailedType } from "../../../../types/DetailedType";
 import { RootComponent } from "../..";
 // 1 没有data可以watch 约束为EmptyObject
 RootComponent()({
@@ -28,6 +29,26 @@ RootComponent()({
     // @ts-expect-error otherFields不在约束字段(num,str,Cnum)中
     otherFields() {
       void 0;
+    },
+  },
+});
+/**
+ * 3  对象联合null的类型 不能watch子字段
+ */
+RootComponent()({
+  properties: {
+    user: Object as DetailedType<{ name: string; age: number } | null>,
+  },
+
+  watch: {
+    user(newValue, oldValue) {
+      void oldValue;
+      void newValue;
+    },
+    // @ts-expect-error 不能watch子字段 因为user可能为null
+    "user.name"(newValue, oldValue) {
+      void oldValue;
+      void newValue;
     },
   },
 });

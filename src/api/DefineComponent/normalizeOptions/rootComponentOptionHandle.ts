@@ -17,9 +17,9 @@ export function rootComponentOptionHandle(
 ) {
   // 自定义事件处理时,如果配置了防抖节流,则需要在data.__throttleDebounce__保留配置信息,以便后续使用
   if (rootComponentOptions.customEvents) customEventsHandle(finalOptions, rootComponentOptions.customEvents);
-
+  delete rootComponentOptions.customEvents;
   if (rootComponentOptions.events) Object.assign(finalOptions.methods, rootComponentOptions.events);
-
+  delete rootComponentOptions.events;
   sameFuncFieldsCollect(rootComponentOptions, funcOptions);
 
   otherFieldsHandle(finalOptions, rootComponentOptions);

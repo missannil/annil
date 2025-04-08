@@ -7,9 +7,9 @@ import type { OptionalType, PropertiesConstraint } from "./PropertiesConstraint"
 
 type _GetPropertiesDoc<
   TProperties extends PropertiesConstraint,
-  TIsPage extends boolean,
+  // TIsPage extends boolean,
   // @ts-ignore
-  OptionalDoc extends object = GetOptionalDoc<Select<TProperties, OptionalType>, TIsPage>,
+  OptionalDoc extends object = GetOptionalDoc<Select<TProperties, OptionalType>>,
   // @ts-ignore
   RequiredDoc extends object = GetRequiredDoc<Omit<TProperties, keyof OptionalDoc>>,
 > = ComputeIntersection<OptionalDoc & RequiredDoc>;
@@ -20,5 +20,5 @@ type _GetPropertiesDoc<
  */
 export type GetPropertiesDoc<
   TProperties extends PropertiesConstraint,
-  TisPage extends boolean,
-> = _GetPropertiesDoc<TProperties, TisPage>;
+> // TisPage extends boolean,
+ = _GetPropertiesDoc<TProperties>;

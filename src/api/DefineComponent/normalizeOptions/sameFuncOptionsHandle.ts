@@ -4,9 +4,8 @@ import type { FinalOptionsOfComponent, SameFuncOptions } from ".";
 /**
  * 把函数配置放入一个配置中依次运行
  */
-function _sameFuncOptionsHandle(config: object, configList: Record<string, Func[]>) {
+function _sameFuncOptionsHandle(config: Record<string, unknown>, configList: Record<string, Func[]>) {
   for (const key in configList) {
-    // @ts-ignore 隐式索引
     config[key] = function(...args: unknown[]) {
       configList[key].forEach(ele => ele.call(this, ...args));
     };

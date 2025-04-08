@@ -1,5 +1,4 @@
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
-import type { AddNullForObject } from "../../../types/AddNullForObject";
 import type { InferDetailedType } from "../../../types/InferDetailedType";
 import type { RequiredSingle, RequiredType } from "./PropertiesConstraint";
 
@@ -15,14 +14,10 @@ export type GetRequiredDoc<
     TProperties[k],
     // 非对象写法
     RequiredSingle,
-    // 组件的对象类型加null
-    AddNullForObject<InferDetailedType<TProperties[k]>>,
-    // 组件的对象类型加null
-    AddNullForObject<
-      // @ts-ignore TProperties[k] 必为 RequiredUnion
-      | InferDetailedType<TProperties[k]["type"]>
-      // @ts-ignore TProperties[k] 必为 RequiredUnion
-      | InferDetailedType<TProperties[k]["optionalTypes"][number]>
-    >
+    InferDetailedType<TProperties[k]>,
+    // @ts-ignore TProperties[k] 必为 RequiredUnion
+    | InferDetailedType<TProperties[k]["type"]>
+    // @ts-ignore TProperties[k] 必为 RequiredUnion
+    | InferDetailedType<TProperties[k]["optionalTypes"][number]>
   >;
 };

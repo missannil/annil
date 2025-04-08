@@ -5,8 +5,8 @@ import type { ComputedConstraint } from "./ComputedConstraint";
 export type ComputedOption<
   TComputed extends ComputedConstraint,
   CompareKeys extends PropertyKey,
-  Instance extends object,
-> = {
+> // Instance extends object,
+ = {
   /**
    * computed字段, [类型约束ComputedConstraint](ComputedConstraint.ts)
    * @remarks
@@ -32,6 +32,5 @@ export type ComputedOption<
    */
   computed?:
     & TComputed
-    & ThisType<Instance>
     & DuplicateFieldValidator<TComputed, CompareKeys>;
 };

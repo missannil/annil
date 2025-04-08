@@ -1,4 +1,4 @@
-import { DefineComponent, RootComponent, SubComponent } from "../../src";
+import { CustomComponent, DefineComponent, RootComponent } from "../../src";
 import { mock_beforeCreate } from "./beforeCreate.test";
 
 interface User {
@@ -6,7 +6,7 @@ interface User {
   age: number;
 }
 
-const sub = SubComponent<Root, { properties: { aaa_num: number; aaa_user: User | null } }>()({
+const sub = CustomComponent<Root, { properties: { aaa_num: number; aaa_user: User | null } }>()({
   data: {
     aaa_num: 456,
     aaa_user: null,

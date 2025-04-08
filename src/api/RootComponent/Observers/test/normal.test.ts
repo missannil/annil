@@ -1,8 +1,10 @@
 import { Checking, type Test } from "hry-types";
 
-import type { User } from "../../../../../jest/common";
 import { RootComponent } from "../..";
-
+type User = {
+  name: string;
+  age?: number;
+};
 RootComponent()({
   data: {
     obj: {} as User | null,

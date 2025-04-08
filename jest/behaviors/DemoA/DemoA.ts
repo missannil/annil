@@ -1,4 +1,4 @@
-import { DefineComponent, RootComponent, SubComponent } from "../../../src";
+import { CustomComponent, DefineComponent, RootComponent } from "../../../src";
 import { mockFn } from "./DemoA.test";
 
 const A = Behavior({
@@ -22,10 +22,10 @@ const Root = Behavior({
     },
   },
 });
-const subA = SubComponent()({
+const subA = CustomComponent()({
   behaviors: [A],
 });
-const subB = SubComponent()({
+const subB = CustomComponent()({
   behaviors: [B],
 });
 const rootComponent = RootComponent()({

@@ -12,8 +12,8 @@ type AddFieldsOfObject<
   TWatchData extends object,
   _WatchKeys extends keyof TWatchData,
   secondKeys extends string = {
-    [k in _WatchKeys]: IsPureObject<Exclude<TWatchData[k], null>> extends true
-      ? `${k & string}.${(keyof Exclude<TWatchData[k], null>) & string}` | `${k & string}.**`
+    [k in _WatchKeys]: IsPureObject<TWatchData[k]> extends true
+      ? `${k & string}.${(keyof TWatchData[k]) & string}` | `${k & string}.**`
       : never;
   }[_WatchKeys],
 > = {
@@ -51,8 +51,7 @@ export type WatchOption<TWatchData extends object, _WatchKeys extends keyof TWat
     NoInfer<
       & {
         [k in _WatchKeys]?: (
-          // newValue 去除null
-          newValue: Exclude<TWatchData[k], null>,
+          newValue: TWatchData[k],
           oldValue: TWatchData[k],
         ) => void;
       }

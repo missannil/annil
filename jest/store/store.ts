@@ -1,31 +1,26 @@
-import { DefineComponent, RootComponent, SubComponent } from "../../src";
+import { ChunkComponent, CustomComponent, DefineComponent, RootComponent } from "../../src";
 import { storeUser } from "./store.test";
 
-const subA = SubComponent<typeof rootComponent, { properties: { aaa_name: string } }>()({
+const chunk = ChunkComponent<Root>()({
   store: {
-    aaa_name: () => storeUser.name,
-  },
-  lifetimes: {
-    attached() {
-      // console.log("subA attached", 1111111111111111);
-      storeUser.changeName("lili");
-      // console.log("subA attached", this.data.aaa_name);
-    },
+    chunkAge: () => storeUser.age,
   },
 });
+
+const custom = CustomComponent<Root, { properties: { custom_age: number } }>()({
+  store: {
+    custom_age: () => storeUser.age,
+  },
+});
+type Root = typeof rootComponent;
 const rootComponent = RootComponent()({
   store: {
     age: () => storeUser.age,
-  },
-  lifetimes: {
-    attached() {
-      storeUser.changeAge();
-    },
   },
 });
 
 DefineComponent({
   name: "test",
   rootComponent,
-  subComponents: [subA],
+  subComponents: [custom, chunk],
 });

@@ -1,0 +1,4 @@
+<subA
+	num="{{compA_num}}"
+	user="{{compA_user}}"
+/>

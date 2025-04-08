@@ -11,4 +11,5 @@ comp.attach(parent); // attach 到父亲节点上，此时会触发自定义组�
 
 test("计算属性深度只读 ", () => {
   expect(comp.data.readonlyDeep).toBe("error");
+  expect(comp.data.setId).toBe("error setting id");
 });

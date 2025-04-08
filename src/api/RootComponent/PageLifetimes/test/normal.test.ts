@@ -1,9 +1,11 @@
 import { Checking, type Test } from "hry-types";
 import { type DetailedType, RootComponent } from "../../../..";
 
-import type { User } from "../../../../../jest/common";
 import type { Mock_User } from "../../Properties/test/normalRequired.test";
-
+type User = {
+  name: string;
+  age?: number;
+};
 /**
  * 组件时
  */

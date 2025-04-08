@@ -1,15 +1,15 @@
 import { Checking, type Test } from "hry-types";
+import type { CustomComponentType } from "../../../CustomComponent/CustomComponentType";
 import type { Bubbles, Composed } from "../../../RootComponent/CustomEvents/CustomEventsTag";
-import type { SubComponentType } from "../../../SubComponent/SubComponentType";
 import { DefineComponent } from "../..";
 
-const SubDocIsAny = {} as SubComponentType<{
+const SubDocIsAny = {} as CustomComponentType<{
   composedEvents: {
     a: number | Composed;
   };
 }>;
 
-const NonEmptyRootDoc = {} as SubComponentType<{
+const NonEmptyRootDoc = {} as CustomComponentType<{
   composedEvents: {
     a: string | Bubbles | Composed;
   };

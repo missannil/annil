@@ -6,7 +6,7 @@ import type { ComputeObject } from "../../types/ComputeObj";
 import type { WMCompOtherOption } from "../../types/OfficialTypeAlias";
 import type { RemoveNullOfRequired } from "../../types/RemoveNullOfRequired";
 import type { ComponentType } from "../DefineComponent/ReturnType/ComponentType";
-import type { IInjectAllData, IInjectStore } from "../InstanceInject/instanceConfig";
+import type { IInjectStore } from "../InstanceInject/instanceConfig";
 import type { ComputedConstraint } from "./Computed/ComputedConstraint";
 import type { ComputedOption } from "./Computed/ComputedOption";
 import type { GetComputedDoc } from "./Computed/GetComputedDoc";
@@ -58,9 +58,8 @@ type RootComponentOptions<
   & StoreOption<TStore, keyof (PropertiesDoc & DataDoc)>
   & ComputedOption<
     TComputed,
-    keyof (PropertiesDoc & DataDoc & StoreDoc),
-    { data: ComputeObject<DataDoc & Required<PropertiesDoc> & StoreDoc & ComputedDoc & IInjectAllData> }
-  >
+    keyof (PropertiesDoc & DataDoc & StoreDoc)
+  > // { data: ComputeObject<DataDoc & Required<PropertiesDoc> & StoreDoc & ComputedDoc & IInjectAllData> }
   & PageLifetimesOption<TIsPage, PropertiesDoc>
   & LifetimesOption
   & WatchOption<
@@ -102,7 +101,7 @@ type RootComponentConstructor<TComponentDocList extends ComponentType[]> = <
   TMethods extends MethodsConstraint = {},
   EventsDoc extends object = IfExtends<EventsConstraint<TComponentDocList>, TEvents, {}, TEvents>,
   CustomEventsDoc extends object = GetCustomEventDoc<TCustomEvents>,
-  PropertiesDoc extends object = GetPropertiesDoc<TProperties, TIsPage>,
+  PropertiesDoc extends object = GetPropertiesDoc<TProperties>,
   DataDoc extends object = TData,
   StoreDoc extends object = GetStoreDoc<TStore>,
   ComputedDoc extends object = GetComputedDoc<TComputed>,

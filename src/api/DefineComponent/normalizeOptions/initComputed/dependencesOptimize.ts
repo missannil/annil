@@ -1,4 +1,5 @@
-import type { ComputedDependence } from "./computedUpdater";
+import type { ComputedDependence } from "./initComputedAndGetCache";
+
 // 删除子依赖
 export function removeSubDependences(dependences: ComputedDependence[]) {
   // 把dependences按照路径长度排序

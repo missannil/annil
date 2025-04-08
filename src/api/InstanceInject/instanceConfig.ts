@@ -6,6 +6,7 @@ import type { DataConstraint } from "../RootComponent/Data/DataConstraint";
 import type { MethodsConstraint } from "../RootComponent/Methods/MethodsConstraint";
 import type { StoreConstraint } from "../RootComponent/Store/StoreConstraint";
 
+export type InjectKey = "options" | "methods" | "data" | "store" | "behaviors";
 // 利用继承的多态性 使得IInjectInfo类型可由使用者外部定义
 interface BaseInjectInfo {
   [key: string]: unknown;

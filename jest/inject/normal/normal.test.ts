@@ -41,8 +41,8 @@ describe("inject功能测试", () => {
       ...options,
     });
 
-    expect(checkData.data.injectTheme).toBe("dark");
+    expect(comp.data.injectTheme).toBe("dark");
 
-    expect(checkData.data.injectStr).toBe("string");
+    expect(comp.data.injectStr).toBe("string");
   });
 });

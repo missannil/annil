@@ -1,9 +1,10 @@
 import type { Func } from "hry-types/src/Misc/Func";
 
 import type { Instance } from "../../../RootComponent/Instance/RootComponentInstance";
-import type { ComputedDependence } from "./computedUpdater";
+
 import { deepProxy, getOriginalValue } from "./data-tracer";
 import { removeSubDependences } from "./dependencesOptimize";
+export type ComputedDependence = { paths: string[]; val: unknown };
 
 type ItemCache = {
   dependences: ComputedDependence[];
@@ -31,8 +32,8 @@ function isValidDependences(dependences: ComputedDependence[], computedKeys: str
 export function _initComputedAndGetCache(
   this: Instance,
   computedConfig: Record<string, Func>,
-  uninitedkeys: string[] = Object.keys(computedConfig),
-  computedCache: ComputedCache = {},
+  uninitedkeys: string[],
+  computedCache: ComputedCache,
 ): ComputedCache {
   for (const key of uninitedkeys) {
     const computedFunc = computedConfig[key];

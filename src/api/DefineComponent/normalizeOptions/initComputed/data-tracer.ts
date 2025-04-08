@@ -1,5 +1,5 @@
-import type { ComputedDependence } from "./computedUpdater";
 import { removePreviousDependence } from "./dependencesOptimize";
+import type { ComputedDependence } from "./initComputedAndGetCache";
 
 // 判断属性字段是否为对象自身的属性
 function isOwnProp(target: object, prop: string) {

@@ -21,6 +21,5 @@ export function reactionRegister(this: Instance, storeConfig: Record<string, () 
       },
     );
   }
-
   this.setData(peddingSetData);
 }

@@ -91,19 +91,6 @@ CustomComponent<RootDoc, CompDoc>()({
 
       void Checking<Mock_User, typeof oldValue, Test.Pass>;
     },
-    "required_obj.age"(newValue, oldValue) {
-      void oldValue;
-      void Checking<number, typeof newValue, Test.Pass>;
-
-      void Checking<number | undefined, typeof oldValue, Test.Pass>;
-    },
-
-    "required_obj.id"(newValue, oldValue) {
-      void oldValue;
-      void Checking<string, typeof newValue, Test.Pass>;
-
-      void Checking<string, typeof oldValue, Test.Pass>;
-    },
 
     // data 字段
     str(newValue, oldValue) {

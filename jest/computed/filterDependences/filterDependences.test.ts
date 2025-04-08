@@ -1,11 +1,10 @@
 import { load, render, sleep } from "miniprogram-simulate";
 import path from "path";
-import type { ComputedDependence } from "../../../src/api/DefineComponent/normalizeOptions/computedWatchHandle/computedUpdater";
 
-import {
-  removeSubDependences,
-} from "../../../src/api/DefineComponent/normalizeOptions/computedWatchHandle/dependencesOptimize";
 import { user } from "../../common";
+
+import { removeSubDependences } from "../../../src/api/DefineComponent/normalizeOptions/initComputed/dependencesOptimize";
+import type { ComputedDependence } from "../../../src/api/DefineComponent/normalizeOptions/initComputed/initComputedAndGetCache";
 
 const id = load(path.resolve(__dirname, "filterDependences")); // 此处必须传入绝对路径
 const comp = render(id, { requiredUser: user }); // 渲染成自定义组件树实例

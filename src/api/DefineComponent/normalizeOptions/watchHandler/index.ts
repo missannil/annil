@@ -31,7 +31,6 @@ export function watchHandler(
     for (const key in watchConfig) {
       const watchHadle = watchConfig[key];
       const originObserversHandle = observersConfig[key] as Func | undefined;
-
       // 在监控多个数据时,参数是多个值
       observersConfig[key] = function(this: Instance, ...newValue: unknown[]) {
         originObserversHandle?.call(this, ...newValue);

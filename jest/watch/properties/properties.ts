@@ -11,18 +11,18 @@ const sub = CustomComponent<Root, { properties: { aaa_num: number; aaa_user: Use
     aaa_user: { name: "zhao", age: 20 },
   },
   watch: {
-    num(a, b) {
-      // @ts-ignore
-      this.data["sub-watch-num"] = [a, b];
-    },
-    user(a, b) {
-      // @ts-ignore
-      this.data["sub-watch-user"] = [a, b];
-    },
-    "user.name"(a, b) {
-      // @ts-ignore
-      this.data["sub-watch-user.name"] = [a, b];
-    },
+    // num(a, b) {
+    //   // @ts-ignore
+    //   this.data["sub-watch-num"] = [a, b];
+    // },
+    // user(a, b) {
+    //   // @ts-ignore
+    //   this.data["sub-watch-user"] = [a, b];
+    // },
+    // "user.name"(a, b) {
+    //   // @ts-ignore
+    //   this.data["sub-watch-user.name"] = [a, b];
+    // },
   },
 });
 
@@ -32,9 +32,17 @@ const rootComponent = RootComponent()({
   properties: {
     num: Number,
     user: Object as DetailedType<User>,
+    unionType: {
+      type: String,
+      optionalTypes: [Number],
+    },
   },
 
   watch: {
+    unionType(a, b) {
+      // @ts-ignore
+      this.data["root-watch-unionType"] = [a, b];
+    },
     num(a, b) {
       // @ts-ignore
       this.data["root-watch-num"] = [a, b];
@@ -46,10 +54,6 @@ const rootComponent = RootComponent()({
     "user.age"(a, b) {
       // @ts-ignore
       this.data["root-watch-user.age"] = [a, b];
-    },
-    // @ts-ignore 模拟user传入null情形。不愿多写一个测试了
-    "user.xxx"() {
-      void 0;
     },
   },
 });

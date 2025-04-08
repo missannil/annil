@@ -14,7 +14,7 @@ import type { PropertiesConstraint } from "../../RootComponent/Properties/Proper
 import type { StoreConstraint } from "../../RootComponent/Store/StoreConstraint";
 import type { DefineComponentOption } from "..";
 import { __throttleDebounce__FieldCheck } from "./__throttleDebounce__FieldCheck";
-import type { ComputedCache } from "./computedWatchHandle/initComputedAndGetCache";
+
 import { initStore } from "./handleStore/initStore";
 import { hijack } from "./hijackHandle";
 import { isPageCheck } from "./hijackHandle/isPageCheck";
@@ -29,6 +29,7 @@ import { sameFuncOptionsHandle } from "./sameFuncOptionsHandle";
 import { disposeStore } from "./handleStore/disposeStore";
 import { initComputed } from "./initComputed";
 import { computedUpdater } from "./initComputed/computedUpdater";
+import type { ComputedCache } from "./initComputed/initComputedAndGetCache";
 import { subComponentsOptionHandle } from "./subComponentsOptionHandle";
 import { watchHandler } from "./watchHandler";
 // 因为watch字段可能有多个变量,所以在这里定义的value是一个数组

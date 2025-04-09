@@ -1,12 +1,13 @@
 import type { IfEquals } from "hry-types/src/Any/IfEquals";
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { NoInfer } from "hry-types/src/Generic/NoInfer";
+import type { ComputeObject } from "../types/ComputeObj";
 import type { WMNavigateToOption } from "../types/OfficialTypeAlias";
 import type { RequiredKeys } from "../types/RequiredKeys";
 import { INNERMARKER } from "../utils/InnerMarker";
 import type { PageDoc } from "./DefineComponent/ReturnType/PageDoc";
 
-type NavigateToOption<T extends PageDoc> =
+type NavigateToOption<T extends PageDoc> = ComputeObject<
   & {
     url: T["path"];
   }
@@ -25,7 +26,8 @@ type NavigateToOption<T extends PageDoc> =
       }
     >
   >
-  & Omit<WMNavigateToOption, "url">;
+  & Omit<WMNavigateToOption, "url">
+>;
 
 /**
  *  对象中可以使用 `"; / ? : @ & = + $ `, #"做为数据的一部分
@@ -54,11 +56,10 @@ const backFuncs: (undefined | ((...args: unknown[]) => void))[] = [];
  * navigateTo API 为 wx.navigateTo的语法糖,增加了data字段,最终的url数据拼接了通过encodeURIComponent编码(支持默认忽略的特殊符号)的data字段,在跳转页面的onload中通过decodeURIComponent解析url赋值给实例的data对象。为求使用时更加方便(无需对参数data解析再赋值)。且有ts类型提示。
  */
 export function navigateTo<TPageDoc extends PageDoc = never>(
-  option: NoInfer<NavigateToOption<TPageDoc>>,
+  option: NoInfer<NavigateToOption<TPageDoc>> & { data?: object },
   onBack?: (res: unknown) => void,
 ) {
   backFuncs.push(onBack);
-  // @ts-ignore 隐式索引
   if (!option.data) {
     return wx.navigateTo(option);
   } else {
@@ -94,9 +95,8 @@ export function navigateBack<Data, T extends NavigateBackOption<Data> = Navigate
   return wx.navigateBack(options);
 }
 export function redirectTo<TPageDoc extends PageDoc = never>(
-  option: NoInfer<NavigateToOption<TPageDoc>>,
+  option: NoInfer<NavigateToOption<TPageDoc>> & { data?: object },
 ) {
-  // @ts-ignore 隐式索引
   if (!option.data) {
     return wx.redirectTo(option);
   } else {

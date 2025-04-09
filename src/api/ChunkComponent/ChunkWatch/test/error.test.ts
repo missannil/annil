@@ -1,7 +1,9 @@
-import type { User } from "../../../../../jest/computed/methodsOfPrototype/methodsOfPrototype.test";
 import { ChunkComponent } from "../..";
 import type { Mock_RootDoc } from "../../ChunkComputed/test/mock";
-
+export type User = {
+  name: string;
+  age?: number;
+};
 // 1. 没有对应字段报错
 ChunkComponent<Mock_RootDoc, "zzz">()({
   watch: {

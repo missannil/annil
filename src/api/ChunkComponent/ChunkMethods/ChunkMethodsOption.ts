@@ -6,7 +6,7 @@ import type { MethodsConstraint } from "../../RootComponent/Methods/MethodsConst
 export type ChunkMethodsOption<
   TMethods extends MethodsConstraint,
   TDuplicateKeys extends PropertyKey,
-  validityKeys extends string,
+  Prefix extends string,
 > = {
   /**
    * 与customEvents和events字段重复检测
@@ -16,7 +16,12 @@ export type ChunkMethodsOption<
     & Validators<
       [
         G.DuplicateFieldValidator<TMethods, TDuplicateKeys, "字段重复">,
-        IfExtends<MethodsConstraint, TMethods, unknown, G.KeyValidator<TMethods, validityKeys, "前缀错误">>,
+        IfExtends<
+          MethodsConstraint,
+          TMethods,
+          unknown,
+          IfExtends<Prefix, "", unknown, G.KeyValidator<TMethods, `${Prefix}_${string}`, "前缀错误">>
+        >,
       ]
     >;
 };

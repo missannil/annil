@@ -174,3 +174,36 @@ CustomComponent<{}, Wm.View>()({
     // ...
   },
 });
+
+// 5 可以调用自身事件
+CustomComponent<{ methods: { aaa: () => string } }, Wm.View>()({
+  methods: {
+    view_xxx() {
+      return 123;
+    },
+  },
+  events: {
+    view_tap(e: Detail<number>) {
+      this.view_xxx();
+      Checking<typeof e.detail, number, Test.Pass>;
+    },
+  },
+});
+// 5 可以调用自身事件
+CustomComponent<{ methods: { aaa: () => string } }, Wm.Map>()({
+  methods: {
+    map_xxx() {
+      return 123;
+    },
+  },
+  events: {
+    map_poitap(e) {
+      this.map_xxx();
+      Checking<typeof e.detail, {
+        name: string;
+        longitude: number;
+        latitude: number;
+      }, Test.Pass>;
+    },
+  },
+});

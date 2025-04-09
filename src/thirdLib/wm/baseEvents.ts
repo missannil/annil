@@ -1,8 +1,8 @@
 import type { Bubbles } from "../../api/RootComponent/CustomEvents/CustomEventsTag";
 import type { WMBaseEvent } from "../../types/OfficialTypeAlias";
 
-export interface BaseEvents {
-  [key: string]: WMBaseEvent | Bubbles;
+export type BaseEvents = {
+  // [key: string]: WMBaseEvent | Bubbles;
   /**
    * 手指触摸动作开始
    */
@@ -51,4 +51,4 @@ export interface BaseEvents {
    * 在支持 3D Touch 的 iPhone 设备，重按时会触发  1.9.90
    */
   touchforcechange: WMBaseEvent | Bubbles;
-}
+};

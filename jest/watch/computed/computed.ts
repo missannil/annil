@@ -1,4 +1,4 @@
-import { CustomComponent, DefineComponent, type DetailedType, RootComponent } from "../../../src";
+import { CustomComponent, DefineComponent, type DetailedType, RootComponent, typeEqual } from "../../../src";
 
 interface User {
   name: string;
@@ -67,8 +67,16 @@ const rootComponent = RootComponent()({
   },
 });
 
-DefineComponent({
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const test = DefineComponent({
   name: "computed",
   rootComponent,
   subComponents: [sub],
 });
+
+typeEqual<typeof test, {
+  properties: {
+    computed_num?: number;
+    computed_user: User | null;
+  };
+}>();

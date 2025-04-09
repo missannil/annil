@@ -47,12 +47,12 @@ type ChunkComponentOptions<
   & ChunkEventsOption<
     TEvents,
     keyof (RootMethods & RootEvents & IInjectMethods),
-    `${Prefix}_${string}`
+    Prefix
   >
   & ChunkMethodsOption<
     TMethods,
     keyof (RootMethods & RootEvents & EventsDoc & IInjectMethods),
-    `${Prefix}_${string}`
+    Prefix
   >
   & ThisType<
     RootComponentInstance<

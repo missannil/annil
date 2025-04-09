@@ -16,7 +16,12 @@ export type ChunkEventsOption<
     & Validators<
       [
         G.DuplicateFieldValidator<TEvents, TDuplicateKeys, "字段重复">,
-        IfExtends<ChunkEventsConstraint, TEvents, unknown, G.KeyValidator<TEvents, Prefix, "前缀错误">>,
+        IfExtends<
+          ChunkEventsConstraint,
+          TEvents,
+          unknown,
+          IfExtends<Prefix, "", unknown, G.KeyValidator<TEvents, `${Prefix}_${string}`, "前缀错误">>
+        >,
       ]
     >;
 };

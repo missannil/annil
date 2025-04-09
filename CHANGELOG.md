@@ -4,6 +4,18 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.12.0-alpha.6](https://github.com/missannil/annil/compare/v1.12.0-alpha.5...v1.12.0-alpha.6) (2025-04-09)
+
+
+### Features
+
+* 增加导出typeEqual函数用于类型校验 ([e6b9ffc](https://github.com/missannil/annil/commit/e6b9ffc67b13572b47f7457d2cf9308be70fb7cc))
+
+
+### Bug Fixes
+
+* chunkComponent events字段和methods字段类型前缀错误 ([#239](https://github.com/missannil/annil/issues/239)) ([e6b9ffc](https://github.com/missannil/annil/commit/e6b9ffc67b13572b47f7457d2cf9308be70fb7cc))
+
 ## [1.12.0-alpha.5](https://github.com/missannil/annil/compare/v1.12.0-alpha.4...v1.12.0-alpha.5) (2025-04-08)
 
 

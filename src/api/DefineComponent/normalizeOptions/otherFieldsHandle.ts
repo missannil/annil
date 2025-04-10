@@ -11,6 +11,7 @@ export function otherFieldsHandle(
   let key: keyof Omit<RootComponentTrueOptions, "customEvents" | "events">;
   for (key in rootComponentOptions) {
     const config = rootComponentOptions[key];
+    console.log("hry 1", key, config);
     if (config === undefined) continue;
     if (key === "behaviors") {
       finalOptions[key].push(...config as string[]);

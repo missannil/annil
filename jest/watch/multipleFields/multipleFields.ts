@@ -9,7 +9,8 @@ const rootComponent = RootComponent()({
   data: {
     num: 123,
     obj: { name: "zhao", age: 20 } as User,
-    valueList: [],
+    watchValues: [],
+    watchCount: 0,
   },
   computed: {
     rootNum() {
@@ -22,27 +23,9 @@ const rootComponent = RootComponent()({
   watch: {
     // @ts-ignore
     "rootNum,age,obj.name"(newRootNum, newAge, newObjName, oldRootNum, oldAge, oldObjName) {
+      this.data.watchCount++;
       // @ts-ignore
-      this.data.valueList = [newRootNum, newAge, newObjName, oldRootNum, oldAge, oldObjName];
-    },
-  },
-  lifetimes: {
-    attached() {
-      this.setData({
-        num: 456,
-      });
-
-      setTimeout(() => {
-        this.setData({
-          "obj.age": 30,
-        });
-
-        setTimeout(() => {
-          this.setData({
-            "obj.name": "lili",
-          });
-        }, 0);
-      }, 0);
+      this.data.watchValues = [newRootNum, newAge, newObjName, oldRootNum, oldAge, oldObjName];
     },
   },
 });

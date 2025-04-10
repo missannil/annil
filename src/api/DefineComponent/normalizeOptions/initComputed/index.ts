@@ -1,4 +1,5 @@
 import type { Func } from "hry-types/src/Misc/Func";
+import { deepClone } from "../../../../utils/deepClone";
 import { isEmptyObject } from "../../../../utils/isEmptyObject";
 import { nonNullable } from "../../../../utils/nonNullable";
 import type { ComputedConstraint } from "../../../RootComponent/Computed/ComputedConstraint";
@@ -23,28 +24,24 @@ import { initComputedAndGetCache } from "./initComputedAndGetCache";
  * @returns
  */
 export function initComputed(
-  computedConfig: ComputedConstraint | undefined,
+  computedConfig: ComputedConstraint,
   watchConfig: Record<string, Func>,
   // mark?: string,
 ) {
   return function(this: Instance) {
     // __computedCache__ 用来避免重复初始化。
-    if (!computedConfig || this.data.__computedInitializing__ === true) return;
-    this.data.__computedInitializing__ = true;
 
     const __computedInitCache__ = initComputedAndGetCache.call(this, computedConfig);
     // 缓存放入data中
     this.data.__computedCache__ = __computedInitCache__;
     // 为__watchOldValue__赋值(watchPath中包含计算属性的值的key)
-
     if (!isEmptyObject(watchConfig)) {
       // 有watchConfig配置时,watchOldValue已经初始过了,所以必有__watchOldValue__
       const watchOldValue: Record<string, unknown[]> = nonNullable(this.data.__watchOldValue__);
       for (const path in watchConfig) {
         // 只针对watchPath中包含计算属性的值的key进行赋值
         if (hasComputedPath(path, Object.keys(computedConfig))) {
-          // @ts-ignore
-          watchOldValue[path] = getPathsValue(this.data, path);
+          watchOldValue[path] = deepClone(getPathsValue(this.data, path));
         }
       }
     }

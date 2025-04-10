@@ -2,7 +2,7 @@ import type { FinalOptionsOfComponent } from ".";
 
 // 内部字段
 const internalFiled = {
-  methods: ["disposer", "__computedUpdater__"],
+  methods: ["disposer"],
   data: ["__computedCache__", "__watchOldValue__"], // "__throttleDebounce__" 放在之前的位置验证
 };
 

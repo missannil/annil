@@ -75,10 +75,10 @@ const onlyProperties = DefineComponent({
 // 1. 类型为typeof OnlyPropsRootDoc加前缀(组件名)
 type OnlyPropertiesExpected = {
   properties: {
-    test_optionalObj?: Mock_User | null;
+    test_optionalObj?: Mock_User;
     test_optionalObjOrNull?: Mock_User | null;
     test_str: string;
-    test_obj: Mock_User | null;
+    test_obj: Mock_User;
   };
 };
 

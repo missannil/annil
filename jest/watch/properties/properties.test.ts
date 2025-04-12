@@ -11,7 +11,6 @@ describe("watch", () => {
   comp.attach(parent); // attach 到父亲节点上，此时会触发自定义组件的 attached 钩子
 
   test("properties改变时--触发watch,从上到下,从根组件到子组件", () => {
-    console.log("hry 1", comp.data["root-watch-unionType"]);
     expect(comp.data["root-watch-unionType"]).toStrictEqual(["123", ""]);
     expect(comp.data["root-watch-num"]).toStrictEqual([num, 0]);
 

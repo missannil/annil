@@ -14,12 +14,10 @@ export type Path = `/${string}`;
 type RootOptions<
   TRootComponentDoc extends RootComponentType,
   TSubComponentTuple extends CustomComponentType[],
-  // TSlotComponents extends unknown[],
   TName extends string,
   TPath extends Path,
 > =
   & NameOrPathOption<TName, TPath, TRootComponentDoc["isPage"] & {}>
-  // & { slotComponents?: TSlotComponents }
   & RootComponentOption<TRootComponentDoc>
   & SubComponentsOption<TSubComponentTuple>;
 

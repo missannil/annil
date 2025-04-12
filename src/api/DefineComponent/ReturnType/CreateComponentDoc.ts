@@ -1,6 +1,5 @@
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
-import type { AddNullForObject } from "../../../types/AddNullForObject";
 import type { CustomComponentType } from "../../CustomComponent/CustomComponentType";
 import type { RootComponentType } from "../../RootComponent/RootComponentType";
 import type { GetCustomEventDocOfSubDoc } from "./GetCustomEventDocOfSubDoc";
@@ -27,9 +26,7 @@ export type CreateComponentDoc<
     {
       properties: {
         // AddNullForObject 为了给子组件传值时,可以让异步对象数据初始值为null。
-        [k in keyof AllPropertiesDoc as `${TName}_${k & string}`]: AddNullForObject<
-          AllPropertiesDoc[k]
-        >;
+        [k in keyof AllPropertiesDoc as `${TName}_${k & string}`]: AllPropertiesDoc[k];
       };
     }
   >

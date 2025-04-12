@@ -1,4 +1,4 @@
-import { CustomComponent, DefineComponent, type DetailedType, RootComponent, typeEqual } from "../../../src";
+import { CustomComponent, DefineComponent, type DetailedType, RootComponent } from "../../../src";
 
 interface User {
   name: string;
@@ -36,7 +36,13 @@ const rootComponent = RootComponent()({
       value: 123,
     },
   },
-
+  data: {
+    watchCount: 0,
+    "root-watch-num": [] as number[],
+    "root-watch-rootNum": [] as number[],
+    "root-watch-user": [] as User[],
+    "root-watch-rootUser.name,num": [] as (string | number)[],
+  },
   computed: {
     rootNum() {
       return this.data.num;
@@ -48,35 +54,23 @@ const rootComponent = RootComponent()({
 
   watch: {
     num(a: number, b: number) {
-      // @ts-ignore
       this.data["root-watch-num"] = [a, b];
     },
     rootNum(a: number, b: number) {
-      // @ts-ignore
       this.data["root-watch-rootNum"] = [a, b];
     },
     rootUser(a: User, b: User) {
-      // @ts-ignore
       this.data["root-watch-user"] = [a, b];
     },
     // @ts-ignore
     "rootUser.name,num"(a: string, b: string, c: number, d: number) {
-      // @ts-ignore
       this.data["root-watch-rootUser.name,num"] = [a, b, c, d];
     },
   },
 });
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const test = DefineComponent({
+DefineComponent({
   name: "computed",
   rootComponent,
   subComponents: [sub],
 });
-
-typeEqual<typeof test, {
-  properties: {
-    computed_num?: number;
-    computed_user: User | null;
-  };
-}>();

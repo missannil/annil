@@ -41,5 +41,5 @@ type InstanceInnerFields = {
   data: OptionsInnerFields["data"];
   disposer: Record<string, Func>;
   cloneData: OptionsInnerFields["data"];
-} & OptionsInnerFields["methods"];
+};
 export type Instance = (ComponentInstance | PageInstance) & InstanceInnerFields;

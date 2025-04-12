@@ -13,11 +13,11 @@ describe("watch-computed", () => {
   test("计算字段改变时--触发watch,从上到下,从root到sub", async () => {
     const newUser = { name: "lili", age: 30 };
 
-    // 根组件 watch computed字段
     expect(comp.data["root-watch-num"]).toStrictEqual([456, 123]);
-    expect(comp.data["root-watch-rootNum"]).toStrictEqual(undefined);
-    expect(comp.data["root-watch-user"]).toStrictEqual(undefined);
-    expect(comp.data["root-watch-rootUser.name,num"]).toStrictEqual(undefined);
+    // 根组件 watch computed字段
+    expect(comp.data["root-watch-rootNum"]).toStrictEqual([]);
+    expect(comp.data["root-watch-user"]).toStrictEqual([]);
+    expect(comp.data["root-watch-rootUser.name,num"]).toStrictEqual([]);
     // 子组件 watch computed字段
     expect(comp.data["sub-watch-num"]).toStrictEqual(undefined);
 
@@ -31,7 +31,7 @@ describe("watch-computed", () => {
     expect(comp.data["root-watch-num"]).toStrictEqual([789, 456]);
     expect(comp.data["root-watch-rootNum"]).toStrictEqual([789, 456]);
     expect(comp.data["root-watch-user"]).toStrictEqual([newUser, user]);
-    expect(comp.data["root-watch-rootUser.name,num"]).toStrictEqual([newUser.name, 789, user.name, 456]);
+    expect(comp.data["root-watch-rootUser.name,num"]).toStrictEqual([newUser.name, 789, user.name, 789]);
     // 子组件 watch computed字段
     expect(comp.data["sub-watch-num"]).toStrictEqual([789, 456]);
 

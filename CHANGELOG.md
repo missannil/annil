@@ -4,6 +4,15 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.12.0-alpha.7](https://github.com/missannil/annil/compare/v1.12.0-alpha.6...v1.12.0-alpha.7) (2025-04-12)
+
+
+### Features
+
+* 去除DefineComponent中针对对象类型加入null ([#241](https://github.com/missannil/annil/issues/241)) ([091485e](https://github.com/missannil/annil/commit/091485e7327c3c94600d61c679e056df845f6222))
+* 在attached周期结束后,如果实例的data字段没有attached字段,则加入attached:true,用于表明组件启动完毕. ([091485e](https://github.com/missannil/annil/commit/091485e7327c3c94600d61c679e056df845f6222))
+* 计算属性初始化在attached周期,之前可能在attach周期会引发计算属性传值时,出现null导致错误的问题 ([091485e](https://github.com/missannil/annil/commit/091485e7327c3c94600d61c679e056df845f6222))
+
 ## [1.12.0-alpha.6](https://github.com/missannil/annil/compare/v1.12.0-alpha.5...v1.12.0-alpha.6) (2025-04-09)
 
 

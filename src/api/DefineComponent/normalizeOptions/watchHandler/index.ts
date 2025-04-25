@@ -20,6 +20,20 @@ function initWatchOldValue(
 
   return watchOldValue;
 }
+function observerHandler(
+  this: Instance,
+  key: string,
+  originObserversHandle: Func | undefined,
+  watchHadle: Func,
+  ...newValue: unknown[]
+) {
+  originObserversHandle?.call(this, ...newValue);
+  const watchOldValue = nonNullable(this.data.__watchOldValue__);
+  const oldValue = watchOldValue[key];
+  if (deepEqual(newValue, oldValue)) return;
+  watchOldValue[key] = deepClone(newValue);
+  watchHadle.call(this, ...newValue, ...oldValue);
+}
 export function watchHandler(
   finalOptionsForComponent: FinalOptionsOfComponent,
 ) {
@@ -34,14 +48,13 @@ export function watchHandler(
       const originObserversHandle = observersConfig[key] as Func | undefined;
       // 在监控多个数据时,参数是多个值
       observersConfig[key] = function(this: Instance, ...newValue: unknown[]) {
-        originObserversHandle?.call(this, ...newValue);
-        // 包含计算属性的路径,只会在计算属性初始化后才会触发watch函数
-        if (hasComputedPath(key, computedKeys) && !this.data.__computedInited__) return;
-        const watchOldValue = nonNullable(this.data.__watchOldValue__);
-        const oldValue = watchOldValue[key];
-        if (deepEqual(newValue, oldValue)) return;
-        watchOldValue[key] = deepClone(newValue);
-        watchHadle.call(this, ...newValue, ...oldValue);
+        if (this.data.__computedInited__) {
+          observerHandler.call(this, key, originObserversHandle, watchHadle, ...newValue);
+        } else {
+          (this.data.__oberverHandler__ ||= []).push(
+            observerHandler.bind(this, key, originObserversHandle, watchHadle, ...newValue),
+          );
+        }
       };
     }
   }

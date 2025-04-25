@@ -27,9 +27,10 @@ export type OptionsInnerFields = {
     __storeInited__?: boolean;
     // 在attach周期结束后,为data.attached赋值为true
     attached?: boolean;
-    // 为data.attached赋值为true时会触发Observers["**"]的回调函数,进而运行computedUpdater,所以要设置一个标志位来避免触发computedUpdater。因为这是无意义的。
-    __notUpdateComputed__?: boolean;
+    // // 为data.attached赋值为true时会触发Observers["**"]的回调函数,进而运行computedUpdater,所以要设置一个标志位来避免触发computedUpdater。因为这是无意义的。
+    // __notUpdateComputed__?: boolean;
     __computedInited__?: boolean;
+    __oberverHandler__?: Func[];
     __computedCache__?: ComputedCache;
     __watchOldValue__?: WatchOldValue;
     __throttleDebounce__?: ThrottleDebounce;

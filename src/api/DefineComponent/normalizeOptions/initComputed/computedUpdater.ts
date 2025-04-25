@@ -5,18 +5,18 @@ import { removeSubDependences } from "./dependencesOptimize";
 import type { ComputedDependence } from "./initComputedAndGetCache";
 
 export function computedUpdater(this: Instance): void {
-  if (this.data.__notUpdateComputed__) return;
+  // if (this.data.__notUpdateComputed__) return;
   for (const key in this.data.__computedCache__) {
     const itemCache = this.data.__computedCache__[key];
     let changed = false;
-    for (const dep of itemCache.dependences) {
+    outLook: for (const dep of itemCache.dependences) {
       let curdepVal: unknown = this.data;
       for (const path of dep.paths) {
-        // // 比如
-        // if (curdepVal === null) {
-        //   changed = true;
-        //   break outLook;
-        // }
+        // 如果依赖值为null,则直接跳出
+        if (curdepVal === null) {
+          changed = true;
+          break outLook;
+        }
         curdepVal = (curdepVal as Record<string, unknown>)[path];
       }
       // 检查依赖值是否改变

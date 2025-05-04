@@ -9,7 +9,7 @@ describe("hasAttachedField", () => {
   comp.attach(parent);
 
   test("当定义了attached字段时,不影响", () => {
-    expect(comp.data.__notUpdateComputed__).toStrictEqual(undefined);
+    expect(comp.data.__computedInited__).toStrictEqual(true);
     expect(comp.data.attached).toStrictEqual(false);
     expect(comp.data.test).toStrictEqual(123);
     // 计算属性更新不受影响

@@ -5,7 +5,6 @@ import { removeSubDependences } from "./dependencesOptimize";
 import type { ComputedDependence } from "./initComputedAndGetCache";
 
 export function computedUpdater(this: Instance): void {
-  // if (this.data.__notUpdateComputed__) return;
   for (const key in this.data.__computedCache__) {
     const itemCache = this.data.__computedCache__[key];
     let changed = false;

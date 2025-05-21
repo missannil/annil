@@ -27,7 +27,7 @@ type AddFieldsOfObject<
       // @ts-ignore
       NonNullable<(Exclude<TWatchData[getFirstKeys<k>], null>)[getLastKeys<k>]>
     >,
-  ) => void;
+  ) => void | Promise<void>;
 };
 
 export type ObserversOption<TWatchData extends object, _WatchKeys extends keyof TWatchData = keyof TWatchData> = {
@@ -44,7 +44,7 @@ export type ObserversOption<TWatchData extends object, _WatchKeys extends keyof 
       & {
         [k in _WatchKeys | "**"]?: (
           newValue: k extends keyof TWatchData ? TWatchData[k] : unknown,
-        ) => void;
+        ) => void | Promise<void>;
       }
       // 解决单独书写计算书写字段的报错(或许是:ts字面量约束检测提前计算属性key引起的错误提示)
       // eslint-disable-next-line @typescript-eslint/consistent-indexed-object-style

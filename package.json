@@ -1,6 +1,6 @@
 {
   "name": "annil",
-  "version": "1.12.0-alpha.7",
+  "version": "1.12.0-alpha.8",
   "description": "微信小程序(原生开发)插件",
   "main": "dist/index.js",
   "types": "src/index.ts",

@@ -94,12 +94,12 @@ type ChunkComponentConstructor<
   RootMethods extends object = RootDoc["methods"] & {},
   RootEvents extends object = RootDoc["events"] & {},
 > = <
-  // TEvents 不能有默认值 {} 会引起事件参数类型(e)失效
   TEvents extends ChunkEventsConstraint,
+  TStore extends ChunkStoreConstraint<Required<RootDoc["properties"]>>,
   TMethods extends MethodsConstraint = {},
   TData extends object = {},
-  TStore extends ChunkStoreConstraint = {},
-  StoreDoc extends object = GetStoreDoc<TStore>,
+  StoreDoc extends object = ChunkStoreConstraint<Required<RootDoc["properties"]>> extends TStore ? {}
+    : GetStoreDoc<TStore>,
   TComputed extends ChunkComputedConstraint = {},
   ComputedDoc extends object = GetComputedDoc<TComputed>,
   EventsDoc extends object = IfExtends<ChunkEventsConstraint, TEvents, {}, TEvents>,

@@ -6,7 +6,6 @@ import type { Extra } from "../../types/Extra";
 import type { GetComponentPrefix } from "../../types/GetComponentPrefix";
 import type { InnerFields } from "../../types/InnerData";
 import type { WMCompOtherOption } from "../../types/OfficialTypeAlias";
-import type { Replace } from "../../types/Replace";
 import type { ReplacePrefix } from "../../types/ReplacePrefix";
 import type { UnionToComma } from "../../types/UnionToComma.test";
 import type { ComponentType } from "../DefineComponent/ReturnType/ComponentType";
@@ -18,6 +17,7 @@ import type { LifetimesConstraint } from "../RootComponent/Lifetimes/LifetimesCo
 import type { MethodsConstraint } from "../RootComponent/Methods/MethodsConstraint";
 import type { PageLifetimesOption } from "../RootComponent/PageLifetimes/PageLifetimesOption";
 import type { RootComponentType } from "../RootComponent/RootComponentType";
+import type { GetStoreDoc } from "../RootComponent/Store/GeTStoreDoc";
 import type { StoreConstraint } from "../RootComponent/Store/StoreConstraint";
 import type { CustomComputedConstraint } from "./CustomComputed/CustomComputedConstraint";
 import type { CustomComputedOption } from "./CustomComputed/CustomComputedOption";
@@ -157,8 +157,10 @@ type Options<
   & ThisType<
     CustomInstance<
       SubMethodsDoc & RootDoc["methods"],
-      Replace<SubDataDoc, Required<CurrentCompDoc["properties"]>>,
-      AllRootDataDoc & Replace<SubDataDoc & SubComputedDoc & SubStoreDoc, Required<CurrentCompDoc["properties"]>>,
+      // Replace<SubDataDoc, Required<CurrentCompDoc["properties"]>>,// 解除Replace的约束
+      SubDataDoc,
+      // AllRootDataDoc & Replace<SubDataDoc & SubComputedDoc & SubStoreDoc, Required<CurrentCompDoc["properties"]>>, // 解除Replace的约束
+      AllRootDataDoc & SubDataDoc & SubComputedDoc & SubStoreDoc,
       NonNullable<RootDoc["customEvents"]>,
       SubStoreDoc
     >
@@ -192,6 +194,7 @@ type CusotmComponentConstructor<
     & Record<InnerFields<CurrentPrefix>, unknown> // 内部字段
   >,
   TStore extends CustomStoreConstraint<
+    Required<TRootDoc["properties"]>,
     & Omit<Required<CurrentCompDoc["properties"]>, keyof (InheritDoc & DataDoc)>
     & Record<InnerFields<CurrentPrefix>, unknown> // 内部字段
   >,
@@ -222,12 +225,13 @@ type CusotmComponentConstructor<
   >,
   StoreDoc extends object = IfExtends<
     CustomStoreConstraint<
+      Required<TRootDoc["properties"]>,
       & Omit<Required<CurrentCompDoc["properties"]>, keyof (InheritDoc & DataDoc)>
       & Record<InnerFields<CurrentPrefix>, unknown>
     >,
     TStore,
     {},
-    { [k in keyof TStore]: ReturnType<NonNullable<TStore[k]>> }
+    GetStoreDoc<TStore>
   >,
   // 无效的计算
   ComputedDoc extends object = IfExtends<

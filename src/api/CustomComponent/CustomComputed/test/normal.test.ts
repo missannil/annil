@@ -75,10 +75,10 @@ CustomComponent<Root, OnlyPropsCompDoc>()({
     aaa_num123(): 123 {
       return 123;
     },
-    aaa_str() {
+    aaa_str(): "a" | "b" {
       return "a"; // 默认下返回的类型是'a',但文档中是'a' | 'b'.所以要在this.data中处理
     },
-    aaa_obj() {
+    aaa_obj(): Mock_User | null {
       // 5 this.data
       void Checking<
         typeof this.data,

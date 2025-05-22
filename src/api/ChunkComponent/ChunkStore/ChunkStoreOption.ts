@@ -1,10 +1,10 @@
 import type { G } from "hry-types";
 import type { Validators } from "../../../types/Validators";
+import type { TypeValidator } from "../../RootComponent/Store/StoreOption";
 import type { ValidatorPrefix } from "../ChunkData/validatePrefix";
-import type { ChunkStoreConstraint } from "./ChunkStoreConstraint";
 
 export type ChunkStoreOption<
-  TStore extends ChunkStoreConstraint,
+  TStore extends object,
   TDuplicateKeys extends PropertyKey,
   Prefix extends string,
 > = {
@@ -26,6 +26,7 @@ export type ChunkStoreOption<
       [
         G.DuplicateFieldValidator<TStore, TDuplicateKeys, "字段重复">,
         ValidatorPrefix<TStore, Prefix>,
+        TypeValidator<TStore>,
       ]
     >;
 };

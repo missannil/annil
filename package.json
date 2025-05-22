@@ -24,7 +24,7 @@
     "@types/jest": "^29.5.5",
     "commitlint": "^17.6.5",
     "eslint": "^9.10.0",
-    "hry-types": "^0.19.2",
+    "hry-types": "^0.19.3",
     "husky": "^8.0.3",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",

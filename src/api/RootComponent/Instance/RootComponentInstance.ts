@@ -2,6 +2,7 @@ import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
 import type { IReactionDisposer } from "mobx";
 
+import type { EmptyObject } from "hry-types/src/Misc/EmptyObject";
 import type { Func } from "hry-types/src/Misc/Func";
 import type { Assign } from "../../../types/Assign";
 import type { ComputeObject } from "../../../types/ComputeObj";
@@ -25,7 +26,7 @@ export type RootComponentInstance<
   & Omit<WMInstanceMethods<{}>, "setData">
   // 加入自定义setData方法
   & CustomSetData<TDataForSetData>
-  & IfExtends<{}, StoreDoc, unknown, {
+  & IfExtends<EmptyObject, StoreDoc, unknown, {
     disposer: { [k in keyof StoreDoc]: IReactionDisposer };
   }>
   // 自身methods覆盖注入的methods

@@ -17,7 +17,7 @@ describe("watch-computed", () => {
     // 根组件 watch computed字段
     expect(comp.data["root-watch-rootNum"]).toStrictEqual([]);
     expect(comp.data["root-watch-user"]).toStrictEqual([]);
-    expect(comp.data["root-watch-rootUser.name,num"]).toStrictEqual([]);
+    expect(comp.data["root-watch-rootUser.name,num"]).toStrictEqual(["zhao", 456, undefined, 456]);
     // 子组件 watch computed字段
     expect(comp.data["sub-watch-num"]).toStrictEqual(undefined);
 

@@ -50,13 +50,24 @@ export function _initComputedAndGetCache(
       },
     });
     // 通过代理data获取计算字段的初始值和依赖
-    let initValue = computedFunc.call(proxyThis);
 
+    let initValue;
+    let errMsg;
+    try {
+      initValue = computedFunc.call(proxyThis);
+    } catch (e) {
+      errMsg = e;
+    }
+    // 计算属性执行失败,直接返回
     // 去除当前已初始的计算属性key
     uninitedkeys = uninitedkeys.filter(ele => ele !== key);
 
     // 验证依赖是否有效
     if (isValidDependences(dependences, uninitedkeys)) {
+      // 依赖合法还有错误就报错
+      if (errMsg) {
+        throw errMsg;
+      }
       initValue = getOriginalValue(initValue);
       // 把计算属性初始值加入到data中 此时会引起watch和observers触发
       this.setData({

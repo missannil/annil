@@ -89,12 +89,11 @@ type RootComponentOptions<
   >;
 
 type RootComponentConstructor<TComponentDocList extends ComponentType[]> = <
-  // TEvents 不能有默认值 {} 会引起事件参数类型(e)失效
   TEvents extends EventsConstraint<TComponentDocList>,
+  TStore extends StoreConstraint<PropertiesDoc>,
   TIsPage extends boolean = false,
   const TProperties extends PropertiesConstraint = {},
   TData extends object = {},
-  TStore extends StoreConstraint = {},
   TComputed extends ComputedConstraint = {},
   // 页面时自定义事件无意义
   TCustomEvents extends IfExtends<TIsPage, false, CustomEventConstraint, EmptyObject> = {},
@@ -103,7 +102,7 @@ type RootComponentConstructor<TComponentDocList extends ComponentType[]> = <
   CustomEventsDoc extends object = GetCustomEventDoc<TCustomEvents>,
   PropertiesDoc extends object = GetPropertiesDoc<TProperties>,
   DataDoc extends object = TData,
-  StoreDoc extends object = GetStoreDoc<TStore>,
+  StoreDoc extends object = StoreConstraint<PropertiesDoc> extends TStore ? {} : GetStoreDoc<TStore>,
   ComputedDoc extends object = GetComputedDoc<TComputed>,
 >(
   options: RootComponentOptions<

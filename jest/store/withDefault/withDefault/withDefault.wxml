@@ -1,0 +1,3 @@
+<block wx:if="{{attached}}">
+	<custom userAList="{{aaa_userAList}}" />
+</block>

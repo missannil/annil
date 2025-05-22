@@ -41,7 +41,7 @@ type CompDoc = ComponentType<{
 
 CustomComponent<RootDoc, CompDoc>()({
   data: {
-    aaa_str: "str",
+    aaa_str: "str" as string,
   },
   computed: {},
   methods: {

@@ -41,9 +41,9 @@ CustomComponent<{ data: { _num: number } }, CompDoc>()({
 
 CustomComponent<{}, CompDoc>()({
   data: {
-    aaa_str: "a",
-    aaa_num: 123,
-    aaa_obj: null,
+    aaa_str: "a" as "a" | "b",
+    aaa_num: 123 as number,
+    aaa_obj: null as Mock_User | null,
     _aaa_str: "str",
   },
   methods: {
@@ -68,7 +68,7 @@ CustomComponent<{}, CompDoc>()({
 // data建立的类型在setData时为组件类型
 CustomComponent<{ data: { _num: number } }, CompDoc>()({
   data: {
-    aaa_obj: null,
+    aaa_obj: null as Mock_User | null,
   },
   lifetimes: {
     attached() {

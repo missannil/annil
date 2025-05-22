@@ -5,18 +5,17 @@ import { removeSubDependences } from "./dependencesOptimize";
 import type { ComputedDependence } from "./initComputedAndGetCache";
 
 export function computedUpdater(this: Instance): void {
-  if (this.data.__notUpdateComputed__) return;
   for (const key in this.data.__computedCache__) {
     const itemCache = this.data.__computedCache__[key];
     let changed = false;
-    for (const dep of itemCache.dependences) {
+    outLook: for (const dep of itemCache.dependences) {
       let curdepVal: unknown = this.data;
       for (const path of dep.paths) {
-        // // 比如
-        // if (curdepVal === null) {
-        //   changed = true;
-        //   break outLook;
-        // }
+        // 如果依赖值为null,则直接跳出
+        if (curdepVal === null) {
+          changed = true;
+          break outLook;
+        }
         curdepVal = (curdepVal as Record<string, unknown>)[path];
       }
       // 检查依赖值是否改变
@@ -27,7 +26,18 @@ export function computedUpdater(this: Instance): void {
     }
     if (changed) {
       const newDependences: ComputedDependence[] = [];
-      const newValue = itemCache.method.call({ data: deepProxy(this.data, newDependences) });
+      const proxyThis = new Proxy(this, {
+        get(target, prop, receiver) {
+          if (prop === "data") {
+            return deepProxy(target.data, newDependences);
+          }
+          return Reflect.get(target, prop, receiver);
+        },
+        set() {
+          throw "不可以在计算属性中修改实例的属性";
+        },
+      });
+      const newValue = itemCache.method.call(proxyThis);
       // 更新值不会立即再次进入**函数,而是当前**函数运行完毕后触发**函数,\
       this.setData({
         [key]: getOriginalValue(newValue),

@@ -11,7 +11,7 @@ describe("addAttachedField", () => {
   test("attached周期结束后,为data加入attached:true", () => {
     expect(comp.data.attached).toStrictEqual(true);
     expect(comp.data.test).toStrictEqual(123);
-    expect(comp.data.__notUpdateComputed__).toStrictEqual(false);
+    expect(comp.data.__computedInited__).toStrictEqual(true);
     // 后续的计算属性更新不受影响
     comp.setData({
       num: 456,

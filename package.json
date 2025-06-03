@@ -17,7 +17,10 @@
     "tsc": "tsc --watch",
     "test": "jest --watch",
     "build": "tsc -p tsconfig.build.json",
-    "check": "tsc --noEmit &&  eslint . --max-warnings 0 && (dprint check || (dprint fmt && exit 1))"
+    "check": "tsc --noEmit &&  eslint . --max-warnings 0 && (dprint check || (dprint fmt && exit 1))",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^17.6.5",
@@ -32,7 +35,8 @@
     "mobx": "^6.9.0",
     "ts-jest": "^29.1.1",
     "typescript": "^5.7.3",
-    "typescript-eslint": "^8.19.1"
+    "typescript-eslint": "^8.19.1",
+    "vitepress": "^1.6.3"
   },
   "files": [
     "LICENSE",

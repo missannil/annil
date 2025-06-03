@@ -16,3 +16,6 @@ project.private.config.json
 # macOS system files
 .DS_Store
 **/.DS_Store
+docs/.vitepress/dist
+docs/.vitepress/cache
+docs/.vitepress/.temp

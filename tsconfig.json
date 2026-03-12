@@ -19,5 +19,6 @@
     // "verbatimModuleSyntax": true, // 5.0后新增配置,替代preserveValueImports。
     "types": ["hry-types", "mobx", "jest", "miniprogram-api-typings", "node"] // 不添加node,tsconfig.build在编译时会报错:` Cannot find namespace 'NodeJS' ` (utils/debounce.ts中使用),也可在tsconfig.build中添加type字段,并带上node。
   },
-  "include": ["**/*.ts"]
+  "include": ["src/**/*.ts", "jest/**/*.ts"],
+  "exclude": ["node_modules", "dist", "docs"]
 }

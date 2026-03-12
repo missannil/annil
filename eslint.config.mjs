@@ -3,6 +3,9 @@
 import eslint from "@eslint/js";
 import tseslint from "typescript-eslint";
 export default tseslint.config(
+  {
+    ignores: ["./commitlint.config.cjs", "docs/**", "docs/.vitepress/**"],
+  },
   eslint.configs.recommended,
   ...tseslint.configs.strict,
   ...tseslint.configs.stylistic,
@@ -12,7 +15,6 @@ export default tseslint.config(
         // definitionFilter: true,
       },
     },
-    ignores: ["./commitlint.config.cjs"],
     rules: {
       "@typescript-eslint/no-unused-expressions": 1,
       "@typescript-eslint/no-empty-function": 1,

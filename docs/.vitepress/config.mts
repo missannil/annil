@@ -21,7 +21,8 @@ export default defineConfig({
         items: [
           { text: '什么是 Annil', link: '/guide/what-is-annil' },
           { text: '安装与配置', link: '/guide/getting-started' },
-          { text: '设计理念', link: '/guide/design-idea' }
+          { text: '设计理念', link: '/guide/design-idea' },
+          { text: '文档部署', link: '/guide/docs-deploy' }
         ]
       },
       {

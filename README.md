@@ -39,6 +39,12 @@ npm i annil
 - [安装与配置](./docs/guide/getting-started.md)
 - [API 总览](./docs/api/overview.md)
 
+### 在线文档
+
+- Global: https://missannil.github.io/annil/
+- CN（可选）：建议配置 Gitee Pages 作为大陆访问入口
+- 部署说明见：[文档部署指南](./docs/guide/docs-deploy.md)（已支持按仓库名自动推导 base）
+
 3. 常用能力
 
 - [computed](./docs/demo/computed.md)

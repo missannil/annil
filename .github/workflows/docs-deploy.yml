@@ -1,0 +1,116 @@
+name: Docs Deploy
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - docs/**
+      - .github/workflows/docs-deploy.yml
+      - package.json
+      - package-lock.json
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: docs-pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
+
+      - name: Build VitePress
+        run: npm run docs:build -- --base "${DOCS_BASE}"
+        env:
+          DOCS_BASE: ${{ vars.DOCS_BASE || format('/{0}/', github.event.repository.name) }}
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/.vitepress/dist
+
+  deploy-github-pages:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+  deploy-gitee-pages:
+    if: ${{ github.event_name == 'push' && secrets.GITEE_REPO != '' && secrets.GITEE_SSH_PRIVATE_KEY != '' }}
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install
+          fi
+
+      - name: Build VitePress for Gitee
+        run: npm run docs:build -- --base "${DOCS_BASE}"
+        env:
+          DOCS_BASE: ${{ vars.GITEE_DOCS_BASE || '/' }}
+
+      - name: Setup SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.GITEE_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan gitee.com >> ~/.ssh/known_hosts
+
+      - name: Publish to Gitee Pages branch
+        env:
+          GITEE_REPO: ${{ secrets.GITEE_REPO }}
+          GITEE_USER: ${{ secrets.GITEE_USER }}
+          GITEE_EMAIL: ${{ secrets.GITEE_EMAIL }}
+          GITEE_BRANCH: ${{ vars.GITEE_PAGES_BRANCH || 'gh-pages' }}
+        run: |
+          set -e
+          cd docs/.vitepress/dist
+          git init
+          git config user.name "${GITEE_USER:-github-actions[bot]}"
+          git config user.email "${GITEE_EMAIL:-41898282+github-actions[bot]@users.noreply.github.com}"
+          git add -A
+          git commit -m "docs: deploy from GitHub Actions" || echo "No changes to commit"
+          git branch -M "${GITEE_BRANCH}"
+          git remote add origin "${GITEE_REPO}"
+          git push -f origin "${GITEE_BRANCH}"

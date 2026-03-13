@@ -25,6 +25,7 @@
   "devDependencies": {
     "@commitlint/config-conventional": "^17.6.5",
     "@types/jest": "^29.5.5",
+    "@types/node": "^20.19.37",
     "commitlint": "^17.6.5",
     "eslint": "^9.10.0",
     "hry-types": "^0.19.3",
@@ -36,7 +37,7 @@
     "ts-jest": "^29.1.1",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.57.0",
-    "vitepress": "^1.6.3"
+    "vitepress": "^1.6.4"
   },
   "files": [
     "LICENSE",

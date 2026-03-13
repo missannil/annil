@@ -4,6 +4,9 @@ on:
   pull_request:
     branches:
       - main
+    paths-ignore:
+      - docs/**
+      - .github/workflows/docs-deploy.yml
       
 jobs:
   test:

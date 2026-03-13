@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-type Callback = (...args: any[]) => any;
-
 /**
  *  节流函数
  *  规定时间内只触发第一次 例如点击按钮
@@ -9,10 +6,13 @@ type Callback = (...args: any[]) => any;
  * @returns
  */
 /* istanbul ignore next  */
-export function throttle<F extends Callback>(callback: F, interval = 200): (...args: Parameters<F>) => void {
+export function throttle<TArgs extends unknown[]>(
+  callback: (...args: TArgs) => unknown,
+  interval = 200,
+): (...args: TArgs) => void {
   let lastCall = 0;
 
-  return function(this: unknown, ...args: Parameters<F>) {
+  return function(this: unknown, ...args: TArgs) {
     const now = Date.now();
 
     if (now - lastCall >= interval) {

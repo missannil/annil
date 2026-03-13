@@ -1,5 +1,10 @@
 {
   "editor.defaultFormatter": "dprint.dprint",
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": false,
+  "files.exclude": {
+    "**/node_modules": true
+  },
   "[jsonc]": {
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "dprint.dprint"

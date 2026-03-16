@@ -1,6 +1,6 @@
 import type { CustomEventsTags } from "../RootComponent/CustomEvents/CustomEventsTag";
 
-type _CustomComponentReturnType = {
+type _CustomComponentDefinition = {
   composedEvents?: Record<
     string,
     | string
@@ -18,4 +18,4 @@ type _CustomComponentReturnType = {
 /**
  * CustomComponent API 的返回类型
  */
-export type CustomComponentReturnType<O extends _CustomComponentReturnType = _CustomComponentReturnType> = O;
+export type CustomComponentDefinition<O extends _CustomComponentDefinition = _CustomComponentDefinition> = O;

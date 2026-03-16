@@ -1,7 +1,7 @@
 import type { WMCompPageLifetimes, WMPageLifetimes } from "../../types/OfficialTypeAlias";
 import type { LifetimesConstraint } from "./Lifetimes/LifetimesConstraint";
 
-type _RootComponentReturnType = {
+type _RootComponentDefinition = {
   isPage?: boolean;
   properties?: object;
   data?: object;
@@ -24,4 +24,4 @@ type _Validator<O, Doc, ErrKeys = Exclude<keyof O, keyof Doc>> = [ErrKeys] exten
 /**
  * RootComponent Api 的返回类型
  */
-export type RootComponentReturnType<O extends _Validator<O, _RootComponentReturnType> = _RootComponentReturnType> = O;
+export type RootComponentDefinition<O extends _Validator<O, _RootComponentDefinition> = _RootComponentDefinition> = O;

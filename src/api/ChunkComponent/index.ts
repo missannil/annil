@@ -7,7 +7,7 @@ import type { LifetimesOption } from "../RootComponent/Lifetimes/LifetimesOption
 import type { MethodsConstraint } from "../RootComponent/Methods/MethodsConstraint";
 import type { ObserversOption } from "../RootComponent/Observers/ObserversOption";
 import type { PageLifetimesOption } from "../RootComponent/PageLifetimes/PageLifetimesOption";
-import type { RootComponentReturnType } from "../RootComponent/returnType";
+import type { RootComponentDefinition } from "../RootComponent/RootComponentDefinition";
 import type { GetStoreDoc } from "../RootComponent/Store/GeTStoreDoc";
 import type { WatchOption } from "../RootComponent/Watch/WatchOption";
 import type { ChunkComputedConstraint } from "./ChunkComputed/ChunkComputedConstraint";
@@ -83,7 +83,7 @@ type ChunkComponentOptions<
   >;
 
 type ChunkComponentConstructor<
-  TRootComponentReturnType extends RootComponentReturnType,
+  TRootComponentReturnType extends RootComponentDefinition,
   TPrefix extends string,
   IsPage extends boolean = TRootComponentReturnType["isPage"] extends true ? true : false,
   RootDatas extends object =
@@ -155,7 +155,7 @@ type ChunkComponentConstructor<
  * @returns never
  */
 export function ChunkComponent<
-  TRootComponentReturnType extends RootComponentReturnType,
+  TRootComponentReturnType extends RootComponentDefinition,
   TPrefix extends string = "",
 >(): ChunkComponentConstructor<
   TRootComponentReturnType,

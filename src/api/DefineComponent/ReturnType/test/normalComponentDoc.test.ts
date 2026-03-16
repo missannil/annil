@@ -14,10 +14,10 @@ import type {
 } from "../../../RootComponent/CustomEvents/CustomEventsTag";
 
 import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
-import type { CustomComponentReturnType } from "../../../CustomComponent/CustomComponentType";
+import type { CustomComponentDefinition } from "../../../CustomComponent/CustomComponentDefinition";
 import type { PropertiesConstraint } from "../../../RootComponent/Properties/PropertiesConstraint";
 import type { Mock_User } from "../../../RootComponent/Properties/test/normalRequired.test";
-import type { RootComponentReturnType } from "../../../RootComponent/returnType";
+import type { RootComponentDefinition } from "../../../RootComponent/RootComponentDefinition";
 import { DefineComponent } from "../..";
 
 const properties = {
@@ -123,7 +123,7 @@ const compDoc = DefineComponent({
 
 Checking<typeof compDoc, ComputeIntersection<CompOnlyCustomEventsExpected & OnlyPropertiesExpected>, Test.Pass>;
 
-type SubA = CustomComponentReturnType<{
+type SubA = CustomComponentDefinition<{
   composedEvents: {
     str: string | Bubbles | Composed;
     num: number | Capture | Composed;
@@ -147,7 +147,7 @@ type customEventsRootDocExpect = {
 
 Checking<typeof customEventsRootDoc, customEventsRootDocExpect, Test.Pass>;
 
-type SubB = CustomComponentReturnType<{
+type SubB = CustomComponentDefinition<{
   composedEvents: {
     str: number | Bubbles | Composed;
     num: string | Capture | Composed;
@@ -172,7 +172,7 @@ type WhenSameKeyOfCustomEventsRootDocExpect = {
 
 Checking<typeof WhenSameKeyOfCustomEventsRootDoc, WhenSameKeyOfCustomEventsRootDocExpect, Test.Pass>;
 
-type RootDocCatch = RootComponentReturnType<{
+type RootDocCatch = RootComponentDefinition<{
   events: {
     aaa_str_bubbles_catch: () => void;
   };
@@ -214,9 +214,9 @@ const rootComponent8 = RootComponent()({
 
 Checking<(typeof rootComponent8)["customEvents"]["decrease"], Mock_User, Test.Pass>;
 
-const subA = CustomComponent<RootComponentReturnType, { properties: { subA_num: number } }>()({});
+const subA = CustomComponent<RootComponentDefinition, { properties: { subA_num: number } }>()({});
 // SubComponent中计算属性字段函数若不写返回值,会造成结果中没有计算属性字段类型,若没有其他字段,结果就为'{}'
-const subB = CustomComponent<RootComponentReturnType, { properties: { subB_str: string } }>()({
+const subB = CustomComponent<RootComponentDefinition, { properties: { subB_str: string } }>()({
   computed: {
     subB_str() {
       return this.data.injectStr;

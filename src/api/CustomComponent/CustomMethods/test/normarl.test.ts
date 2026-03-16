@@ -1,14 +1,14 @@
-import type { ComponentType } from "../../../DefineComponent/ReturnType/ComponentType";
-import type { RootComponentReturnType } from "../../../RootComponent/returnType";
+import type { ComponentDoc } from "../../../DefineComponent/ReturnType/ComponentDoc";
+import type { RootComponentDefinition } from "../../../RootComponent/RootComponentDefinition";
 import { CustomComponent } from "../..";
 
-type RootDoc = RootComponentReturnType<{
+type RootDoc = RootComponentDefinition<{
   methods: {
     Mstr: () => string;
   };
 }>;
 
-type CompDoc = ComponentType<{
+type CompDoc = ComponentDoc<{
   customEvents: {
     aaa_str: string;
   };

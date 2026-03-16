@@ -1,12 +1,12 @@
 import { Checking, type Test } from "hry-types";
-import type { ComponentType } from "../../../DefineComponent/ReturnType/ComponentType";
+import type { ComponentDoc } from "../../../DefineComponent/ReturnType/ComponentDoc";
 
 import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
 import type { IInjectAllData } from "../../../InstanceInject/instanceConfig";
 import type { Mock_User } from "../../../RootComponent/Properties/test/normalRequired.test";
 import { CustomComponent } from "../..";
 
-type OnlyCustomCompDoc = ComponentType<{
+type OnlyCustomCompDoc = ComponentDoc<{
   customEvents: { aaa_str: string };
 }>;
 
@@ -31,7 +31,7 @@ interface Root {
   };
 }
 
-type $aaa = ComponentType<
+type $aaa = ComponentDoc<
   { properties: { aaa_str: string; aaa_user: User | null; aaa_num: number; aaa_age: number } }
 >;
 
@@ -40,7 +40,7 @@ CustomComponent<{}, OnlyCustomCompDoc>()({
   computed: {},
 });
 
-type OnlyPropsCompDoc = ComponentType<{
+type OnlyPropsCompDoc = ComponentDoc<{
   properties: {
     aaa_str: "a" | "b";
     aaa_num?: number;

@@ -1,11 +1,11 @@
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { ComputeIntersectionDeep } from "hry-types/src/Object/ComputeIntersectionDeep";
-import type { ComponentType } from "../api/DefineComponent/ReturnType/ComponentType";
+import type { ComponentDoc } from "../api/DefineComponent/ReturnType/ComponentDoc";
 import type { GetComponentPrefix } from "./GetComponentPrefix";
 
 type Validator<
-  TOriginalComponentType extends ComponentType,
-  TExtensionType extends ComponentType,
+  TOriginalComponentType extends ComponentDoc,
+  TExtensionType extends ComponentDoc,
   TOriginalPrefix extends PropertyKey = GetComponentPrefix<TOriginalComponentType>,
   TExtenstionPrefix extends PropertyKey = GetComponentPrefix<TExtensionType>,
   DuplicateKeys extends PropertyKey =
@@ -14,7 +14,7 @@ type Validator<
 > = IfExtends<
   TOriginalPrefix,
   TExtenstionPrefix,
-  IfExtends<DuplicateKeys, never, ComponentType, `${DuplicateKeys & string}字段重复`>,
+  IfExtends<DuplicateKeys, never, ComponentDoc, `${DuplicateKeys & string}字段重复`>,
   `前缀错误,应为${TOriginalPrefix & string}`
 >;
 
@@ -46,7 +46,7 @@ type Validator<
  * ```
  */
 export type ExtendComponentType<
-  TOriginalComponentType extends ComponentType,
+  TOriginalComponentType extends ComponentDoc,
   // @ts-ignore
   TExtensionType extends Validator<TOriginalComponentType, TExtensionType>,
 > = ComputeIntersectionDeep<TOriginalComponentType & TExtensionType>;

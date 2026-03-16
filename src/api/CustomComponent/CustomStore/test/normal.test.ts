@@ -1,13 +1,13 @@
 import { observable } from "mobx";
 
-import type { ComponentType } from "../../../DefineComponent/ReturnType/ComponentType";
+import type { ComponentDoc } from "../../../DefineComponent/ReturnType/ComponentDoc";
 import { CustomComponent } from "../..";
 const user = observable({
   name: "zhao",
   age: 20,
 });
 
-type DocA = ComponentType<{
+type DocA = ComponentDoc<{
   properties: {
     aaa_str: string;
     aaa_num: number;
@@ -35,7 +35,7 @@ CustomComponent<{ data: { _num: number } }, DocA, "a">()({
   },
 });
 
-type DocText = ComponentType<{
+type DocText = ComponentDoc<{
   properties: {
     aaa_useList: User[];
   };

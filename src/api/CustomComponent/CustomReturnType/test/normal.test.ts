@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { Checking, type Test } from "hry-types";
-import type { ComponentType } from "../../../DefineComponent/ReturnType/ComponentType";
+import type { ComponentDoc } from "../../../DefineComponent/ReturnType/ComponentDoc";
 import type {
   Bubbles,
   BubblesCaptureComposed,
@@ -10,7 +10,7 @@ import type {
 } from "../../../RootComponent/CustomEvents/CustomEventsTag";
 import { CustomComponent } from "../..";
 
-type CompDoc = ComponentType<{
+type CompDoc = ComponentDoc<{
   properties: {
     aaa_str: string;
   };

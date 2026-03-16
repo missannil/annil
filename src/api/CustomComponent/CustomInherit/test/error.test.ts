@@ -1,11 +1,11 @@
 import { Checking, type Test } from "hry-types";
 import { DefineComponent } from "../../../DefineComponent";
-import type { ComponentType } from "../../../DefineComponent/ReturnType/ComponentType";
-import type { RootComponentReturnType } from "../../../RootComponent/returnType";
+import type { ComponentDoc } from "../../../DefineComponent/ReturnType/ComponentDoc";
+import type { RootComponentDefinition } from "../../../RootComponent/RootComponentDefinition";
 import { CustomComponent } from "../..";
-import type { CustomComponentReturnType } from "../../CustomComponentType";
+import type { CustomComponentDefinition } from "../../CustomComponentDefinition";
 
-type Mock_RootDoc = RootComponentReturnType<{
+type Mock_RootDoc = RootComponentDefinition<{
   properties: {
     required_num: number;
     optional_literal_num?: 123 | 456 | 789;
@@ -25,7 +25,7 @@ type Mock_RootDoc = RootComponentReturnType<{
   };
 }>;
 
-type Mock_CompDoc = ComponentType<{
+type Mock_CompDoc = ComponentDoc<{
   properties: {
     aaa_num: number;
     aaa_literal_num: 123 | 456;
@@ -55,7 +55,7 @@ const customDoc = CustomComponent<Mock_RootDoc, Mock_CompDoc>()({
   },
 });
 
-void Checking<typeof customDoc, CustomComponentReturnType, Test.Fail>;
+void Checking<typeof customDoc, CustomComponentDefinition, Test.Fail>;
 
 DefineComponent({
   name: "xxx",

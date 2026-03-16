@@ -8,7 +8,7 @@ import type { InnerFields } from "../../types/InnerData";
 import type { WMCompOtherOption } from "../../types/OfficialTypeAlias";
 import type { ReplacePrefix } from "../../types/ReplacePrefix";
 import type { UnionToComma } from "../../types/UnionToComma.test";
-import type { ComponentType } from "../DefineComponent/ReturnType/ComponentType";
+import type { ComponentDoc } from "../DefineComponent/ReturnType/ComponentDoc";
 import type { IInjectStore } from "../InstanceInject/instanceConfig";
 import type { ComputedConstraint } from "../RootComponent/Computed/ComputedConstraint";
 import type { DataConstraint } from "../RootComponent/Data/DataConstraint";
@@ -16,7 +16,7 @@ import type { EventsConstraint } from "../RootComponent/Events/EventsConstraint"
 import type { LifetimesConstraint } from "../RootComponent/Lifetimes/LifetimesConstraint";
 import type { MethodsConstraint } from "../RootComponent/Methods/MethodsConstraint";
 import type { PageLifetimesOption } from "../RootComponent/PageLifetimes/PageLifetimesOption";
-import type { RootComponentReturnType } from "../RootComponent/returnType";
+import type { RootComponentDefinition } from "../RootComponent/RootComponentDefinition";
 import type { GetStoreDoc } from "../RootComponent/Store/GeTStoreDoc";
 import type { StoreConstraint } from "../RootComponent/Store/StoreConstraint";
 import type { CustomComputedConstraint } from "./CustomComputed/CustomComputedConstraint";
@@ -43,9 +43,9 @@ import type { CustomWatchOption } from "./CustomWatch/CustomWatchOption";
 //   : K extends Extract<Exclude<keyof NoInfer<TSubStore>, keyof SubDataDoc>, InnerFields<Prefix>> ? K
 //   : never;
 type Options<
-  RootDoc extends RootComponentReturnType,
+  RootDoc extends RootComponentDefinition,
   IsPage extends boolean,
-  CurrentCompDoc extends ComponentType,
+  CurrentCompDoc extends ComponentDoc,
   Prefix extends string,
   AllRootDataDoc extends object,
   TInherit extends object,
@@ -167,15 +167,15 @@ type Options<
   >;
 
 type CustomComponentConstructor<
-  TRootDoc extends RootComponentReturnType,
-  TOriginalCompDoc extends ComponentType,
+  TRootDoc extends RootComponentDefinition,
+  TOriginalCompDoc extends ComponentDoc,
   // 补充的前缀
   TSupplementalPrefix extends string = "",
   IsPage extends boolean = TRootDoc["isPage"] extends true ? true : false,
   // 重构子组件的前缀
   CurrentPrefix extends string = `${GetComponentPrefix<TOriginalCompDoc>}${Capitalize<TSupplementalPrefix>}`,
   // 更新原始文档的前缀为Prefix
-  CurrentCompDoc extends ComponentType = IfExtends<
+  CurrentCompDoc extends ComponentDoc = IfExtends<
     TSupplementalPrefix,
     "",
     TOriginalCompDoc & { properties: Extra<CurrentPrefix> }, // 为文档增加格外字段
@@ -306,8 +306,8 @@ type CustomComponentConstructor<
  * @returns `(options:) => ComponentDoc`
  */
 export function CustomComponent<
-  RootDoc extends RootComponentReturnType,
-  CompDoc extends ComponentType,
+  RootDoc extends RootComponentDefinition,
+  CompDoc extends ComponentDoc,
   Prefix extends string = "",
 >(): IfExtends<
   EmptyObject,

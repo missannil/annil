@@ -1,13 +1,13 @@
 import { Checking, type Test } from "hry-types";
-import type { ComponentType } from "../../../DefineComponent/ReturnType/ComponentType";
+import type { ComponentDoc } from "../../../DefineComponent/ReturnType/ComponentDoc";
 
 import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
 import type { IInjectAllData } from "../../../InstanceInject/instanceConfig";
 import type { Mock_User } from "../../../RootComponent/Properties/test/normalRequired.test";
-import type { RootComponentReturnType } from "../../../RootComponent/returnType";
+import type { RootComponentDefinition } from "../../../RootComponent/RootComponentDefinition";
 import { CustomComponent } from "../..";
 
-type RootDoc = RootComponentReturnType<{
+type RootDoc = RootComponentDefinition<{
   properties: {
     Pstr: string;
     Pobj: Mock_User | null;
@@ -30,7 +30,7 @@ type RootDoc = RootComponentReturnType<{
   };
 }>;
 
-type CompDoc = ComponentType<{
+type CompDoc = ComponentDoc<{
   properties: {
     aaa_str: string;
   };

@@ -1,8 +1,8 @@
 import type { View } from "../../../../thirdLib/wm";
-import type { RootComponentReturnType } from "../../../RootComponent/returnType";
+import type { RootComponentDefinition } from "../../../RootComponent/RootComponentDefinition";
 import { CustomComponent } from "../..";
 
-type RootDoc = RootComponentReturnType<{
+type RootDoc = RootComponentDefinition<{
   events: {
     RootE1: () => string;
   };

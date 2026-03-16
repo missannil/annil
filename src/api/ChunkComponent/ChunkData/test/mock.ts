@@ -1,6 +1,6 @@
-import type { RootComponentReturnType } from "../../../RootComponent/returnType";
+import type { RootComponentDefinition } from "../../../RootComponent/RootComponentDefinition";
 
-export type Mock_RootDoc = RootComponentReturnType<{
+export type Mock_RootDoc = RootComponentDefinition<{
   properties: {
     required_num: number;
     optional_literal_num?: 123 | 456 | 789;

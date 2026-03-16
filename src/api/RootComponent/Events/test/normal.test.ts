@@ -11,7 +11,7 @@ import type {
   WMCustomEvent,
 } from "../../../../types/OfficialTypeAlias";
 import { nonNullable } from "../../../../utils/nonNullable";
-import type { ComponentType } from "../../../DefineComponent/ReturnType/ComponentType";
+import type { ComponentDoc } from "../../../DefineComponent/ReturnType/ComponentDoc";
 import { RootComponent } from "../..";
 import type { Bubbles, Capture } from "../../CustomEvents/CustomEventsTag";
 
@@ -71,7 +71,7 @@ RootComponent()({
   },
 });
 
-type ComponentDocA = ComponentType<{
+type ComponentDocA = ComponentDoc<{
   properties: {
     aaa_str: string;
   };
@@ -81,7 +81,7 @@ type ComponentDocA = ComponentType<{
   };
 }>;
 
-type ComponentDocB = ComponentType<{
+type ComponentDocB = ComponentDoc<{
   customEvents: {
     bbb_str: string;
     bbb_num: number | Capture;

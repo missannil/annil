@@ -16,7 +16,7 @@ import type { EventsConstraint } from "../RootComponent/Events/EventsConstraint"
 import type { LifetimesConstraint } from "../RootComponent/Lifetimes/LifetimesConstraint";
 import type { MethodsConstraint } from "../RootComponent/Methods/MethodsConstraint";
 import type { PageLifetimesOption } from "../RootComponent/PageLifetimes/PageLifetimesOption";
-import type { RootComponentType } from "../RootComponent/RootComponentType";
+import type { RootComponentReturnType } from "../RootComponent/returnType";
 import type { GetStoreDoc } from "../RootComponent/Store/GeTStoreDoc";
 import type { StoreConstraint } from "../RootComponent/Store/StoreConstraint";
 import type { CustomComputedConstraint } from "./CustomComputed/CustomComputedConstraint";
@@ -43,7 +43,7 @@ import type { CustomWatchOption } from "./CustomWatch/CustomWatchOption";
 //   : K extends Extract<Exclude<keyof NoInfer<TSubStore>, keyof SubDataDoc>, InnerFields<Prefix>> ? K
 //   : never;
 type Options<
-  RootDoc extends RootComponentType,
+  RootDoc extends RootComponentReturnType,
   IsPage extends boolean,
   CurrentCompDoc extends ComponentType,
   Prefix extends string,
@@ -166,8 +166,8 @@ type Options<
     >
   >;
 
-type CusotmComponentConstructor<
-  TRootDoc extends RootComponentType,
+type CustomComponentConstructor<
+  TRootDoc extends RootComponentReturnType,
   TOriginalCompDoc extends ComponentType,
   // 补充的前缀
   TSupplementalPrefix extends string = "",
@@ -302,18 +302,18 @@ type CusotmComponentConstructor<
 >;
 
 /**
- * 子组件构建函数
+ * 自定义组件构建函数
  * @returns `(options:) => ComponentDoc`
  */
 export function CustomComponent<
-  RootDoc extends RootComponentType,
+  RootDoc extends RootComponentReturnType,
   CompDoc extends ComponentType,
   Prefix extends string = "",
 >(): IfExtends<
   EmptyObject,
   CompDoc,
   (opt: EmptyObject) => never,
-  CusotmComponentConstructor<RootDoc, CompDoc, Prefix>
+  CustomComponentConstructor<RootDoc, CompDoc, Prefix>
 > {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return ((options: any) => options as CustomComponentTrueOptions) as any;

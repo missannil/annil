@@ -1,16 +1,21 @@
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
-import type { CustomComponentType } from "../../CustomComponent/CustomComponentType";
-import type { RootComponentType } from "../../RootComponent/RootComponentType";
+import type { CustomComponentReturnType } from "../../CustomComponent/CustomComponentType";
+import type { RootComponentReturnType } from "../../RootComponent/returnType";
 import type { GetCustomEventDocOfSubDoc } from "./GetCustomEventDocOfSubDoc";
 
 // 获取RootComponetDoc中events字段类型阻止事件(后最为catch)的key `${ 组件前缀 }_${infer Key}_${ bubbles | capture }_catch`
 type GetStopKeys<O> = { [k in keyof O]: k extends `${string}_${infer Key}_${string}_catch` ? Key : never }[keyof O];
 
+/**
+ * 生成组件文档类型
+ * type ComponentDoc = { properties?: TRootDoc["properties"] & SubComponent1Doc["properties"] & SubComponent2Doc["properties"] ...,
+ * customEvents?: TRootDoc["customEvents"] & SubComponent1Doc["customEvents"] & SubComponent2Doc["customEvents"] ... }
+ */
 export type CreateComponentDoc<
-  TRootDoc extends RootComponentType,
+  TRootDoc extends RootComponentReturnType,
   TName extends string,
-  TSubComponentTuple extends CustomComponentType[],
+  TSubComponentTuple extends CustomComponentReturnType[],
   // 获取RootDoc和SubComponent[]中所有的properties字段类型
   AllPropertiesDoc extends unknown | object = TRootDoc["properties"],
   AllCustomEventsDoc extends unknown | object =

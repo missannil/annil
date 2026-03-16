@@ -10,13 +10,15 @@ export type NameOrPathOption<
   IsPage extends boolean,
 > = IsPage extends true ? {
     /**
-     * 页面路径已'/'开头
+     * 页面路径
+     * @remarks 必须以斜杠`/`开头
      */
     path: TPath;
   }
   : {
     /**
-     * 组件名不可为空串和含有下划线
+     * 组件名
+     * @remarks 不可为空串和含有下划线
      */
     name:
       & TName

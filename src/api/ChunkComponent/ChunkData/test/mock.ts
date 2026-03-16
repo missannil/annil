@@ -1,6 +1,6 @@
-import type { RootComponentType } from "../../../RootComponent/RootComponentType";
+import type { RootComponentReturnType } from "../../../RootComponent/returnType";
 
-export type Mock_RootDoc = RootComponentType<{
+export type Mock_RootDoc = RootComponentReturnType<{
   properties: {
     required_num: number;
     optional_literal_num?: 123 | 456 | 789;
@@ -26,19 +26,19 @@ export type Mock_RootDoc = RootComponentType<{
   };
 }>;
 
-export type Mock_SubDoc = {
-  allDatas: {
-    aaa_num: number;
-    aaa_literal_num: 123 | 456;
-    aaa_str?: string;
-    aaa_union: string | boolean;
-    aaa_obj: object | null;
-    aaa_obj1?: object | null;
-  };
-  events: {
-    xxx_subEvent: () => string;
-  };
-  methods: {
-    xxx_subMethods: () => void;
-  };
-};
+// export type Mock_SubDoc = {
+//   allDatas: {
+//     aaa_num: number;
+//     aaa_literal_num: 123 | 456;
+//     aaa_str?: string;
+//     aaa_union: string | boolean;
+//     aaa_obj: object | null;
+//     aaa_obj1?: object | null;
+//   };
+//   events: {
+//     xxx_subEvent: () => string;
+//   };
+//   methods: {
+//     xxx_subMethods: () => void;
+//   };
+// };

@@ -1,9 +1,9 @@
 import type { ComponentType } from "../../../DefineComponent/ReturnType/ComponentType";
 import type { Bubbles } from "../../../RootComponent/CustomEvents/CustomEventsTag";
-import type { RootComponentType } from "../../../RootComponent/RootComponentType";
+import type { RootComponentReturnType } from "../../../RootComponent/returnType";
 import { CustomComponent } from "../..";
 
-type RootDoc = RootComponentType<{
+type RootDoc = RootComponentReturnType<{
   methods: {
     Mstr: () => string;
   };

@@ -1,11 +1,11 @@
-import type { RootComponentType } from "../../RootComponent/RootComponentType";
+import type { RootComponentReturnType } from "../../RootComponent/returnType";
 
 /**
  * DefineComponent API`rootComponent`字段配置
  */
-export type RootComponentOption<TRootComponent extends RootComponentType> = {
+export type RootComponentOption<TRootComponentReturnType extends RootComponentReturnType> = {
   /**
    * 根组件配置
    */
-  rootComponent?: TRootComponent;
+  rootComponent?: TRootComponentReturnType;
 };

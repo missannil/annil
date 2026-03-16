@@ -4,10 +4,10 @@ import type { ComponentType } from "../../../DefineComponent/ReturnType/Componen
 import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
 import type { IInjectAllData } from "../../../InstanceInject/instanceConfig";
 import type { Mock_User } from "../../../RootComponent/Properties/test/normalRequired.test";
-import type { RootComponentType } from "../../../RootComponent/RootComponentType";
+import type { RootComponentReturnType } from "../../../RootComponent/returnType";
 import { CustomComponent } from "../..";
 
-type RootDoc = RootComponentType<{
+type RootDoc = RootComponentReturnType<{
   properties: {
     Pstr: string;
     Pobj: Mock_User | null;

@@ -1,7 +1,7 @@
 import type { WMCompPageLifetimes, WMPageLifetimes } from "../../types/OfficialTypeAlias";
 import type { LifetimesConstraint } from "./Lifetimes/LifetimesConstraint";
 
-type _RootComponentType = {
+type _RootComponentReturnType = {
   isPage?: boolean;
   properties?: object;
   data?: object;
@@ -22,23 +22,6 @@ type _Validator<O, Doc, ErrKeys = Exclude<keyof O, keyof Doc>> = [ErrKeys] exten
   : `错误的字段${ErrKeys & string}`;
 
 /**
- * RootComponent Api 返回的类型
- * ```ts
- * {
- *  isPage?: boolean;
- *  properties?: object;
- *  data?: object;
- *  computed?: object;
- *  customEvents?: object;
- *  methods?: object;
- *  events?: object;
- *  store?: object;
- *  watch?: Record<string, AnyFunction>;
- *  lifetimes?: LifetimesConstraint;
- *  pageLifetimes?: Partial<WMCompPageLifetimes & { load:AnyFunction }> | Partial<WMPageLifetimes>;
- *  export?:AnyFunction
- *  externalClasses?: string[];
- * };
- * ```
+ * RootComponent Api 的返回类型
  */
-export type RootComponentType<O extends _Validator<O, _RootComponentType> = _RootComponentType> = O;
+export type RootComponentReturnType<O extends _Validator<O, _RootComponentReturnType> = _RootComponentReturnType> = O;

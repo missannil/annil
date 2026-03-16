@@ -7,7 +7,7 @@ import type { LifetimesOption } from "../RootComponent/Lifetimes/LifetimesOption
 import type { MethodsConstraint } from "../RootComponent/Methods/MethodsConstraint";
 import type { ObserversOption } from "../RootComponent/Observers/ObserversOption";
 import type { PageLifetimesOption } from "../RootComponent/PageLifetimes/PageLifetimesOption";
-import type { RootComponentType } from "../RootComponent/RootComponentType";
+import type { RootComponentReturnType } from "../RootComponent/returnType";
 import type { GetStoreDoc } from "../RootComponent/Store/GeTStoreDoc";
 import type { WatchOption } from "../RootComponent/Watch/WatchOption";
 import type { ChunkComputedConstraint } from "./ChunkComputed/ChunkComputedConstraint";
@@ -83,31 +83,31 @@ type ChunkComponentOptions<
   >;
 
 type ChunkComponentConstructor<
-  RootDoc extends RootComponentType,
-  Prefix extends string,
-  IsPage extends boolean = RootDoc["isPage"] extends true ? true : false,
+  TRootComponentReturnType extends RootComponentReturnType,
+  TPrefix extends string,
+  IsPage extends boolean = TRootComponentReturnType["isPage"] extends true ? true : false,
   RootDatas extends object =
-    & Required<RootDoc["properties"]>
-    & RootDoc["data"]
-    & RootDoc["computed"]
-    & RootDoc["store"],
-  RootMethods extends object = RootDoc["methods"] & {},
-  RootEvents extends object = RootDoc["events"] & {},
+    & Required<TRootComponentReturnType["properties"]>
+    & TRootComponentReturnType["data"]
+    & TRootComponentReturnType["computed"]
+    & TRootComponentReturnType["store"],
+  RootMethods extends object = TRootComponentReturnType["methods"] & {},
+  RootEvents extends object = TRootComponentReturnType["events"] & {},
 > = <
   TEvents extends ChunkEventsConstraint,
-  TStore extends ChunkStoreConstraint<Required<RootDoc["properties"]>>,
+  TStore extends ChunkStoreConstraint<Required<TRootComponentReturnType["properties"]>>,
   TMethods extends MethodsConstraint = {},
   TData extends object = {},
-  StoreDoc extends object = ChunkStoreConstraint<Required<RootDoc["properties"]>> extends TStore ? {}
+  StoreDoc extends object = ChunkStoreConstraint<Required<TRootComponentReturnType["properties"]>> extends TStore ? {}
     : GetStoreDoc<TStore>,
   TComputed extends ChunkComputedConstraint = {},
   ComputedDoc extends object = GetComputedDoc<TComputed>,
   EventsDoc extends object = IfExtends<ChunkEventsConstraint, TEvents, {}, TEvents>,
-  PropertiesDoc extends object = RootDoc["properties"] & {},
+  PropertiesDoc extends object = NonNullable<TRootComponentReturnType["properties"]>,
 >(
   options: ChunkComponentOptions<
     IsPage,
-    Prefix,
+    TPrefix,
     RootDatas,
     TEvents,
     TData,
@@ -123,13 +123,43 @@ type ChunkComponentConstructor<
   >,
 ) => never;
 
+/**
+ * ChunkComponent API
+ * @description 它是用来配置wxml中非自定义组件元素数据和逻辑的API。在不想把wxml中某个元素提取为单独的自定义组件时,可以使用它来把某个元素的相关数据和逻辑配置在一起,以达到和自定义组件相同的效果。
+ * @example
+ * ```wxml
+ *  <view>
+ *    <customA ... / >
+ *    ...
+ *    <view id="chunkA" >
+ *       <text>{{chunkA_num}}</text>
+ *       <view bind:tap="chunkA_tap"/>
+ *        ...
+ *    </view>
+ * </view>
+ * ```
+ * ```ts
+ * const chunkA = ChunkComponent<Root, "chunkA">()({
+ *   data: {chunkA_num: "123",...},
+ *   events: {chunkA_tap(e){e.detail},...},// e.detail 类型为string
+ * });
+ * const customA = CustomComponent<Root, CustomA>()({
+ *   ...
+ * });
+ * DefinedComponent({
+ *  ...
+ *  subComponents: [chunkA, customA],
+ * })
+ * ```
+ * @param options - ChunkComponent的选项配置,包括数据、方法、事件等,具体配置项和类型可以参考ChunkComponentOptions类型定义。
+ * @returns never
+ */
 export function ChunkComponent<
-  RootDoc extends RootComponentType,
-  Prefix extends string = "",
+  TRootComponentReturnType extends RootComponentReturnType,
+  TPrefix extends string = "",
 >(): ChunkComponentConstructor<
-  RootDoc,
-  Prefix
+  TRootComponentReturnType,
+  TPrefix
 > {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return (options: any) => options as never;
+  return (options) => options as never;
 }

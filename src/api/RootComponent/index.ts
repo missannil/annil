@@ -122,7 +122,7 @@ type RootComponentConstructor<TComponentDocList extends ComponentType[]> = <
     StoreDoc,
     ComputedDoc
   >,
-) => // 返回类型 satisfies RootComponentDoc
+) => // 生成RootComponentReturnType类型
 ComputeIntersection<
   & IfExtends<TIsPage, false, {}, { isPage: true }>
   & IfExtends<
@@ -138,7 +138,11 @@ ComputeIntersection<
   & IfExtends<EmptyObject, EventsDoc, {}, { events: EventsDoc }>
   & IfExtends<EmptyObject, CustomEventsDoc, {}, { customEvents: ComputeObject<CustomEventsDoc> }>
 >;
-
+/**
+ * RootComponent API
+ * 组件构建的必备API
+ * @returns
+ */
 export function RootComponent<
   // TComponentDocList泛型为了给events字段提供类型约束
   TComponentDocList extends ComponentType[] = [],

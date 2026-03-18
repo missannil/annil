@@ -1,4 +1,4 @@
-import type { ComponentDoc } from "../src/api/DefineComponent/ReturnType/ComponentDoc";
+import type { ComponentDoc } from "../src/api/DefineComponent/returnType/ComponentDoc";
 
 export interface User {
   name: string;

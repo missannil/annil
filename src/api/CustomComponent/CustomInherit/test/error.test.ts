@@ -1,9 +1,9 @@
 import { Checking, type Test } from "hry-types";
 import { DefineComponent } from "../../../DefineComponent";
-import type { ComponentDoc } from "../../../DefineComponent/ReturnType/ComponentDoc";
-import type { RootComponentDefinition } from "../../../RootComponent/RootComponentDefinition";
+import type { ComponentDoc } from "../../../DefineComponent/returnType/ComponentDoc";
+import type { RootComponentDefinition } from "../../../RootComponent/returnType";
 import { CustomComponent } from "../..";
-import type { CustomComponentDefinition } from "../../CustomComponentDefinition";
+import type { CustomComponentDefinition } from "../../returnType";
 
 type Mock_RootDoc = RootComponentDefinition<{
   properties: {

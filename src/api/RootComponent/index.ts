@@ -5,7 +5,7 @@ import type { ComputeIntersection } from "hry-types/src/Object/_api";
 import type { ComputeObject } from "../../types/ComputeObj";
 import type { WMCompOtherOption } from "../../types/OfficialTypeAlias";
 import type { RemoveNullOfRequired } from "../../types/RemoveNullOfRequired";
-import type { ComponentDoc } from "../DefineComponent/ReturnType/ComponentDoc";
+import type { ComponentDoc } from "../DefineComponent/returnType/ComponentDoc";
 import type { IInjectStore } from "../InstanceInject/instanceConfig";
 import type { ComputedConstraint } from "./Computed/ComputedConstraint";
 import type { ComputedOption } from "./Computed/ComputedOption";
@@ -13,13 +13,11 @@ import type { GetComputedDoc } from "./Computed/GetComputedDoc";
 import type { CustomEventConstraint } from "./CustomEvents/CustomEventConstraint";
 import type { CustomEventsOption } from "./CustomEvents/CustomEventsOption";
 import type { GetCustomEventDoc } from "./CustomEvents/GetCustomEventDoc";
-import type { DataConstraint } from "./Data/DataConstraint";
 import type { DataOption } from "./Data/DataOption";
 import type { EventsConstraint } from "./Events/EventsConstraint";
 import type { EventsOption } from "./Events/EventsOption";
 import type { RootComponentInstance } from "./Instance/RootComponentInstance";
 import type { IsPageOption } from "./IsPage/IsPageOption";
-import type { LifetimesConstraint } from "./Lifetimes/LifetimesConstraint";
 import type { LifetimesOption } from "./Lifetimes/LifetimesOption";
 import type { MethodsConstraint } from "./Methods/MethodsConstraint";
 import type { MethodsOption } from "./Methods/MethodsOption";
@@ -122,7 +120,7 @@ type RootComponentConstructor<TComponentDocList extends ComponentDoc[]> = <
     StoreDoc,
     ComputedDoc
   >,
-) => // 生成RootComponentReturnType类型
+) => // 生成RootComponentDefinition
 ComputeIntersection<
   & IfExtends<TIsPage, false, {}, { isPage: true }>
   & IfExtends<
@@ -140,8 +138,7 @@ ComputeIntersection<
 >;
 /**
  * RootComponent API
- * 组件构建的必备API
- * @returns
+ * @returns RootComponentDefinition
  */
 export function RootComponent<
   // TComponentDocList泛型为了给events字段提供类型约束
@@ -152,21 +149,3 @@ export function RootComponent<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (options: any) => options;
 }
-
-export type RootComponentTrueOptions = {
-  isPage?: boolean;
-  properties?: PropertiesConstraint;
-  data?: DataConstraint;
-  computed?: ComputedConstraint;
-  customEvents?: CustomEventConstraint;
-  observers?: Record<string, Func>;
-  methods?: MethodsConstraint;
-  behaviors?: string[];
-  events?: EventsConstraint;
-  store?: StoreConstraint;
-  watch?: Record<string, Func>;
-  lifetimes?: LifetimesConstraint;
-  pageLifetimes?:
-    | PageLifetimesOption<false, object>["pageLifetimes"]
-    | PageLifetimesOption<true, object>["pageLifetimes"];
-};

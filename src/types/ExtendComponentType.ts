@@ -1,6 +1,6 @@
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { ComputeIntersectionDeep } from "hry-types/src/Object/ComputeIntersectionDeep";
-import type { ComponentDoc } from "../api/DefineComponent/ReturnType/ComponentDoc";
+import type { ComponentDoc } from "../api/DefineComponent/returnType/ComponentDoc";
 import type { GetComponentPrefix } from "./GetComponentPrefix";
 
 type Validator<

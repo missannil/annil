@@ -2,7 +2,7 @@
 import type { IfExtends } from "hry-types/src/Any/_api";
 import type { Select } from "hry-types/src/Object/_api";
 import type { Detail, WMBaseEvent } from "../../../types/OfficialTypeAlias";
-import type { ComponentDoc } from "../../DefineComponent/ReturnType/ComponentDoc";
+import type { ComponentDoc } from "../../DefineComponent/returnType/ComponentDoc";
 import type { CustomEventsDoc } from "../CustomEvents/CustomEventsDoc";
 import type {
   Bubbles,

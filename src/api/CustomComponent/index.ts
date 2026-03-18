@@ -1,6 +1,5 @@
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { EmptyObject } from "hry-types/src/Misc/EmptyObject";
-import type { Func } from "hry-types/src/Misc/Func";
 import type { RequiredKeys } from "hry-types/src/Object/RequiredKeys";
 import type { Extra } from "../../types/Extra";
 import type { GetComponentPrefix } from "../../types/GetComponentPrefix";
@@ -8,17 +7,10 @@ import type { InnerFields } from "../../types/InnerData";
 import type { WMCompOtherOption } from "../../types/OfficialTypeAlias";
 import type { ReplacePrefix } from "../../types/ReplacePrefix";
 import type { UnionToComma } from "../../types/UnionToComma.test";
-import type { ComponentDoc } from "../DefineComponent/ReturnType/ComponentDoc";
+import type { ComponentDoc } from "../DefineComponent/returnType/ComponentDoc";
 import type { IInjectStore } from "../InstanceInject/instanceConfig";
-import type { ComputedConstraint } from "../RootComponent/Computed/ComputedConstraint";
-import type { DataConstraint } from "../RootComponent/Data/DataConstraint";
-import type { EventsConstraint } from "../RootComponent/Events/EventsConstraint";
-import type { LifetimesConstraint } from "../RootComponent/Lifetimes/LifetimesConstraint";
-import type { MethodsConstraint } from "../RootComponent/Methods/MethodsConstraint";
-import type { PageLifetimesOption } from "../RootComponent/PageLifetimes/PageLifetimesOption";
-import type { RootComponentDefinition } from "../RootComponent/RootComponentDefinition";
+import type { RootComponentDefinition } from "../RootComponent/returnType";
 import type { GetStoreDoc } from "../RootComponent/Store/GeTStoreDoc";
-import type { StoreConstraint } from "../RootComponent/Store/StoreConstraint";
 import type { CustomComputedConstraint } from "./CustomComputed/CustomComputedConstraint";
 import type { CustomComputedOption } from "./CustomComputed/CustomComputedOption";
 import type { GetCustomComputedDoc } from "./CustomComputed/GetCustomComputedDoc";
@@ -306,32 +298,15 @@ type CustomComponentConstructor<
  * @returns `(options:) => ComponentDoc`
  */
 export function CustomComponent<
-  RootDoc extends RootComponentDefinition,
-  CompDoc extends ComponentDoc,
+  TRootComponentDefinition extends RootComponentDefinition,
+  TCompDoc extends ComponentDoc,
   Prefix extends string = "",
 >(): IfExtends<
   EmptyObject,
-  CompDoc,
+  TCompDoc,
   (opt: EmptyObject) => never,
-  CustomComponentConstructor<RootDoc, CompDoc, Prefix>
+  CustomComponentConstructor<TRootComponentDefinition, TCompDoc, Prefix>
 > {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return ((options: any) => options as CustomComponentTrueOptions) as any;
+  return ((options: any) => options) as any;
 }
-
-export type CustomComponentTrueOptions = {
-  inhrit?: string;
-  data?: DataConstraint;
-  computed?: ComputedConstraint;
-  store?: StoreConstraint;
-  events?: EventsConstraint;
-  methods?: MethodsConstraint;
-  // behaviors?: string[];
-  observers?: Record<string, Func>;
-  watch?: Record<string, Func>;
-  lifetimes?: LifetimesConstraint;
-  pageLifetimes?:
-    | PageLifetimesOption<false, object>["pageLifetimes"]
-    | PageLifetimesOption<true, object>["pageLifetimes"];
-};
-// export type SubComponentType =string

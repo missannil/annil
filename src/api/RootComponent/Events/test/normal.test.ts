@@ -11,7 +11,7 @@ import type {
   WMCustomEvent,
 } from "../../../../types/OfficialTypeAlias";
 import { nonNullable } from "../../../../utils/nonNullable";
-import type { ComponentDoc } from "../../../DefineComponent/ReturnType/ComponentDoc";
+import type { ComponentDoc } from "../../../DefineComponent/returnType/ComponentDoc";
 import { RootComponent } from "../..";
 import type { Bubbles, Capture } from "../../CustomEvents/CustomEventsTag";
 

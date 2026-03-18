@@ -1,5 +1,5 @@
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
-import type { ComponentDoc } from "../api/DefineComponent/ReturnType/ComponentDoc";
+import type { ComponentDoc } from "../api/DefineComponent/returnType/ComponentDoc";
 // import type { ComponentDoc } from "../api/DefineComponent/CreateDoc/ComponentDoc";
 
 type _ReplacePrefix<O, TPrefix extends string> = {

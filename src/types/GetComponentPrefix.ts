@@ -1,7 +1,7 @@
 // import { Checking, type Test } from "hry-types";
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { EmptyObject } from "hry-types/src/Misc/EmptyObject";
-import type { ComponentDoc } from "../api/DefineComponent/ReturnType/ComponentDoc";
+import type { ComponentDoc } from "../api/DefineComponent/returnType/ComponentDoc";
 
 /**
  * 提取文档前缀名

@@ -22,7 +22,7 @@ import { userStore } from "../../moudule/userStore";
 
 type $TopNavExtend = ExtendComponentType<
   $TopNav,
-  { customEvents: { topNav_tap: null } }
+  { events: { topNav_tap: null } }
 >;
 
 const rootComponent = RootComponent()({

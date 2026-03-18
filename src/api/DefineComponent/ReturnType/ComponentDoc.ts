@@ -2,14 +2,14 @@ type PrefixKey = `${string}_${string}`;
 
 type _ComponentDoc = {
   properties?: Record<PrefixKey, unknown>;
-  customEvents?: Record<PrefixKey, unknown>;
+  events?: Record<PrefixKey, unknown>;
 };
 
-type Error = "{ properties?: Record<PrefixKey, any>; customEvents?: Record<PrefixKey, any>;}";
+type Error = "{ properties?: Record<PrefixKey, any>; events?: Record<PrefixKey, any>;}";
 
 type _Validator<O> = keyof O extends keyof _ComponentDoc
   // @ts-ignore 要求ComponentDoc有前缀
-  ? keyof (O["properties"] & O["customEvents"]) extends PrefixKey ? _ComponentDoc
+  ? keyof (O["properties"] & O["events"]) extends PrefixKey ? _ComponentDoc
   : Error
   : Error;
 
@@ -18,7 +18,7 @@ type _Validator<O> = keyof O extends keyof _ComponentDoc
  * ```ts
  * type XxxDoc = {
  *  properties?: Record<PrefixKey, unknown>;
- *  customEvents?: Record<PrefixKey, unknown>;
+ *  events?: Record<PrefixKey, unknown>;
 };
  * ```
  */

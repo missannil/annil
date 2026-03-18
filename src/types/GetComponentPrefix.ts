@@ -10,7 +10,7 @@ export type GetComponentPrefix<TComponentDoc extends ComponentDoc> = EmptyObject
   : keyof IfExtends<
     unknown,
     TComponentDoc["properties"],
-    TComponentDoc["customEvents"],
+    TComponentDoc["events"],
     TComponentDoc["properties"]
   > extends `${infer P}_${string}` ? P
   : never;
@@ -21,7 +21,7 @@ export type GetComponentPrefix<TComponentDoc extends ComponentDoc> = EmptyObject
 
 // Checking<Test1, Test1Expect, Test.Pass>;
 
-// type Test2 = GetComponentPrefix<{ customEvents: { xxx_name: string } }>;
+// type Test2 = GetComponentPrefix<{ events: { xxx_name: string } }>;
 
 // type Test2Expect = "xxx";
 

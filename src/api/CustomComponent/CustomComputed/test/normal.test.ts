@@ -7,7 +7,7 @@ import type { Mock_User } from "../../../RootComponent/Properties/test/normalReq
 import { CustomComponent } from "../..";
 
 type OnlyCustomCompDoc = ComponentDoc<{
-  customEvents: { aaa_str: string };
+  events: { aaa_str: string };
 }>;
 
 interface User {

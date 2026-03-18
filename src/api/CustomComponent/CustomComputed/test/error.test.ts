@@ -2,7 +2,7 @@ import type { ComponentDoc } from "../../../DefineComponent/returnType/Component
 import { CustomComponent } from "../..";
 
 type OnlyCustomCompDoc = ComponentDoc<{
-  customEvents: { aaa_str: string };
+  events: { aaa_str: string };
 }>;
 
 // 1 CompDoc的properties为空时,写任何字段都报错

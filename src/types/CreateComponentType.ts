@@ -33,5 +33,5 @@ export type CreateComponentType<TName extends string, T extends ComponentDoc> = 
       properties: AddPrefix<T["properties"] & {}, TName>;
     }
   >
-  & IfExtends<unknown, T["customEvents"], {}, { customEvents: AddPrefix<T["customEvents"] & {}, TName> }>
+  & IfExtends<unknown, T["events"], {}, { events: AddPrefix<T["events"] & {}, TName> }>
 >;

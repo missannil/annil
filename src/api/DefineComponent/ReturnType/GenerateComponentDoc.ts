@@ -9,8 +9,6 @@ type GetStopKeys<O> = { [k in keyof O]: k extends `${string}_${infer Key}_${stri
 
 /**
  * 生成组件文档类型
- * type ComponentDoc = { properties?: TRootDoc["properties"] & SubComponent1Doc["properties"] & SubComponent2Doc["properties"] ...,
- * customEvents?: TRootDoc["customEvents"] & SubComponent1Doc["customEvents"] & SubComponent2Doc["customEvents"] ... }
  */
 export type GenerateComponentDoc<
   TRootDoc extends RootComponentDefinition,
@@ -18,11 +16,11 @@ export type GenerateComponentDoc<
   TSubComponentTuple extends CustomComponentDefinition[],
   // 获取RootDoc和SubComponent[]中所有的properties字段类型
   AllPropertiesDoc extends unknown | object = TRootDoc["properties"],
-  AllCustomEventsDoc extends unknown | object =
+  AllEventsDoc extends unknown | object =
     & TRootDoc["customEvents"]
     & GetCustomEventDocOfSubDoc<TSubComponentTuple[number]>,
   StopKeys extends string = GetStopKeys<TRootDoc["events"]>,
-  FinalCustomEventDoc extends object = Omit<AllCustomEventsDoc, StopKeys>,
+  FinalEventsDoc extends object = Omit<AllEventsDoc, StopKeys>,
 > = ComputeIntersection<
   & IfExtends<
     unknown,
@@ -37,11 +35,11 @@ export type GenerateComponentDoc<
   >
   & IfExtends<
     {},
-    FinalCustomEventDoc,
+    FinalEventsDoc,
     {},
     {
-      customEvents: {
-        [k in keyof FinalCustomEventDoc as `${TName}_${k & string}`]: FinalCustomEventDoc[k];
+      events: {
+        [k in keyof FinalEventsDoc as `${TName}_${k & string}`]: FinalEventsDoc[k];
       };
     }
   >

@@ -11,17 +11,17 @@ export type CustomEventsConstraint<
   CompDoc extends ComponentDoc,
 > = {
   [
-    k in keyof CompDoc["customEvents"] as Contains<CompDoc["customEvents"][k], Bubbles | Capture> extends true
+    k in keyof CompDoc["events"] as Contains<CompDoc["events"][k], Bubbles | Capture> extends true
       ? (k | `${k & string}_catch`)
       : k
   ]?: (
     e: IfExtends<
       // 有可能是基础组件(手写类型),所以事件类型可能为WMBaseEvent
       WMBaseEvent,
-      CompDoc["customEvents"][k],
+      CompDoc["events"][k],
       WMBaseEvent,
-      // 去除 CustomEventsTags 标记
-      Detail<Exclude<CompDoc["customEvents"][k], CustomEventsTags>>
+      // 去除 eventsTags 标记
+      Detail<Exclude<CompDoc["events"][k], CustomEventsTags>>
     >,
   ) => void;
 };

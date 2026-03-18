@@ -23,7 +23,7 @@ type GetBubblesOrCaptureEventsFromCompDoc<
 > = ComponentDocList extends [infer Head extends ComponentDoc, ...infer Rest extends ComponentDoc[]]
   ? GetBubblesOrCaptureEventsFromCompDoc<
     Rest,
-    Result & (FilterNormalFields<Head["customEvents"] & {}>)
+    Result & (FilterNormalFields<Head["events"] & {}>)
   >
   : Result;
 

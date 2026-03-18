@@ -34,7 +34,7 @@ type CompDoc = ComponentDoc<{
   properties: {
     aaa_str: string;
   };
-  customEvents: {
+  events: {
     aaa_num: number;
   };
 }>;

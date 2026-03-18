@@ -10,7 +10,7 @@ type Validator<
   TExtenstionPrefix extends PropertyKey = GetComponentPrefix<TExtensionType>,
   DuplicateKeys extends PropertyKey =
     | Extract<keyof TExtensionType["properties"], keyof TOriginalComponentType["properties"]>
-    | Extract<keyof TExtensionType["customEvents"], keyof TOriginalComponentType["customEvents"]>,
+    | Extract<keyof TExtensionType["events"], keyof TOriginalComponentType["events"]>,
 > = IfExtends<
   TOriginalPrefix,
   TExtenstionPrefix,

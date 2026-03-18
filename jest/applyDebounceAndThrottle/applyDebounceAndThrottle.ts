@@ -4,7 +4,7 @@ const sub = CustomComponent<
   Root,
   {
     properties: { sub_debounced: number; sub_throttle: number };
-    customEvents: { sub_onTapDebounced: undefined; sub_onTapThrottled: undefined };
+    events: { sub_onTapDebounced: undefined; sub_onTapThrottled: undefined };
   }
 >()({
   data: {

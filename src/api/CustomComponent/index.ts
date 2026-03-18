@@ -128,7 +128,7 @@ type Options<
   // }
   // 无需与根组件的events字段重复检测,因为根组件多了bubbles字段,一定不会重复
   & CustomEventsOption<TEvents, SubEventsDoc, keyof CustomEventsConstraint<CurrentCompDoc>>
-  & CustomMethodsOption<TSubMethods, Prefix, keyof (CurrentCompDoc["customEvents"] & SubEventsDoc)>
+  & CustomMethodsOption<TSubMethods, Prefix, keyof (CurrentCompDoc["events"] & SubEventsDoc)>
   & CustomPageLifetimesOption<IsPage, NonNullable<RootDoc["properties"]>>
   & CustomLifetimesOption
   & CustomWatchOption<
@@ -287,7 +287,7 @@ type CustomComponentConstructor<
   MissingRequiredField,
   never,
   CreatCustomComponentDoc<
-    NonNullable<CurrentCompDoc["customEvents"]>,
+    NonNullable<CurrentCompDoc["events"]>,
     EventsDoc
   >,
   `缺少必传的字段${UnionToComma<MissingRequiredField & string>}`

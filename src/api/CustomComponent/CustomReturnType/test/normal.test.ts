@@ -14,7 +14,7 @@ type CompDoc = ComponentDoc<{
   properties: {
     aaa_str: string;
   };
-  customEvents: {
+  events: {
     aaa_num: number;
     aaa_bubbles: number | Bubbles;
     aaa_bubblesComposed: number | BubblesComposed;

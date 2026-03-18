@@ -1,7 +1,7 @@
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
-import type { CustomComponentDefinition } from "../../CustomComponent/CustomComponentDefinition";
-import type { RootComponentDefinition } from "../../RootComponent/RootComponentDefinition";
+import type { CustomComponentDefinition } from "../../CustomComponent/returnType";
+import type { RootComponentDefinition } from "../../RootComponent/returnType";
 import type { GetCustomEventDocOfSubDoc } from "./GetCustomEventDocOfSubDoc";
 
 // 获取RootComponetDoc中events字段类型阻止事件(后最为catch)的key `${ 组件前缀 }_${infer Key}_${ bubbles | capture }_catch`

@@ -7,7 +7,7 @@ import type { LifetimesOption } from "../RootComponent/Lifetimes/LifetimesOption
 import type { MethodsConstraint } from "../RootComponent/Methods/MethodsConstraint";
 import type { ObserversOption } from "../RootComponent/Observers/ObserversOption";
 import type { PageLifetimesOption } from "../RootComponent/PageLifetimes/PageLifetimesOption";
-import type { RootComponentDefinition } from "../RootComponent/RootComponentDefinition";
+import type { RootComponentDefinition } from "../RootComponent/returnType";
 import type { GetStoreDoc } from "../RootComponent/Store/GeTStoreDoc";
 import type { WatchOption } from "../RootComponent/Watch/WatchOption";
 import type { ChunkComputedConstraint } from "./ChunkComputed/ChunkComputedConstraint";

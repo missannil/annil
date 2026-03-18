@@ -10,7 +10,7 @@ import type { MethodsConstraint } from "../../RootComponent/Methods/MethodsConst
 import type { PageLifetimesOption } from "../../RootComponent/PageLifetimes/PageLifetimesOption";
 import type { PropertiesConstraint } from "../../RootComponent/Properties/PropertiesConstraint";
 import type { StoreConstraint } from "../../RootComponent/Store/StoreConstraint";
-import type { DefineComponentOptionEquivalent } from "..";
+import type { DefineComponentOptionRuntime } from "..";
 import { handleRootComponent } from "./handleRootComponent";
 import { handleSubComponents } from "./handleSubComponents";
 import { hijackHandle } from "./hijackHandle";
@@ -67,7 +67,7 @@ export type FinalOptionsOfComponent = {
  * @returns  返回符合原生Component API配置
  */
 export function normalizeOptions(
-  defineComponentOption: DefineComponentOptionEquivalent,
+  defineComponentOption: DefineComponentOptionRuntime,
 ): FinalOptionsOfComponent {
   const { rootComponent, subComponents, path } = defineComponentOption;
   const isPage = rootComponent?.isPage ?? false;

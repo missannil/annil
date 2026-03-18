@@ -1,13 +1,14 @@
 import type { Func } from "hry-types/src/Misc/Func";
-import type { CustomComponentTrueOptions } from "../../CustomComponent";
-import type { RootComponentTrueOptions } from "../../RootComponent";
+
+import type { CustomComponentDefinitionRuntime } from "../../CustomComponent/returnType";
+import type { RootComponentDefinitionRuntime } from "../../RootComponent/returnType";
 import type { SameFuncOptions } from ".";
 
 /**
  * 把配置为函数的字段方法收集到funcOptions中
  */
 export function sameFuncFieldsCollect(
-  options: CustomComponentTrueOptions | RootComponentTrueOptions,
+  options: CustomComponentDefinitionRuntime | RootComponentDefinitionRuntime,
   funcOptions: SameFuncOptions,
 ) {
   let key: keyof SameFuncOptions;

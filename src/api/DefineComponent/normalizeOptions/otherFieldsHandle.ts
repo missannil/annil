@@ -1,4 +1,4 @@
-import type { RootComponentTrueOptions } from "../../RootComponent";
+import type { RootComponentDefinitionRuntime } from "../../RootComponent/returnType";
 import type { FinalOptionsOfComponent } from ".";
 
 /**
@@ -6,9 +6,9 @@ import type { FinalOptionsOfComponent } from ".";
  */
 export function otherFieldsHandle(
   finalOptions: FinalOptionsOfComponent,
-  rootComponentOptions: Omit<RootComponentTrueOptions, "customEvents" | "events">,
+  rootComponentOptions: Omit<RootComponentDefinitionRuntime, "customEvents" | "events">,
 ) {
-  let key: keyof Omit<RootComponentTrueOptions, "customEvents" | "events">;
+  let key: keyof Omit<RootComponentDefinitionRuntime, "customEvents" | "events">;
   for (key in rootComponentOptions) {
     const config = rootComponentOptions[key];
     if (config === undefined) continue;

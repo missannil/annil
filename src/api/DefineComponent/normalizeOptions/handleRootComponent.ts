@@ -1,5 +1,6 @@
 import { isEmptyObject } from "../../../utils/isEmptyObject";
-import type { RootComponentTrueOptions } from "../../RootComponent";
+
+import type { RootComponentDefinitionRuntime } from "../../RootComponent/returnType";
 import type { FinalOptionsOfComponent, SameFuncOptions } from ".";
 import { __throttleDebounce__FieldCheck } from "./__throttleDebounce__FieldCheck";
 import { customEventsHandle } from "./customEventsHandle";
@@ -14,7 +15,7 @@ import { sameFuncFieldsCollect } from "./sameFuncFieldsCollect";
  */
 export function handleRootComponent(
   finalOptions: FinalOptionsOfComponent,
-  rootComponent: RootComponentTrueOptions | undefined,
+  rootComponent: RootComponentDefinitionRuntime | undefined,
   funcOptions: SameFuncOptions,
 ) {
   if (rootComponent && !isEmptyObject(rootComponent)) {

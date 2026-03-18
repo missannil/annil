@@ -1,4 +1,4 @@
-import type { CustomComponentDefinition } from "../../CustomComponent/CustomComponentDefinition";
+import type { CustomComponentDefinition } from "../../CustomComponent/returnType";
 
 /**
  * RootComponent API 的`subComponents`字段配置

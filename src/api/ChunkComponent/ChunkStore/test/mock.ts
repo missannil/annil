@@ -1,4 +1,4 @@
-import type { RootComponentDefinition } from "../../../RootComponent/RootComponentDefinition";
+import type { RootComponentDefinition } from "../../../RootComponent/returnType";
 
 export type Mock_RootDoc = RootComponentDefinition<{
   properties: {

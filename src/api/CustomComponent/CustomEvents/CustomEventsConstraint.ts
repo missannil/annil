@@ -1,7 +1,7 @@
 import type { Contains } from "hry-types/src/Any/Contains";
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { Detail, WMBaseEvent } from "../../../types/OfficialTypeAlias";
-import type { ComponentDoc } from "../../DefineComponent/ReturnType/ComponentDoc";
+import type { ComponentDoc } from "../../DefineComponent/returnType/ComponentDoc";
 import type { Bubbles, Capture, CustomEventsTags } from "../../RootComponent/CustomEvents/CustomEventsTag";
 
 /**

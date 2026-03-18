@@ -1,6 +1,6 @@
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
-import type { RootComponentDefinition } from "../../RootComponent/RootComponentDefinition";
+import type { RootComponentDefinition } from "../../RootComponent/returnType";
 
 /**
  * 生成页面文档类型

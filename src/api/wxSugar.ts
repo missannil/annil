@@ -5,7 +5,7 @@ import type { ComputeObject } from "../types/ComputeObj";
 import type { WMNavigateToOption } from "../types/OfficialTypeAlias";
 import type { RequiredKeys } from "../types/RequiredKeys";
 import { INNERMARKER } from "../utils/InnerMarker";
-import type { PageDoc } from "./DefineComponent/ReturnType/PageDoc";
+import type { PageDoc } from "./DefineComponent/returnType/PageDoc";
 
 type NavigateToOption<T extends PageDoc> = ComputeObject<
   & {

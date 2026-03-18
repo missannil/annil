@@ -1,5 +1,5 @@
 import { Checking, type Test } from "hry-types";
-import type { CustomComponentDefinition } from "../../../CustomComponent/CustomComponentDefinition";
+import type { CustomComponentDefinition } from "../../../CustomComponent/returnType";
 import type { Bubbles, Composed } from "../../../RootComponent/CustomEvents/CustomEventsTag";
 import { DefineComponent } from "../..";
 

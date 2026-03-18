@@ -14,10 +14,10 @@ import type {
 } from "../../../RootComponent/CustomEvents/CustomEventsTag";
 
 import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
-import type { CustomComponentDefinition } from "../../../CustomComponent/CustomComponentDefinition";
+import type { CustomComponentDefinition } from "../../../CustomComponent/returnType";
 import type { PropertiesConstraint } from "../../../RootComponent/Properties/PropertiesConstraint";
 import type { Mock_User } from "../../../RootComponent/Properties/test/normalRequired.test";
-import type { RootComponentDefinition } from "../../../RootComponent/RootComponentDefinition";
+import type { RootComponentDefinition } from "../../../RootComponent/returnType";
 import { DefineComponent } from "../..";
 
 const properties = {

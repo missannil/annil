@@ -1,6 +1,6 @@
 import type { SelectKeys } from "hry-types/src/Object/_api";
 import type { RemoveInnerData } from "../../../types/RemoveInnerData";
-import type { ComponentDoc } from "../../DefineComponent/ReturnType/ComponentDoc";
+import type { ComponentDoc } from "../../DefineComponent/returnType/ComponentDoc";
 
 type WXMLSign = "wxml";
 

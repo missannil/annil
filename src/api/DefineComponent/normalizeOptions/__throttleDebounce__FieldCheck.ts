@@ -1,9 +1,9 @@
 import type { SlotComponentReturnType } from "../../ChunkComponent/SlotComponentReturnType";
-import type { CustomComponentTrueOptions } from "../../CustomComponent";
-import type { RootComponentTrueOptions } from "../../RootComponent";
+import type { CustomComponentDefinitionRuntime } from "../../CustomComponent/returnType";
+import type { RootComponentDefinitionRuntime } from "../../RootComponent/returnType";
 
 export function __throttleDebounce__FieldCheck(
-  config: RootComponentTrueOptions | CustomComponentTrueOptions[] | SlotComponentReturnType[],
+  config: RootComponentDefinitionRuntime | CustomComponentDefinitionRuntime[] | SlotComponentReturnType[],
 ) {
   if (Array.isArray(config)) {
     for (const subComponent of config) {

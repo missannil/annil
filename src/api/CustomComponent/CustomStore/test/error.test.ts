@@ -1,6 +1,6 @@
 import { observable } from "mobx";
 
-import type { ComponentDoc } from "../../../DefineComponent/ReturnType/ComponentDoc";
+import type { ComponentDoc } from "../../../DefineComponent/returnType/ComponentDoc";
 import { CustomComponent } from "../..";
 const user = observable({
   name: "zhao",

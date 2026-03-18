@@ -1,6 +1,6 @@
 import { Checking, type Test } from "hry-types";
 
-import type { ComponentDoc } from "../../../DefineComponent/ReturnType/ComponentDoc";
+import type { ComponentDoc } from "../../../DefineComponent/returnType/ComponentDoc";
 
 import type { Mock_User } from "../../../RootComponent/Properties/test/normalRequired.test";
 import { CustomComponent } from "../..";

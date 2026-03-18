@@ -2,7 +2,7 @@ import type { IsNever, IsUnion } from "hry-types/src/Any/_api";
 import type { UnionTwoObject } from "hry-types/src/Object/UnionTwoObject";
 import type { Last } from "hry-types/src/Union/Last";
 import type { Assert } from "../../../types/Assert";
-import type { CustomComponentDefinition } from "../../CustomComponent/CustomComponentDefinition";
+import type { CustomComponentDefinition } from "../../CustomComponent/returnType";
 
 /**
  * 因为子组件文档customEvents字段有可能相同(无前缀),所以使用UnionTwoObject

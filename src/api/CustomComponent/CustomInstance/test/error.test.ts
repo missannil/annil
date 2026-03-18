@@ -1,5 +1,5 @@
 import type { View } from "../../../../thirdLib/wm";
-import type { RootComponentDefinition } from "../../../RootComponent/RootComponentDefinition";
+import type { RootComponentDefinition } from "../../../RootComponent/returnType";
 import { CustomComponent } from "../..";
 
 type RootDoc = RootComponentDefinition<{

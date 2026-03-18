@@ -22,9 +22,9 @@ export type ReplacePrefix<TComponentDoc extends ComponentDoc, TPrefix extends st
   >
   & IfExtends<
     unknown,
-    TComponentDoc["customEvents"],
+    TComponentDoc["events"],
     {},
-    { customEvents: _ReplacePrefix<TComponentDoc["customEvents"], TPrefix> }
+    { events: _ReplacePrefix<TComponentDoc["events"], TPrefix> }
   >;
 
 // type Test1 = ReplacePrefix<{ properties: { xxx_name: string } }, "xxxDaa">;
@@ -33,9 +33,9 @@ export type ReplacePrefix<TComponentDoc extends ComponentDoc, TPrefix extends st
 
 // Checking<Test1, Test1Expect, Test.Pass>;
 
-// type Test2 = ReplacePrefix<{ customEvents: { xxx_name: string } }, "xxxDaa">;
+// type Test2 = ReplacePrefix<{ events: { xxx_name: string } }, "xxxDaa">;
 
-// type Test2Expect = { customEvents: { xxxDaa_name: string } };
+// type Test2Expect = { events: { xxxDaa_name: string } };
 
 // Checking<Test2, Test2Expect, Test.Pass>;
 

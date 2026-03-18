@@ -9,7 +9,7 @@ type RootDoc = RootComponentDefinition<{
 }>;
 
 type CompDoc = ComponentDoc<{
-  customEvents: {
+  events: {
     aaa_str: string;
   };
 }>;

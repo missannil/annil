@@ -17,7 +17,7 @@ import type { Mock_User } from "../../../RootComponent/Properties/test/normalReq
 import { CustomComponent } from "../..";
 
 type CompDoc = ComponentDoc<{
-  customEvents: {
+  events: {
     aaa_str: string;
     aaa_bubbles: string | Bubbles;
     aaa_CapturePhase: string | Capture;

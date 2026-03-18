@@ -17,7 +17,7 @@ CustomComponent<{}, CompDoc>()({
 });
 
 type CompDoc1 = ComponentDoc<{
-  customEvents: {
+  events: {
     aaa_str: string | Bubbles;
   };
 }>;

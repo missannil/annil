@@ -1,7 +1,6 @@
 <view
 	class="events"
 	data-id="events"
-	bind:tap="onTap"
 >{{id}}</view>
 
 <subA

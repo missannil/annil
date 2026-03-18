@@ -6,7 +6,7 @@ export interface User {
 }
 
 export type CompDoc = ComponentDoc<
-  { properties: { compA_num: number; compA_user?: User | null }; customEvents: { compA_str: string } }
+  { properties: { compA_num: number; compA_user?: User | null }; events: { compA_str: string } }
 >;
 
 export const user: User = { name: "lili", age: 30 };

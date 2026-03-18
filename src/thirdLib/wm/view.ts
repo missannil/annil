@@ -24,5 +24,5 @@ export type View = CreateComponentType<"view", {
      */
     hoverStayTime?: number;
   };
-  customEvents: BaseEvents;
+  events: BaseEvents;
 }>;

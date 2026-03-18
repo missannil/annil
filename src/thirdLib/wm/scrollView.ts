@@ -48,7 +48,7 @@ export type ScrollView = CreateComponentType<"scrollView", {
     // 滑动减速速率控制 (同时开启 enhanced 属性后生效)
     fast_deceleration?: boolean;
   };
-  customEvents: {
+  events: {
     // 滑动开始事件 (同时开启 enhanced 属性后生效) detail { scrollTop, scrollLeft }
     binddragstart: { scrollTop: number; scrollLeft: number };
     // 滑动事件 (同时开启 enhanced 属性后生效) detail { scrollTop, scrollLeft }
@@ -73,7 +73,7 @@ export type ScrollView = CreateComponentType<"scrollView", {
     // 自定义下拉刷新被触发
     bindrefresherrefresh: EmptyObject;
     // 自定义下拉刷新被复位
-    bindrefresherreStore: EmptyObject;
+    bindrefresherrestore: EmptyObject;
     // 自定义下拉刷新被中止
     bindrefresherabort: EmptyObject;
   };

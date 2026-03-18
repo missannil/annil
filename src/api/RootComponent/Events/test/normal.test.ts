@@ -75,14 +75,14 @@ type ComponentDocA = ComponentDoc<{
   properties: {
     aaa_str: string;
   };
-  customEvents: {
+  events: {
     aaa_str: string;
     aaa_num: number | Bubbles;
   };
 }>;
 
 type ComponentDocB = ComponentDoc<{
-  customEvents: {
+  events: {
     bbb_str: string;
     bbb_num: number | Capture;
   };

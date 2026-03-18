@@ -37,7 +37,7 @@ type Mock_SubComponent = CreateComponentType<"xxx", {
     num: number;
     user: User | null;
   };
-  customEvents: {
+  events: {
     onTap: string | Bubbles;
   };
 }>;

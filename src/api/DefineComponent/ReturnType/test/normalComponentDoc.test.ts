@@ -95,7 +95,7 @@ const compOnlyCustomEvents = DefineComponent({
 
 // 2 rootComponent中只有customEvents字段时 加前缀(组件名) 无properties字段
 type CompOnlyCustomEventsExpected = {
-  customEvents: {
+  events: {
     test_str: string;
     test_null: null;
     test_unionStr: "male" | "female";
@@ -108,7 +108,17 @@ type CompOnlyCustomEventsExpected = {
     test_bubbles_capturePhase_composed: boolean | BubblesCaptureComposed;
   };
 };
-
+//     test_str: string;
+//     test_null: null;
+//     test_bubbles: string | Bubbles;
+//     test_capturePhase: Capture | null;
+//     test_list: string | 0 | 1 | 2 | null;
+//     test_bubbles_capturePhase: string | number | BubblesCapture;
+//     test_bubbles_composed: BubblesComposed | "male" | "female";
+//     test_capturePhase_composed: string | 0 | 1 | 2 | CaptureComposed | null;
+//     test_bubbles_capturePhase_composed: boolean | BubblesCaptureComposed;
+//     test_unionStr: "male" | "female";
+// };
 Checking<typeof compOnlyCustomEvents, CompOnlyCustomEventsExpected, Test.Pass>;
 
 const rootComponent = RootComponent()({
@@ -138,7 +148,7 @@ const customEventsRootDoc = DefineComponent({
 
 // 4 子组件返回的事件类型是必带Composed的
 type customEventsRootDocExpect = {
-  customEvents: {
+  events: {
     test_str: string | Bubbles | Composed;
     test_num: number | Capture | Composed;
     test_null: null | Bubbles | Capture | Composed;
@@ -163,7 +173,7 @@ const WhenSameKeyOfCustomEventsRootDoc = DefineComponent({
 
 // 5 子组件中存在相同自定义事件字段时,类型联合
 type WhenSameKeyOfCustomEventsRootDocExpect = {
-  customEvents: {
+  events: {
     test_str: string | number | Bubbles | Composed;
     test_num: string | number | Capture | Composed;
     test_null: boolean | Bubbles | Capture | Composed | null;
@@ -186,7 +196,7 @@ const whenRootDocCatch = DefineComponent({
 
 // 6 根组件有阻止(catch)子组件事件时(子组件aaa的str事件是阻止事件,不会被继续传递),去除对应的事件
 type whenRootDocCatchExpect = {
-  customEvents: {
+  events: {
     // 少了str事件
     test_num: number | Composed | Capture;
     test_null: Bubbles | Composed | Capture | null;

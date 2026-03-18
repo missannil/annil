@@ -224,7 +224,7 @@ export type Map = CreateComponentType<"map", {
     // 配置项 2.8.2
     setting?: object;
   };
-  customEvents: {
+  events: {
     // 点击地图时触发，2.9.0起返回经纬度信息 1.0.0
     tap: MarkLocation;
     // 点击标记点时触发，e.detail = {markerId} 1.0.0

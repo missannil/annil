@@ -59,32 +59,8 @@ jobs:
               uses: codecov/codecov-action@v3
               env:
                   CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-            - name: Configure npm for publish
-              run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
-
-            - name: Verify npm auth
-              run: |
-                npm whoami
-
-            - name: Dry-run publish
-              run: |
-                if echo "${{ needs.changelog-and-release.outputs.version }}" | grep -q "alpha"; then
-                  npm publish --tag alpha --dry-run
-                elif echo "${{ needs.changelog-and-release.outputs.version }}" | grep -q "beta"; then
-                  npm publish --tag beta --dry-run
-                elif echo "${{ needs.changelog-and-release.outputs.version }}" | grep -q "dev"; then
-                  npm publish --tag dev --dry-run
-                elif echo "${{ needs.changelog-and-release.outputs.version }}" | grep -q "rc"; then
-                  npm publish --tag rc --dry-run
-                else
-                  npm publish --dry-run
-                fi
-              env:
-                NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
             # 发布
-            - name: Publish to npm (only when REAL_PUBLISH=true)
-              if: env.REAL_PUBLISH == 'true'
-              run: |
+            - run: |
                 if echo "${{ needs.changelog-and-release.outputs.version }}" | grep -q "alpha"; then
                   npm publish --tag alpha
                 elif echo "${{ needs.changelog-and-release.outputs.version }}" | grep -q "beta"; then

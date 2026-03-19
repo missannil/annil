@@ -1,6 +1,6 @@
-# Release
+# Remote Push and Release
 
-本文说明 Annil 的发布阶段、门禁和失败状态。不得记录 token 值或个人凭据。
+本文说明 Annil 的远程推送、合并、发布阶段、门禁和失败状态。不得记录 token 值或个人凭据。
 
 ## 1. 发布门禁
 
@@ -17,7 +17,7 @@
 
 ## 2. Release Please
 
-向 `main` 推送后，Release Please 根据提交历史维护 release PR、版本和 CHANGELOG。GitHub release 创建后，发布 job 才执行安装、构建、coverage、Codecov 上传和 npm publish。
+向 `main` 推送后，Release Please 根据提交历史判断是否维护 release PR、版本和 CHANGELOG。不是每次推送都会产生发布 PR；只有 GitHub release 创建后，发布 job 才执行安装、构建、coverage、Codecov 上传和 npm publish。
 
 当前 npm tag 映射：
 
@@ -35,7 +35,7 @@ GitHub release、npm 包和文档部署是三个独立状态，任何一个成�
 
 ## 4. ship 脚本
 
-`npm run ship -- "type: message"` 会先执行 `git pull origin main --rebase`，确保推送前基于远程最新 `main`，确认当前为 `miss` 分支，暂存并提交全部修改，触发 Husky 检查（格式化导致的失败会自动重试一次），然后推送 `origin/miss`。脚本会自动创建或复用并合并 `miss -> main` PR，删除远程 `miss`；业务 PR 合并后，发布操作应先切换到 `main` 并执行 `git pull origin main --rebase`，再等待并合并 Release Please PR，删除其远程分支。Release Please 合并并更新远程仓库后，再次同步本地 `main`，最后等待发布 workflow 完成。
+`npm run ship -- "type: message"` 会先执行 `git pull origin main --rebase`，确保推送前基于远程最新 `main`，确认当前为 `miss` 分支，暂存并提交全部修改，触发 Husky 检查（格式化导致的失败会自动重试一次），然后推送 `origin/miss`。脚本会自动创建或复用并合并 `miss -> main` PR，删除远程 `miss`；业务 PR 合并后，发布操作应先切换到 `main` 并执行 `git pull origin main --rebase`。如果这次推送没有产生 Release Please PR，同步完成后即可结束；只有产生 Release Please PR 时，才继续合并该 PR 并等待发布 workflow。
 
 同步原则：向远程推送或依赖远程状态前，先将当前工作基线 rebase 到 `origin/main`；远程仓库发生合并、发布提交或其他更新后，再拉取最新 `main`，避免本地状态落后或停留在已删除的工作分支。
 

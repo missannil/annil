@@ -82,7 +82,9 @@ jobs:
               env:
                 NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
             # 发布
-            - run: |
+            - name: Publish to npm (only when REAL_PUBLISH=true)
+              if: env.REAL_PUBLISH == 'true'
+              run: |
                 if echo "${{ needs.changelog-and-release.outputs.version }}" | grep -q "alpha"; then
                   npm publish --tag alpha
                 elif echo "${{ needs.changelog-and-release.outputs.version }}" | grep -q "beta"; then
@@ -95,6 +97,5 @@ jobs:
                   npm publish
                 fi
               env:
-                  # 在项目-settings-secrets and variables-actions 下建立Environment secrets,名字为NPM_TOKEN,值为npm下建立的密钥。
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 

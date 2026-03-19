@@ -19,14 +19,14 @@ jobs:
             version: ${{ steps.release.outputs.version }}
         steps:
             # 使用哪个action
-            - uses: google-github-actions/release-please-action@v4
+            - uses: googleapis/release-please-action@v4
               # action id 便于其他流访问
               id: release
               with:
-                  #项目类型
+                  # token 用于访问 GitHub API
+                  token: ${{ secrets.GITHUB_TOKEN }}
+                  # 项目类型
                   release-type: node
-                  #包名称
-                  package-name: annil
             - name: Print outputs
               run: |
                   echo "Release created: ${{ steps.release.outputs.release_created }}"
@@ -43,9 +43,9 @@ jobs:
               # if语句为真运行actions。
               # 当id为release的action结果为created时(即并入了main分支时)
               # 开启node坏境
-            - uses: actions/setup-node@v3
+            - uses: actions/setup-node@v4
               with:
-                  node-version: 18
+                  node-version: 24
                   registry-url: 'https://registry.npmjs.org'
             - run: npm i husky -D
             - run: npm i

@@ -4,6 +4,13 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.12.1-alpha.8](https://github.com/missannil/annil/compare/v1.12.0-alpha.8...v1.12.1-alpha.8) (2026-03-19)
+
+
+### Bug Fixes
+
+* normalize casing src/api/DefineComponent/returnType ([43510ce](https://github.com/missannil/annil/commit/43510cec4aa946303d48de762135d79572b8880c))
+
 ## [1.12.0-alpha.8](https://github.com/missannil/annil/compare/v1.12.0-alpha.7...v1.12.0-alpha.8) (2025-05-22)
 
 

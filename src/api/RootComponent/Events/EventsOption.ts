@@ -15,14 +15,14 @@ export type EventsOption<TEvents extends object> = {
    * @example B
    * ```ts
    * type ComponentDocA = {
-   *  customEvents: {
+   *  events: {
    *    aaa_str: string;
    *    aaa_num: number | Bubbles;
    *  };
    * };
    *
    * type ComponentDocB = {
-   *  customEvents: {
+   *  events: {
    *    bbb_str: string;
    *    bbb_num: number | Capture;
    *  };

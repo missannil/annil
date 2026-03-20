@@ -11,7 +11,7 @@ import type { AddPrefix } from "./AddPrefix";
  * ```ts
  * type $CustomA = CreateComponentType<"customA", {
  *   properties: { num: string };
- *   customEvents: { onTap: string }
+ *   events: { onTap: string }
  * }>;
  *
  * // 等同下面的类型
@@ -19,7 +19,7 @@ import type { AddPrefix } from "./AddPrefix";
  *    properties: {
  *      customA_num: string;
  *    };
- *    customEvents: {
+ *    events: {
  *      customA_onTap: string;
  *    };
  * ```

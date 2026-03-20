@@ -94,7 +94,7 @@ export type Swiper = CreateComponentType<"swiper", {
      */
     easingFunction?: "defaultValue" | "linear" | "easeInCubic" | "easeOutCubic" | "easeInOutCubic";
   };
-  customEvents: {
+  events: {
     /**
      * current 改变时会触发 change 事件，event.detail = `{current, source}`
      */

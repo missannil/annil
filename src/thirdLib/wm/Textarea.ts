@@ -88,7 +88,7 @@ export type Textarea = CreateComponentType<"textarea", {
      */
     showConfirmBar?: boolean;
   };
-  customEvents: {
+  events: {
     /**
      * 输入框行数变化时调用 1.0.0
      */

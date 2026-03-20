@@ -63,7 +63,7 @@ export type Popup = CreateComponentType<"popup", {
      */
     lockScroll?: boolean;
   };
-  customEvents: {
+  events: {
     clickOverlay: null;
     close: null; // ddd
   };

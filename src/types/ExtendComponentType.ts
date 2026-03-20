@@ -27,10 +27,10 @@ type Validator<
  * ```ts
  * type $CustomA = ExtendComponentType<
  *  { properties: { aaa_num: number };
- *   customEvents: { aaa_xxx: string }
+ *   events: { aaa_xxx: string }
  *  },
  *  { properties: { aaa_str: string };
- *   customEvents: { aaa_yyy: string }
+ *   events: { aaa_yyy: string }
  * }>;
  *
  * // 等同下面的类型
@@ -39,7 +39,7 @@ type Validator<
  *      aaa_num: number;
  *      aaa_str: string;
  *    };
- *    customEvents: {
+ *    events: {
  *      aaa_xxx: string;
  *      aaa_yyy: string;
  *    };
@@ -53,8 +53,8 @@ export type ExtendComponentType<
 
 // type test0 = ExtendComponentType<{ properties: { aaa_xxx: string } }, { properties: { aaa_xxx: string } }>; // => "aaa_xxx字段重复"
 
-// type test1 = ExtendComponentType<{ customEvents: { aaa_xxx: string } }, { customEvents: { aaa_xxx: string } }>; // => "aaa_xxx字段重复"
+// type test1 = ExtendComponentType<{ events: { aaa_xxx: string } }, { events: { aaa_xxx: string } }>; // => "aaa_xxx字段重复"
 
 // type test2 = ExtendComponentType<{ properties: { aaa_xxx: string } }, { properties: { ddd_xxx: string } }>; // => "前缀错误,应为aaa"
 
-// type test3 = ExtendComponentType<{ customEvents: { aaa_xxx: string } }, { customEvents: { ddd_xxx: string } }>; // => "前缀错误,应为aaa"
+// type test3 = ExtendComponentType<{ events: { aaa_xxx: string } }, { events: { ddd_xxx: string } }>; // => "前缀错误,应为aaa"

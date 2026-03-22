@@ -4,6 +4,19 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.13.0](https://github.com/missannil/annil/compare/v1.12.7...v1.13.0) (2026-03-22)
+
+
+### Features
+
+* 去除store的对象写法 ([9f2d50c](https://github.com/missannil/annil/commit/9f2d50c68fadda1ef166fcbedb2890461650c687))
+
+
+### Bug Fixes
+
+* nonNullable.ts 增加第二个错误信息参数,第三方库和wm库类型中customEvents字段变为events ([a38e8c5](https://github.com/missannil/annil/commit/a38e8c5f14237884c338d57bb11fcee1538b57fe))
+* 使用Replace泛型解决实例和setData中使用data字段推导类型为字面量的问题 ([9a2cf3d](https://github.com/missannil/annil/commit/9a2cf3da30d2b0a5ade1e22800f34df97cce7896))
+
 ## [1.12.7](https://github.com/missannil/annil/compare/v1.12.7...v1.12.7) (2026-03-19)
 
 

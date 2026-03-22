@@ -5,6 +5,7 @@ import type { Extra } from "../../types/Extra";
 import type { GetComponentPrefix } from "../../types/GetComponentPrefix";
 import type { InnerFields } from "../../types/InnerData";
 import type { WMCompOtherOption } from "../../types/OfficialTypeAlias";
+import type { Replace } from "../../types/Replace";
 import type { ReplacePrefix } from "../../types/ReplacePrefix";
 import type { UnionToComma } from "../../types/UnionToComma.test";
 import type { ComponentDoc } from "../DefineComponent/returnType/ComponentDoc";
@@ -149,10 +150,10 @@ type Options<
   & ThisType<
     CustomInstance<
       SubMethodsDoc & RootDoc["methods"],
-      // Replace<SubDataDoc, Required<CurrentCompDoc["properties"]>>,// 解除Replace的约束
-      SubDataDoc,
-      // AllRootDataDoc & Replace<SubDataDoc & SubComputedDoc & SubStoreDoc, Required<CurrentCompDoc["properties"]>>, // 解除Replace的约束
-      AllRootDataDoc & SubDataDoc & SubComputedDoc & SubStoreDoc,
+      Replace<SubDataDoc, Required<CurrentCompDoc["properties"]>>, // Replace目的是让setData中的类型与文档中定义的类型一致
+      // SubDataDoc,
+      AllRootDataDoc & Replace<SubDataDoc & SubComputedDoc & SubStoreDoc, Required<CurrentCompDoc["properties"]>>, // Replace的目的是让实例中的类型与文档中定义的类型一致
+      // AllRootDataDoc & SubDataDoc & SubComputedDoc & SubStoreDoc,
       NonNullable<RootDoc["customEvents"]>,
       SubStoreDoc
     >

@@ -1,8 +1,6 @@
 import type { G } from "hry-types";
 import type { As } from "hry-types/src/Any/As";
 import type { IfContains } from "hry-types/src/Any/IfContains";
-import type { IfExtends } from "hry-types/src/Any/IfExtends";
-import type { IsPureObject } from "hry-types/src/Any/IsPureObject";
 import type { Func } from "hry-types/src/Misc/Func";
 import type { Validators } from "../../../types/Validators";
 import type { StoreConstraint } from "./StoreConstraint";
@@ -45,43 +43,11 @@ export type StoreOption<
 export type TypeValidator<
   TStore,
   Result = {
-    [k in keyof TStore]: TStore[k] extends {
-      getter: (...arg: unknown[]) => infer R;
-      default: infer D;
-    }
-      // 对象形式
-      ? IfContains<
-        R,
-        undefined,
-        // 如果包含undefined时
-        IfExtends<
-          // 是否为纯对象
-          IsPureObject<Exclude<R, undefined>>,
-          true,
-          // 如果是纯对象,则default可以为null
-          IfExtends<
-            D,
-            Exclude<R, undefined> | null,
-            unknown,
-            { default: () => "⚠️类型错误⚠️" }
-          >,
-          // 如果不是纯对象,则default只能为getter返回值
-          IfExtends<
-            D,
-            Exclude<R, undefined>,
-            unknown,
-            { default: () => "⚠️类型错误⚠️" }
-          >
-        >,
-        // 不包含undefined时,报错getter
-        { getter: () => "⚠️类型不包含undefined⚠️ " }
-      >
-      // 非对象形式
-      : IfContains<
-        ReturnType<As<TStore[k], Func>>,
-        undefined,
-        () => "⚠️类型包含undefined,应写成对象形式⚠️",
-        unknown
-      >;
+    [k in keyof TStore]: IfContains<
+      ReturnType<As<TStore[k], Func>>,
+      undefined,
+      () => "⚠️返回类型中不可以包含undefined⚠️",
+      unknown
+    >;
   },
 > = Record<keyof TStore, unknown> extends Result ? unknown : Result;

@@ -1,4 +1,5 @@
-import type { Getter, WithDefault } from "../../RootComponent/Store/StoreConstraint";
+import type { AddNullForObject } from "../../../types/AddNullForObject";
+import type { Getter } from "../../RootComponent/Store/StoreConstraint";
 
 /**
  * 子组件Data字段约束
@@ -8,5 +9,5 @@ export type CustomStoreConstraint<
   PropertyDoc extends object,
   legal extends object,
 > = {
-  [k in keyof legal]?: Getter<PropertyDoc, legal[k]> | WithDefault<PropertyDoc, legal[k]>;
+  [k in keyof legal]?: Getter<PropertyDoc, AddNullForObject<legal[k]>>;
 };

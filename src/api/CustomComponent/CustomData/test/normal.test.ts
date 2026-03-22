@@ -65,17 +65,20 @@ CustomComponent<{}, CompDoc>()({
   },
 });
 
-// data建立的类型在setData时为组件类型
+// 确保实例和setData中使用的data字段类型为文档中定义的类型而非data配置中的类型(data中配置的类型可能推导默认为字面量类型,通过加入Replace泛型替换为对应的文档类型。),
 CustomComponent<{ data: { _num: number } }, CompDoc>()({
   data: {
-    aaa_obj: null as Mock_User | null,
+    aaa_obj: null, // 类型为null 而非 Mock_User | null
+    aaa_str: "a", // 类型为"a" 而非string
+    aaa_num: 123, // 类型为123 而非number
   },
   lifetimes: {
     attached() {
+      // 实例中的aaa_obj类型为文档中定义的类型 Mock_User | null 而非data配置中的类型 null
       void Checking<typeof this.data.aaa_obj, Mock_User | null, Test.Pass>;
-
+      // setData中aaa_str类型为文档中定义的类型 "a" | "b" 而非data配置中的类型 "a"
       this.setData({
-        aaa_obj: {} as Mock_User, // aaa_obj 类型为 Mock_User | null 而非 null
+        aaa_str: "b",
       });
     },
   },

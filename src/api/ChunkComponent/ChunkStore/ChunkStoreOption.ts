@@ -2,9 +2,10 @@ import type { G } from "hry-types";
 import type { Validators } from "../../../types/Validators";
 import type { TypeValidator } from "../../RootComponent/Store/StoreOption";
 import type { ValidatorPrefix } from "../ChunkData/validatePrefix";
+import type { ChunkStoreConstraint } from "./ChunkStoreConstraint";
 
 export type ChunkStoreOption<
-  TStore extends object,
+  TStore extends ChunkStoreConstraint,
   TDuplicateKeys extends PropertyKey,
   Prefix extends string,
 > = {

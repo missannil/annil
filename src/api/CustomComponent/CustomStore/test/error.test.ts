@@ -47,54 +47,14 @@ CustomComponent<{
     aaa_num: () => 123,
   },
 });
-
-type DocText = ComponentDoc<{
+// 类型约束错误
+CustomComponent<{
   properties: {
-    aaa_useList: User[];
+    aaa_num: number;
   };
-}>;
-type User = {
-  name: string;
-  age?: number;
-};
-type AllGoods = Record<string, User[] | undefined>;
-const M_User = observable({
-  allUser: {
-    categoryA: [{ name: "zhao", age: 20 }],
-    categoryB: [{ name: "zhao" }],
-  } as AllGoods,
-});
-
-CustomComponent<{ properties: { categoryId: string } }, DocText>()({
+}, DocA>()({
   store: {
-    // @ts-expect-error 1 响应式包含undefined时 不可以写成getter函数形式
-    aaa_useList: (data) => M_User.allUser[data.categoryId],
-  },
-});
-CustomComponent<{ properties: { categoryId: string } }, DocText>()({
-  store: {
-    _aaa_categoryList: {
-      // @ts-expect-error  2 响应式数据不包含undefined时 不可以写成对象形式
-      getter: (data) => M_User.allUser[data.categoryId] as User[],
-      default: 0,
-    },
-  },
-});
-CustomComponent<{ properties: { categoryId: string } }, DocText>()({
-  store: {
-    _aaa_categoryList1: {
-      getter: (data) => M_User.allUser[data.categoryId] as User[] | undefined,
-      // @ts-expect-error  3 默认值应该为[]
-      default: 0,
-    },
-  },
-});
-CustomComponent<{ properties: { categoryId: string } }, DocText>()({
-  store: {
-    _aaa_categoryList2: {
-      getter: (data) => M_User.allUser[data.categoryId]?.[0],
-      // @ts-expect-error 对象类型 默认值为User类型或null namesss错误
-      default: { namesss: "zhao", age: 20 },
-    },
+    // @ts-expect-error 返回类型错误
+    aaa_num: () => undefined,
   },
 });

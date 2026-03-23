@@ -5,8 +5,8 @@ import {
   CustomComponent,
   DefineComponent,
   isEmptyObject,
-  type ParamsEqual,
   RootComponent,
+  typeEqual,
 } from "../../../src";
 import type { User } from "../../common";
 const slot = ChunkComponent<Root, "slot">()({
@@ -83,7 +83,6 @@ const rootComponent = RootComponent()({
     },
   },
 });
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const index = DefineComponent({
   path: "/pages/index/index",
   rootComponent,
@@ -98,5 +97,4 @@ export type $IndexSlot = {
   };
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-type test = ParamsEqual<$IndexSlot, typeof index>;
+typeEqual<$IndexSlot>(index);

@@ -7,7 +7,7 @@ import { navigateBack, navigateTo, redirectTo } from "./api/wxSugar";
 import type { CreateComponentType } from "./types/CreateComponentType";
 import type { DetailedType } from "./types/DetailedType";
 import type { ExtendComponentType } from "./types/ExtendComponentType";
-import type { ParamsEqual } from "./types/TwoParamsEqual";
+
 export * from "./utils/_utils";
 
 export type {
@@ -43,7 +43,6 @@ export {
   instanceConfig,
   navigateBack,
   navigateTo,
-  type ParamsEqual,
   redirectTo,
   RootComponent,
 };

@@ -1,8 +1,7 @@
 import { CustomComponent, typeEqual } from "../../index";
 import type { Wm } from "../index";
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const swiper = CustomComponent<{}, Wm.Swiper>()({
+CustomComponent<{}, Wm.Swiper>()({
   data: {
     swiper_style: "16/9",
   },
@@ -12,13 +11,12 @@ const swiper = CustomComponent<{}, Wm.Swiper>()({
     },
   },
   events: {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     swiper_change(e) {
-      typeEqual<typeof e.detail.current, number>();
+      typeEqual<number>(e.detail.current);
     },
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
     swiper_animationfinish(e) {
-      typeEqual<typeof e.detail.current, number>();
+      typeEqual<number>(e.detail.current);
     },
   },
 });

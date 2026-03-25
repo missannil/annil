@@ -3,16 +3,17 @@ import type { Equals } from "hry-types/src/Any/Equals";
  * 类型相等验证
  * @example
  * ```ts
- * const a = { a: 1 };
- * type A = Typeof a;
- * type B = { a: number };
- * typeEqual<A, B>(); 全类型比对
- * typeEqual<A>(a); 类型和值比对
+ * const a = 1;
+ * type A = typeof a;
+ * const b = 2;
+ * type B = typeof b;
+ * typeEqual<A, B>(); // B位置报错
+ * typeEqual<A>(a); // 不报错
  * ```
  */
 export function typeEqual<
-  A,
-  B extends Equals<A, B> extends true ? unknown : never = never,
->(value?: NoInfer<A>) {
-  void value;
+  const A,
+  const B extends Equals<A, B> extends true ? unknown : never = never,
+>(a?: NoInfer<A>): void {
+  void a;
 }

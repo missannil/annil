@@ -1,4 +1,4 @@
-import { Checking, type Test } from "hry-types";
+import { typeEqual } from "../../../../utils/typeEqual";
 import type { CustomComponentDefinition } from "../../../CustomComponent/returnType";
 import type { Bubbles, Composed } from "../../../RootComponent/CustomEvents/CustomEventsTag";
 import { DefineComponent } from "../..";
@@ -1039,11 +1039,11 @@ const aaa = DefineComponent({
     A,
   ],
 });
-void aaa;
-void Checking<typeof aaa, {
+type Epected = {
   events: {
     test_a: string | number | boolean | Composed;
     test_b: string | number | Composed;
     test_c: boolean | Composed;
   };
-}, Test.Pass>;
+};
+typeEqual<Epected>(aaa);

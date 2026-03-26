@@ -5,6 +5,6 @@ import type { ComputedConstraint } from "./ComputedConstraint";
  * @param T - ComputedConstraint
  * @returns object
  */
-export type GetComputedDoc<TComputed extends ComputedConstraint> = {
+export type GetComputedDef<TComputed extends ComputedConstraint> = {
   [k in keyof TComputed]: ReturnType<TComputed[k]>;
 };

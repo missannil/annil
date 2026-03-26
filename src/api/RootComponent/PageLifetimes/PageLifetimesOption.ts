@@ -1,6 +1,6 @@
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
-import type { ComputeObject } from "../../../types/ComputeObj";
+import type { ComputeObject } from "../../../types/ComputeObject";
 import type { WMCompPageLifetimes, WMPageLifetimes } from "../../../types/OfficialTypeAlias";
 import type { RemoveNullOfRequired } from "../../../types/RemoveNullOfRequired";
 

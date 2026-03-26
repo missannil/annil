@@ -143,3 +143,19 @@ Checking<typeof EmptyEventsFields, {}, Test.Pass>;
 const NoEventsFields = RootComponent<[ComponentDocA, ComponentDocB]>()({});
 
 Checking<typeof NoEventsFields, {}, Test.Pass>;
+
+/**
+ * 7. 子事件可以与root事件共存。
+ */
+const RootDef = RootComponent<[ComponentDocA, ComponentDocB]>()({
+  events: {
+    // root事件
+    root_str(e) {
+      Checking<typeof e, WMBaseEvent, Test.Pass>;
+    },
+    // 子事件
+    aaa_num_bubbles(e) {
+      Checking<typeof e.detail, number, Test.Pass>;
+    },
+  },
+});

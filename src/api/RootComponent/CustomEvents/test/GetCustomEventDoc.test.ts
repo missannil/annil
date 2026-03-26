@@ -1,5 +1,5 @@
 import { Checking, type Test } from "hry-types";
-import type { GetCustomEventDoc } from "../GetCustomEventDoc";
+import type { GetCustomEventsDef } from "../GetCustomEventDef";
 
 import {
   type BubblesCapturePhaseComposedExpected,
@@ -18,7 +18,7 @@ import {
 } from "./GetShortEventDoc.test";
 import { type mock_customEvents } from "./normal.test";
 
-type Mock_CustomEventsDoc = GetCustomEventDoc<typeof mock_customEvents>;
+type Mock_CustomEventsDoc = GetCustomEventsDef<typeof mock_customEvents>;
 
 export type Mock_CustomEventsDocExpected = {
   str: StrExpected;

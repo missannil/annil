@@ -5,7 +5,7 @@ import type { OptionalType } from "./PropertiesConstraint";
 /**
  * 获取properties可传字段文档类型
  */
-export type GetOptionalDoc<
+export type GetOptionalDef<
   TOptionalProperties extends Record<string, OptionalType>,
 > = {
   -readonly [k in keyof TOptionalProperties]?: IfExtends<

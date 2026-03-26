@@ -13,7 +13,7 @@ export type Bubbles = () => "bubbles";
 
 export type Capture = () => "capture";
 
-export type Composed = () => "Composed";
+export type Composed = () => "composed";
 
 export type BubblesCapture = Bubbles | Capture;
 
@@ -31,7 +31,7 @@ export type CustomEventsTags =
   | CaptureComposed
   | BubblesCaptureComposed;
 
-export type AddTagForCustomEventsDoc<Options extends OptionsFieldsConfigOfCustomEvents> = IfExtends<
+export type AddTagForCustomEventsDef<Options extends OptionsFieldsConfigOfCustomEvents> = IfExtends<
   BubblesOption,
   Options,
   Bubbles,

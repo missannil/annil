@@ -42,32 +42,47 @@ export type OptionsFieldsConfigOfCustomEvents =
 /**
  * 带options的CustomEvents配置
  */
-export type FullCustomEvents = {
+export type FullCustomEventsOptions = {
   detail: ShortCustomeEvents;
   options: OptionsFieldsConfigOfCustomEvents;
   debounce?: never;
   throttle?: never;
-} | {
+};
+
+export type FullCustomEventsWithDebounce = {
   detail: ShortCustomeEvents;
   options?: never;
   debounce: number;
   throttle?: never;
-} | {
+};
+
+export type FullCustomEventsWithThrottle = {
   detail: ShortCustomeEvents;
   options?: never;
   debounce?: never;
   throttle: number;
-} | {
+};
+
+export type FullCustomEventsOptionsWithThrottle = {
   detail: ShortCustomeEvents;
   options: OptionsFieldsConfigOfCustomEvents;
   debounce?: never;
   throttle: number;
-} | {
+};
+
+export type FullCustomEventsOptionsWithDebounce = {
   detail: ShortCustomeEvents;
   options: OptionsFieldsConfigOfCustomEvents;
   debounce: number;
   throttle?: never;
 };
+
+export type FullCustomEvents =
+  | FullCustomEventsOptions
+  | FullCustomEventsWithDebounce
+  | FullCustomEventsWithThrottle
+  | FullCustomEventsOptionsWithThrottle
+  | FullCustomEventsOptionsWithDebounce;
 
 export type CustomEvents = FullCustomEvents | ShortCustomeEvents;
 

@@ -5,10 +5,9 @@ import type { ComputedConstraint } from "./ComputedConstraint";
 export type ComputedOption<
   TComputed extends ComputedConstraint,
   CompareKeys extends PropertyKey,
-> // Instance extends object,
- = {
+> = {
   /**
-   * computed字段, [类型约束ComputedConstraint](ComputedConstraint.ts)
+   * computed字段
    * @remarks
    *
    * 函数体内,可通过this.data获取实例其他数据(依赖),setData发生时,若数据(依赖)发生变化则重新运行函数体并setData。

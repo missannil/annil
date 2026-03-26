@@ -5,18 +5,18 @@ import type { IReactionDisposer } from "mobx";
 import type { EmptyObject } from "hry-types/src/Misc/EmptyObject";
 import type { Func } from "hry-types/src/Misc/Func";
 import type { Assign } from "../../../types/Assign";
-import type { ComputeObject } from "../../../types/ComputeObj";
+import type { ComputeObject } from "../../../types/ComputeObject";
 import type { WMComponentInstance, WMInstanceMethods, WMPageInstance } from "../../../types/OfficialTypeAlias";
 import type { OptionsInnerFields } from "../../DefineComponent/normalizeOptions";
 import type { IInjectAllData, IInjectMethods } from "../../InstanceInject/instanceConfig";
-import type { CustomEventMethods } from "./CustomEventMethods";
+import type { generateCustomEventMethods } from "./CustomEventMethods";
 import type { CustomSetData } from "./CustomSetData";
 export type RootComponentInstance<
   TIsPage extends boolean,
   TMethods extends object,
   TDataForSetData extends object,
   AllData extends object,
-  CustomEventsDoc extends object,
+  CustomEventsDef extends object,
   StoreDoc extends object,
   instanceData = ComputeObject<Assign<IInjectAllData, ComputeIntersection<AllData>>>,
 > =
@@ -30,7 +30,7 @@ export type RootComponentInstance<
     disposer: { [k in keyof StoreDoc]: IReactionDisposer };
   }>
   // 自身methods覆盖注入的methods
-  & Assign<IInjectMethods, TMethods & CustomEventMethods<CustomEventsDoc>>
+  & Assign<IInjectMethods, TMethods & generateCustomEventMethods<CustomEventsDef>>
   & { data: instanceData };
 // & { cloneData: ComputeObject<Assign<IInjectData, ComputeIntersection<AllData>>> };
 

@@ -1,5 +1,5 @@
 import { Checking } from "hry-types";
-import type { ComputeObject } from "../../../../types/ComputeObj";
+import type { ComputeObject } from "../../../../types/ComputeObject";
 import type { IInjectAllData } from "../../../InstanceInject/instanceConfig";
 import { ChunkComponent } from "../..";
 import type { Mock_RootDoc } from "./mock";

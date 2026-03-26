@@ -4,6 +4,15 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.13.1](https://github.com/missannil/annil/compare/v1.13.0...v1.13.1) (2026-03-26)
+
+
+### Bug Fixes
+
+* root事件无法与子事件共存的问题 ([13ceb70](https://github.com/missannil/annil/commit/13ceb704add0e31c75dbff65a5818f9b5e13e0da))
+* typeEqual增加参数验证方式 ([08e4cf6](https://github.com/missannil/annil/commit/08e4cf634c919018bd7aab4279637016a40b2274))
+* 去除api类型 ParamsEqual ([a57b0ac](https://github.com/missannil/annil/commit/a57b0acc0199c1e022bb3784f35e1fc95733d52b))
+
 ## [1.13.0](https://github.com/missannil/annil/compare/v1.12.7...v1.13.0) (2026-03-22)
 
 

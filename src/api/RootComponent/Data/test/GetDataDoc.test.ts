@@ -1,6 +1,6 @@
 import { Checking, type Test } from "hry-types";
 
-import type { GetDataDoc } from "../GetDataDoc";
+import type { GetDataDef } from "../GetDataDef";
 
 export const mock_data = {
   func: {
@@ -12,7 +12,7 @@ export const mock_data = {
   str: "str",
 };
 
-type Test1 = GetDataDoc<typeof mock_data>;
+type Test1 = GetDataDef<typeof mock_data>;
 
 type Test1Expected = {
   func: {
@@ -25,7 +25,7 @@ type Test1Expected = {
 void Checking<Test1, Test1Expected, Test.Pass>;
 
 // 测试空对象
-type Test4 = GetDataDoc<{}>;
+type Test4 = GetDataDef<{}>;
 
 type Test4Expected = {};
 

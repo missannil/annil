@@ -1,7 +1,7 @@
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { EmptyObject } from "hry-types/src/Misc/EmptyObject";
 import type { ComputeIntersection, Select } from "hry-types/src/Object/_api";
-import type { ComputeObject } from "../../../types/ComputeObj";
+import type { ComputeObject } from "../../../types/ComputeObject";
 import type { RemovePrefix } from "../../../types/RemovePrefix";
 import type { Composed } from "../../RootComponent/CustomEvents/CustomEventsTag";
 

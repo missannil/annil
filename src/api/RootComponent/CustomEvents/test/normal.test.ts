@@ -60,11 +60,11 @@ export const mock_customEvents = {
   ...mock_fullCustomEvents,
 } satisfies CustomEventConstraint;
 
-const rootDoc = RootComponent()({
+const rootDef = RootComponent()({
   customEvents: mock_customEvents,
 });
 
-type RootDoc = {
+type RootDef = {
   customEvents: {
     // 简写字段 值类型为事件参数e的detail类型
     str: string;
@@ -83,17 +83,17 @@ type RootDoc = {
   };
 };
 
-// 1 RootDoc中customEventsDoc 类型为事件参数e的detail类型和事件标记的联合(冒泡|穿透|捕获)
-Checking<typeof rootDoc, RootDoc, Test.Pass>;
+// 1 RootDef中customEventsDoc 类型为事件参数e的detail类型和事件标记的联合(冒泡|穿透|捕获)
+Checking<typeof rootDef, RootDef, Test.Pass>;
 
-const rootDocEmpty = RootComponent()({
+const rootDefEmpty = RootComponent()({
   customEvents: {},
 });
 
 // 2. customEvents字段配置为`{}`时,Doc中无customEvents字段
-Checking<typeof rootDocEmpty, {}, Test.Pass>;
+Checking<typeof rootDefEmpty, {}, Test.Pass>;
 
-const rootDocNoFields = RootComponent()({});
+const rootDefNoFields = RootComponent()({});
 
 // 3. 无customEvents字段时,Doc中无customEvents字段
-Checking<typeof rootDocNoFields, {}, Test.Pass>;
+Checking<typeof rootDefNoFields, {}, Test.Pass>;

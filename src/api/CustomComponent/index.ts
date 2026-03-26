@@ -11,7 +11,7 @@ import type { UnionToComma } from "../../types/UnionToComma.test";
 import type { ComponentDoc } from "../DefineComponent/returnType/ComponentDoc";
 import type { IInjectStore } from "../InstanceInject/instanceConfig";
 import type { RootComponentDefinition } from "../RootComponent/returnType";
-import type { GetStoreDoc } from "../RootComponent/Store/GeTStoreDoc";
+import type { GetStoreDef } from "../RootComponent/Store/GetStoreDef";
 import type { CustomComputedConstraint } from "./CustomComputed/CustomComputedConstraint";
 import type { CustomComputedOption } from "./CustomComputed/CustomComputedOption";
 import type { GetCustomComputedDoc } from "./CustomComputed/GetCustomComputedDoc";
@@ -224,7 +224,7 @@ type CustomComponentConstructor<
     >,
     TStore,
     {},
-    GetStoreDoc<TStore>
+    GetStoreDef<TStore>
   >,
   // 无效的计算
   ComputedDoc extends object = IfExtends<

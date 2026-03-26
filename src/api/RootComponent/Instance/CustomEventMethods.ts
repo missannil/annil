@@ -1,11 +1,11 @@
 import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { CustomEventsTags } from "../CustomEvents/CustomEventsTag";
 
-export type CustomEventMethods<O extends object> = {
-  [k in keyof O]: IfExtends<
-    Exclude<O[k], CustomEventsTags>,
+export type generateCustomEventMethods<TCustomEventsDef extends object> = {
+  [k in keyof TCustomEventsDef]: IfExtends<
+    Exclude<TCustomEventsDef[k], CustomEventsTags>,
     undefined,
     () => void,
-    (detail: Exclude<O[k], CustomEventsTags>) => void
+    (detail: Exclude<TCustomEventsDef[k], CustomEventsTags>) => void
   >;
 };

@@ -1,8 +1,8 @@
-import type { ParamsEqual } from "../../../types/TwoParamsEqual";
+import { typeEqual } from "../../../utils/typeEqual";
 import type { Getter } from "./StoreConstraint";
 // 单独Getter类型返回值会把undefined转换为null
 // 但是WithDefault类型返回值为getter的返回值去除undefined和default的类型联合。
-export type GetStoreDoc<TStore extends object> = {
+export type GetStoreDef<TStore extends object> = {
   [k in keyof TStore]: TStore[k] extends Getter ? ReturnType<TStore[k]>
     : TStore[k] extends {
       getter: (...args: unknown[]) => infer R;
@@ -13,7 +13,7 @@ export type GetStoreDoc<TStore extends object> = {
 
 // test
 type User = { name: string; age: number };
-type test = GetStoreDoc<{
+type test = GetStoreDef<{
   userName: (data: { aaa: "string" }) => string;
   userAge: (data: { aaa: "string" }) => number;
   userInfo: {
@@ -25,14 +25,10 @@ type test = GetStoreDoc<{
     default: [];
   };
 }>;
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-type test1 = ParamsEqual<
-  test,
-  {
-    userName: string;
-    userAge: number;
-    userInfo: User | null;
-    list: User[];
-  }
->;
+type expected = {
+  userName: string;
+  userAge: number;
+  userInfo: User | null;
+  list: User[];
+};
+typeEqual<test, expected>();

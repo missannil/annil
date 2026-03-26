@@ -1,14 +1,14 @@
 import type { IfExtends } from "hry-types/src/Any/_api";
 import type { WMCompOtherOption } from "../../types/OfficialTypeAlias";
 import type { IInjectAllData, IInjectMethods, IInjectStore } from "../InstanceInject/instanceConfig";
-import type { GetComputedDoc } from "../RootComponent/Computed/GetComputedDoc";
+import type { GetComputedDef } from "../RootComponent/Computed/GetComputedDef";
 import type { RootComponentInstance } from "../RootComponent/Instance/RootComponentInstance";
 import type { LifetimesOption } from "../RootComponent/Lifetimes/LifetimesOption";
 import type { MethodsConstraint } from "../RootComponent/Methods/MethodsConstraint";
 import type { ObserversOption } from "../RootComponent/Observers/ObserversOption";
 import type { PageLifetimesOption } from "../RootComponent/PageLifetimes/PageLifetimesOption";
 import type { RootComponentDefinition } from "../RootComponent/returnType";
-import type { GetStoreDoc } from "../RootComponent/Store/GeTStoreDoc";
+import type { GetStoreDef } from "../RootComponent/Store/GetStoreDef";
 import type { WatchOption } from "../RootComponent/Watch/WatchOption";
 import type { ChunkComputedConstraint } from "./ChunkComputed/ChunkComputedConstraint";
 import type { ChunkComputedOption } from "./ChunkComputed/ChunkComputedOption";
@@ -99,9 +99,9 @@ type ChunkComponentConstructor<
   TMethods extends MethodsConstraint = {},
   TData extends object = {},
   StoreDoc extends object = ChunkStoreConstraint<Required<TRootComponentReturnType["properties"]>> extends TStore ? {}
-    : GetStoreDoc<TStore>,
+    : GetStoreDef<TStore>,
   TComputed extends ChunkComputedConstraint = {},
-  ComputedDoc extends object = GetComputedDoc<TComputed>,
+  ComputedDoc extends object = GetComputedDef<TComputed>,
   EventsDoc extends object = IfExtends<ChunkEventsConstraint, TEvents, {}, TEvents>,
   PropertiesDoc extends object = NonNullable<TRootComponentReturnType["properties"]>,
 >(

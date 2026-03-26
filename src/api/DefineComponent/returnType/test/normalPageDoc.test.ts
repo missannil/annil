@@ -19,7 +19,6 @@ const OnlyPropsRootDoc = RootComponent()({
       value: null,
     },
   },
-  customEvents: {}, // EmptyObject
 });
 
 const compDocOnlyProperties = DefineComponent({

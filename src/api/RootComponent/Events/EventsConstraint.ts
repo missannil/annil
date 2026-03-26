@@ -50,8 +50,8 @@ type TransformCustomEventsDocTypeToFunctionTypeAndAddSuffix<T extends CustomEven
 
 // 所有子组件自定义事件(过滤掉非冒泡或捕获)的key加入后缀并把值(detail)转换为函数类型
 type GetAllSubCustomEventsConstraint<
-  ComponentDocList extends ComponentDoc[],
-  AllCustomEvents extends CustomEventsDoc = GetBubblesOrCaptureEventsFromCompDoc<ComponentDocList>,
+  TComponentDocList extends ComponentDoc[],
+  AllCustomEvents extends CustomEventsDoc = GetBubblesOrCaptureEventsFromCompDoc<TComponentDocList>,
 > = IfExtends<
   {},
   AllCustomEvents,
@@ -70,5 +70,5 @@ export type EventsConstraint<ComponentDocList extends ComponentDoc[] = []> = IfE
   [],
   ComponentDocList,
   BaseEvent,
-  GetAllSubCustomEventsConstraint<ComponentDocList>
+  GetAllSubCustomEventsConstraint<ComponentDocList> & BaseEvent
 >;

@@ -7,7 +7,7 @@ import type {
   ShortCustomeEvents,
   SimpleCustomeEventsList,
 } from "./CustomEventConstraint";
-import type { AddTagForCustomEventsDoc } from "./CustomEventsTag";
+import type { AddTagForCustomEventsDef } from "./CustomEventsTag";
 
 export type GetShortCustomEventsDoc<T extends ShortCustomeEvents> = T extends DetailedType ? InferDetailedType<T>
   : T extends null ? null
@@ -17,7 +17,7 @@ export type GetShortCustomEventsDoc<T extends ShortCustomeEvents> = T extends De
 
 export type GetFullCustomEventsDoc<T extends FullCustomEvents> =
   | GetShortCustomEventsDoc<T["detail"]>
-  | IfExtends<unknown, T["options"], never, AddTagForCustomEventsDoc<T["options"] & {}>>;
+  | IfExtends<unknown, T["options"], never, AddTagForCustomEventsDef<T["options"] & {}>>;
 
 /**
  * 获取自定义事件的文档
@@ -42,6 +42,6 @@ export type GetCustomEventDoc<T extends CustomEventConstraint> =
         // 为自定义事件模型加标记,方便识别
         // @ts-ignore T[k] 一定为 FullCustomEvents 类型
         // | AddTagForCustomEventsDoc<T[k]["options"]>;
-        | IfExtends<unknown, T[k]["options"], never, AddTagForCustomEventsDoc<T[k]["options"] & {}>>;
+        | IfExtends<unknown, T[k]["options"], never, AddTagForCustomEventsDef<T[k]["options"] & {}>>;
   }
 ;

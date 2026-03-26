@@ -2,17 +2,17 @@ import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { EmptyObject } from "hry-types/src/Misc/EmptyObject";
 import type { Func } from "hry-types/src/Misc/Func";
 import type { ComputeIntersection } from "hry-types/src/Object/_api";
-import type { ComputeObject } from "../../types/ComputeObj";
+import type { ComputeObject } from "../../types/ComputeObject";
 import type { WMCompOtherOption } from "../../types/OfficialTypeAlias";
 import type { RemoveNullOfRequired } from "../../types/RemoveNullOfRequired";
 import type { ComponentDoc } from "../DefineComponent/returnType/ComponentDoc";
 import type { IInjectStore } from "../InstanceInject/instanceConfig";
 import type { ComputedConstraint } from "./Computed/ComputedConstraint";
 import type { ComputedOption } from "./Computed/ComputedOption";
-import type { GetComputedDoc } from "./Computed/GetComputedDoc";
+import type { GetComputedDef } from "./Computed/GetComputedDef";
 import type { CustomEventConstraint } from "./CustomEvents/CustomEventConstraint";
 import type { CustomEventsOption } from "./CustomEvents/CustomEventsOption";
-import type { GetCustomEventDoc } from "./CustomEvents/GetCustomEventDoc";
+import type { GetCustomEventsDef } from "./CustomEvents/GetCustomEventDef";
 import type { DataOption } from "./Data/DataOption";
 import type { EventsConstraint } from "./Events/EventsConstraint";
 import type { EventsOption } from "./Events/EventsOption";
@@ -23,10 +23,10 @@ import type { MethodsConstraint } from "./Methods/MethodsConstraint";
 import type { MethodsOption } from "./Methods/MethodsOption";
 import type { ObserversOption } from "./Observers/ObserversOption";
 import type { PageLifetimesOption } from "./PageLifetimes/PageLifetimesOption";
-import type { GetPropertiesDoc } from "./Properties/GetPropertiesDoc";
+import type { GetPropertiesDef } from "./Properties/GetPropertiesDef";
 import type { PropertiesConstraint } from "./Properties/PropertiesConstraint";
 import type { PropertiesOption } from "./Properties/PropertiesOption";
-import type { GetStoreDoc } from "./Store/GeTStoreDoc";
+import type { GetStoreDef } from "./Store/GetStoreDef";
 import type { StoreConstraint } from "./Store/StoreConstraint";
 import type { StoreOption } from "./Store/StoreOption";
 import type { WatchOption } from "./Watch/WatchOption";
@@ -40,55 +40,55 @@ type RootComponentOptions<
   TData extends object,
   TStore extends StoreConstraint,
   TComputed extends Record<string, Func>,
-  EventsDoc extends object,
-  CustomEventsDoc extends object,
-  PropertiesDoc extends object,
-  DataDoc extends object,
-  StoreDoc extends object,
-  ComputedDoc extends object,
+  EventsDef extends object,
+  CustomEventsDef extends object,
+  PropertiesDef extends object,
+  DataDef extends object,
+  StoreDef extends object,
+  ComputedDef extends object,
 > =
-  & MethodsOption<TMethods, keyof (EventsDoc & CustomEventsDoc)>
+  & MethodsOption<TMethods, keyof (EventsDef & CustomEventsDef)>
   & PropertiesOption<TProperties>
   & IsPageOption<TIsPage>
   & EventsOption<TEvents>
-  & CustomEventsOption<TCustomEvents, keyof EventsDoc>
-  & DataOption<TData, keyof PropertiesDoc>
-  & StoreOption<TStore, keyof (PropertiesDoc & DataDoc)>
+  & IfExtends<TIsPage, false, CustomEventsOption<TCustomEvents, keyof EventsDef>, {}>
+  & DataOption<TData, keyof PropertiesDef>
+  & StoreOption<TStore, keyof (PropertiesDef & DataDef)>
   & ComputedOption<
     TComputed,
-    keyof (PropertiesDoc & DataDoc & StoreDoc)
-  > // { data: ComputeObject<DataDoc & Required<PropertiesDoc> & StoreDoc & ComputedDoc & IInjectAllData> }
-  & PageLifetimesOption<TIsPage, PropertiesDoc>
+    keyof (PropertiesDef & DataDef & StoreDef)
+  > // { data: ComputeObject<DataDef & Required<PropertiesDef> & StoreDef & ComputedDef & IInjectAllData> }
+  & PageLifetimesOption<TIsPage, PropertiesDef>
   & LifetimesOption
   & WatchOption<
-    & ComputedDoc
-    & Required<PropertiesDoc>
-    & DataDoc
-    & StoreDoc
+    & ComputedDef
+    & Required<PropertiesDef>
+    & DataDef
+    & StoreDef
     & IInjectStore
   >
   & Partial<Omit<WMCompOtherOption, "pageLifetimes" | "definitionFilter" | "observers">>
   & ObserversOption<
-    & ComputedDoc
-    & Required<PropertiesDoc>
-    & DataDoc
-    & StoreDoc
+    & ComputedDef
+    & Required<PropertiesDef>
+    & DataDef
+    & StoreDef
     & IInjectStore
   >
   & ThisType<
     RootComponentInstance<
       TIsPage,
       TMethods,
-      DataDoc,
-      DataDoc & Required<PropertiesDoc> & StoreDoc & ComputedDoc,
-      CustomEventsDoc,
-      StoreDoc
+      DataDef,
+      DataDef & Required<PropertiesDef> & StoreDef & ComputedDef,
+      CustomEventsDef,
+      StoreDef
     >
   >;
 
 type RootComponentConstructor<TComponentDocList extends ComponentDoc[]> = <
   TEvents extends EventsConstraint<TComponentDocList>,
-  TStore extends StoreConstraint<PropertiesDoc>,
+  TStore extends StoreConstraint<PropertiesDef>,
   TIsPage extends boolean = false,
   const TProperties extends PropertiesConstraint = {},
   TData extends object = {},
@@ -96,12 +96,12 @@ type RootComponentConstructor<TComponentDocList extends ComponentDoc[]> = <
   // 页面时自定义事件无意义
   TCustomEvents extends IfExtends<TIsPage, false, CustomEventConstraint, EmptyObject> = {},
   TMethods extends MethodsConstraint = {},
-  EventsDoc extends object = IfExtends<EventsConstraint<TComponentDocList>, TEvents, {}, TEvents>,
-  CustomEventsDoc extends object = GetCustomEventDoc<TCustomEvents>,
-  PropertiesDoc extends object = GetPropertiesDoc<TProperties>,
-  DataDoc extends object = TData,
-  StoreDoc extends object = StoreConstraint<PropertiesDoc> extends TStore ? {} : GetStoreDoc<TStore>,
-  ComputedDoc extends object = GetComputedDoc<TComputed>,
+  EventsDef extends object = IfExtends<EventsConstraint<TComponentDocList>, TEvents, {}, TEvents>,
+  CustomEventsDef extends object = GetCustomEventsDef<TCustomEvents>,
+  PropertiesDef extends object = GetPropertiesDef<TProperties>,
+  DataDef extends object = TData,
+  StoreDef extends object = StoreConstraint<PropertiesDef> extends TStore ? {} : GetStoreDef<TStore>,
+  ComputedDef extends object = GetComputedDef<TComputed>,
 >(
   options: RootComponentOptions<
     TEvents,
@@ -113,28 +113,28 @@ type RootComponentConstructor<TComponentDocList extends ComponentDoc[]> = <
     TStore,
     TComputed,
     // TObservers,
-    EventsDoc,
-    CustomEventsDoc,
-    PropertiesDoc,
-    DataDoc,
-    StoreDoc,
-    ComputedDoc
+    EventsDef,
+    CustomEventsDef,
+    PropertiesDef,
+    DataDef,
+    StoreDef,
+    ComputedDef
   >,
 ) => // 生成RootComponentDefinition
 ComputeIntersection<
   & IfExtends<TIsPage, false, {}, { isPage: true }>
   & IfExtends<
     EmptyObject,
-    PropertiesDoc,
+    PropertiesDef,
     {},
-    { properties: IfExtends<false, TIsPage, PropertiesDoc, RemoveNullOfRequired<PropertiesDoc>> }
+    { properties: IfExtends<false, TIsPage, PropertiesDef, RemoveNullOfRequired<PropertiesDef>> }
   >
-  & IfExtends<EmptyObject, DataDoc, {}, { data: DataDoc }>
-  & IfExtends<EmptyObject, StoreDoc, {}, { store: ComputeObject<StoreDoc> }>
-  & IfExtends<EmptyObject, ComputedDoc, {}, { computed: ComputedDoc }>
+  & IfExtends<EmptyObject, DataDef, {}, { data: DataDef }>
+  & IfExtends<EmptyObject, StoreDef, {}, { store: ComputeObject<StoreDef> }>
+  & IfExtends<EmptyObject, ComputedDef, {}, { computed: ComputedDef }>
   & IfExtends<EmptyObject, TMethods, {}, { methods: TMethods }>
-  & IfExtends<EmptyObject, EventsDoc, {}, { events: EventsDoc }>
-  & IfExtends<EmptyObject, CustomEventsDoc, {}, { customEvents: ComputeObject<CustomEventsDoc> }>
+  & IfExtends<EmptyObject, EventsDef, {}, { events: EventsDef }>
+  & IfExtends<EmptyObject, CustomEventsDef, {}, { customEvents: ComputeObject<CustomEventsDef> }>
 >;
 /**
  * RootComponent API

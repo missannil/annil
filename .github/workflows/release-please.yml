@@ -39,15 +39,14 @@ jobs:
         if: ${{ needs.changelog-and-release.outputs.release_created }}
         steps:
               # 以下为npm发布逻辑
-            - uses: actions/checkout@v3
+            - uses: actions/checkout@v6
               # if语句为真运行actions。
               # 当id为release的action结果为created时(即并入了main分支时)
               # 开启node坏境
-            - uses: actions/setup-node@v4
+            - uses: actions/setup-node@v6
               with:
                   node-version: 24
                   registry-url: 'https://registry.npmjs.org'
-                  always-auth: true
             - run: npm i husky -D
             - run: npm i
               # 打包
@@ -57,7 +56,7 @@ jobs:
               run: npx jest --coverage --config jest.config.ci.ts
               # 上传覆盖率报告
             - name: Upload coverage reports to Codecov
-              uses: codecov/codecov-action@v3
+              uses: codecov/codecov-action@v6
               env:
                   CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
             # 发布

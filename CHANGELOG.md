@@ -4,6 +4,13 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.14.0](https://github.com/missannil/annil/compare/v1.13.2...v1.14.0) (2026-06-05)
+
+
+### Features
+
+* 更新action符合node.js 24 ([f16712e](https://github.com/missannil/annil/commit/f16712e239071d0c65a7803247ce36fc05b079b5))
+
 ## [1.13.2](https://github.com/missannil/annil/compare/v1.13.1...v1.13.2) (2026-06-05)
 
 

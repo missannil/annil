@@ -19,7 +19,7 @@ jobs:
             version: ${{ steps.release.outputs.version }}
         steps:
             # 使用哪个action
-            - uses: googleapis/release-please-action@v4
+            - uses: googleapis/release-please-action@v5
               # action id 便于其他流访问
               id: release
               with:

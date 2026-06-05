@@ -4,6 +4,13 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.13.2](https://github.com/missannil/annil/compare/v1.13.1...v1.13.2) (2026-06-05)
+
+
+### Bug Fixes
+
+* typeEqual 和_CustomComponentDefinition ([9914cc5](https://github.com/missannil/annil/commit/9914cc59d063a1dce2427b33fd27c18d233636d1))
+
 ## [1.13.1](https://github.com/missannil/annil/compare/v1.13.0...v1.13.1) (2026-03-26)
 
 

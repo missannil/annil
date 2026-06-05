@@ -97,4 +97,4 @@ export type $IndexSlot = {
   };
 };
 
-typeEqual<$IndexSlot>(index);
+typeEqual<$IndexSlot>()(index);

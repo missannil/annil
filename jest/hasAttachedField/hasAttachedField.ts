@@ -13,8 +13,8 @@ const rootComponent = RootComponent()({
   },
 });
 
-const test = DefineComponent({
+const test: EmptyObject = DefineComponent({
   name: "test",
   rootComponent,
 });
-typeEqual<EmptyObject>(test);
+typeEqual<EmptyObject>()(test);

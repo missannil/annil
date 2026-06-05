@@ -12,11 +12,11 @@ CustomComponent<{}, Wm.Swiper>()({
   },
   events: {
     swiper_change(e) {
-      typeEqual<number>(e.detail.current);
+      typeEqual<number>()(e.detail.current);
     },
 
     swiper_animationfinish(e) {
-      typeEqual<number>(e.detail.current);
+      typeEqual<number>()(e.detail.current);
     },
   },
 });

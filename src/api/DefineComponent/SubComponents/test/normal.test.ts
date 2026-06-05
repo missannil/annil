@@ -1046,4 +1046,4 @@ type Epected = {
     test_c: boolean | Composed;
   };
 };
-typeEqual<Epected>(aaa);
+typeEqual<Epected>()(aaa);

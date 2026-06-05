@@ -1,6 +1,5 @@
 import type { Func } from "hry-types/src/Misc/Func";
 import type { ComputedConstraint } from "../RootComponent/Computed/ComputedConstraint";
-import type { CustomEventsTags } from "../RootComponent/CustomEvents/CustomEventsTag";
 import type { DataConstraint } from "../RootComponent/Data/DataConstraint";
 import type { EventsConstraint } from "../RootComponent/Events/EventsConstraint";
 import type { LifetimesConstraint } from "../RootComponent/Lifetimes/LifetimesConstraint";
@@ -9,19 +8,7 @@ import type { PageLifetimesOption } from "../RootComponent/PageLifetimes/PageLif
 import type { StoreConstraint } from "../RootComponent/Store/StoreConstraint";
 
 type _CustomComponentDefinition = {
-  composedEvents?: Record<
-    string,
-    | string
-    | number
-    | bigint
-    | boolean
-    | symbol
-    | null
-    | undefined
-    | Record<string, unknown>
-    | unknown[]
-    | CustomEventsTags
-  >;
+  composedEvents?: Record<string, unknown>;
 };
 
 // 验证key是否合法

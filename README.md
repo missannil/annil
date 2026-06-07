@@ -132,7 +132,9 @@ npm i annil
 {
   "compilerOptions": {
     "target": "ES2022",
-    "moduleResolution": "node",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "verbatimModuleSyntax": true,
     "skipLibCheck": true, // 跳过声明文件的类型检查(.d.ts)。
     "esModuleInterop": true, // 默认false. 兼容非ES模块引用的写法(如 import type mobx from 'mobx'等).
     "strict": true, // 启用严格模式

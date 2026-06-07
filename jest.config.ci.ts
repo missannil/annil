@@ -1,8 +1,33 @@
-import { config } from "./jest.config";
+import type { Config } from "@jest/types";
+const ciConfig = {
+  clearMocks: true,
+  testEnvironment: "jsdom",
+  collectCoverage: true,
+  collectCoverageFrom: [
+    "./src/**/*.ts",
+    "!src/**/*.test.ts",
+    "!src/api/wxSugar.ts",
+    "!src/api/DefineComponent/isPageCheck.ts",
+    "!src/api/InstanceInject/inject.ts",
+    "!src/thirdLib/**",
+    "!src/utils/_utils.ts",
+  ],
+  testMatch: [
+    "<rootDir>/jest/**/*.test.ts",
+  ],
+  transform: {
+    "\\.ts$": "ts-jest",
+  },
+  coverageDirectory: "coverage",
+  coverageReporters: ["lcov"],
+  coverageThreshold: {
+    global: {
+      branches: 90,
+      functions: 90,
+      lines: 90,
+      statements: 90,
+    },
+  },
+} satisfies Config.InitialOptions;
 
-exports.default = {
-  ...config, // 导入原始的 Jest 配置
-  collectCoverage: true, // 收集测试覆盖率
-  coverageDirectory: "coverage", // 指定覆盖率报告的输出目录
-  coverageReporters: ["lcov"], // 在 CI 中使用 'lcov' 格式
-};
+exports.default = ciConfig;

@@ -35,9 +35,9 @@
     "jest-environment-jsdom": "^29.7.0",
     "miniprogram-simulate": "^1.6.1",
     "mobx": "^6.9.0",
-    "ts-jest": "^29.1.1",
-    "typescript": "^5.9.3",
-    "typescript-eslint": "^8.57.0",
+    "ts-jest": "^29.4.11",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.60.1",
     "vitepress": "^1.6.4"
   },
   "files": [

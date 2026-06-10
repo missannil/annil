@@ -1,8 +1,8 @@
 # RootComponent
 
-`RootComponent` 是 annil 的核心构建函数，负责定义组件或页面的主状态与主逻辑。与 `DefineComponent` 搭配使用，可进一步接收 `CustomComponent` / `ChunkComponent` 作为子组件，实现复杂页面的拆分。
+`RootComponent` 用于构建根组件(页面)，负责定义组件的公共状态与逻辑。
 
-它在原生 `Component` 选项基础上扩展了 `computed`、`watch`、`store`、`customEvents` 等能力，同时保留对原生所有选项的完整兼容。
+它在原生 `Component` 选项基础上扩展了 `computed`、`watch`、`store`、`customEvents` 等字段，同时保留对原生所有选项的完整兼容。
 
 ::: warning 高阶函数
 为支持外部泛型（`events` 字段的子组件类型约束），`RootComponent` 需调用两次：

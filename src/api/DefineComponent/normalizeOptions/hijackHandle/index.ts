@@ -7,7 +7,7 @@ import { computedUpdater } from "../initComputed/computedUpdater";
 import { addDetachedData } from "./addDetachedData";
 import { hijack } from "./hijack";
 import { isPageCheck } from "./isPageCheck";
-import { loadReceivedDataHandle } from "./loadReceivedDataHandle";
+// import { loadReceivedDataHandle } from "./loadReceivedDataHandle";
 import { onLoadReceivedDataHandle } from "./onLoadReceivedDataHandle";
 import { pagePathCheck } from "./pagePathCheck";
 
@@ -16,10 +16,9 @@ export function hijackHandle(
   isPage: boolean | undefined,
   path: string | undefined,
 ) {
-  // 对页面传入参数进行处理 老框架劫持页面methods.onLoad,新框架劫持页面pageLifetimes.load
-  if (finalOptionsForComponent.isPage) {
-    hijack(finalOptionsForComponent.pageLifetimes, "load", [loadReceivedDataHandle]);
-  }
+  // if (finalOptionsForComponent.isPage) {
+  //   hijack(finalOptionsForComponent.pageLifetimes, "load", [loadReceivedDataHandle]);
+  // }
 
   hijack(finalOptionsForComponent.methods, "onLoad", [onLoadReceivedDataHandle]);
   hijack(finalOptionsForComponent.observers, "**", [

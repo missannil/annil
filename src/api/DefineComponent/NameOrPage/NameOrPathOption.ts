@@ -1,4 +1,4 @@
-import type { IfExtends } from "hry-types/src/Any/IfExtends";
+import type { IfEquals, IfExtends } from "hry-types/src/Any/_api";
 import type { Includes } from "../../../types/includes";
 
 /**
@@ -18,7 +18,7 @@ export type NameOrPathOption<
   : {
     /**
      * 组件名
-     * @remarks 不可为空串和含有下划线
+     * @remarks 不可为空串或包含下划线或空格
      */
     name:
       & TName
@@ -26,6 +26,6 @@ export type NameOrPathOption<
         TName,
         "",
         () => "⚠️组件名不可为空⚠️",
-        IfExtends<Includes<TName, "_">, true, () => "⚠️组件名不可包含下划线 _ ⚠️", unknown>
+        IfEquals<Includes<TName, "_" | " ">, true, () => "⚠️组件名不可包含下划线或空格⚠️", unknown>
       >;
   };

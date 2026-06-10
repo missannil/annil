@@ -6,7 +6,7 @@ const subA = CustomComponent<Root, { properties: { subA_num: number } }>()({
     subA_num: 100,
   },
   pageLifetimes: {
-    load() {
+    show() {
       user.age++;
     },
   },
@@ -17,7 +17,7 @@ type Root = typeof rootComponent;
 const rootComponent = RootComponent()({
   lifetimes: {
     beforeCreate(options) {
-      options.pageLifetimes.load?.();
+      options.pageLifetimes.show?.();
     },
     created() {
       // 模拟组件 添加is
@@ -25,7 +25,7 @@ const rootComponent = RootComponent()({
     },
   },
   pageLifetimes: {
-    load() {
+    show() {
       user.age++;
     },
   },

@@ -21,11 +21,6 @@ RootComponent()({
     show() {
       void 0;
     },
-    // 1 glass-easel(最低版本库3.0.2)支持的周期函数
-    load(obj) {
-      void obj;
-      void Checking<typeof obj, object | undefined, Test.Pass>;
-    },
   },
 });
 

@@ -8,17 +8,7 @@ export type PageLifetimesOption<TIsPage extends boolean, PropertiesDoc extends o
   TIsPage,
   false,
   {
-    pageLifetimes?: ComputeIntersection<
-      // 官方组件页面生命周期
-      & Partial<WMCompPageLifetimes>
-      & {
-        /**
-         * 周期发生在组件attached之后,页面onLoad之前,要求组件为同步组件
-         * 最低基础库： `3.0.2`
-         */
-        load?: (props?: object) => void;
-      }
-    >;
+    pageLifetimes?: Partial<WMCompPageLifetimes>;
   },
   {
     /**

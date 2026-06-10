@@ -7,7 +7,7 @@ const slot = ChunkComponent<Root, "slot">()({
   },
   lifetimes: {
     beforeCreate(options) {
-      options.pageLifetimes.load?.();
+      options.pageLifetimes.show?.();
     },
     created() {
       // 模拟组件 添加is
@@ -15,7 +15,7 @@ const slot = ChunkComponent<Root, "slot">()({
     },
   },
   pageLifetimes: {
-    load() {
+    show() {
       user.age++;
     },
   },
@@ -25,7 +25,7 @@ type Root = typeof rootComponent;
 
 const rootComponent = RootComponent()({
   pageLifetimes: {
-    load() {
+    show() {
       user.age++;
     },
   },

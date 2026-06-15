@@ -1,8 +1,6 @@
 # RootComponent
 
-`RootComponent` 用于构建根组件(页面)，负责定义组件的公共状态与逻辑。
-
-它在原生 `Component` 选项基础上扩展了 `computed`、`watch`、`store`、`customEvents` 等字段，同时保留对原生所有选项的完整兼容。
+`RootComponent` 用于构建根组件，负责声明组件是否为页面,接收属性(properties)、组件事件(customEvents),公共状态与逻辑。
 
 ::: warning 高阶函数
 为支持外部泛型（`events` 字段的子组件类型约束），`RootComponent` 需调用两次：
@@ -45,18 +43,13 @@ function RootComponent<
 该字段影响：
 
 - `DefineComponent` 中的入口字段：页面时使用 `path`，组件时使用 `name`。
-- `pageLifetimes` 的可用生命周期类型（见下文）。
+- `pageLifetimes` 的可用生命周期类型,页面时为 `onLoad`...，组件时为 `show`...。
 - `customEvents` 字段：页面时不可用。
-- `onLoad` 的参数类型：页面时参数为 `properties` 中定义的字段（去除 `null`）。
 
 ```ts
 RootComponent()({
   isPage: true,
-  pageLifetimes: {
-    onLoad(props) {
-      // props 类型由 properties 推导
-    },
-  },
+  // ...
 });
 ```
 
@@ -69,20 +62,24 @@ RootComponent()({
 | 类型     | `Record<string, PropertyOption>` |
 | 是否必填 | 否                               |
 
-定义组件/页面的外部属性，兼容原生写法，并扩展了以下能力：
+定义组件/页面的接收的属性（外部传值）。支持以下特性：
 
-- **任意类型**：通过 `as DetailedType<T>` 声明精确类型（原生只能用构造函数）。
-- **value 类型检测**：`value` 字段类型须与 `type` 声明一致，写错会有类型报错。
-- **重复字段检测**：与 `data`、`store`、`computed` 字段存在重名时报错。
+- **任意类型**：通过 `as DetailedType<T>` 声明精确类型。
+- **类型检测**：
+  1. 字段错误
+  2. `value` 字段类型须与 `type` 声明一致，写错会有类型报错。
+
 - **必传/可选推断**：
-  - 简写 → 调用方**必传**，单一类型。
-  - 对象写法 + `optionalTypes` → 调用方**必传**，联合类型。
-  - 对象写法 + `value` → 调用方**可选传**（有默认值），可同时配合 `optionalTypes`。
+  - 简写 → **必传**，单一类型。
+  - 对象写法(`type` + `optionalTypes`) → **必传**，联合类型。
+  - 对象写法 如果定义了 `value`字段 → **可选类型**，可同时配合 `optionalTypes`。
 - **禁用 `observable`**：请用 `watch` 代替。
 
 ```ts
 import { DetailedType } from "annil";
-
+type Level = 0 | 1 | 2;
+type User = { id: string; age: number };
+type Cart = { id: string; total: number };
 RootComponent()({
   properties: {
     // ── 必传：简写（构造函数） ──────────────────────────────
@@ -92,10 +89,10 @@ RootComponent()({
     arr: Array, // unknown[]
     obj: Object, // object
 
-    // ── 必传：简写 + DetailedType（精确/字面量/联合类型） ──
+    // ── 必传：简写 + DetailedType ──
     gender: String as DetailedType<"male" | "female">, // "male" | "female"
-    level: Number as DetailedType<0 | 1 | 2>, // 0 | 1 | 2
-    tuple: Array as unknown as DetailedType<[string, number]>, // [string, number]（元组需 as unknown 中转）
+    level: Number as DetailedType<Level>, // Level
+    tuple: Array as unknown as DetailedType<[string, number]>, // [string, number]（元组需 as unknown）
     userOrCart: Object as DetailedType<User | Cart>, // User | Cart
 
     // ── 必传：对象写法 + optionalTypes（跨构造函数联合类型） ──
@@ -105,7 +102,7 @@ RootComponent()({
     },
     genderOrLevel: {
       type: String as DetailedType<"male" | "female">,
-      optionalTypes: [Number as DetailedType<0 | 1 | 2>], // "male" | "female" | 0 | 1 | 2
+      optionalTypes: [Number as DetailedType<Level>], // "male" | "female" | Level
     },
 
     // ── 可选传：对象写法 + value（有默认值） ──────────────────
@@ -134,46 +131,57 @@ RootComponent()({
 
 ### data
 
-|          |          |
-| -------- | -------- |
-| 类型     | `object` |
-| 是否必填 | 否       |
+|          |                  |
+| -------- | ---------------- |
+| 类型     | `DataConstraint` |
+| 是否必填 | 否               |
 
-定义组件内部数据，与原生 `data` 完全一致。与 `properties`、`store`、`computed` 存在重名时报错。
+定义组件内部数据，与原生 `data` 完全一致。与 `properties`存在重名时报错。
 
 ---
 
 ### store
 
-|          |                                   |
-| -------- | --------------------------------- |
-| 类型     | `Record<string, (data) => value>` |
-| 是否必填 | 否                                |
+|          |                   |
+| -------- | ----------------- |
+| 类型     | `StoreConstraint` |
+| 是否必填 | 否                |
 
-定义基于 `mobx` 的全局响应式数据映射。store 字段中的 getter 返回值变化时，会自动 `setData` 到实例。
+定义基于 `mobx` 的响应式数据映射。store 字段中的 getter 返回值变化时，会自动 `setData` 到实例。
 
 - **返回类型不可包含 `undefined`**（运行时无法区分未初始化与显式 undefined）。
-- getter 可接收当前实例的 `properties` + `data` 作为参数（适合依赖属性计算 store）。
+- getter 可接收当前实例的 `properties` + `data` 作为参数。
 - 与 `properties`、`data` 存在重名时报错。
 - 实例上提供 `this.disposer`，其中每个 store 字段对应一个 `IReactionDisposer`，可手动取消监听。
 
 ```ts
-import { userStore } from "../../stores/userStore";
+import { userStore } from "path/userStore";
 
 RootComponent()({
   properties: {
     userId: String,
   },
+  data:{
+    ignoredId:'xxx', 
+  }
   store: {
     // 简单 getter
     userName: () => userStore.name,
-    // 依赖 properties 的 getter
+    // 依赖 properties userId 的 getter
     userInfo: (data) => userStore.users[data.userId],
+    // 特定字段绑定
+    ignored: (data) => {
+      const {userId, ignoredId} = data; 
+      if(userId===ignoredId) return null;
+      return userStore.users[userId];
+    },
   },
   lifetimes: {
     detached() {
       // 取消某个 store 字段监听
       this.disposer.userName();
+      this.disposer.userInfo();
+      this.disposer.ignored();
     },
   },
 });
@@ -183,18 +191,19 @@ RootComponent()({
 
 ### computed
 
-|          |                               |
-| -------- | ----------------------------- |
-| 类型     | `Record<string, () => value>` |
-| 是否必填 | 否                            |
+|          |                      |
+| -------- | -------------------- |
+| 类型     | `ComputedConstraint` |
+| 是否必填 | 否                   |
 
-定义计算属性。计算函数中通过 `this.data` 获取依赖数据，依赖变化（`setData` 触发）后自动重新计算并 `setData`。
+定义计算属性。计算属性(函数)中可使用`this`,当使用到`this.data`时会自动收集依赖数据，依赖数据变化后更新实例上计算属性值。
 
 - `this.data` 中可访问 `properties`、`data`、`store` 及其他 `computed` 字段。
-- `this.data` 是**只读**的（运行时检测），不可直接赋值。
-- 计算属性在实例 `attached` 前完成初始化。
+- `this.data` 是**只读**的（运行时检测）。
+- 计算属性初始化在 `store` 之后, `attached`生命周期前。
 - 与 `properties`、`data`、`store` 存在重名时报错。
-- 若类型推断出错，可显式标注返回类型。
+- 应显式标注返回类型(避免类型推断错误)。
+- 可通过this.data.__computedCache__访问计算属性缓存对象.
 
 ```ts
 RootComponent()({
@@ -207,6 +216,17 @@ RootComponent()({
     agePlusOne() {
       return this.data.age + 1;
     },
+    countPlusAge(): number {
+      return this.data.count + this.data.age;
+    },
+  },
+  lifetimes: {
+    attached() {
+      console.log(this.data.countPlusOne); // 2
+      console.log(this.data.agePlusOne); // userStore.age + 1
+      console.log(this.data.countPlusAge); // count + age
+      console.log(this.data.__computedCache__); // 计算属性缓存
+    },
   },
 });
 ```
@@ -215,29 +235,39 @@ RootComponent()({
 
 ### events
 
-|          |                                            |
-| -------- | ------------------------------------------ |
-| 类型     | `Record<string, (e: WMBaseEvent) => void>` |
-| 是否必填 | 否                                         |
+|          |                    |
+| -------- | ------------------ |
+| 类型     | `EventsConstraint` |
+| 是否必填 | 否                 |
 
-定义组件/页面的 wxml 事件处理函数（`bindtap`、`catchtap` 等绑定的方法）。
+声明组件/页面的 wxml 事件处理函数（`bindtap`、`catchtap` 等绑定的方法）。
 
 当 `RootComponent` 传入子组件类型列表时，`events` 字段会提供子组件事件名的类型约束及参数提示。事件名支持后缀修饰：
 
-| 后缀             | 含义                     |
-| ---------------- | ------------------------ |
-| `_bubbles`       | 子组件冒泡事件           |
-| `_capture`       | 子组件捕获事件           |
-| `_bubbles_catch` | 冒泡事件，并阻止继续传递 |
-| `_capture_catch` | 捕获事件，并阻止继续传递 |
+| 后缀             | 含义                               |
+| ---------------- | ---------------------------------- |
+| `_bubbles`       | 子组件冒泡事件                     |
+| `_capture`       | 子组件捕获事件                     |
+| `_bubbles_catch` | 子组件冒泡穿透事件，并阻止继续传递 |
+
+annil 提供了一些内置事件参数类型：WMBaseEvent(默认),Dataset,Mark,Detail,CurrentTargetDataset,TargetDataset...
 
 ```ts
 RootComponent<[ComponentDocA]>()({
   events: {
-    // 普通事件，e 类型为 WMBaseEvent
-    onTap(e) {},
-    // 子组件冒泡事件，e.detail 类型由 ComponentDocA 推导
-    itemA_click_bubbles(e) {},
+    // 普通wxml中定义的事件。
+    onTap(e) {e.detail //e 默认为 WMBaseEvent },
+    // 子组件冒泡事件。使用Dataset定义事件参数，currentTargetDataset为触发事件的子组件dataset，targetDataset为事件源组件dataset。
+    itemA_click_bubbles(e:Dataset<{ currentTargetDataset: number }, { targetDataset: string }, number>) {
+        const { currentTargetDataset, targetDataset,detail } = e.detail;
+        console.log(currentTargetDataset); // number，子组件dataset
+        console.log(targetDataset); // string，事件源组件dataset
+        console.log(detail); // number，事件参数
+    },
+    // 子组件捕获事件。
+    itemA_click_capture(e) {},
+    // 子组件冒泡穿透事件，阻止继续传递。
+    itemA_click_bubbles_catch (e) {},
   },
 });
 ```
@@ -246,14 +276,15 @@ RootComponent<[ComponentDocA]>()({
 
 ### customEvents
 
-|          |                                                                              |
-| -------- | ---------------------------------------------------------------------------- |
-| 类型     | `Record<string, DetailedType \| [DetailedType, ...] \| { detail, options }>` |
-| 是否必填 | 否                                                                           |
-| 可用条件 | `isPage: false`（页面时不可用）                                              |
+|          |                               |
+| -------- | ----------------------------- |
+| 类型     | `CustomEventConstraint`       |
+| 是否必填 | 否                            |
+| 可用条件 | `isPage: false`（组件时可用） |
 
-定义组件对外触发的自定义事件。定义后可在 `methods` 中通过 `this.事件名(detail)` 直接触发，无需手动调用 `triggerEvent`。
+定义组件对外触发的自定义事件。通过 `this.事件名(detail)` 调用。
 
+- detail字段 可通过 `DetailedType` 声明精确类型。
 - 与 `events` 字段存在重名时报错。
 - `options` 支持 `bubbles`、`composed`、`capturePhase` 的任意合法组合。
 
@@ -262,7 +293,7 @@ RootComponent()({
   customEvents: {
     // detail 类型为 number
     confirm: Number,
-    // detail 类型为 "male" | "female" | number
+    // detail 联合类型 "male" | "female" | number
     select: [String as DetailedType<"male" | "female">, Number],
     // 带事件选项
     close: {
@@ -283,17 +314,14 @@ RootComponent()({
 
 ### watch
 
-|          |                                                                            |
-| -------- | -------------------------------------------------------------------------- |
-| 类型     | `Record<string \| "field.**" \| "field.subKey", (newVal, oldVal) => void>` |
-| 是否必填 | 否                                                                         |
+|          |             |
+| -------- | ----------- |
+| 类型     | WatchOption |
+| 是否必填 | 否          |
 
-监听数据字段变化，使用 `JSON.stringify` 深度相等比较（与原生 `observers` 的引用比较不同）。可监听 `properties`、`data`、`store`、`computed` 及注入数据。
+watch监听数据(包含注入数据)真正变化时(structural比较)触发回调函数,回调参数为`(newVal, oldVal)`。
 
-- 直接写字段名监听整个字段：`fieldName(newVal, oldVal) {}`。
-- 写 `field.subKey` 监听对象一级子字段。
-- 写 `field.**` 监听整个对象（回调参数排除 `null`，旧值保留 `null`）。
-- 回调支持 `async`。
+- 字段写法同原生 `observers`，只是做了深度比较和旧值参数的扩展。
 
 ```ts
 RootComponent()({
@@ -318,7 +346,7 @@ RootComponent()({
 
 根据 `isPage` 的值，该字段有两种形态：
 
-**构建组件时（`isPage: false`）**：表示组件所在页面的生命周期，对应原生 `pageLifetimes`，并额外扩展了 `load` 周期（需基础库 `>= 3.0.2`，且组件须为同步组件）。
+**构建组件时（`isPage: false`）**：表示组件所在页面的生命周期，对应原生 `pageLifetimes`。
 
 ```ts
 RootComponent()({
@@ -326,12 +354,11 @@ RootComponent()({
     show() {},
     hide() {},
     resize(size) {},
-    load(props) {}, // 扩展，基础库 >= 3.0.2
   },
 });
 ```
 
-**构建页面时（`isPage: true`）**：表示页面生命周期，`onLoad` 的参数类型由 `properties` 推导。
+**构建页面时（`isPage: true`）**：表示页面生命周期，把原生中应该放在methods中的声明周期移到了pageLifetimes中，`onLoad` 的参数类型由 `properties` 推导。
 
 ```ts
 RootComponent()({

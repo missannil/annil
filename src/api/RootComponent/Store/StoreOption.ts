@@ -33,7 +33,7 @@ export type StoreOption<
     & TStore
     & Validators<[
       G.DuplicateFieldValidator<TStore, TDuplicateKeys, "字段重复">,
-      TypeValidator<TStore>,
+      // TypeValidator<TStore>,
     ]>;
 };
 /**

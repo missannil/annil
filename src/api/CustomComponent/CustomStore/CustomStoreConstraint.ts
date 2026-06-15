@@ -9,5 +9,5 @@ export type CustomStoreConstraint<
   PropertyDoc extends object,
   legal extends object,
 > = {
-  [k in keyof legal]?: Getter<PropertyDoc, AddNullForObject<legal[k]>>;
+  [k in keyof legal]?: Getter<PropertyDoc, AddNullForObject<legal[k]> | undefined>;
 };

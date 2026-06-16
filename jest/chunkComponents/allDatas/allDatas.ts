@@ -1,3 +1,4 @@
+import { observable } from "mobx";
 import {
   type Bubbles,
   ChunkComponent,
@@ -9,14 +10,21 @@ import {
   typeEqual,
 } from "../../../src";
 import type { User } from "../../common";
+const storeUser = observable({
+  age: 10,
+  name: "annil",
+  changeAge() {
+    this.age += 1;
+  },
+});
 const slot = ChunkComponent<Root, "slot">()({
   data: {
     slot_num: 123,
     slot_str: "a",
   },
   store: {
-    _slot_num: () => 456,
-    _slot_str: () => "b",
+    _slot_num: () => storeUser.age,
+    _slot_str: () => storeUser.name,
   },
   computed: {
     slot_count() {
@@ -47,7 +55,7 @@ const subComp = CustomComponent<Root, Mock_SubComponent>()({
     xxx_user: null,
   },
   store: {
-    _xxx_str: () => "d",
+    _xxx_str: () => storeUser.name,
   },
   computed: {
     _xxx_num() {
@@ -74,7 +82,7 @@ const rootComponent = RootComponent()({
     },
   },
   store: {
-    _str: () => "_str",
+    _str: () => storeUser.name,
   },
   lifetimes: {
     created() {

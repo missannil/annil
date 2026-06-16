@@ -24,11 +24,12 @@ Environment:
 What it does:
   1. git add -A
   2. git commit -m "..."
-  3. git pull --rebase <remote> <base>
-  4. git push --force-with-lease <remote> <branch>
-  5. create or reuse a pull request
-  6. wait for GitHub Actions checks
-  7. merge the PR automatically
+  3. npm run test -- --watch=false --watchAll=false
+  4. git pull --rebase <remote> <base>
+  5. git push --force-with-lease <remote> <branch>
+  6. create or reuse a pull request
+  7. wait for GitHub Actions checks
+  8. merge the PR automatically
 `);
 }
 
@@ -105,6 +106,10 @@ function run(command, args, { capture = false } = {}) {
 
 function git(args, options) {
   return run("git", args, options);
+}
+
+function npmRun(args, options) {
+  return run("npm", ["run", ...args], options);
 }
 
 function hasRemoteBranch(remote, branch) {
@@ -292,6 +297,7 @@ async function main() {
 
   git(["add", "-A"]);
   git(["commit", "-m", options.commitMessage]);
+  npmRun(["test", "--", "--watch=false", "--watchAll=false"]);
   git(["pull", "--rebase", options.remote, options.base]);
 
   if (hasRemoteBranch(options.remote, currentBranch)) {

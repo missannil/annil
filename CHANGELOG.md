@@ -4,6 +4,23 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.15.0](https://github.com/missannil/annil/compare/v1.14.0...v1.15.0) (2026-06-16)
+
+
+### Features
+
+* store加入为依赖验证和返回值为undefined时的警告 ([8c19098](https://github.com/missannil/annil/commit/8c1909805db762607549c59e4d5ae5b7040debf5))
+* 自动化合并 ([cfad291](https://github.com/missannil/annil/commit/cfad291e3c238147419b2e467cc7598e8153f1d4))
+* 自动化合并 ([277e295](https://github.com/missannil/annil/commit/277e295927fcf7a5240394a508736a59802dc1e9))
+* 自动化合并3 ([5de49b0](https://github.com/missannil/annil/commit/5de49b03b115c19d420c18af97b27910e2fe59b5))
+* 自动化合并3 ([#284](https://github.com/missannil/annil/issues/284)) ([77515c7](https://github.com/missannil/annil/commit/77515c70b2e3c14ceca232fd0c80135061a625a9))
+
+
+### Bug Fixes
+
+* release-please-action@v4-[@v5](https://github.com/v5) ([ecf54a2](https://github.com/missannil/annil/commit/ecf54a2dc0c082adbc9d2a876667c09195ba081d))
+* 去除组件load声明周期 ([241c89a](https://github.com/missannil/annil/commit/241c89a76ade24ab2dfa70c25d0c54679edcb739))
+
 ## [1.14.0](https://github.com/missannil/annil/compare/v1.13.2...v1.14.0) (2026-06-05)
 
 

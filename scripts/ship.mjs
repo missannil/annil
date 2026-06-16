@@ -107,6 +107,19 @@ function git(args, options) {
   return run("git", args, options);
 }
 
+function hasRemoteBranch(remote, branch) {
+  const result = spawnSync("git", ["ls-remote", "--exit-code", "--heads", remote, branch], {
+    encoding: "utf8",
+    stdio: ["ignore", "pipe", "pipe"],
+  });
+
+  if (result.error) {
+    throw result.error;
+  }
+
+  return result.status === 0;
+}
+
 function getToken() {
   const token = process.env.GH_TOKEN ?? process.env.GITHUB_TOKEN;
   if (!token) {
@@ -280,7 +293,13 @@ async function main() {
   git(["add", "-A"]);
   git(["commit", "-m", options.commitMessage]);
   git(["pull", "--rebase", options.remote, options.base]);
-  git(["push", "--force-with-lease", "--set-upstream", options.remote, currentBranch]);
+
+  if (hasRemoteBranch(options.remote, currentBranch)) {
+    git(["push", "--force-with-lease", "--set-upstream", options.remote, currentBranch]);
+  } else {
+    console.log(`Remote branch ${options.remote}/${currentBranch} not found. Creating it...`);
+    git(["push", "--set-upstream", options.remote, currentBranch]);
+  }
 
   let pullRequest = await findOpenPullRequest(token, owner, repo, currentBranch, options.base);
 

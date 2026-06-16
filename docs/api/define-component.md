@@ -80,17 +80,17 @@ typeEqual<$Index>()(index);
 
 1. `rootComponent`
 
-- 类型为 `RootComponentDefinition`。
+- 类型 [RootComponentDefinition](https://github.com/missannil/annil/blob/main/src/api/RootComponent/returnType.ts)
 
 2. `path` / `name`
 
-- 类型为 `NameOrPathOption`
+- 类型 [NameOrPathOption](https://github.com/missannil/annil/blob/main/src/api/DefineComponent/nameOrPath/nameOrPathOption.ts)
 - 当 `rootComponent.isPage === true` 时，使用 `path`，类型为 `/${string}`。
 - 当 `rootComponent.isPage` 不存在或为 `false` 时，使用 `name`，类型为非空且不包含下划线和空格的字符串。
 
 3. `subComponents`
 
-- 类型为 `ComponentDoc`[]
+- 类型 [CustomComponentDefinition](https://github.com/missannil/annil/blob/main/src/api/CustomComponent/returnType.ts)[]
 
 ## 参考
 

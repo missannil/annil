@@ -2,7 +2,7 @@ import type { IfExtends } from "hry-types/src/Any/IfExtends";
 
 import type { CustomComponentDefinition, CustomComponentDefinitionRuntime } from "../CustomComponent/returnType";
 import type { RootComponentDefinition, RootComponentDefinitionRuntime } from "../RootComponent/returnType";
-import type { NameOrPathOption } from "./NameOrPage/NameOrPathOption";
+import type { NameOrPathOption } from "./NameOrPath/NameOrPathOption";
 import { normalizeOptions } from "./normalizeOptions";
 import type { GenerateComponentDoc } from "./returnType/GenerateComponentDoc";
 import type { GeneratePageDoc } from "./returnType/GeneratePageDoc";

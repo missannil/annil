@@ -16,21 +16,24 @@ test("store数据初始化在attached周期", async () => {
   const parent = document.createElement("parent-wrapper");
 
   comp.attach(parent);
-
+  // 1. 初始值正确
   expect(comp.instance.data.age).toBe(20);
   expect(comp.instance.data.chunkAge).toBe(20);
   expect(comp.instance.data.custom_age).toBe(20);
   storeUser.changeAge();
+  // 2. store字段响应式更新
   expect(comp.instance.data.age).toBe(21);
   expect(comp.instance.data.chunkAge).toBe(21);
   expect(comp.instance.data.custom_age).toBe(21);
+  // 3. 手动调用 disposer 解绑 reaction 后，字段不再响应式
   //  @ts-ignore
   comp.instance.disposer.age();
   storeUser.changeAge();
   expect(comp.instance.data.age).toBe(21); // 这里不变，因为age已经解绑了
   expect(comp.instance.data.chunkAge).toBe(22);
   expect(comp.instance.data.custom_age).toBe(22);
-  comp.detach(); // 卸载组件时会触发全部解绑
+  // 4. 卸载组件时会触发全部解绑逻辑，验证是否生效
+  comp.detach();
   storeUser.changeAge(); // 触发store状态更改,但是已经解绑了,不会触发组件数据更新
   expect(comp.instance.data.age).toBe(21); // 这里不变，因为已经解绑了
   expect(comp.instance.data.chunkAge).toBe(22); // 这里不变，因为已经解绑了

@@ -45,12 +45,12 @@ export function reactionRegister(this: Instance, storeConfig: StoreConstraint) {
 
     // 4. 验证
     if (firstRunValue === undefined) {
-      console.warn(`store字段${key}的getter函数返回了undefined，该字段将不会被注册为响应式字段。`);
+      console.warn(`store字段 ${key} 的getter函数返回了undefined，该字段将不会被注册为响应式字段。`);
       continue;
     }
 
     if (!hasObservableDependency) {
-      throw new Error(`store字段${key}的getter函数没有依赖任何响应式数据，该字段不会注册reaction。`);
+      throw new Error(`store字段 ${key} 的getter函数没有依赖任何响应式数据。`);
     }
 
     // 5. 正式绑定

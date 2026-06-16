@@ -37,4 +37,3 @@ export type CustomComponentDefinitionRuntime = {
     | PageLifetimesOption<false, object>["pageLifetimes"]
     | PageLifetimesOption<true, object>["pageLifetimes"];
 };
-// import type { CustomComponentRuntime } from "../CustomComponent";

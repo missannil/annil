@@ -17,10 +17,7 @@ test("store getter返回undefined时console.warn警告且字段不可响应", ()
 
   // 1. console.warn 被调用，提示 getter 返回了 undefined
   expect(warnSpy).toHaveBeenCalledWith(
-    expect.stringContaining("store字段"),
-  );
-  expect(warnSpy).toHaveBeenCalledWith(
-    expect.stringContaining("getter函数返回了undefined"),
+    expect.stringContaining("store字段 undefinedField 的getter函数返回了undefined，该字段将不会被注册为响应式字段。"),
   );
 
   // 2. undefinedField 不在 data 中（setData 未被调用写入该字段）

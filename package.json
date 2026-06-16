@@ -12,6 +12,7 @@
   "scripts": {
     "coverage": "jest --coverage",
     "prepare": "husky install",
+    "ship": "node scripts/ship.mjs",
     "lint": "eslint . --max-warnings 0",
     "fmt": "dprint fmt",
     "tsc": "tsc --watch",

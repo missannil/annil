@@ -4,6 +4,14 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.15.1](https://github.com/missannil/annil/compare/v1.15.0...v1.15.1) (2026-06-16)
+
+
+### Bug Fixes
+
+* ts6.xxx要去显示的声明rootDir字段 ([f400d04](https://github.com/missannil/annil/commit/f400d04373b513e9cbe60e8f5783d44727fdb2ec))
+* ts6.xxx要去显示的声明rootDir字段  ([#286](https://github.com/missannil/annil/issues/286)) ([7b0300f](https://github.com/missannil/annil/commit/7b0300f374f691b502a270fc3ff40a45391466f1))
+
 ## [1.15.0](https://github.com/missannil/annil/compare/v1.14.0...v1.15.0) (2026-06-16)
 
 

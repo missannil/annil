@@ -34,7 +34,7 @@ CustomComponent<{
     // @ts-expect-error 3 超出约束字段
     nu1m: () => user.age,
     // @ts-expect-error 4 与data的内部字段重复
-    aaa_xxx: () => user.age,
+    _aaa_xxx: () => user.age,
   },
 });
 CustomComponent<{
@@ -55,6 +55,6 @@ CustomComponent<{
 }, DocA>()({
   store: {
     // @ts-expect-error 返回类型错误
-    aaa_num: () => undefined,
+    aaa_num: () => "str",
   },
 });

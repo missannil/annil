@@ -2,11 +2,12 @@
   "compilerOptions": {
     "lib": ["ES2022", "DOM"], // jest中用到了DOM类型
     "target": "ES2017",
-    "module": "ES2022",
-    "moduleResolution": "Node",
+    "module": "es2022",
+    "moduleResolution": "bundler",
     "skipLibCheck": true, // 跳过声明文件的类型检查(.d.ts),你引用的依然会检查, 默认false(不跳过)。
     "esModuleInterop": true, // 默认false. 兼容非ES模块引用的写法(如 import fs from 'fs').
     "allowSyntheticDefaultImports": true, // 默认false. 允许从没有设置默认导出的模块中默认导入。
+    "verbatimModuleSyntax": true, // 保留原始import/export语法, 与ESM写法一致。
     "strict": true,
     "noEmit": true, // 不生成输出文件。
     // "resolveJsonModule": true, // 允许导入json模块。
@@ -16,7 +17,6 @@
     "exactOptionalPropertyTypes": true, // 带有?标志的属性类型不在包含undefined类型
     "noImplicitReturns": true, // 当启用时,TypeScript会检查函数中的所有代码路径，以确保它们返回值
     "isolatedModules": true, // 模块化(.ts文件必须有导入或导出) 默认false
-    // "verbatimModuleSyntax": true, // 5.0后新增配置,替代preserveValueImports。
     "types": ["hry-types", "mobx", "jest", "miniprogram-api-typings", "node"]
   },
   "include": ["src/**/*.ts", "jest/**/*.ts"],

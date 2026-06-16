@@ -13,9 +13,6 @@ RootComponent()({
     resize() {
       void 0;
     },
-    load(props) {
-      void props;
-    },
     // @ts-expect-error 1 错误的声明周期
     xxx() {
       void 0;

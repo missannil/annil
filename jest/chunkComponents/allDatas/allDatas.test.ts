@@ -11,13 +11,13 @@ describe("slot数据", () => {
     expect(comp.instance.data.user).toBe(null);
     expect(comp.instance.data.count).toBe(100);
     expect(comp.instance.data.str).toBe("c");
-    expect(comp.instance.data._str).toBe("_str");
+    expect(comp.instance.data._str).toBe("annil");
   });
   test("subComp-allDatas", () => {
     expect(comp.instance.data.xxx_num).toBe(1);
 
     expect(comp.instance.data.xxx_user).toBe(null);
-    expect(comp.instance.data._xxx_str).toBe("d");
+    expect(comp.instance.data._xxx_str).toBe("annil");
     expect(comp.instance.data._xxx_num).toBe(123);
   });
   test("slot-data", () => {
@@ -26,13 +26,13 @@ describe("slot数据", () => {
     expect(comp.instance.data.slot_str).toBe("a");
   });
   test("slot-store", () => {
-    expect(comp.instance.data._slot_num).toBe(456);
+    expect(comp.instance.data._slot_num).toBe(10);
 
-    expect(comp.instance.data._slot_str).toBe("b");
+    expect(comp.instance.data._slot_str).toBe("annil");
   });
   test("slot-data", () => {
-    expect(comp.instance.data.slot_count).toBe(679);
+    expect(comp.instance.data.slot_count).toBe(233);
 
-    expect(comp.instance.data._slot_Cstr).toBe("ab_str");
+    expect(comp.instance.data._slot_Cstr).toBe("aannilannil");
   });
 });

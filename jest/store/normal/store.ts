@@ -1,4 +1,4 @@
-import { ChunkComponent, CustomComponent, DefineComponent, RootComponent } from "../../src";
+import { ChunkComponent, CustomComponent, DefineComponent, RootComponent } from "../../../src";
 import { storeUser } from "./store.test";
 
 const chunk = ChunkComponent<Root>()({

@@ -6,7 +6,8 @@ import { getPathsValue } from "./getPathsValue";
 import { getPropertiesValue } from "./getPropertiesValue";
 import { hasComputedPath } from "./hasComputedPath";
 
-function initWatchOldValue(
+// 初始化watch监控字段的旧值对象,排除有计算属性的字段。
+function initWatchOldValuesWithoutComputed(
   data: FinalOptionsOfComponent["data"],
   watchConfig: object,
   computedKeys: string[],
@@ -27,6 +28,7 @@ function observerHandler(
   watchHadle: Func,
   ...newValue: unknown[]
 ) {
+  // 先调用原生observers的回调函数,再调用watch的回调函数。因为watch的回调函数可能会用到原生observers回调函数中更新的数据。
   originObserversHandle?.call(this, ...newValue);
   const watchOldValue = nonNullable(this.data.__watchOldValue__);
   const oldValue = watchOldValue[key];
@@ -34,7 +36,15 @@ function observerHandler(
   watchOldValue[key] = deepClone(newValue);
   watchHadle.call(this, ...newValue, ...oldValue);
 }
-export function watchHandler(
+
+/**
+ * 把watch配置转换成observers配置的形式,并在回调函数中调用watch的回调函数。
+ * 小程序的observers是通过监控setData字段,来触发的,不会比较值的变化,小程序底层代码可以监控到properties变化时的setData动作.
+ * watch字段的目的是数据变化时才触发回调函数,但由于实例中无法通过setData的调用来监听到properties字段变化,所以watch字段的实现方式是通过在observers回调函数中比较新旧值来实现的。
+ * 还要在组件实例上维护一个__watchOldValue__对象来存储watch监控字段的旧值，以便在回调函数中进行比较。
+ * @param finalOptionsForComponent
+ */
+export function handleWatchConfig(
   finalOptionsForComponent: FinalOptionsOfComponent,
 ) {
   const { observers: observersConfig, watch: watchConfig, data, properties, computed: computedConfig } =
@@ -42,7 +52,11 @@ export function watchHandler(
   if (!isEmptyObject(watchConfig)) {
     const rawPropertiesValue = getPropertiesValue(properties);
     const computedKeys = Object.keys(computedConfig);
-    data.__watchOldValue__ = initWatchOldValue({ ...data, ...rawPropertiesValue }, watchConfig, computedKeys);
+    data.__watchOldValue__ = initWatchOldValuesWithoutComputed(
+      { ...data, ...rawPropertiesValue },
+      watchConfig,
+      computedKeys,
+    );
     for (const key in watchConfig) {
       const watchHadle = watchConfig[key];
       const originObserversHandle = observersConfig[key] as Func | undefined;

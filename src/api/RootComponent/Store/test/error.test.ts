@@ -8,7 +8,7 @@ const user = observable({
 // 1 约束错误
 RootComponent()({
   store: {
-    // @ts-expect-error 1.1 不能将类型“string”分配给类型“() => unknown”
+    // @ts-expect-error 1.1 不能将类型“string”分配给类型“Getter<{}, unknown>”
     userName: user.name,
   },
 });
@@ -26,12 +26,5 @@ RootComponent()({
     userName: () => user.name,
     // @ts-expect-error 2.2 与userAge字段重复
     userAge: () => user.age,
-  },
-});
-// 3. 返回类型错误
-RootComponent()({
-  store: {
-    // @ts-expect-error 3.1 返回类型中不可以包含undefined
-    xxx: () => "xxx" as string | undefined,
   },
 });

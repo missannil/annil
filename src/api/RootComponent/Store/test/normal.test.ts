@@ -1,5 +1,5 @@
-import { Checking, type Test } from "hry-types";
 import { observable } from "mobx";
+import { typeEqual } from "../../../../utils/_utils";
 import { RootComponent } from "../..";
 const user = observable({
   name: "zhao",
@@ -7,18 +7,29 @@ const user = observable({
 });
 
 const storeDoc = RootComponent()({
+  properties: {
+    condition: Number,
+  },
   store: {
+    // normal
     userName: () => user.name,
-    userAge: () => user.age,
+    // 条件反应式,当condition>10时,响应式,否则不可响应式(返回undefined),但不报错(有警告).
+    userAge: (props) => {
+      if (props.condition > 10) {
+        return user.age;
+      }
+      return undefined;
+    },
   },
 });
-void storeDoc;
-interface StoreDocExpected {
+
+type StoreDocExpected = {
+  properties: {
+    condition: number;
+  };
   store: {
     userName: string;
-    userAge: number;
+    userAge: number | undefined;
   };
-}
-
-// 返回类型为函数返回类型
-void Checking<typeof storeDoc, StoreDocExpected, Test.Pass>;
+};
+typeEqual<StoreDocExpected>()(storeDoc);

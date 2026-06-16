@@ -51,6 +51,18 @@ npm i annil
 - [watch](./docs/demo/watch.md)
 - [store](./docs/demo/store.md)
 
+### 自动提交
+
+如果你已经把仓库的 PR 合并限制放宽，并且只要 `test.yml` 通过就可以自动合并，可以直接用这个命令把整条链路串起来。
+
+```bash
+GH_TOKEN=xxxx npm run ship -- "feat: your message"
+```
+
+它会自动执行 `git add -A`、`git commit`、`git pull --rebase origin main`、`git push`、创建或复用 PR、等待 GitHub Actions 检查通过，然后自动合并。
+
+需要一个带有仓库权限的 GitHub token，环境变量用 `GH_TOKEN` 或 `GITHUB_TOKEN` 都可以。
+
 ### 特点
 
 [代码片段](https://developers.weixin.qq.com/s/kRjkFlme7nTV)
@@ -132,7 +144,9 @@ npm i annil
 {
   "compilerOptions": {
     "target": "ES2022",
-    "moduleResolution": "node",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "verbatimModuleSyntax": true,
     "skipLibCheck": true, // 跳过声明文件的类型检查(.d.ts)。
     "esModuleInterop": true, // 默认false. 兼容非ES模块引用的写法(如 import type mobx from 'mobx'等).
     "strict": true, // 启用严格模式

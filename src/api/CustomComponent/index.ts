@@ -31,10 +31,7 @@ import type { CreatCustomComponentDoc } from "./CustomReturnType/CreateCustomCom
 import type { CustomStoreConstraint } from "./CustomStore/CustomStoreConstraint";
 import type { CustomStoreOption } from "./CustomStore/CustomStoreOption";
 import type { CustomWatchOption } from "./CustomWatch/CustomWatchOption";
-// type getLegalKeys<K> = K extends Exclude<CompDocKeys, (keyof (InheritDoc & SubDataDoc))> ? K
-//   : K extends keyof AllRootDataDoc ? never
-//   : K extends Extract<Exclude<keyof NoInfer<TSubStore>, keyof SubDataDoc>, InnerFields<Prefix>> ? K
-//   : never;
+
 type Options<
   RootDoc extends RootComponentDefinition,
   IsPage extends boolean,
@@ -94,15 +91,6 @@ type Options<
           : never;
     }[keyof NoInfer<TSubStore>]
   >
-  // 下面为之前的写法 不好与根组件的字段重复检测。
-
-  // // 合法的字段(继承组件类型的keys)
-  // | Exclude<CompDocKeys, (keyof (InheritDoc & SubDataDoc))>
-  // // 合法的内部字段(不与data重复的内部字段)
-  // | Extract<Exclude<keyof NoInfer<TSubStore>, keyof SubDataDoc>, InnerFields<Prefix>>
-  // 不与allData重复的字段
-  // | Exclude<keyof NoInfer<TSubStore>, keyof AllRootDataDoc>
-
   & CustomComputedOption<
     TSubComputed,
     {

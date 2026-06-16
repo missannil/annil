@@ -18,7 +18,7 @@ import type { ComputedCache } from "./initComputed/initComputedAndGetCache";
 import { injectInfoHandler } from "./injectInfoHandler";
 import { InternalFieldProtection } from "./internalFieldProtection";
 import { sameFuncOptionsHandle } from "./sameFuncOptionsHandle";
-import { watchHandler } from "./watchHandler";
+import { handleWatchConfig } from "./watchHandler";
 // 因为watch字段可能有多个变量,所以在这里定义的value是一个数组
 export type WatchOldValue = Record<string, unknown[]>;
 export type ThrottleDebounce = Partial<Record<"throttle" | "debounce", Record<string, number>>>;
@@ -116,7 +116,7 @@ export function normalizeOptions(
   applyDebounceAndThrottle(finalOptionsForComponent.methods);
 
   // 处理watch配置,注意的是 oldValue中的计算属性初始赋值在计算属性初始化完毕后,即计算属性初始化后,再变化时才会被watch到。
-  watchHandler(finalOptionsForComponent);
+  handleWatchConfig(finalOptionsForComponent);
 
   // BBeforeCreate在最后面,让BeforeCreate生命周期运行在最终建立组件时。用于测试。
   finalOptionsForComponent.behaviors.push(BBeforeCreate);

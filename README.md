@@ -177,8 +177,6 @@ GH_TOKEN=xxxx npm run ship -- "feat: your message"
 
   [ChunkComponent](./docs/api/chunk-component.md)
 
-  [SubComponent(旧)](./docs/api/sub-component.md)
-
   [instanceConfig](./docs/api/instance-config.md)
 
 - **常用API**

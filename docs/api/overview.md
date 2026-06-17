@@ -22,7 +22,3 @@ Annil 的公开 API 以 `src/index.ts` 导出为准，建议按“组件构建 +
 - `CreateComponentType`
 - `ExtendComponentType`
 - `Vant / Wm`
-
-## 兼容说明
-
-- 旧文档中的 `SubComponent` 路线保留在 [SubComponent（旧）](./sub-component.md)，用于历史项目兼容参考。

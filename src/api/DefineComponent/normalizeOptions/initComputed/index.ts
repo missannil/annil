@@ -7,15 +7,6 @@ import type { Instance } from "../../../RootComponent/Instance/RootComponentInst
 import { getPathsValue } from "../watchHandler/getPathsValue";
 import { hasComputedPath } from "../watchHandler/hasComputedPath";
 import { initComputedAndGetCache } from "./initComputedAndGetCache";
-// function initWatchOldValue(this: Instance, watchConfig: object): WatchOldValue {
-//   const watchOldValue: Record<string, unknown[]> = {};
-//   for (const key in watchConfig) {
-//     watchOldValue[key] = deepClone(getPathsValue(this.data, key));
-//   }
-
-//   return watchOldValue;
-// }
-
 /**
  * 初始化会在2个时间渲染,一个是observers.**的回调函数,一个是attached周期。
  * @param computedConfig

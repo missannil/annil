@@ -44,7 +44,7 @@ RootComponent()({
   pageLifetimes: {
     onLoad(data) {
       Checking<typeof data, {
-        optionalObj?: {
+        optionalObj: {
           name: string;
         };
         obj: object;

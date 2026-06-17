@@ -34,7 +34,6 @@ export default defineConfig({
           { text: 'CustomComponent', link: '/api/custom-component' },
           { text: 'ChunkComponent', link: '/api/chunk-component' },
           { text: 'instanceConfig', link: '/api/instance-config' },
-          { text: 'SubComponent（旧）', link: '/api/sub-component' },
           { text: 'wxSugar', link: '/api/wx-sugar' }
         ]
       },

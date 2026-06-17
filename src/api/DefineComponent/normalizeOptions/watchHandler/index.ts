@@ -52,6 +52,7 @@ export function handleWatchConfig(
   if (!isEmptyObject(watchConfig)) {
     const rawPropertiesValue = getPropertiesValue(properties);
     const computedKeys = Object.keys(computedConfig);
+
     data.__watchOldValue__ = initWatchOldValuesWithoutComputed(
       { ...data, ...rawPropertiesValue },
       watchConfig,
@@ -61,12 +62,14 @@ export function handleWatchConfig(
       const watchHadle = watchConfig[key];
       const originObserversHandle = observersConfig[key] as Func | undefined;
       // 在监控多个数据时,参数是多个值
-      observersConfig[key] = function(this: Instance, ...newValue: unknown[]) {
+      observersConfig[key] = function(this: Instance, ...values: unknown[]) {
+        // 计算属性初始化完成时直接调用。
         if (this.data.__computedInited__) {
-          observerHandler.call(this, key, originObserversHandle, watchHadle, ...newValue);
+          observerHandler.call(this, key, originObserversHandle, watchHadle, ...values);
         } else {
+          // 计算属性未初始化完成时,先把watch的回调函数注册到实例上,等计算属性初始化完成时再调用。因为计算属性初始化完成时会把data中的值setData一次,会触发observers回调函数,所以在这里注册watch的回调函数,就能保证计算属性初始化完成后能正确调用watch的回调函数。
           (this.data.__oberverHandler__ ||= []).push(
-            observerHandler.bind(this, key, originObserversHandle, watchHadle, ...newValue),
+            observerHandler.bind(this, key, originObserversHandle, watchHadle, ...values),
           );
         }
       };

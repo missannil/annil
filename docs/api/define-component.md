@@ -84,7 +84,7 @@ typeEqual<$Index>()(index);
 
 2. `path` / `name`
 
-- 类型 [NameOrPathOption](https://github.com/missannil/annil/blob/main/src/api/DefineComponent/nameOrPath/nameOrPathOption.ts)
+- 类型 [NameOrPathOption](https://github.com/missannil/annil/blob/main/src/api/DefineComponent/NameOrPath/NameOrPathOption.ts)
 - 当 `rootComponent.isPage === true` 时，使用 `path`，类型为 `/${string}`。
 - 当 `rootComponent.isPage` 不存在或为 `false` 时，使用 `name`，类型为非空且不包含下划线和空格的字符串。
 

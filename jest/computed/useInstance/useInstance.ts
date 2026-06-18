@@ -1,11 +1,18 @@
-import { ChunkComponent, DefineComponent, RootComponent } from "../../../src";
+import { DefineComponent, RootComponent, SubComponent } from "../../../src";
+import type { ComponentDoc } from "../../../src/api/DefineComponent/returnType/ComponentDoc";
 
-const subA = ChunkComponent<Root>()({
+type $SubA = ComponentDoc<{
+  properties: {
+    compA_num: number;
+    compA_instanceId: string;
+  };
+}>;
+const subA = SubComponent<Root, $SubA>()({
   data: {
     compA_num: 0,
   },
   computed: {
-    instanceId() {
+    compA_instanceId() {
       // console.log("this.id === 'annil' => true");
       return this.id;
     },

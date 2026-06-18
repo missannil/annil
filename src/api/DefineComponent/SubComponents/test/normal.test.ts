@@ -1,15 +1,15 @@
 import { typeEqual } from "../../../../utils/typeEqual";
-import type { CustomComponentDefinition } from "../../../CustomComponent/returnType";
 import type { Bubbles, Composed } from "../../../RootComponent/CustomEvents/CustomEventsTag";
+import type { SubComponentDefinition } from "../../../SubComponent/returnType";
 import { DefineComponent } from "../..";
 
-const SubDocIsAny = {} as CustomComponentDefinition<{
+const SubDocIsAny = {} as SubComponentDefinition<{
   composedEvents: {
     a: number | Composed;
   };
 }>;
 
-const NonEmptyRootDoc = {} as CustomComponentDefinition<{
+const NonEmptyRootDoc = {} as SubComponentDefinition<{
   composedEvents: {
     a: string | Bubbles | Composed;
   };

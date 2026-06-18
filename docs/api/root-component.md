@@ -1025,4 +1025,4 @@ DefineComponent({
 ## 参考
 
 - 源码：[src/api/RootComponent](https://github.com/missannil/annil/tree/main/src/api/RootComponent)
-- 相关 API：[DefineComponent](./define-component.md) · [CustomComponent](./custom-component.md) · [ChunkComponent](./chunk-component.md)
+- 相关 API：[DefineComponent](./define-component.md) · [SubComponent](./sub-component.md)

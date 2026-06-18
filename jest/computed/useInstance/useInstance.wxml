@@ -1,1 +1,1 @@
-<subA num="{{compA_num}}"></subA>
+<view id="subA" num="{{compA_num}}"></view>

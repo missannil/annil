@@ -1,8 +1,9 @@
-import { ChunkComponent, CustomComponent, DefineComponent, type DetailedType, RootComponent } from "../../../src";
+import { DefineComponent, type DetailedType, RootComponent, SubComponent } from "../../../src";
+import type { ComponentDoc } from "../../../src/api/DefineComponent/returnType/ComponentDoc";
 import { type CompDoc, type User, user } from "../../common";
 import { store } from "./InitializationOnAttach.test";
 
-const customA = CustomComponent<Root, CompDoc>()({
+const customA = SubComponent<Root, CompDoc>()({
   computed: {
     // 5 可引用根组件properties、data和计算字段
     compA_num(): number {
@@ -14,7 +15,16 @@ const customA = CustomComponent<Root, CompDoc>()({
     },
   },
 });
-const chunk = ChunkComponent<Root, "chunk">()({
+type $Chunk = ComponentDoc<{
+  properties: {
+    chunk_num?: number;
+    chunk_CStoreAge?: number;
+    chunk_copyPropName?: string;
+    chunk_CrequiredName?: string;
+    chunk_CoptionalUser?: User;
+  };
+}>;
+const chunk = SubComponent<Root, $Chunk>()({
   computed: {
     chunk_num(): number {
       return this.data.num * 2;
@@ -23,15 +33,15 @@ const chunk = ChunkComponent<Root, "chunk">()({
       return this.data.storeAge;
     },
     // 3 可引用其他计算属性的子字段,即使是写在后面的计算属性
-    chunk_copyPropName() {
+    chunk_copyPropName(): string {
       return this.data.chunk_CrequiredName;
     },
     // 2 计算属性引用properties必传字段的子属性不报错,因为初始化时properties必传字段已经有值了。
-    chunk_CrequiredName() {
+    chunk_CrequiredName(): string {
       return this.data.requiredUser.name;
     },
     // 1 计算属性可引用properties选传字段。
-    chunk_CoptionalUser() {
+    chunk_CoptionalUser(): User {
       return this.data.optionalUser;
     },
   },

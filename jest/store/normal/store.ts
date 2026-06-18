@@ -1,13 +1,13 @@
-import { ChunkComponent, CustomComponent, DefineComponent, RootComponent } from "../../../src";
+import { DefineComponent, RootComponent, SubComponent } from "../../../src";
 import { storeUser } from "./store.test";
 
-const chunk = ChunkComponent<Root>()({
+const chunk = SubComponent<Root, { properties: { chunk_age: number } }>()({
   store: {
-    chunkAge: () => storeUser.age,
+    chunk_age: () => storeUser.age,
   },
 });
 
-const custom = CustomComponent<Root, { properties: { custom_age: number } }>()({
+const custom = SubComponent<Root, { properties: { custom_age: number } }>()({
   store: {
     custom_age: () => storeUser.age,
   },

@@ -1,4 +1,4 @@
-import type { CustomComponentDefinitionRuntime } from "../../CustomComponent/returnType";
+import type { SubComponentDefinitionRuntime } from "../../SubComponent/returnType";
 import type { FinalOptionsOfComponent, SameFuncOptions } from ".";
 import { __throttleDebounce__FieldCheck } from "./__throttleDebounce__FieldCheck";
 import { otherFieldsHandle } from "./otherFieldsHandle";
@@ -6,7 +6,7 @@ import { sameFuncFieldsCollect } from "./sameFuncFieldsCollect";
 
 export function handleSubComponents(
   componentOptions: FinalOptionsOfComponent,
-  subComponents: CustomComponentDefinitionRuntime[] | undefined,
+  subComponents: SubComponentDefinitionRuntime[] | undefined,
   funcOptions: SameFuncOptions,
 ) {
   if (subComponents && subComponents.length !== 0) {

@@ -1,8 +1,8 @@
-import { ChunkComponent, DefineComponent, type DetailedType, RootComponent } from "../../../../src";
-const slot = ChunkComponent<Root, "slot">()({
+import { DefineComponent, type DetailedType, RootComponent, SubComponent } from "../../../../src";
+const slot = SubComponent<Root, { properties: { slot_num?: number } }>()({
   lifetimes: {
     created() {
-      // 模拟页面 添加is和route
+      // @ts-ignore  模拟页面 添加is和route
       this.is = this.route = "pages/index/index";
     },
   },

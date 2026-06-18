@@ -1,8 +1,8 @@
-import { CustomComponent, DefineComponent, RootComponent } from "../../../src";
+import { DefineComponent, RootComponent, SubComponent } from "../../../src";
 import { type CompDoc } from "../../common";
 import { obj, obj1 } from "./methodsOfPrototype.test";
 
-const subA = CustomComponent<Root, CompDoc>()({
+const subA = SubComponent<Root, CompDoc>()({
   data: {
     compA_num: 0,
   },

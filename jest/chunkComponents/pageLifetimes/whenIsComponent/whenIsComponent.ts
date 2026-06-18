@@ -1,7 +1,7 @@
-import { ChunkComponent, DefineComponent, RootComponent } from "../../../../src";
+import { DefineComponent, RootComponent, SubComponent } from "../../../../src";
 import { user } from "./whenIsComponent.test";
 
-const slot = ChunkComponent<Root, "slot">()({
+const slot = SubComponent<Root, { properties: { slot_num: number } }>()({
   data: {
     slot_num: 100,
   },

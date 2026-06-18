@@ -1,1 +1,2 @@
-<custom age="{{custom_age}}"></custom>
+<view id="chunk" age="{{chunk_age}}"></view>
+<view id="custom" age="{{custom_age}}"></view>

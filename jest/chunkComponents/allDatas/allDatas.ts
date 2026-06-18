@@ -1,12 +1,11 @@
 import { observable } from "mobx";
 import {
   type Bubbles,
-  ChunkComponent,
   type CreateComponentType,
-  CustomComponent,
   DefineComponent,
   isEmptyObject,
   RootComponent,
+  SubComponent,
   typeEqual,
 } from "../../../src";
 import type { User } from "../../common";
@@ -15,29 +14,6 @@ const storeUser = observable({
   name: "annil",
   changeAge() {
     this.age += 1;
-  },
-});
-const slot = ChunkComponent<Root, "slot">()({
-  data: {
-    slot_num: 123,
-    slot_str: "a",
-  },
-  store: {
-    _slot_num: () => storeUser.age,
-    _slot_str: () => storeUser.name,
-  },
-  computed: {
-    slot_count() {
-      return this.data.slot_num + this.data._slot_num + this.data.num + this.data.count;
-    },
-    _slot_Cstr() {
-      return this.data.slot_str + this.data._slot_str + this.data._str;
-    },
-  },
-  events: {
-    slot_forCoverage: () => {
-      // 为了覆盖率
-    },
   },
 });
 type Mock_SubComponent = CreateComponentType<"xxx", {
@@ -49,7 +25,7 @@ type Mock_SubComponent = CreateComponentType<"xxx", {
     onTap: string | Bubbles;
   };
 }>;
-const subComp = CustomComponent<Root, Mock_SubComponent>()({
+const subComp = SubComponent<Root, Mock_SubComponent>()({
   data: {
     xxx_num: 1,
     xxx_user: null,
@@ -94,7 +70,7 @@ const rootComponent = RootComponent()({
 const index = DefineComponent({
   path: "/pages/index/index",
   rootComponent,
-  subComponents: [subComp, slot],
+  subComponents: [subComp],
   // slotComponents: [],
 });
 export type $IndexSlot = {

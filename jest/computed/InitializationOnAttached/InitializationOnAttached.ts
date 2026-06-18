@@ -1,15 +1,23 @@
-import { ChunkComponent, CustomComponent, DefineComponent, RootComponent } from "../../../src";
+import { DefineComponent, RootComponent, SubComponent } from "../../../src";
+import type { ComponentDoc } from "../../../src/api/DefineComponent/returnType/ComponentDoc";
 import { type CompDoc } from "../../common";
 import { store } from "./InitializationOnAttached.test";
 
-const customA = CustomComponent<Root, CompDoc>()({
+const customA = SubComponent<Root, CompDoc>()({
   computed: {
     compA_num(): number {
       return (this.data.CDataNum + this.data.CStoreAge) * 2;
     },
   },
 });
-const chunk = ChunkComponent<Root, "chunk">()({
+type $Chunk = ComponentDoc<{
+  properties: {
+    chunk_num?: number;
+    chunk_CStoreAge?: number;
+    chunk_CDataNum?: number;
+  };
+}>;
+const chunk = SubComponent<Root, $Chunk>()({
   computed: {
     chunk_CStoreAge(): number {
       return this.data.CStoreAge + 1;

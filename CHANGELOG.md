@@ -4,6 +4,13 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.16.0](https://github.com/missannil/annil/compare/v1.15.1...v1.16.0) (2026-06-18)
+
+
+### Features
+
+* 统一子组件API SubComponent ([646e1e7](https://github.com/missannil/annil/commit/646e1e72de41a22441cb38028fd3b719554b14fa))
+
 ## [1.15.1](https://github.com/missannil/annil/compare/v1.15.0...v1.15.1) (2026-06-16)
 
 

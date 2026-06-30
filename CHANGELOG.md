@@ -4,6 +4,13 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.17.0](https://github.com/missannil/annil/compare/v1.16.0...v1.17.0) (2026-06-30)
+
+
+### Features
+
+* 注入配置完善组件覆盖逻辑 ([17b75c4](https://github.com/missannil/annil/commit/17b75c445dc46c39cd30b56ffeece992f88aa722))
+
 ## [1.16.0](https://github.com/missannil/annil/compare/v1.15.1...v1.16.0) (2026-06-18)
 
 

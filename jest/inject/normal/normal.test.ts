@@ -26,6 +26,7 @@ instanceConfig.setInjectInfo({
   options,
   data: {
     injectStr: "string",
+    injectNum: 123,
   },
   store: {
     injectTheme: () => store.themeMode,

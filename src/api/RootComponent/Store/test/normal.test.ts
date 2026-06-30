@@ -1,3 +1,4 @@
+import { Checking, type Test } from "hry-types";
 import { observable } from "mobx";
 import { typeEqual } from "../../../../utils/_utils";
 import { RootComponent } from "../..";
@@ -9,15 +10,30 @@ const user = observable({
 const storeDoc = RootComponent()({
   properties: {
     condition: Number,
+    optional: {
+      type: Number,
+      value: 10,
+    },
+  },
+  data: {
+    injectStr: 123,
   },
   store: {
-    // normal
+    // 1. 简单的箭头函数写法
     userName: () => user.name,
-    // 条件反应式,当condition>10时,响应式,否则不可响应式(返回undefined),但不报错(有警告).
-    userAge: (props) => {
-      if (props.condition > 10) {
+    // 2. 使用参数 datas
+    userAge: (datas) => {
+      // 参数类型为Required<PropertiesDef> & DataDef & Omit<InjectData, keyof (PropertiesDef & DataDef).
+      Checking<
+        typeof datas,
+        { condition: number; optional: number; injectStr: number; injectNum: number },
+        Test.Pass
+      >();
+
+      if (datas.condition > 10) {
         return user.age;
       }
+      // 返回undefined时字段不会被响应式追踪,不会报错(有警告).
       return undefined;
     },
   },
@@ -25,7 +41,11 @@ const storeDoc = RootComponent()({
 
 type StoreDocExpected = {
   properties: {
+    optional?: number;
     condition: number;
+  };
+  data: {
+    injectStr: number;
   };
   store: {
     userName: string;

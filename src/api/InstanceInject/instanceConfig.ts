@@ -19,15 +19,14 @@ interface BaseInjectInfo {
 
 export interface IInjectInfo extends BaseInjectInfo {
 }
+export type InjectData = DataConstraint extends IInjectInfo["data"] ? {} : IInjectInfo["data"];
 
 export type IInjectAllData = IfEquals<
   {},
-  injectData & IInjectStore,
+  InjectData & IInjectStore,
   {},
-  ComputeIntersection<injectData & IInjectStore>
+  ComputeIntersection<InjectData & IInjectStore>
 >;
-
-type injectData = DataConstraint extends IInjectInfo["data"] ? {} : IInjectInfo["data"];
 
 export type IInjectStore = StoreConstraint extends IInjectInfo["store"] ? {}
   : ReturnTypeInObject<IInjectInfo["store"]>;

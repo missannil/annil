@@ -6,7 +6,7 @@ import type { ComputeObject } from "../../types/ComputeObject";
 import type { WMCompOtherOption } from "../../types/OfficialTypeAlias";
 import type { RemoveNullOfRequired } from "../../types/RemoveNullOfRequired";
 import type { ComponentDoc } from "../DefineComponent/returnType/ComponentDoc";
-import type { IInjectStore } from "../InstanceInject/instanceConfig";
+import type { IInjectAllData, IInjectMethods, IInjectStore, InjectData } from "../InstanceInject/instanceConfig";
 import type { ComputedConstraint } from "./Computed/ComputedConstraint";
 import type { ComputedOption } from "./Computed/ComputedOption";
 import type { GetComputedDef } from "./Computed/GetComputedDef";
@@ -46,6 +46,8 @@ type RootComponentOptions<
   DataDef extends object,
   StoreDef extends object,
   ComputedDef extends object,
+  SelfAllDatas extends object,
+  ValidInjectDatas extends object,
 > =
   & MethodsOption<TMethods, keyof (EventsDef & CustomEventsDef)>
   & PropertiesOption<TProperties>
@@ -57,7 +59,7 @@ type RootComponentOptions<
   & ComputedOption<
     TComputed,
     keyof (PropertiesDef & DataDef & StoreDef)
-  > // { data: ComputeObject<DataDef & Required<PropertiesDef> & StoreDef & ComputedDef & IInjectAllData> }
+  >
   & PageLifetimesOption<TIsPage, PropertiesDef>
   & LifetimesOption
   & WatchOption<
@@ -78,9 +80,9 @@ type RootComponentOptions<
   & ThisType<
     RootComponentInstance<
       TIsPage,
-      TMethods,
+      TMethods & Omit<IInjectMethods, keyof TMethods>,
       DataDef,
-      DataDef & Required<PropertiesDef> & StoreDef & ComputedDef,
+      SelfAllDatas & ValidInjectDatas,
       CustomEventsDef,
       StoreDef
     >
@@ -88,7 +90,9 @@ type RootComponentOptions<
 
 type RootComponentConstructor<TComponentDocList extends ComponentDoc[]> = <
   TEvents extends EventsConstraint<TComponentDocList>,
-  TStore extends StoreConstraint<PropertiesDef>,
+  TStore extends StoreConstraint<
+    ComputeIntersection<Required<PropertiesDef> & DataDef & Omit<InjectData, keyof (PropertiesDef & DataDef)>>
+  >,
   TIsPage extends boolean = false,
   const TProperties extends PropertiesConstraint = {},
   TData extends object = {},
@@ -100,8 +104,13 @@ type RootComponentConstructor<TComponentDocList extends ComponentDoc[]> = <
   CustomEventsDef extends object = GetCustomEventsDef<TCustomEvents>,
   PropertiesDef extends object = GetPropertiesDef<TProperties>,
   DataDef extends object = TData,
-  StoreDef extends object = StoreConstraint<PropertiesDef> extends TStore ? {} : GetStoreDef<TStore>,
+  StoreDef extends object = StoreConstraint<
+    ComputeIntersection<Required<PropertiesDef> & DataDef & Omit<InjectData, keyof (PropertiesDef & DataDef)>>
+  > extends TStore ? {}
+    : GetStoreDef<TStore>,
   ComputedDef extends object = GetComputedDef<TComputed>,
+  SelfAllDatas extends object = Required<PropertiesDef> & DataDef & StoreDef & ComputedDef,
+  ValidInjectDatas extends object = Omit<IInjectAllData, keyof SelfAllDatas>,
 >(
   options: RootComponentOptions<
     TEvents,
@@ -118,7 +127,9 @@ type RootComponentConstructor<TComponentDocList extends ComponentDoc[]> = <
     PropertiesDef,
     DataDef,
     StoreDef,
-    ComputedDef
+    ComputedDef,
+    SelfAllDatas,
+    ValidInjectDatas
   >,
 ) => // 生成RootComponentDefinition
 ComputeIntersection<
@@ -149,3 +160,5 @@ export function RootComponent<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (options: any) => options;
 }
+
+// 全局实例增加 有效的注入数据,store字段参数包含 (prop + data + 有效的注入数据)

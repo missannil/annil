@@ -10,7 +10,7 @@ RootComponent()({
 
       Checking<typeof this.data.injectTheme, "dark" | "light" | undefined, Test.Pass>;
 
-      Checking<typeof this.injectMethod, (data: string) => string, Test.Pass>;
+      Checking<typeof this.injectMethodA, (data: string) => string, Test.Pass>;
     },
   },
 });
@@ -18,12 +18,12 @@ RootComponent()({
 // 2. 注入字段重复时,自身覆盖注入类型
 RootComponent()({
   data: {
-    // 覆盖注入的数据类型
+    // 覆盖注入的数据类型,注入的类型为string。
     injectStr: 123,
   },
   store: {
-    // 覆盖注入的数据类型
-    injectTheme: (() => "aaa") as () => "aaa",
+    // 覆盖注入的数据类型,注入的类型为"dark" | "light" | undefined。
+    injectTheme: () => "aaa",
   },
   methods: {
     // 覆盖注入的方法类型
@@ -31,9 +31,10 @@ RootComponent()({
       return 123;
     },
     testInjectTypes() {
+      // 覆盖注入的数据类型,注入的类型为string。
       Checking<typeof this.data.injectStr, number, Test.Pass>;
-
-      Checking<typeof this.data.injectTheme, "aaa", Test.Pass>;
+      // 覆盖注入的数据类型,注入的类型为"dark" | "light" | undefined。
+      Checking<typeof this.data.injectTheme, string, Test.Pass>;
 
       Checking<typeof this.injectMethod, () => 123, Test.Pass>;
     },

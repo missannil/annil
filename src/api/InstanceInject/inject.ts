@@ -11,15 +11,20 @@ wx.onThemeChange((Res) => {
 });
 
 // 注入的方法;
-function injectMethod(data: string) {
+function injectMethodA(data: string) {
+  return data;
+}
+function injectMethodB(data: number) {
   return data;
 }
 
 const data = {
   injectStr: "injectStr",
+  injectNum: 123,
 };
 const methods = {
-  injectMethod,
+  injectMethodA,
+  injectMethodB,
 };
 const store = {
   injectTheme: () => themeStore.theme,

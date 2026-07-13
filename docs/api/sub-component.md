@@ -3,7 +3,7 @@
 `SubComponent` 用于在 `DefineComponent` 的 `subComponents` 中声明"组件类型驱动"的子组件配置。它将已有组件类型文档（如 `$TopNav`）接入父组件，并提供 `inherit`、`data`、`store`、`computed`、`events`、`watch` 等字段的组合能力。
 
 ::: warning 高阶函数
-与 `RootComponent` 类似，`SubComponent` 也需调用两次：
+与 `RootComponent` 相同，`SubComponent` 也需调用两次：
 
 ```ts
 // 第一次调用：传入泛型参数

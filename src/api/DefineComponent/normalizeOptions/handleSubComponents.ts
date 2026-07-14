@@ -1,4 +1,5 @@
-import type { SubComponentDefinitionRuntime } from "../../SubComponent/returnType";
+import type { SlotComponentReturnType } from "../../ChunkComponent/SlotComponentReturnType";
+import type { CustomComponentDefinitionRuntime } from "../../CustomComponent/returnType";
 import type { FinalOptionsOfComponent, SameFuncOptions } from ".";
 import { __throttleDebounce__FieldCheck } from "./__throttleDebounce__FieldCheck";
 import { otherFieldsHandle } from "./otherFieldsHandle";
@@ -6,7 +7,7 @@ import { sameFuncFieldsCollect } from "./sameFuncFieldsCollect";
 
 export function handleSubComponents(
   componentOptions: FinalOptionsOfComponent,
-  subComponents: SubComponentDefinitionRuntime[] | undefined,
+  subComponents: (CustomComponentDefinitionRuntime | SlotComponentReturnType)[] | undefined,
   funcOptions: SameFuncOptions,
 ) {
   if (subComponents && subComponents.length !== 0) {

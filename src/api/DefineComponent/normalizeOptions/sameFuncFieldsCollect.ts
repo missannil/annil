@@ -1,14 +1,15 @@
 import type { Func } from "hry-types/src/Misc/Func";
 
+import type { SlotComponentReturnType } from "../../ChunkComponent/SlotComponentReturnType";
+import type { CustomComponentDefinitionRuntime } from "../../CustomComponent/returnType";
 import type { RootComponentDefinitionRuntime } from "../../RootComponent/returnType";
-import type { SubComponentDefinitionRuntime } from "../../SubComponent/returnType";
 import type { SameFuncOptions } from ".";
 
 /**
  * 把配置为函数的字段方法收集到funcOptions中
  */
 export function sameFuncFieldsCollect(
-  options: SubComponentDefinitionRuntime | RootComponentDefinitionRuntime,
+  options: CustomComponentDefinitionRuntime | SlotComponentReturnType | RootComponentDefinitionRuntime,
   funcOptions: SameFuncOptions,
 ) {
   let key: keyof SameFuncOptions;

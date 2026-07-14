@@ -1,10 +1,10 @@
-import type { SubComponentDefinition } from "../../SubComponent/returnType";
+import type { CustomComponentDefinition } from "../../CustomComponent/returnType";
 
 /**
  * RootComponent API 的`subComponents`字段配置
  */
 export type SubComponentsOption<
-  TSubComponentReturnTypeList extends SubComponentDefinition[],
+  TSubComponentReturnTypeList extends CustomComponentDefinition[],
 > = {
   /**
    * 子组件列表

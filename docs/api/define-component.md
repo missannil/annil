@@ -1,6 +1,6 @@
 # DefineComponent
 
-`DefineComponent` 是组件构建入口函数，通常与 `RootComponent`、`SubComponent` 搭配使用。
+`DefineComponent` 是组件构建入口函数，通常与 `RootComponent`、`CustomComponent` 搭配使用。
 
 ## 示例 A：构建组件(CompA)
 
@@ -33,9 +33,14 @@ typeEqual<$CompA>()(compA);
 ## 示例 B：构建页面(IndexPage)
 
 ```ts
-import { DefineComponent, RootComponent, SubComponent, typeEqual } from "annil";
+import {
+  CustomComponent,
+  DefineComponent,
+  RootComponent,
+  typeEqual,
+} from "annil";
 import type { $CompA } from "../components/compA";
-const customA = SubComponent<Root, $CompA>()({
+const customA = CustomComponent<Root, $CompA>()({
   computed: {
     compA_num() {
       return this.data.num + 1;
@@ -85,7 +90,7 @@ typeEqual<$Index>()(index);
 
 3. `subComponents`
 
-- 类型 [SubComponentDefinition](https://github.com/missannil/annil/blob/main/src/api/SubComponent/returnType.ts)[]
+- 类型 [CustomComponentDefinition](https://github.com/missannil/annil/blob/main/src/api/CustomComponent/returnType.ts)[]
 
 ## 参考
 

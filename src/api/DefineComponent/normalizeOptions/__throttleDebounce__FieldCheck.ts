@@ -1,8 +1,9 @@
+import type { SlotComponentReturnType } from "../../ChunkComponent/SlotComponentReturnType";
+import type { CustomComponentDefinitionRuntime } from "../../CustomComponent/returnType";
 import type { RootComponentDefinitionRuntime } from "../../RootComponent/returnType";
-import type { SubComponentDefinitionRuntime } from "../../SubComponent/returnType";
 
 export function __throttleDebounce__FieldCheck(
-  config: RootComponentDefinitionRuntime | SubComponentDefinitionRuntime[],
+  config: RootComponentDefinitionRuntime | CustomComponentDefinitionRuntime[] | SlotComponentReturnType[],
 ) {
   if (Array.isArray(config)) {
     for (const subComponent of config) {

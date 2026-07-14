@@ -1,0 +1,8 @@
+<view>
+	<!-- slot 块 -->
+	<subComp
+		num="{{xxx_num}}"
+		user="{{xxx_user}}"
+	>{{count}}</subComp> 
+	<!-- xxx_num -->
+</view>

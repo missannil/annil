@@ -1,7 +1,7 @@
-import { SubComponent, typeEqual } from "../../index";
+import { CustomComponent, typeEqual } from "../../index";
 import type { Wm } from "../index";
 
-SubComponent<{}, Wm.Swiper>()({
+CustomComponent<{}, Wm.Swiper>()({
   data: {
     swiper_style: "16/9",
   },

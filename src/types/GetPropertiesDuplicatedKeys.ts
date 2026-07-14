@@ -1,4 +1,4 @@
-// import type { SubComponentType } from "../api/SubComponent/SubComponentType";
+// import { CustomComponent "../api/CustomComponent/SubComponentType";
 
 // // 获取元组中properties字段的重复keys
 // export type GetPropertiesDuplicatedKeys<

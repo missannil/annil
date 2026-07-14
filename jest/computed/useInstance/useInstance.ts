@@ -1,4 +1,4 @@
-import { DefineComponent, RootComponent, SubComponent } from "../../../src";
+import { CustomComponent, DefineComponent, RootComponent } from "../../../src";
 import type { ComponentDoc } from "../../../src/api/DefineComponent/returnType/ComponentDoc";
 
 type $SubA = ComponentDoc<{
@@ -7,7 +7,7 @@ type $SubA = ComponentDoc<{
     compA_instanceId: string;
   };
 }>;
-const subA = SubComponent<Root, $SubA>()({
+const subA = CustomComponent<Root, $SubA>()({
   data: {
     compA_num: 0,
   },

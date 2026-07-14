@@ -1,9 +1,9 @@
-import { DefineComponent, type DetailedType, RootComponent, SubComponent } from "../../../src";
+import { CustomComponent, DefineComponent, type DetailedType, RootComponent } from "../../../src";
 import type { ComponentDoc } from "../../../src/api/DefineComponent/returnType/ComponentDoc";
 import { type CompDoc, type User, user } from "../../common";
 import { store } from "./InitializationOnAttach.test";
 
-const customA = SubComponent<Root, CompDoc>()({
+const customA = CustomComponent<Root, CompDoc>()({
   computed: {
     // 5 可引用根组件properties、data和计算字段
     compA_num(): number {
@@ -24,7 +24,7 @@ type $Chunk = ComponentDoc<{
     chunk_CoptionalUser?: User;
   };
 }>;
-const chunk = SubComponent<Root, $Chunk>()({
+const chunk = CustomComponent<Root, $Chunk>()({
   computed: {
     chunk_num(): number {
       return this.data.num * 2;

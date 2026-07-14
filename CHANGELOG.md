@@ -16,7 +16,7 @@
 
 ### Features
 
-* 统一子组件API SubComponent ([646e1e7](https://github.com/missannil/annil/commit/646e1e72de41a22441cb38028fd3b719554b14fa))
+* 统一子组件API CustomComponent ([646e1e7](https://github.com/missannil/annil/commit/646e1e72de41a22441cb38028fd3b719554b14fa))
 
 ## [1.15.1](https://github.com/missannil/annil/compare/v1.15.0...v1.15.1) (2026-06-16)
 

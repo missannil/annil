@@ -31,7 +31,7 @@ export default defineConfig({
           { text: '总览', link: '/api/overview' },
           { text: 'DefineComponent', link: '/api/define-component' },
           { text: 'RootComponent', link: '/api/root-component' },
-          { text: 'SubComponent', link: '/api/sub-component' },
+          { text: 'CustomComponent', link: '/api/custom-component' },
           { text: 'instanceConfig', link: '/api/instance-config' },
           { text: 'wxSugar', link: '/api/wx-sugar' }
         ]

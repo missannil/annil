@@ -6,10 +6,10 @@
 npm i annil
 ```
 
-可选依赖（TypeScript 开发推荐）：
+可选依赖（TypeScript开发）:
 
 ```bash
-npm --save-dev typescript hry-types miniprogram-api-typings
+npm --save-dev typescript miniprogram-api-typings
 ```
 
 使用 `store` 能力时：
@@ -22,14 +22,29 @@ npm i mobx
 
 在微信开发者工具中执行：工具 → 构建 npm。
 
-> 若使用 mobx 6.x，构建前请按 README 说明处理 `node_modules/mobx/dist/index.js`，避免 `process is not defined` 错误。
+> 若使用mobx@6^,在构建npm前需要手动更改`node_modules/mobx/dist/index.js`文件
+> 避免构建时出现 `ReferenceError: process is not defined` 错误。
 
-## VS Code 插件（推荐）
+```js
+// 更改前
+"use strict";
 
-推荐安装 `vscode-annil`，用于提升开发效率与代码一致性，尤其在与 AI 协作生成代码时更易得到正确字段与结构。
+if (process.env.NODE_ENV === "production") {
+  module.exports = require("./mobx.cjs.production.min.js"); // 仅保留这行即可
+} else {
+  module.exports = require("./mobx.cjs.development.js");
+}
+```
 
-- 插件市场：[vscode-annil](https://marketplace.visualstudio.com/items?itemName=missannil.vscode-annil)
-- 项目地址：[missannil/vscode-annil](https://github.com/missannil/vscode-annil)
+```js
+// 更改后
+"use strict";
+module.exports = require("./mobx.cjs.production.min.js");
+```
+
+## VS Code 插件
+
+插件市场安装 搜索 `annil` 安装即可
 
 ## tsconfig 推荐配置
 
@@ -37,14 +52,14 @@ npm i mobx
 {
   "compilerOptions": {
     "target": "ES2022",
-    "moduleResolution": "node",
+    "moduleResolution": "nodenext",
+    "module": "nodenext",
     "skipLibCheck": true,
-    "esModuleInterop": true,
-    "strict": true,
-    "exactOptionalPropertyTypes": true,
-    "noEmit": true,
     "strictFunctionTypes": false,
-    "types": ["hry-types", "mobx", "miniprogram-api-typings"]
+    "types": [
+      "mobx",
+      "miniprogram-api-typings"
+    ]
   },
   "include": ["**/*.ts"]
 }

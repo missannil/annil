@@ -1,4 +1,4 @@
-import type { CreateComponentType } from "../../types/CreateComponentType";
+import type { CreateComponentDoc } from "../../types/CreateComponentDoc";
 
 type RegionChangeBegin = { type: "begin"; causedBy: "gesture" | "update" };
 
@@ -159,7 +159,7 @@ export type SegmentText = {
 };
 
 // 源自 https://developers.weixin.qq.com/miniprogram/dev/component/map.html#%E5%B1%9E%E6%80%A7%E8%AF%B4%E6%98%8E
-export type Map = CreateComponentType<"map", {
+export type Map = CreateComponentDoc<"map", {
   properties: {
     // 中心经度 1.0.0
     latitude: number;

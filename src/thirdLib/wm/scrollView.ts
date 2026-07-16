@@ -1,7 +1,7 @@
 import type { EmptyObject } from "hry-types/src/Misc/EmptyObject";
-import type { CreateComponentType } from "../../types/CreateComponentType";
+import type { CreateComponentDoc } from "../../types/CreateComponentDoc";
 
-export type ScrollView = CreateComponentType<"scrollView", {
+export type ScrollView = CreateComponentDoc<"scrollView", {
   properties: {
     class?: string;
     style?: string;

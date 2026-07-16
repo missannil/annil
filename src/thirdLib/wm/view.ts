@@ -1,7 +1,7 @@
-import type { CreateComponentType } from "../../types/CreateComponentType";
+import type { CreateComponentDoc } from "../../types/CreateComponentDoc";
 import type { BaseEvents } from "./baseEvents";
 
-export type View = CreateComponentType<"view", {
+export type View = CreateComponentDoc<"view", {
   properties: {
     /**
      * 指定按下去的样式类。当 hover-class="none" 时，没有点击态效果

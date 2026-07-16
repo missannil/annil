@@ -2,7 +2,7 @@ import { observable } from "mobx";
 import {
   type Bubbles,
   ChunkComponent,
-  type CreateComponentType,
+  type CreateComponentDoc,
   CustomComponent,
   DefineComponent,
   isEmptyObject,
@@ -40,7 +40,7 @@ const slot = ChunkComponent<Root, "slot">()({
     },
   },
 });
-type Mock_SubComponent = CreateComponentType<"xxx", {
+type Mock_SubComponent = CreateComponentDoc<"xxx", {
   properties: {
     num: number;
     user: User | null;

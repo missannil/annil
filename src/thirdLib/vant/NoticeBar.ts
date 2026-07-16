@@ -1,4 +1,4 @@
-import type { CreateComponentType } from "../../types/CreateComponentType";
+import type { CreateComponentDoc } from "../../types/CreateComponentDoc";
 
 export type CssVar<T extends string = string> = `var(--${T}-${string})`;
 
@@ -12,8 +12,12 @@ export type TWClass = `${string}-${string}`;
 
 export type Color = RGBA | HEX | RGB | CssVar<"color">;
 
-// 链接： https://github.com/youzan/vant-weapp/blob/dev/packages/notice-bar/README.md
-export type NoticeBar = CreateComponentType<"noticeBar", {
+/**
+ * NoticeBar 通知栏
+ *
+ * 文档链接： https://github.com/youzan/vant-weapp/blob/dev/packages/notice-bar/README.md
+ */
+export type NoticeBar = CreateComponentDoc<"noticeBar", {
   properties: {
     // 通知栏模式，可选值为 closeable link
     mode?: "closeable" | "link";

@@ -4,7 +4,7 @@ import { DefineComponent } from "./api/DefineComponent";
 import { type IInjectInfo, instanceConfig } from "./api/InstanceInject/instanceConfig";
 import { RootComponent } from "./api/RootComponent";
 import { navigateBack, navigateTo, redirectTo } from "./api/wxSugar";
-import type { CreateComponentType } from "./types/CreateComponentType";
+import type { CreateComponentDoc } from "./types/CreateComponentDoc";
 import type { DetailedType } from "./types/DetailedType";
 import type { ExtendComponentType } from "./types/ExtendComponentType";
 
@@ -34,7 +34,7 @@ export type {
 
 export {
   ChunkComponent,
-  type CreateComponentType,
+  type CreateComponentDoc,
   CustomComponent,
   DefineComponent,
   type DetailedType,

@@ -24,7 +24,7 @@ import type { AddPrefix } from "./AddPrefix";
  *    };
  * ```
  */
-export type CreateComponentType<TName extends string, T extends ComponentDoc> = ComputeIntersection<
+export type CreateComponentDoc<TName extends string, T extends ComponentDoc> = ComputeIntersection<
   & IfExtends<
     unknown,
     T["properties"],

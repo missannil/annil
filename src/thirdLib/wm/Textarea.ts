@@ -1,7 +1,7 @@
-import type { CreateComponentType } from "../../types/CreateComponentType";
+import type { CreateComponentDoc } from "../../types/CreateComponentDoc";
 type ConfirmType = "send" | "search" | "next" | "go" | "done" | "return";
 
-export type Textarea = CreateComponentType<"textarea", {
+export type Textarea = CreateComponentDoc<"textarea", {
   properties: {
     /**
      * 输入框的内容 1.0.0

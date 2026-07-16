@@ -1,4 +1,4 @@
-import type { CreateComponentType } from "../../types/CreateComponentType";
+import type { CreateComponentDoc } from "../../types/CreateComponentDoc";
 
 type CssVar<T extends string = string> = `var(--${T}-${string})`;
 
@@ -12,7 +12,7 @@ interface ChangeEventDetail {
 
 type AnimationfinishEventDetail = ChangeEventDetail;
 
-export type Swiper = CreateComponentType<"swiper", {
+export type Swiper = CreateComponentDoc<"swiper", {
   properties: {
     /**
      * @description class

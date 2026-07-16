@@ -1,21 +1,31 @@
-// @ts-expect-error @eslint/js的导出使用了export = 导致报错。
 import eslintComments from "@eslint-community/eslint-plugin-eslint-comments";
 import eslint from "@eslint/js";
+import { defineConfig } from "eslint/config";
+import globals from "globals";
 import tseslint from "typescript-eslint";
-export default tseslint.config(
+
+export default defineConfig([
   {
-    ignores: ["./commitlint.config.cjs", "docs/**", "docs/.vitepress/**"],
+    ignores: [
+      "./commitlint.config.cjs",
+      "docs/**",
+      "docs/.vitepress/**",
+      "out/**",
+      ".worktree/**",
+      "dist/**",
+    ],
   },
   eslint.configs.recommended,
   ...tseslint.configs.strict,
   ...tseslint.configs.stylistic,
   {
+    files: ["src/**/*.ts", "jest/**/*.ts"],
     plugins: {
       "eslint-comments": eslintComments,
     },
     languageOptions: {
       globals: {
-        // definitionFilter: true,
+        ...globals.node,
       },
     },
     rules: {
@@ -38,4 +48,4 @@ export default tseslint.config(
       ],
     },
   },
-);
+]);

@@ -3,7 +3,7 @@
 ## 安装
 
 ```bash
-npm i annil
+pnpm add annil
 ```
 
 可选依赖（TypeScript开发）:
@@ -15,7 +15,26 @@ npm --save-dev typescript miniprogram-api-typings
 使用 `store` 能力时：
 
 ```bash
-npm i mobx
+pnpm add mobx
+```
+
+若使用 `mobx` 6.x，先用 pnpm patch 固化微信开发者工具所需的入口修改：
+
+```bash
+pnpm patch mobx
+```
+
+在 pnpm 输出的临时目录中，将 `dist/index.js` 改为：
+
+```js
+"use strict";
+module.exports = require("./mobx.cjs.production.min.js");
+```
+
+然后提交 patch：
+
+```bash
+pnpm patch-commit <临时目录>
 ```
 
 ## 构建 npm

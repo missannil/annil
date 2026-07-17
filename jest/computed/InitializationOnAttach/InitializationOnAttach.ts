@@ -1,5 +1,11 @@
-import { CustomComponent, DefineComponent, type DetailedType, RootComponent } from "../../../src";
-import type { ComponentDoc } from "../../../src/api/DefineComponent/returnType/ComponentDoc";
+import {
+  type CreateComponentDoc,
+  CustomComponent,
+  DefineComponent,
+  type DetailedType,
+  RootComponent,
+} from "../../../src";
+
 import { type CompDoc, type User, user } from "../../common";
 import { store } from "./InitializationOnAttach.test";
 
@@ -15,13 +21,13 @@ const customA = CustomComponent<Root, CompDoc>()({
     },
   },
 });
-type $Chunk = ComponentDoc<{
+type $Chunk = CreateComponentDoc<"chunk", {
   properties: {
-    chunk_num?: number;
-    chunk_CStoreAge?: number;
-    chunk_copyPropName?: string;
-    chunk_CrequiredName?: string;
-    chunk_CoptionalUser?: User;
+    num?: number;
+    CStoreAge?: number;
+    copyPropName?: string;
+    CrequiredName?: string;
+    CoptionalUser?: User;
   };
 }>;
 const chunk = CustomComponent<Root, $Chunk>()({

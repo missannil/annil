@@ -2,7 +2,10 @@ import type { IfExtends } from "hry-types/src/Any/_api";
 import type { ComputeIntersection } from "hry-types/src/Object/_api";
 import type { ComponentDoc } from "../api/DefineComponent/returnType/ComponentDoc";
 import type { AddPrefix } from "./AddPrefix";
-
+type ErrMsg = "{ properties?: Record<string, unknown>; events?: Record<string, unknown>; }";
+// 验证字段
+type Validator<T> = keyof T extends "properties" | "events" ? ComponentDoc
+  : ErrMsg;
 /**
  * 建立一个组件类型
  * @param TName 组件名称
@@ -24,14 +27,16 @@ import type { AddPrefix } from "./AddPrefix";
  *    };
  * ```
  */
-export type CreateComponentDoc<TName extends string, T extends ComponentDoc> = ComputeIntersection<
-  & IfExtends<
-    unknown,
-    T["properties"],
-    {},
-    {
-      properties: AddPrefix<T["properties"] & {}, TName>;
-    }
+export type CreateComponentDoc<TName extends string, T extends Validator<T>> = T extends ComponentDoc
+  ? ComputeIntersection<
+    & IfExtends<
+      unknown,
+      T["properties"],
+      {},
+      {
+        properties: AddPrefix<T["properties"] & {}, TName>;
+      }
+    >
+    & IfExtends<unknown, T["events"], {}, { events: AddPrefix<T["events"] & {}, TName> }>
   >
-  & IfExtends<unknown, T["events"], {}, { events: AddPrefix<T["events"] & {}, TName> }>
->;
+  : ErrMsg;

@@ -1,16 +1,16 @@
 import { observable } from "mobx";
 
-import type { ComponentDoc } from "../../../DefineComponent/returnType/ComponentDoc";
+import type { CreateComponentDoc } from "../../../../types/CreateComponentDoc";
 import { CustomComponent } from "../..";
 const user = observable({
   name: "zhao",
   age: 20,
 });
 
-type DocA = ComponentDoc<{
+type DocA = CreateComponentDoc<"aaa", {
   properties: {
-    aaa_str: string;
-    aaa_num: number;
+    str: string;
+    num: number;
   };
 }>;
 

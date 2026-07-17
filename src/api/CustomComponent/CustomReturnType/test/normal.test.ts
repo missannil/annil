@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { Checking, type Test } from "hry-types";
-import type { ComponentDoc } from "../../../DefineComponent/returnType/ComponentDoc";
+
+import type { CreateComponentDoc } from "../../../../types/CreateComponentDoc";
 import type {
   Bubbles,
   BubblesCaptureComposed,
@@ -10,17 +11,17 @@ import type {
 } from "../../../RootComponent/CustomEvents/CustomEventsTag";
 import { CustomComponent } from "../..";
 
-type CompDoc = ComponentDoc<{
+type CompDoc = CreateComponentDoc<"aaa", {
   properties: {
-    aaa_str: string;
+    str: string;
   };
   events: {
-    aaa_num: number;
-    aaa_bubbles: number | Bubbles;
-    aaa_bubblesComposed: number | BubblesComposed;
-    aaa_captrue: number | Capture;
-    aaa_captrueComposed: number | CaptureComposed;
-    aaa_bubblesCaptrueComposed: number | BubblesCaptureComposed;
+    num: number;
+    bubbles: number | Bubbles;
+    bubblesComposed: number | BubblesComposed;
+    captrue: number | Capture;
+    captrueComposed: number | CaptureComposed;
+    bubblesCaptrueComposed: number | BubblesCaptureComposed;
   };
 }>;
 

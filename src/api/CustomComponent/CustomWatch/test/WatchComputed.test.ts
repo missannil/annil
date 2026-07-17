@@ -1,5 +1,5 @@
 import { Checking, type Test } from "hry-types";
-import type { ComponentDoc } from "../../../DefineComponent/returnType/ComponentDoc";
+import type { CreateComponentDoc } from "../../../../types/CreateComponentDoc";
 import type { Mock_User } from "../../../RootComponent/Properties/test/normalRequired.test";
 import type { RootComponentDefinition } from "../../../RootComponent/returnType";
 import { CustomComponent } from "../..";
@@ -16,12 +16,12 @@ type RootDoc = RootComponentDefinition<{
   };
 }>;
 
-type CompDoc = ComponentDoc<{
+type CompDoc = CreateComponentDoc<"aaa", {
   properties: {
-    aaa_obj: Mock_User | null;
-    aaa_str: string;
-    aaa_num: number;
-    aaa_bool: boolean;
+    obj: Mock_User | null;
+    str: string;
+    num: number;
+    bool: boolean;
   };
 }>;
 

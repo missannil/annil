@@ -1,16 +1,16 @@
 import { Checking, type Test } from "hry-types";
-import type { ComponentDoc } from "../../../DefineComponent/returnType/ComponentDoc";
 
 import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
+import type { CreateComponentDoc } from "../../../../types/CreateComponentDoc";
 import type { IInjectAllData } from "../../../InstanceInject/instanceConfig";
 import type { Mock_User } from "../../../RootComponent/Properties/test/normalRequired.test";
 import { CustomComponent } from "../..";
 
-type CompDoc = ComponentDoc<{
+type CompDoc = CreateComponentDoc<"aaa", {
   properties: {
-    aaa_str: "a" | "b";
-    aaa_num?: number;
-    aaa_obj?: Mock_User | null;
+    str: "a" | "b";
+    num?: number;
+    obj?: Mock_User | null;
   };
 }>;
 

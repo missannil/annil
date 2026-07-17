@@ -1,13 +1,13 @@
 import { Checking, type Test } from "hry-types";
-import type { ComponentDoc } from "../../../DefineComponent/returnType/ComponentDoc";
 
 import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
+import type { CreateComponentDoc } from "../../../../types/CreateComponentDoc";
 import type { IInjectAllData } from "../../../InstanceInject/instanceConfig";
 import type { Mock_User } from "../../../RootComponent/Properties/test/normalRequired.test";
 import { CustomComponent } from "../..";
 
-type OnlyCustomCompDoc = ComponentDoc<{
-  events: { aaa_str: string };
+type OnlyCustomCompDoc = CreateComponentDoc<"onlyCustom", {
+  events: { str: string };
 }>;
 
 interface User {
@@ -31,37 +31,37 @@ interface Root {
   };
 }
 
-type $aaa = ComponentDoc<
-  { properties: { aaa_str: string; aaa_user: User | null; aaa_num: number; aaa_age: number } }
->;
+type $aaa = CreateComponentDoc<"aaa", {
+  properties: { str: string; user: User | null; num: number; age: number };
+}>;
 
 CustomComponent<{}, OnlyCustomCompDoc>()({
   // 1 CompDoc的properties为空时,可以写{}
   computed: {},
 });
 
-type OnlyPropsCompDoc = ComponentDoc<{
+type OnlyPropsCompDoc = CreateComponentDoc<"onlyProps", {
   properties: {
-    aaa_str: "a" | "b";
-    aaa_num?: number;
-    aaa_num123: 123;
-    aaa_obj?: Mock_User | null;
+    str: "a" | "b";
+    num?: number;
+    num123: 123;
+    obj?: Mock_User | null;
   };
 }>;
 
 CustomComponent<Root, OnlyPropsCompDoc>()({
   inherit: {
-    aaa_num: "num",
+    onlyProps_num: "num",
   },
   data: {
-    aaa_str: "a",
+    onlyProps_str: "a",
   },
   // 2 可写字段为组件去除inherit和data的剩余字段,返回类型应为对应的文档类型
   computed: {
-    aaa_obj() {
+    onlyProps_obj() {
       return {} as Mock_User | null;
     },
-    aaa_num123(): 123 {
+    onlyProps_num123(): 123 {
       return 123;
     },
   },
@@ -69,16 +69,16 @@ CustomComponent<Root, OnlyPropsCompDoc>()({
 // 3 computed字段的返回类型应为对应的文档类型,避免返回字面量类型导致与实际文档类型不符
 CustomComponent<Root, OnlyPropsCompDoc>()({
   computed: {
-    aaa_num() {
+    onlyProps_num() {
       return 123;
     },
-    aaa_num123(): 123 {
+    onlyProps_num123(): 123 {
       return 123;
     },
-    aaa_str(): "a" | "b" {
+    onlyProps_str(): "a" | "b" {
       return "a"; // 默认下返回的类型是'a',但文档中是'a' | 'b'.所以要在this.data中处理
     },
-    aaa_obj(): Mock_User | null {
+    onlyProps_obj(): Mock_User | null {
       // 5 this.data
       void Checking<
         typeof this.data,
@@ -89,10 +89,10 @@ CustomComponent<Root, OnlyPropsCompDoc>()({
             SNum: number;
             str: string;
             bool: boolean;
-            aaa_num: number;
-            aaa_num123: 123;
-            aaa_str: "a" | "b";
-            aaa_obj: Mock_User | null;
+            onlyProps_num: number;
+            onlyProps_num123: 123;
+            onlyProps_str: "a" | "b";
+            onlyProps_obj: Mock_User | null;
           } & IInjectAllData
         >,
         Test.Pass
@@ -113,10 +113,10 @@ CustomComponent<Root, OnlyPropsCompDoc>()({
             str: string;
             SNum: number;
             bool: boolean;
-            aaa_num: number;
-            aaa_num123: 123;
-            aaa_str: "a" | "b";
-            aaa_obj: Mock_User | null;
+            onlyProps_num: number;
+            onlyProps_num123: 123;
+            onlyProps_str: "a" | "b";
+            onlyProps_obj: Mock_User | null;
           } & IInjectAllData
         >,
         Test.Pass

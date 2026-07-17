@@ -3,7 +3,7 @@
 import { Checking, type Test } from "hry-types";
 import type { Wm } from "../../../../thirdLib";
 
-import type { Detail, Mark, WMBaseEvent } from "../../../..";
+import type { CreateComponentDoc, Detail, Mark, WMBaseEvent } from "../../../..";
 import type { ComponentDoc } from "../../../DefineComponent/returnType/ComponentDoc";
 import type {
   Bubbles,
@@ -16,15 +16,15 @@ import type {
 import type { Mock_User } from "../../../RootComponent/Properties/test/normalRequired.test";
 import { CustomComponent } from "../..";
 
-type CompDoc = ComponentDoc<{
+type CompDoc = CreateComponentDoc<"aaa", {
   events: {
-    aaa_str: string;
-    aaa_bubbles: string | Bubbles;
-    aaa_CapturePhase: string | Capture;
-    aaa_BubblesCapturePhase: null | BubblesCapture;
-    aaa_BubblesComposed: string | BubblesComposed;
-    aaa_CapturePhaseComposed: string | CaptureComposed;
-    aaa_BubblesCapturePhaseComposed: string | BubblesCaptureComposed;
+    str: string;
+    bubbles: string | Bubbles;
+    CapturePhase: string | Capture;
+    BubblesCapturePhase: null | BubblesCapture;
+    BubblesComposed: string | BubblesComposed;
+    CapturePhaseComposed: string | CaptureComposed;
+    BubblesCapturePhaseComposed: string | BubblesCaptureComposed;
   };
 }>;
 

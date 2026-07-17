@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import { Checking, type Test } from "hry-types";
+import type { CreateComponentDoc } from "../../../../types/CreateComponentDoc";
 import type {
   CurrentTargetDataset,
   Dataset,
@@ -11,7 +12,6 @@ import type {
   WMCustomEvent,
 } from "../../../../types/OfficialTypeAlias";
 import { nonNullable } from "../../../../utils/nonNullable";
-import type { ComponentDoc } from "../../../DefineComponent/returnType/ComponentDoc";
 import { RootComponent } from "../..";
 import type { Bubbles, Capture } from "../../CustomEvents/CustomEventsTag";
 
@@ -71,20 +71,20 @@ RootComponent()({
   },
 });
 
-type ComponentDocA = ComponentDoc<{
+type ComponentDocA = CreateComponentDoc<"aaa", {
   properties: {
-    aaa_str: string;
+    str: string;
   };
   events: {
-    aaa_str: string;
-    aaa_num: number | Bubbles;
+    str: string;
+    num: number | Bubbles;
   };
 }>;
 
-type ComponentDocB = ComponentDoc<{
+type ComponentDocB = CreateComponentDoc<"bbb", {
   events: {
-    bbb_str: string;
-    bbb_num: number | Capture;
+    str: string;
+    num: number | Capture;
   };
 }>;
 

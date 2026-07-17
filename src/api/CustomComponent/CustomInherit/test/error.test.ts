@@ -1,6 +1,6 @@
 import { Checking, type Test } from "hry-types";
+import type { CreateComponentDoc } from "../../../../types/CreateComponentDoc";
 import { DefineComponent } from "../../../DefineComponent";
-import type { ComponentDoc } from "../../../DefineComponent/returnType/ComponentDoc";
 import type { RootComponentDefinition } from "../../../RootComponent/returnType";
 import { CustomComponent } from "../..";
 import type { CustomComponentDefinition } from "../../returnType";
@@ -25,14 +25,14 @@ type Mock_RootDoc = RootComponentDefinition<{
   };
 }>;
 
-type Mock_CompDoc = ComponentDoc<{
+type Mock_CompDoc = CreateComponentDoc<"aaa", {
   properties: {
-    aaa_num: number;
-    aaa_literal_num: 123 | 456;
-    aaa_str?: string;
-    aaa_union: string | boolean;
-    aaa_obj: object | null;
-    aaa_obj1?: object | null;
+    num: number;
+    literal_num: 123 | 456;
+    str?: string;
+    union: string | boolean;
+    obj: object | null;
+    obj1?: object | null;
   };
 }>;
 

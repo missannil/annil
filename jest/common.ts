@@ -1,12 +1,13 @@
-import type { ComponentDoc } from "../src/api/DefineComponent/returnType/ComponentDoc";
+import type { CreateComponentDoc } from "../src/index";
 
 export interface User {
   name: string;
   age?: number;
 }
 
-export type CompDoc = ComponentDoc<
-  { properties: { compA_num: number; compA_user?: User | null }; events: { compA_str: string } }
+export type CompDoc = CreateComponentDoc<
+  "compA",
+  { properties: { num: number; user?: User | null }; events: { str: string } }
 >;
 
 export const user: User = { name: "lili", age: 30 };

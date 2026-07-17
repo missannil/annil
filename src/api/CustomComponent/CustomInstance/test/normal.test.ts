@@ -1,7 +1,7 @@
 import { Checking, type Test } from "hry-types";
-import type { ComponentDoc } from "../../../DefineComponent/returnType/ComponentDoc";
 
 import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
+import type { CreateComponentDoc } from "../../../../types/CreateComponentDoc";
 import type { IInjectAllData } from "../../../InstanceInject/instanceConfig";
 import type { Mock_User } from "../../../RootComponent/Properties/test/normalRequired.test";
 import type { RootComponentDefinition } from "../../../RootComponent/returnType";
@@ -30,12 +30,12 @@ type RootDoc = RootComponentDefinition<{
   };
 }>;
 
-type CompDoc = ComponentDoc<{
+type CompDoc = CreateComponentDoc<"aaa", {
   properties: {
-    aaa_str: string;
+    str: string;
   };
   events: {
-    aaa_num: number;
+    num: number;
   };
 }>;
 

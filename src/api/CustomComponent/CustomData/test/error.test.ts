@@ -1,58 +1,57 @@
-import type { ComponentDoc } from "../../../DefineComponent/returnType/ComponentDoc";
-
+import type { CreateComponentDoc } from "../../../../types/CreateComponentDoc";
 import type { Mock_User } from "../../../RootComponent/Properties/test/normalRequired.test";
 import { CustomComponent } from "../..";
 
-type OnlyCustomCompDoc = ComponentDoc<{
-  events: { aaa_str: string };
+type OnlyCustomCompDoc = CreateComponentDoc<"onlyCustom", {
+  events: { onlyCustom_str: string };
 }>;
 
 // 1 CompDoc无properties字段时 data字段只可写内部字段
 CustomComponent<{}, OnlyCustomCompDoc>()({
   data: {
     // @ts-expect-error "⚠️ 与Inherit字段重复或组件文档无需字段 ⚠️"
-    aaa_str: "str",
-    _aaa_str: "str", // 内部字段 ok
+    onlyCustom_str: "str",
+    _onlyCustom_str: "str", // 内部字段 ok
   },
 });
 
-type OnlyPropsCompDoc = ComponentDoc<{
+type OnlyPropsCompDoc = CreateComponentDoc<"onlyProps", {
   properties: {
-    aaa_str: "a" | "b";
-    aaa_num?: number;
-    aaa_obj?: Mock_User | null;
+    str: "a" | "b";
+    num?: number;
+    obj?: Mock_User | null;
   };
 }>;
 
 // 2 CompDoc有properties字段但去除Inherit字段后为空,只可写内部字段
 CustomComponent<{}, OnlyPropsCompDoc>()({
   inherit: {
-    aaa_str: "wxml",
-    aaa_num: "wxml",
-    aaa_obj: "wxml",
+    onlyProps_str: "wxml",
+    onlyProps_num: "wxml",
+    onlyProps_obj: "wxml",
   },
   data: {
     // @ts-expect-error "⚠️ 与Inherit字段重复或组件文档无需字段 ⚠️"
-    aaa_str: "123",
+    onlyProps_str: "123",
     // @ts-expect-error "⚠️ 与Inherit字段重复或组件文档无需字段 ⚠️"
     errorfield: "str",
-    _aaa_str: "内部字段", // ok
+    _onlyProps_str: "内部字段", // ok
   },
 });
 
 // 3 重复字段和非组件所需字段错误
 CustomComponent<{}, OnlyPropsCompDoc>()({
   inherit: {
-    aaa_str: "wxml",
+    onlyProps_str: "wxml",
   },
   data: {
-    aaa_num: 123, // ok
-    aaa_obj: null, // ok
+    onlyProps_num: 123, // ok
+    onlyProps_obj: null, // ok
     // @ts-expect-error "⚠️ Inherit字段重复 ⚠️"
-    aaa_str: "123",
+    onlyProps_str: "123",
     // @ts-expect-error  "⚠️ 组件文档无需字段 ⚠️"
-    aaa_xxx: "组件文档无需字段会报错",
-    _aaa_xxx: 123, // ok 内部字段可写
+    onlyProps_xxx: "组件文档无需字段会报错",
+    _onlyProps_xxx: 123, // ok 内部字段可写
   },
 });
 // 4 与root的数据字段重复

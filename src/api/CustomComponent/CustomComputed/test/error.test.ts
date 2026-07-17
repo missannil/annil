@@ -1,8 +1,8 @@
-import type { ComponentDoc } from "../../../DefineComponent/returnType/ComponentDoc";
+import type { CreateComponentDoc } from "../../../../types/CreateComponentDoc";
 import { CustomComponent } from "../..";
 
-type OnlyCustomCompDoc = ComponentDoc<{
-  events: { aaa_str: string };
+type OnlyCustomCompDoc = CreateComponentDoc<"onlyCustom", {
+  events: { str: string };
 }>;
 
 // 1 CompDoc的properties为空时,写任何字段都报错
@@ -15,27 +15,27 @@ CustomComponent<{}, OnlyCustomCompDoc>()({
   },
 });
 
-type OnlyPropsCompDoc = ComponentDoc<{
+type OnlyPropsCompDoc = CreateComponentDoc<"onlyProps", {
   properties: {
-    aaa_str: "a" | "b";
-    aaa_num?: number;
+    str: "a" | "b";
+    num?: number;
   };
 }>;
 
 // 2 去除inhrit和data字段后无组件字段约束时,只可写内部字段
 CustomComponent<{}, OnlyPropsCompDoc>()({
   inherit: {
-    aaa_str: "wxml",
+    onlyProps_str: "wxml",
   },
   data: {
-    aaa_num: 123,
+    onlyProps_num: 123,
   },
   computed: {
-    _aaa_xxx() {
+    _onlyProps_xxx() {
       void 0;
     },
     // @ts-expect-error 只可写内部字段
-    aaa_yyy() {
+    onlyProps_yyy() {
       void 0;
     },
   },
@@ -44,11 +44,11 @@ CustomComponent<{}, OnlyPropsCompDoc>()({
 // 3 类型错误
 CustomComponent<{}, OnlyPropsCompDoc>()({
   inherit: {
-    aaa_str: "wxml",
+    onlyProps_str: "wxml",
   },
   computed: {
     // @ts-expect-error  类型错误
-    aaa_num() {
+    onlyProps_num() {
       return "string";
     },
   },
@@ -56,11 +56,11 @@ CustomComponent<{}, OnlyPropsCompDoc>()({
 // 4 与data的内部字段重复
 CustomComponent<{}, OnlyPropsCompDoc>()({
   data: {
-    _aaa_fff: 123,
+    _onlyProps_fff: 123,
   },
   computed: {
     // @ts-expect-error 与data的内部字段重复
-    _aaa_fff(): number {
+    _onlyProps_fff(): number {
       return 123;
     },
   },
@@ -68,20 +68,20 @@ CustomComponent<{}, OnlyPropsCompDoc>()({
 // 5 与store的内部字段重复
 CustomComponent<{}, OnlyPropsCompDoc>()({
   store: {
-    _aaa_ccc: () => 123,
+    _onlyProps_ccc: () => 123,
   },
   computed: {
     // @ts-expect-error 与store的内部字段重复
-    _aaa_ccc(): number {
+    _onlyProps_ccc(): number {
       return 123;
     },
   },
 });
 // 6 与root字段重复
-CustomComponent<{ data: { _aaa_ccc: 123 } }, OnlyPropsCompDoc>()({
+CustomComponent<{ data: { _onlyProps_ccc: 123 } }, OnlyPropsCompDoc>()({
   computed: {
-    // @ts-expect-error 与store的内部字段重复
-    _aaa_ccc(): number {
+    // @ts-expect-error 与data的内部字段重复
+    _onlyProps_ccc(): number {
       return 123;
     },
   },

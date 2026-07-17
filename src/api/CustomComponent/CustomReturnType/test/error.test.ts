@@ -1,12 +1,12 @@
 import { Checking, type Test } from "hry-types";
-import type { ComponentDoc } from "../../../DefineComponent/returnType/ComponentDoc";
+import type { CreateComponentDoc } from "../../../../types/CreateComponentDoc";
 import { CustomComponent } from "../..";
 
-type CompDoc = ComponentDoc<{
+type CompDoc = CreateComponentDoc<"aaa", {
   properties: {
-    aaa_str: string;
-    aaa_bool: boolean;
-    aaa_num?: number;
+    str: string;
+    bool: boolean;
+    num?: number;
   };
 }>;
 

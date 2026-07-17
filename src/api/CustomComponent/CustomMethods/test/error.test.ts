@@ -1,4 +1,4 @@
-import type { ComponentDoc } from "../../../DefineComponent/returnType/ComponentDoc";
+import type { CreateComponentDoc } from "../../../../types/CreateComponentDoc";
 import type { Bubbles } from "../../../RootComponent/CustomEvents/CustomEventsTag";
 import type { RootComponentDefinition } from "../../../RootComponent/returnType";
 import { CustomComponent } from "../..";
@@ -15,9 +15,9 @@ type RootDoc = RootComponentDefinition<{
   };
 }>;
 
-type CompDoc = ComponentDoc<{
+type CompDoc = CreateComponentDoc<"aaa", {
   events: {
-    aaa_str: string | Bubbles;
+    str: string | Bubbles;
   };
 }>;
 

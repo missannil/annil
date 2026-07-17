@@ -6,8 +6,6 @@ import { RootComponent } from "./api/RootComponent";
 import { navigateBack, navigateTo, redirectTo } from "./api/wxSugar";
 import type { CreateComponentDoc } from "./types/CreateComponentDoc";
 import type { DetailedType } from "./types/DetailedType";
-import type { ExtendComponentType } from "./types/ExtendComponentType";
-
 export * from "./utils/_utils";
 
 export type {
@@ -38,7 +36,6 @@ export {
   CustomComponent,
   DefineComponent,
   type DetailedType,
-  type ExtendComponentType,
   type IInjectInfo,
   instanceConfig,
   navigateBack,

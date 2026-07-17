@@ -1,18 +1,17 @@
-import { CustomComponent, DefineComponent, RootComponent } from "../../../src";
-import type { ComponentDoc } from "../../../src/api/DefineComponent/returnType/ComponentDoc";
+import { type CreateComponentDoc, CustomComponent, DefineComponent, RootComponent } from "../../../src";
 
-type $SubA = ComponentDoc<{
+type $SubA = CreateComponentDoc<"subA", {
   properties: {
-    compA_num: number;
-    compA_instanceId: string;
+    num: number;
+    instanceId: string;
   };
 }>;
 const subA = CustomComponent<Root, $SubA>()({
   data: {
-    compA_num: 0,
+    subA_num: 0,
   },
   computed: {
-    compA_instanceId() {
+    subA_instanceId() {
       // console.log("this.id === 'annil' => true");
       return this.id;
     },

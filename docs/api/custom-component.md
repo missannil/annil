@@ -101,11 +101,11 @@ CustomComponent<Root, $TopNav>()({
 - `this.data` 和 `setData` 的类型会被替换为文档中定义的类型（而非配置中的字面量类型）。
 
 ```ts
-type CompDoc = ComponentDoc<{
+type CompDoc = CreateComponentDoc<"aaa", {
   properties: {
-    aaa_str: "a" | "b";
-    aaa_num?: number;
-    aaa_obj?: { id: string } | null;
+    str: "a" | "b";
+    num?: number;
+    obj?: { id: string } | null;
   };
 }>;
 
@@ -192,11 +192,11 @@ CustomComponent<Root, CompDoc>()({
 - 可使用 `Detail<T>`、`Mark<T>` 等类型工具覆盖参数类型。
 
 ```ts
-type CompDoc = ComponentDoc<{
+type CompDoc = CreateComponentDoc<"aaa", {
   events: {
-    aaa_str: string;
-    aaa_bubbles: string | Bubbles;
-    aaa_Composed: number | BubblesComposed;
+    str: string;
+    bubbles: string | Bubbles;
+    Composed: number | BubblesComposed;
   };
 }>;
 
@@ -399,11 +399,11 @@ CustomComponent<{}, CompDoc>()({
 自动检测子组件文档中无默认值的必传字段是否被 `inherit`、`data`、`store`、`computed` 完整覆盖。若有遗漏，返回类型为错误字符串：
 
 ```ts
-type CompDoc = ComponentDoc<{
+type CompDoc = CreateComponentDoc<"aaa", {
   properties: {
-    aaa_str: string; // 必传
-    aaa_bool: boolean; // 必传
-    aaa_num?: number; // 可选
+    str: string; // 必传
+    bool: boolean; // 必传
+    num?: number; // 可选
   };
 }>;
 
@@ -420,9 +420,9 @@ const SubDoc = CustomComponent<{}, CompDoc>()({});
 - **`composedEvents`**：子组件文档中标记了 `Composed` 的事件（未被 `_catch` 阻止的部分），去除前缀后暴露给上层组件。
 
 ```ts
-type CompDoc = ComponentDoc<{
+type CompDoc = CreateComponentDoc<"aaa", {
   events: {
-    aaa_Composed: number | BubblesComposed;
+    Composed: number | BubblesComposed;
   };
 }>;
 

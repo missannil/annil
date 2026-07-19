@@ -4,8 +4,11 @@ import type { CustomComponentDefinition } from "../../CustomComponent/returnType
 import type { RootComponentDefinition } from "../../RootComponent/returnType";
 import type { GetCustomEventDocOfSubDoc } from "./GetCustomEventDocOfSubDoc";
 
-// 获取RootComponetDoc中events字段类型阻止事件(后最为catch)的key `${ 组件前缀 }_${infer Key}_${ bubbles | capture }_catch`
-type GetStopKeys<O> = { [k in keyof O]: k extends `${string}_${infer Key}_${string}_catch` ? Key : never }[keyof O];
+// 匹配所有 _catch 后缀的 events key，但排除纯 _capture_catch（捕获 catch 不阻止类型向上传递）
+type GetStopKeys<O> = {
+  [k in keyof O]: k extends `${string}_${infer Key}_${string}_catch` ? k extends `${string}_capture_catch` ? never : Key
+    : never;
+}[keyof O];
 
 /**
  * 生成组件文档类型

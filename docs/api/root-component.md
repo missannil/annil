@@ -312,21 +312,21 @@ RootComponent()({
 
 ```ts
 import { Bubbles, Capture } from "annil";
-import type { ComponentDoc } from "annil";
+import type { CreateComponentDoc } from "annil";
 
 // 子组件 A：aaa_num 为冒泡事件
-type ComponentDocA = ComponentDoc<{
+type ComponentDocA = CreateComponentDoc<"aaa", {
   events: {
-    aaa_str: string;
-    aaa_num: number | Bubbles;
+    str: string;
+    num: number | Bubbles;
   };
 }>;
 
 // 子组件 B：bbb_num 为捕获事件
-type ComponentDocB = ComponentDoc<{
+type ComponentDocB = CreateComponentDoc<"bbb", {
   events: {
-    bbb_str: string;
-    bbb_num: number | Capture;
+    str: string;
+    num: number | Capture;
   };
 }>;
 

@@ -1,6 +1,11 @@
 import type { G } from "hry-types";
 
-export type CustomEventsOption<TCustomEvents, CustomEventsDoc extends object, legalKeys extends PropertyKey> = {
+export type CustomEventsOption<
+  TCustomEvents extends object,
+  CustomEventsDoc extends object,
+  legalKeys extends PropertyKey,
+  DuplicateKeys extends PropertyKey,
+> = {
   /**
    * 子组件事件(基础事件|自定义事件)
    * 可使用内部泛型(Detail、Mark、WMBaseEvent、WMCustomEvent、CurrentTargetDataset、TargetDataset)自定义事件类型
@@ -8,5 +13,6 @@ export type CustomEventsOption<TCustomEvents, CustomEventsDoc extends object, le
    */
   events?:
     & TCustomEvents
-    & G.IllegalFieldValidator<CustomEventsDoc, legalKeys>;
+    & G.IllegalFieldValidator<CustomEventsDoc, legalKeys>
+    & G.DuplicateFieldValidator<TCustomEvents, DuplicateKeys>;
 };

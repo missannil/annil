@@ -4,7 +4,6 @@ import { Checking, type Test } from "hry-types";
 import type { Wm } from "../../../../thirdLib";
 
 import type { CreateComponentDoc, Detail, Mark, WMBaseEvent } from "../../../..";
-import type { ComponentDoc } from "../../../DefineComponent/returnType/ComponentDoc";
 import type {
   Bubbles,
   BubblesCapture,

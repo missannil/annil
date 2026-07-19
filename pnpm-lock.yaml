@@ -7,10 +7,6 @@ settings:
 importers:
 
   .:
-    dependencies:
-      miniprogram-api-typings:
-        specifier: ^5.2.1
-        version: 5.2.1
     devDependencies:
       '@commitlint/config-conventional':
         specifier: ^17.6.5
@@ -48,6 +44,9 @@ importers:
       jest-environment-jsdom:
         specifier: ^29.7.0
         version: 29.7.0
+      miniprogram-api-typings:
+        specifier: ^5.2.1
+        version: 5.2.1
       miniprogram-simulate:
         specifier: ^1.6.1
         version: 1.6.2

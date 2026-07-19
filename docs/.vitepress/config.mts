@@ -8,7 +8,7 @@ export default defineConfig({
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
-      { text: '指南', link: '/guide/what-is-annil' },
+      { text: '指南', link: '/guide/getting-started' },
       { text: 'API', link: '/api/overview' },
       { text: '示例', link: '/demo/overview' },
       { text: '更新日志', link: 'https://github.com/missannil/annil/blob/main/CHANGELOG.md' },
@@ -19,7 +19,6 @@ export default defineConfig({
       {
         text: '快速开始',
         items: [
-          { text: '什么是 Annil', link: '/guide/what-is-annil' },
           { text: '安装与配置', link: '/guide/getting-started' },
           { text: '设计理念', link: '/guide/design-idea' },
           { text: '文档部署', link: '/guide/docs-deploy' }

@@ -3,46 +3,27 @@
 ## 安装
 
 ```bash
-pnpm add annil
+npm install annil
 ```
 
-可选依赖（TypeScript开发）:
+typeScript 开发时：
 
 ```bash
-npm --save-dev typescript miniprogram-api-typings
+npm --save-dev typescript@^7.0.2 miniprogram-api-typings@^5.2.1
 ```
 
 使用 `store` 能力时：
 
 ```bash
-pnpm add mobx
-```
-
-若使用 `mobx` 6.x，先用 pnpm patch 固化微信开发者工具所需的入口修改：
-
-```bash
-pnpm patch mobx
-```
-
-在 pnpm 输出的临时目录中，将 `dist/index.js` 改为：
-
-```js
-"use strict";
-module.exports = require("./mobx.cjs.production.min.js");
-```
-
-然后提交 patch：
-
-```bash
-pnpm patch-commit <临时目录>
+npm install mobx@^6.9.0
 ```
 
 ## 构建 npm
 
 在微信开发者工具中执行：工具 → 构建 npm。
 
-> 若使用mobx@6^,在构建npm前需要手动更改`node_modules/mobx/dist/index.js`文件
-> 避免构建时出现 `ReferenceError: process is not defined` 错误。
+::: tip
+使用 mobx 时,为避免报错 ——`process is not defined`, 需要在npm打包前修改 `node_modules/mobx/dist/index.js`中的内容：
 
 ```js
 // 更改前
@@ -61,6 +42,8 @@ if (process.env.NODE_ENV === "production") {
 module.exports = require("./mobx.cjs.production.min.js");
 ```
 
+:::
+
 ## VS Code 插件
 
 插件市场安装 搜索 `annil` 安装即可
@@ -70,9 +53,9 @@ module.exports = require("./mobx.cjs.production.min.js");
 ```json
 {
   "compilerOptions": {
-    "target": "ES2022",
-    "moduleResolution": "nodenext",
-    "module": "nodenext",
+    "target": "es2022",
+    "module": "es2022",
+    "moduleResolution": "bundler",
     "skipLibCheck": true,
     "strictFunctionTypes": false,
     "types": [

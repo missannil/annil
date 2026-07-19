@@ -50,6 +50,7 @@ type Options<
   CustomComputedDoc extends object,
   CustomEventsDoc extends object,
   CustomMethodsDoc extends object,
+  RootEventKeys extends PropertyKey,
   CompDocKeys extends PropertyKey = keyof CurrentCompDoc["properties"],
 > =
   & CustomInheritOption<
@@ -103,20 +104,9 @@ type Options<
           : k extends InnerFields<Prefix> ? k
           : never;
     }[keyof NoInfer<TCustomComputed>]
-  > // 下面为之前的写法 不好与根组件的字段重复检测。
-  // | Exclude<CompDocKeys, (keyof (InheritDoc & CustomDataDoc & CustomStoreDoc))>
-  // | Extract<Exclude<keyof NoInfer<TCustomComputed>, keyof (CustomDataDoc & CustomStoreDoc)>, InnerFields<Prefix>>,
-  // {
-  //   data: ComputeObject<
-  //     & AllRootDataDoc
-  //     & Replace<CustomComputedDoc, Required<CurrentCompDoc["properties"]>>
-  //     & CustomStoreDoc
-  //     & CustomDataDoc
-  //     & IInjectAllData
-  //   >;
-  // }
-  // 无需与根组件的events字段重复检测,因为根组件多了bubbles字段,一定不会重复
-  & CustomEventsOption<TEvents, CustomEventsDoc, keyof CustomEventsConstraint<CurrentCompDoc>>
+  >
+  // 无需与根组件的events字段重复检测,因为根组件多了bubbles字段,一定不会重复,还是要检查,因为根组件可能写与子组件相同的事件名,导致子组件事件被阻止,所以要检查
+  & CustomEventsOption<TEvents, CustomEventsDoc, keyof CustomEventsConstraint<CurrentCompDoc>, RootEventKeys>
   & CustomMethodsOption<TCustomMethods, Prefix, keyof (CurrentCompDoc["events"] & CustomEventsDoc)>
   & CustomPageLifetimesOption<IsPage, NonNullable<RootDoc["properties"]>>
   & CustomLifetimesOption
@@ -169,6 +159,7 @@ type CustomComponentConstructor<
     & TRootDoc["data"]
     & TRootDoc["computed"]
     & TRootDoc["store"],
+  RootEventKeys extends PropertyKey = IfExtends<unknown, TRootDoc["events"], "", keyof TRootDoc["events"]>,
 > = <
   TInherit extends CustomInheritConstraint<AllRootDataDoc, CurrentCompDoc>,
   TData extends CustomDataConstraint<
@@ -271,7 +262,8 @@ type CustomComponentConstructor<
     StoreDoc,
     ComputedDoc,
     EventsDoc,
-    MethodsDoc
+    MethodsDoc,
+    RootEventKeys
   >,
 ) => IfExtends<
   MissingRequiredField,

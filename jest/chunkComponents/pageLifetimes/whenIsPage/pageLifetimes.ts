@@ -8,7 +8,6 @@ const slot = ChunkComponent<Root, "slot">()({
   },
   pageLifetimes: {
     onLoad(data) {
-      // @ts-ignore
       this.data.age = data.user.age;
     },
   },

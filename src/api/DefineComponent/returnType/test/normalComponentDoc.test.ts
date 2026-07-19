@@ -1,8 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-expressions */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import { Checking, type Test } from "hry-types";
-import { CustomComponent, type DetailedType, RootComponent } from "../../../..";
-// import type { CustomEventConstraint } from "../../../rootComponent/CustomEvents/CustomEventConstraint";
+import { CustomComponent, type DetailedType, RootComponent, typeEqual } from "../../../..";
 import type {
   Bubbles,
   BubblesCapture,
@@ -83,8 +79,7 @@ type OnlyPropertiesExpected = {
   };
 };
 
-Checking<typeof onlyProperties, OnlyPropertiesExpected, Test.Pass>;
-
+typeEqual<OnlyPropertiesExpected>()(onlyProperties);
 const OnlyCustomEventsRootDoc = RootComponent()({
   customEvents,
 });
@@ -109,18 +104,7 @@ type CompOnlyCustomEventsExpected = {
     test_bubbles_capturePhase_composed: boolean | BubblesCaptureComposed;
   };
 };
-//     test_str: string;
-//     test_null: null;
-//     test_bubbles: string | Bubbles;
-//     test_capturePhase: Capture | null;
-//     test_list: string | 0 | 1 | 2 | null;
-//     test_bubbles_capturePhase: string | number | BubblesCapture;
-//     test_bubbles_composed: BubblesComposed | "male" | "female";
-//     test_capturePhase_composed: string | 0 | 1 | 2 | CaptureComposed | null;
-//     test_bubbles_capturePhase_composed: boolean | BubblesCaptureComposed;
-//     test_unionStr: "male" | "female";
-// };
-Checking<typeof compOnlyCustomEvents, CompOnlyCustomEventsExpected, Test.Pass>;
+typeEqual<CompOnlyCustomEventsExpected>()(compOnlyCustomEvents);
 
 const rootComponent = RootComponent()({
   properties,
@@ -132,7 +116,7 @@ const compDoc = DefineComponent({
   rootComponent,
 });
 
-Checking<typeof compDoc, ComputeIntersection<CompOnlyCustomEventsExpected & OnlyPropertiesExpected>, Test.Pass>;
+typeEqual<ComputeIntersection<CompOnlyCustomEventsExpected & OnlyPropertiesExpected>>()(compDoc);
 
 type SubA = CustomComponentDefinition<{
   composedEvents: {
@@ -156,7 +140,7 @@ type customEventsRootDocExpect = {
   };
 };
 
-Checking<typeof customEventsRootDoc, customEventsRootDocExpect, Test.Pass>;
+typeEqual<customEventsRootDocExpect>()(customEventsRootDoc);
 
 type SubB = CustomComponentDefinition<{
   composedEvents: {
@@ -181,7 +165,7 @@ type WhenSameKeyOfCustomEventsRootDocExpect = {
   };
 };
 
-Checking<typeof WhenSameKeyOfCustomEventsRootDoc, WhenSameKeyOfCustomEventsRootDocExpect, Test.Pass>;
+typeEqual<WhenSameKeyOfCustomEventsRootDocExpect>()(WhenSameKeyOfCustomEventsRootDoc);
 
 type RootDocCatch = RootComponentDefinition<{
   events: {
@@ -195,7 +179,7 @@ const whenRootDocCatch = DefineComponent({
   subComponents: [{} as SubA],
 });
 
-// 6 根组件有阻止(catch)子组件事件时(子组件aaa的str事件是阻止事件,不会被继续传递),去除对应的事件
+// 6 根组件有阻止(bubbles_catch)子组件事件时,去除对应的冒泡事件
 type whenRootDocCatchExpect = {
   events: {
     // 少了str事件
@@ -204,7 +188,31 @@ type whenRootDocCatchExpect = {
   };
 };
 
-Checking<typeof whenRootDocCatch, whenRootDocCatchExpect, Test.Pass>;
+typeEqual<whenRootDocCatchExpect>()(whenRootDocCatch);
+
+type RootDocCaptureCatch = RootComponentDefinition<{
+  events: {
+    aaa_num_capture_catch: () => void;
+  };
+}>;
+
+const whenRootDocCaptureCatch = DefineComponent({
+  name: "test",
+  rootComponent: {} as RootDocCaptureCatch,
+  subComponents: [{} as SubA],
+});
+
+// 6.1 根组件有阻止(capture_catch)子组件事件时,不排除对应事件
+type whenRootDocCaptureCatchExpect = {
+  events: {
+    // capture_catch 不触发排除，所有事件保留
+    test_str: string | Bubbles | Composed;
+    test_num: number | Composed | Capture;
+    test_null: Bubbles | Composed | Capture | null;
+  };
+};
+
+typeEqual<whenRootDocCaptureCatchExpect>()(whenRootDocCaptureCatch);
 
 // 7 根组件和子组件都没有事件和properties时 返回组件类型为 {}
 const ComponetDoc = DefineComponent({
@@ -213,7 +221,7 @@ const ComponetDoc = DefineComponent({
   subComponents: [],
 });
 
-Checking<typeof ComponetDoc, {}, Test.Pass>;
+typeEqual<{}>()(ComponetDoc);
 
 // 8 自定义事件文档类型与定义的类型相同
 const rootComponent8 = RootComponent()({
@@ -223,7 +231,7 @@ const rootComponent8 = RootComponent()({
   },
 });
 
-Checking<(typeof rootComponent8)["customEvents"]["decrease"], Mock_User, Test.Pass>;
+typeEqual<Mock_User>()(rootComponent8.customEvents.decrease);
 
 const subA = CustomComponent<RootComponentDefinition, { properties: { subA_num: number } }>()({});
 // SubComponent中计算属性字段函数若不写返回值,会造成结果中没有计算属性字段类型,若没有其他字段,结果就为'{}'

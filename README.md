@@ -35,7 +35,6 @@ npm i annil
 
 2. 阅读主文档入口
 
-- [什么是 Annil](./docs/guide/what-is-annil.md)
 - [安装与配置](./docs/guide/getting-started.md)
 - [API 总览](./docs/api/overview.md)
 

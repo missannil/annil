@@ -7,6 +7,7 @@ Annil 的公开 API 以 `src/index.ts` 导出为准，建议按“组件构建 +
 - [DefineComponent](./define-component.md)
 - [RootComponent](./root-component.md)
 - [CustomComponent](./custom-component.md)
+- [ChunkComponent](./chunk-component.md)
 
 ## 实例注入
 

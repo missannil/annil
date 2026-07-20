@@ -111,7 +111,7 @@ typeEqual<$CompA>()(compA);
 
 3. `subComponents`
 
-- 类型 [CustomComponentDefinition](https://github.com/missannil/annil/blob/main/src/api/CustomComponent/returnType.ts)[]
+- 类型为 `CustomComponent` 或 `ChunkComponent` 的配置数组。
 - **可选**。
 
 ## 返回类型
@@ -208,4 +208,4 @@ type PageDoc = {
 
 ## 参考
 
-- 源码导出：[src/index.ts](https://github.com/missannil/annil/blob/main/src/index.ts)
+- 源码导出：[src/api/DefineComponent/index.ts](https://github.com/missannil/annil/blob/main/src/api/DefineComponent/index.ts)

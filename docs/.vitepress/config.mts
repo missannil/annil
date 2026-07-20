@@ -33,7 +33,7 @@ export default defineConfig({
           { text: 'CustomComponent', link: '/api/custom-component' },
           { text: 'ChunkComponent', link: '/api/chunk-component' },
           { text: 'instanceConfig', link: '/api/instance-config' },
-          { text: 'wxSugar', link: '/api/wx-sugar' }
+          { text: '导航 API', link: '/api/navigation' }
         ]
       },
       {

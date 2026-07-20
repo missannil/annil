@@ -15,7 +15,7 @@ Annil 的公开 API 以 `src/index.ts` 导出为准，建议按“组件构建 +
 
 ## 常用能力
 
-- [wxSugar](./wx-sugar.md)
+- [导航 API（navigateTo / navigateBack / redirectTo）](./navigation.md)
 
 ## 类型与第三方组件
 

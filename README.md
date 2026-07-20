@@ -180,7 +180,7 @@ GH_TOKEN=xxxx npm run ship -- "feat: your message"
 
 - **常用API**
 
-  [wxSugar](./docs/api/wx-sugar.md)
+  [导航 API](./docs/api/navigation.md)
 
 - 实用泛型
 

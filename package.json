@@ -46,12 +46,7 @@
     "miniprogram-api-typings": "^5.2.1"
   },
   "files": [
-    "LICENSE",
-    "CHANGELOG.md",
-    "README.md",
-    "src",
-    "dist",
-    "tsconfig.json"
+    "dist"
   ],
   "keywords": [
     "mini",

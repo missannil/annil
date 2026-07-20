@@ -20,8 +20,10 @@ function CustomComponent<
   TRootComponentDefinition extends RootComponentDefinition,
   TCompDoc extends ComponentDoc,
   Prefix extends string = "",
->(): (options: Options) => CustomComponentDefinition;
+>(): (options: Options) => InferredCustomComponentDefinition;
 ```
+
+`Options` 与 `InferredCustomComponentDefinition` 用于说明输入、输出形状；它们不是公开导出的类型。实际返回类型会根据子组件的 `composed` 事件及 `_catch` 配置推导。
 
 [源码入口](https://github.com/missannil/annil/blob/main/src/api/CustomComponent/index.ts)
 
@@ -39,24 +41,25 @@ function CustomComponent<
 
 ## 配置字段
 
-| 字段                            | 类型                        | 必填 |
-| ------------------------------- | --------------------------- | ---- |
-| [inherit](#inherit)             | `CustomInheritConstraint`   | 否   |
-| [data](#data)                   | `CustomDataConstraint`      | 否   |
-| [store](#store)                 | `CustomStoreConstraint`     | 否   |
-| [computed](#computed)           | `CustomComputedConstraint`  | 否   |
-| [events](#events)               | `CustomEventsConstraint`    | 否   |
-| [methods](#methods)             | `CustomMethodsConstraint`   | 否   |
-| [watch](#watch)                 | `CustomWatchOption`         | 否   |
-| [observers](#observers)         | `CustomObserversOption`     | 否   |
-| [pageLifetimes](#pagelifetimes) | `CustomPageLifetimesOption` | 否   |
-| [lifetimes](#lifetimes)         | `CustomLifetimesOption`     | 否   |
+| 字段                            | 类型                           | 必填 |
+| ------------------------------- | ------------------------------ | ---- |
+| [inherit](#inherit)             | `CustomInheritConstraint`      | 否   |
+| [data](#data)                   | `CustomDataConstraint`         | 否   |
+| [store](#store)                 | `CustomStoreConstraint`        | 否   |
+| [computed](#computed)           | `CustomComputedConstraint`     | 否   |
+| [events](#events)               | `CustomEventsConstraint`       | 否   |
+| [methods](#methods)             | `CustomMethodsConstraint`      | 否   |
+| [watch](#watch)                 | `CustomWatchOption`            | 否   |
+| [observers](#observers)         | `CustomObserversOption`        | 否   |
+| [pageLifetimes](#pagelifetimes) | `CustomPageLifetimesOption`    | 否   |
+| [lifetimes](#lifetimes)         | `CustomLifetimesOption`        | 否   |
+| 其他原生字段                    | `WMCompOtherOption` 的部分字段 | 否   |
 
 ---
 
 ### inherit
 
-**描述** 声明子组件数据从何而来，可以来自根组件也可以来自 wxml 模板。被 `inherit` 声明的字段不允许在 `data`、`store`、`computed` 中重复声明。
+**描述** 声明子组件数据从何而来，可以来自根组件可用数据（`properties`、`data`、`store`、`computed`）也可以来自 wxml 模板。被 `inherit` 声明的字段不允许在 `data`、`store`、`computed` 中重复声明。
 
 **类型** `CustomInheritConstraint` · **是否必填** 否
 
@@ -101,6 +104,8 @@ CustomComponent<Root, $TopNav>()({
 - `this.data` 和 `setData` 的类型会被替换为文档中定义的类型（而非配置中的字面量类型）。
 
 ```ts
+import { type CreateComponentDoc, CustomComponent } from "annil";
+
 type CompDoc = CreateComponentDoc<"aaa", {
   properties: {
     str: "a" | "b";
@@ -165,6 +170,8 @@ CustomComponent<Root, CompDoc>()({
 
 可写范围为 `inherit`、`data`、`store` 均未覆盖的剩余字段，以及内部字段。
 
+计算函数应显式标注返回类型；该返回类型会参与子组件字段和 `watch` 的类型推导。
+
 ```ts
 CustomComponent<Root, CompDoc>()({
   computed: {
@@ -192,6 +199,13 @@ CustomComponent<Root, CompDoc>()({
 - 可使用 `Detail<T>`、`Mark<T>` 等类型工具覆盖参数类型。
 
 ```ts
+import {
+  type Bubbles,
+  type BubblesComposed,
+  type CreateComponentDoc,
+  CustomComponent,
+} from "annil";
+
 type CompDoc = CreateComponentDoc<"aaa", {
   events: {
     str: string;
@@ -218,6 +232,8 @@ CustomComponent<{}, CompDoc>()({
 **基础组件事件**：
 
 ```ts
+import { CustomComponent, type Wm } from "annil";
+
 CustomComponent<{}, Wm.View>()({
   events: {
     view_tap(e) {/* e: WMBaseEvent */},
@@ -237,6 +253,8 @@ CustomComponent<{}, Wm.ScrollView>()({
 **自定义参数类型**：
 
 ```ts
+import { CustomComponent, type Detail, type Mark, type Wm } from "annil";
+
 CustomComponent<{}, Wm.View>()({
   events: {
     view_tap(e: Detail<number>) {
@@ -312,7 +330,7 @@ CustomComponent<Root, CompDoc>()({
 
 **类型** `CustomWatchOption` · **是否必填** 否
 
-可监听范围包括：子组件 `data`、`store`、`computed` 字段，以及根组件的所有数据字段。
+可监听范围包括：子组件 `data`、`store`、`computed` 字段，根组件的 `properties`、`data`、`store`、`computed` 字段，以及通过 `instanceConfig` 注入的 store 字段。
 
 ```ts
 CustomComponent<Root, CompDoc>()({
@@ -367,15 +385,15 @@ CustomComponent<Root, CompDoc>()({
 
 ## 前缀机制
 
-子组件所有字段名需遵循 `前缀_xxx` 命名规范。前缀从组件文档自动推导（取 `properties` 或 `events` 第一个字段的第一段）。
+子组件所有字段名需遵循 `前缀_xxx` 命名规范。前缀由组件文档字段名推导：优先取 `properties` 的前缀；没有 `properties` 时取 `events` 的前缀。
 
-当同一组件类型多次出现时，通过第三个泛型参数 `Prefix` 增加额外前缀：
+当同一组件类型多次出现时，通过第三个泛型参数 `Prefix` 在原前缀**末尾**追加其首字母大写形式：
 
 ```ts
 const topNav = CustomComponent<Root, $TopNav>()({/* ... */});
 const topNav2 = CustomComponent<Root, $TopNav, "Secondary">()({
-  // 字段前缀变为 SecondaryTopNav_xxx
-  data: { secondaryTopNav_title: "次级标题" },
+  // 若原前缀为 topNav，字段前缀变为 topNavSecondary_xxx
+  data: { topNavSecondary_title: "次级标题" },
 });
 ```
 
@@ -399,6 +417,8 @@ CustomComponent<{}, CompDoc>()({
 自动检测子组件文档中无默认值的必传字段是否被 `inherit`、`data`、`store`、`computed` 完整覆盖。若有遗漏，返回类型为错误字符串：
 
 ```ts
+import type { CreateComponentDoc } from "annil";
+
 type CompDoc = CreateComponentDoc<"aaa", {
   properties: {
     str: string; // 必传
@@ -415,25 +435,28 @@ const SubDoc = CustomComponent<{}, CompDoc>()({});
 
 ## 返回类型
 
-返回 `CustomComponentDefinition`，包含：
+返回类型由配置推导；当存在未被阻止的 `composed` 事件时，返回对象包含：
 
 - **`composedEvents`**：子组件文档中标记了 `Composed` 的事件（未被 `_catch` 阻止的部分），去除前缀后暴露给上层组件。
 
 ```ts
+import {
+  type BubblesComposed,
+  type CreateComponentDoc,
+  CustomComponent,
+} from "annil";
+
 type CompDoc = CreateComponentDoc<"aaa", {
   events: {
     Composed: number | BubblesComposed;
   };
 }>;
 
-const sub = CustomComponent<{}, CompDoc>()({
-  data: { aaa_num: 0 },
-});
+const sub = CustomComponent<{}, CompDoc>()({});
 // sub.composedEvents: { Composed: number | BubblesComposed }
 
 // 所有 Composed 事件被 _catch 阻止 → 返回 never
 const blocked = CustomComponent<{}, CompDoc>()({
-  data: { aaa_num: 0 },
   events: { aaa_Composed_catch() {} },
 });
 // blocked: never
@@ -444,12 +467,12 @@ const blocked = CustomComponent<{}, CompDoc>()({
 ## 完整示例
 
 ```ts
-import { type ComponentDoc, CustomComponent, RootComponent } from "annil";
+import { CustomComponent, RootComponent } from "annil";
 import type { $BottomBar } from "path/to/bottom-bar";
 import type { $TopNav } from "path/to/top-nav";
 
 const rootComponent = RootComponent()({
-  data: { title: "首页", count: 0 },
+  data: { title: "首页", count: 0, activeTab: "home" },
   methods: {
     onHeaderTap() {
       console.log("header tapped");
@@ -474,10 +497,10 @@ const topNav = CustomComponent<Root, $TopNav>()({
 
 // 底部栏（带额外前缀）
 const bottomBar = CustomComponent<Root, $BottomBar, "Secondary">()({
-  inherit: { secondaryBottomBar_active: "activeTab" },
-  data: { _secondaryBottomBar_loading: false },
+  inherit: { bottomBarSecondary_active: "activeTab" },
+  data: { _bottomBarSecondary_loading: false },
   methods: {
-    secondaryBottomBar_onTap() {
+    bottomBarSecondary_onTap() {
       this.increment();
     },
   },

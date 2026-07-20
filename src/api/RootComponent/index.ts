@@ -4,7 +4,6 @@ import type { Func } from "hry-types/src/Misc/Func";
 import type { ComputeIntersection } from "hry-types/src/Object/_api";
 import type { ComputeObject } from "../../types/ComputeObject";
 import type { WMCompOtherOption } from "../../types/OfficialTypeAlias";
-import type { RemoveNullOfRequired } from "../../types/RemoveNullOfRequired";
 import type { ComponentDoc } from "../DefineComponent/returnType/ComponentDoc";
 import type { IInjectAllData, IInjectMethods, IInjectStore, InjectData } from "../InstanceInject/instanceConfig";
 import type { ComputedConstraint } from "./Computed/ComputedConstraint";
@@ -70,6 +69,7 @@ type RootComponentOptions<
     & IInjectStore
   >
   & Partial<Omit<WMCompOtherOption, "pageLifetimes" | "definitionFilter" | "observers">>
+  & { behaviors?: string[] }
   & ObserversOption<
     & ComputedDef
     & Required<PropertiesDef>
@@ -121,7 +121,6 @@ type RootComponentConstructor<TComponentDocList extends ComponentDoc[]> = <
     TData,
     TStore,
     TComputed,
-    // TObservers,
     EventsDef,
     CustomEventsDef,
     PropertiesDef,
@@ -138,7 +137,7 @@ ComputeIntersection<
     EmptyObject,
     PropertiesDef,
     {},
-    { properties: IfExtends<false, TIsPage, PropertiesDef, RemoveNullOfRequired<PropertiesDef>> }
+    { properties: IfExtends<false, TIsPage, PropertiesDef, PropertiesDef> }
   >
   & IfExtends<EmptyObject, DataDef, {}, { data: DataDef }>
   & IfExtends<EmptyObject, StoreDef, {}, { store: ComputeObject<StoreDef> }>

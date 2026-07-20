@@ -32,7 +32,6 @@ export type RootComponentInstance<
   // 自身methods覆盖注入的methods
   & Assign<IInjectMethods, TMethods & generateCustomEventMethods<CustomEventsDef>>
   & { data: instanceData };
-// & { cloneData: ComputeObject<Assign<IInjectData, ComputeIntersection<AllData>>> };
 
 export type ComponentInstance = RootComponentInstance<false, {}, {}, {}, {}, {}>;
 

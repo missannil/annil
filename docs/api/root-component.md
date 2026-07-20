@@ -40,8 +40,9 @@ function RootComponent<
 | [watch](#watch)                 | `WatchOption`                    | 否   |
 | [pageLifetimes](#pagelifetimes) | —                                | 否   |
 | [lifetimes](#lifetimes)         | —                                | 否   |
-| [methods](#methods)             | —                                | 否   |
+| [methods](#methods)             | `MethodsConstraint`              | 否   |
 | [observers](#observers)         | —                                | 否   |
+| [其他原生字段](#其他原生字段)   | —                                | 否   |
 
 ### isPage
 
@@ -123,7 +124,7 @@ RootComponent()({
 
 ### store
 
-**描述** 定义基于 `mobx` 的响应式数据映射。getter 参数为 `properties` 字段初始传值.getter 返回值变化时，会自动 `setData` 到实例。与 `properties`、`data` 存在重名时报错。组件detach时会自动取消监听。重新attach时会重新建立监听。
+**描述** 定义基于 `mobx` 的响应式数据映射。getter 参数为 properties 和 data 字段的当前值。getter 返回值变化时，会自动 `setData` 到实例。与 `properties`、`data` 存在重名时报错。组件detach时会自动取消监听。重新attach时会重新建立监听。
 
 **是否必填** 否
 
@@ -155,8 +156,8 @@ RootComponent()({
     // 常规写法：getter 直接访问 store 中的响应式数据
     userName: () => storeUser.name,
     // 依赖 properties 的写法：getter 参数为 properties 初始传值
-    ignoreField: (props) =>
-      storeUser.id === props.userId ? storeUser.age : void 0,
+    ignoreField: (data) =>
+      storeUser.id === data.userId ? storeUser.age : void 0,
     // 错误示例：getter 中没有依赖响应式数据
     errorField: () => 23,
   },
@@ -171,7 +172,7 @@ RootComponent()({
 
 ### computed
 
-**描述** 定义计算属性。函数中可使用组件实例(this),this.data上的字段自动收集为依赖,依赖变化后更新计算属性值。与 `properties`、`data`、`store` 存在重名时报错。
+**描述** 定义计算属性。函数中的 `this` 为实例的代理对象，`this.data` 被深度代理以自动收集依赖，依赖变化后更新计算属性值。实例方法等其他属性可正常访问，但对实例属性的写入会在运行时报错。与 `properties`、`data`、`store` 存在重名时报错。
 
 **类型** [ComputedConstraint](https://github.com/missannil/annil/blob/main/src/api/RootComponent/Computed/ComputedConstraint.ts)
 
@@ -179,11 +180,17 @@ RootComponent()({
 
 ::: warning 提示
 
+- 计算函数中的 `this` 为实例的代理对象：`this.data` 被深度代理用于依赖收集，实例方法等可正常访问，但对实例属性的写入会在运行时报错。
+
 - `this.data` 中可访问 `properties`、`data`、`store` 及其他 `computed` 字段，且为**只读**（运行时检测）。
 
-- 计算属性初始化在 `store` 之后、`attached` 之前。
+- 计算属性初始化在 `store` 之后、`attached` 之前。依赖变化后自动 `setData`，会触发 `watch` 和 `observers`。
 
-- 应显式标注返回类型（避免类型推断错误），可通过 `this.data.__computedCache__` 访问缓存。
+- 系统自动处理计算属性间的依赖顺序，后面的计算属性可依赖前面的；但**请勿形成循环依赖**（如 A 依赖 B、B 依赖 A），否则初始化会陷入死循环。
+
+- 应显式标注返回类型（避免类型推断错误）。`this.data.__computedCache__` 仅供调试使用，请勿直接修改。
+
+- 请勿在计算函数中进行复杂或异步操作，依赖变化时会频繁重算。
   :::
 
 ```ts
@@ -208,7 +215,7 @@ RootComponent()({
     // 依赖其他 computed 字段
     praise():string {
       return this.data.greeting + ", you are so beautiful";
-  },
+    },
 });
 ```
 
@@ -224,12 +231,16 @@ RootComponent()({
 
 当 `RootComponent` 传入子组件文档泛型时，子组件中标记为冒泡或捕获的事件会自动生成带后缀的事件字段，用于区分事件传递阶段：
 
-| 后缀             | 含义                                         |
-| ---------------- | -------------------------------------------- |
-| `_bubbles`       | 子组件冒泡事件，事件从子组件向父组件传递     |
-| `_bubbles_catch` | 子组件冒泡事件，并在当前组件阻止继续向上传递 |
-| `_capture`       | 子组件捕获事件，事件从父组件向子组件传递     |
-| `_capture_catch` | 子组件捕获事件，并在当前组件阻止继续向下传递 |
+| 后缀                    | 含义                                                        |
+| ----------------------- | ----------------------------------------------------------- |
+| `_bubbles`              | 子组件冒泡事件，事件从子组件向父组件传递                    |
+| `_bubbles_catch`        | 子组件冒泡事件（含 `composed`），在当前组件阻止继续向上传递 |
+| `_capture`              | 子组件捕获事件，事件从父组件向子组件传递                    |
+| `_capture_catch`        | 子组件捕获事件（含 `composed`），在当前组件阻止继续向下传递 |
+| `_bubblesCapture`       | 子组件同时具有冒泡与捕获阶段的事件                          |
+| `_bubblesCapture_catch` | 子组件冒泡+捕获事件（含 `composed`），在当前组件阻止传递    |
+
+> **说明**：`_catch` 后缀仅在子组件 `customEvents` 中配置了 `composed: true` 时生成，对应 WXML 中使用 `catch:` 前缀绑定事件。
 
 #### 内置事件参数类型
 
@@ -247,19 +258,9 @@ annil 提供了以下类型工具，用于为事件参数 `e` 标注精确类型
 
 #### 示例
 
-##### 1. 无子组件时：事件参数默认为 `WMBaseEvent`
+##### 1. 无子组件时
 
-```ts
-RootComponent()({
-  events: {
-    onTap(e) {
-      // e 类型为 WMBaseEvent
-    },
-  },
-});
-```
-
-##### 2. 无子组件时：使用类型工具定义参数
+默认参数类型为 `WMBaseEvent`，也可通过内置类型工具精确标注参数：
 
 ```ts
 import {
@@ -272,26 +273,30 @@ import {
 
 RootComponent()({
   events: {
-    // 通过 WMCustomEvent 定义 detail、mark、dataset
+    // 默认基础事件类型
+    onTap(e) {
+      // e 类型为 WMBaseEvent
+    },
+    // 通过 WMCustomEvent 完整定义 detail、mark、dataset
     customA(
       e: WMCustomEvent<
-        string,
-        { markData: { id: string } },
-        { data: string },
-        { data: number }
+        string, // detail
+        { markData: { id: string } }, // mark
+        { currentTargetDatasetData: string }, // currentTarget.dataset
+        { targetDatasetData: number } // target.dataset
       >,
     ) {
       e.detail; // string
-      e.mark; // { markData: { id: string } } | undefined
-      e.currentTarget.dataset; // { data: string }
-      e.target.dataset; // { data: number }
+      e.mark?.markData; // { id: string }
+      e.currentTarget.dataset.currentTargetDatasetData; // string
+      e.target.dataset.targetDatasetData; // number
     },
     // 仅定义 detail
-    bbb(e: Detail<{ str: string }>) {
+    subB(e: Detail<{ str: string }>) {
       e.detail.str; // string
     },
     // 仅定义 mark
-    ccc(e: Mark<{ id: string }>) {
+    subC(e: Mark<{ id: string }>) {
       e.mark.id; // string
     },
     // 仅定义 currentTarget.dataset
@@ -306,86 +311,66 @@ RootComponent()({
 });
 ```
 
-##### 3. 传入子组件泛型时：子组件冒泡/捕获事件提示
+##### 2. 传入子组件泛型时
 
-子组件文档中，事件的 detail 类型通过联合 `Bubbles` / `Capture` 标记冒泡或捕获行为：
+子组件文档中，事件的 detail 类型通过联合 `Bubbles` / `Capture` 等标记冒泡或捕获行为。`RootComponent` 会自动为这些事件生成带后缀的字段，并提供 `detail` 类型推导。
 
 ```ts
-import { Bubbles, Capture } from "annil";
+import { Bubbles, BubblesComposed, Capture, CaptureComposed } from "annil";
 import type { CreateComponentDoc } from "annil";
 
-// 子组件 A：aaa_num 为冒泡事件
-type ComponentDocA = CreateComponentDoc<"aaa", {
+// 子组件 A：bubbles 为冒泡事件，bubblesComposed 为含 composed 的冒泡事件
+type $SubDocA = CreateComponentDoc<"subA", {
   events: {
     str: string;
-    num: number | Bubbles;
+    bubbles: number | Bubbles;
+    bubblesComposed: number | BubblesComposed;
   };
 }>;
 
-// 子组件 B：bbb_num 为捕获事件
-type ComponentDocB = CreateComponentDoc<"bbb", {
+// 子组件 B：capture 为捕获事件，captureComposed 为含 composed 的捕获事件
+type $SubDocB = CreateComponentDoc<"subB", {
   events: {
     str: string;
-    num: number | Capture;
+    capture: number | Capture;
+    captureComposed: number | CaptureComposed;
   };
 }>;
 
-RootComponent<[ComponentDocA, ComponentDocB]>()({
+RootComponent<[$SubDocA, $SubDocB]>()({
   events: {
-    // 3.1 冒泡事件：后缀 _bubbles
-    aaa_num_bubbles(e) {
-      e.detail; // number
-    },
-    // 3.2 冒泡事件+阻止传递：后缀 _bubbles_catch
-    aaa_num_bubbles_catch(e) {
-      e.detail; // number
-    },
-    // 3.3 捕获事件：后缀 _capture，可配合 Dataset 定义 dataset 类型
-    bbb_num_capture(
-      e: Dataset<
-        { currentTargetDataset: number },
-        { targetDataset: string },
-        number
-      >,
-    ) {
-      e.detail; // number
-      e.currentTarget.dataset.currentTargetDataset; // number
-      e.target.dataset.targetDataset; // string
-    },
-    // 3.4 捕获事件+阻止传递：后缀 _capture_catch
-    bbb_num_capture_catch(e) {
-      e.detail; // number
-    },
-  },
-});
-```
-
-##### 4. 子事件与根组件自身事件共存
-
-```ts
-RootComponent<[ComponentDocA, ComponentDocB]>()({
-  events: {
-    // 根组件自身事件
-    rootTap(e) {
+    // 根组件自身的基础事件（与子组件无关）
+    xxx(e) {
       // e 类型为 WMBaseEvent
     },
-    // 子组件冒泡事件
-    aaa_num_bubbles(e) {
+    // 与子组件普通事件（非 Bubbles/Capture）同名时，仍当作根组件自身事件处理
+    subA_str(e) {
+      // e 类型为 WMBaseEvent
+    },
+    // 冒泡事件：后缀 _bubbles
+    subA_bubbles_bubbles(e) {
+      e.detail; // number
+    },
+    // 含 composed 的冒泡事件：后缀 _bubbles（也可用 _bubbles_catch 阻止传递）
+    subA_bubblesComposed_bubbles(e) {
+      e.detail; // number
+    },
+    subA_bubblesComposed_bubbles_catch(e) {
+      e.detail; // number
+    },
+    // 捕获事件：后缀 _capture
+    subB_capture_capture(e) {
+      e.detail; // number
+    },
+    // 含 composed 的捕获事件：后缀 _capture（也可用 _capture_catch 阻止传递）
+    subB_captureComposed_capture(e) {
+      e.detail; // number
+    },
+    subB_captureComposed_capture_catch(e) {
       e.detail; // number
     },
   },
 });
-```
-
-##### 5. 空事件与无事件字段
-
-`events` 为 `{}` 或未定义时，返回类型中不包含 `events` 字段。
-
-```ts
-// events 为 {}，返回类型中无 events
-const Empty = RootComponent<[ComponentDocA]>()({ events: {} });
-// 无 events 字段，返回类型中无 events
-const NoEvents = RootComponent<[ComponentDocA]>()({});
 ```
 
 ### customEvents
@@ -400,11 +385,11 @@ const NoEvents = RootComponent<[ComponentDocA]>()({});
 
 `customEvents` 支持三种配置形式，用以描述事件参数 `detail` 的类型：
 
-| 形式     | 写法                                                 | 说明                              |
-| -------- | ---------------------------------------------------- | --------------------------------- |
-| **简写** | `事件名: 构造函数`                                   | detail 为该构造函数对应的基础类型 |
-| **联合** | `事件名: [构造函数1, 构造函数2, ...]`                | detail 为所有构造函数的联合类型   |
-| **完整** | `事件名: { detail, options?, debounce?, throttle? }` | 可同时配置事件选项与节流防抖      |
+| 形式     | 写法                                                 | 说明                                                               |
+| -------- | ---------------------------------------------------- | ------------------------------------------------------------------ |
+| **简写** | `事件名: 构造函数`                                   | detail 为该构造函数对应的基础类型                                  |
+| **联合** | `事件名: [构造函数1, 构造函数2, ...]`                | detail 为所有构造函数的联合类型                                    |
+| **完整** | `事件名: { detail, options?, debounce?, throttle? }` | 可配置事件选项和/或节流防抖（至少一项）；debounce 与 throttle 互斥 |
 
 ##### 简写形式
 
@@ -476,6 +461,16 @@ RootComponent()({
       options: { capturePhase: true },
       throttle: 200,
     },
+    // 仅配置 debounce（无 options）
+    onlyDebounce: {
+      detail: undefined,
+      debounce: 300,
+    },
+    // 仅配置 throttle（无 options）
+    onlyThrottle: {
+      detail: undefined,
+      throttle: 200,
+    },
   },
 });
 ```
@@ -494,8 +489,9 @@ RootComponent()({
 
 - `options` 中的字段值**只能为 `true`**，不可设为 `false`（默认即为 `false`）。
 - `composed` **不可单独使用**，必须配合 `bubbles` 和/或 `capturePhase` 为 `true`。
-- `options` 不可为空对象，如无选项配置请使用简写形式。
-- 完整形式中若未配置 `options`，则不可使用对象形式，应改用简写。
+- `options` 不可为空对象。
+- 完整形式中至少需配置 `options`、`debounce` 或 `throttle` 中的一项；`debounce` 与 `throttle` 互斥，不可同时使用。
+- 若无需 `options`、`debounce` 或 `throttle`，应改用简写形式。
   :::
 
 合法组合示例：
@@ -552,62 +548,13 @@ RootComponent()({
 });
 ```
 
-##### options 配置错误
-
-```ts
-RootComponent()({
-  customEvents: {
-    // ❌ 无 options 时不可用对象形式，应简写为 `error1: Boolean`
-    error1: { detail: Boolean },
-    // ❌ options 不可为空对象
-    error2: { detail: Boolean, options: {} },
-    // ❌ 不可显式设为 false（默认即为 false）
-    error3: { detail: Boolean, options: { bubbles: false } },
-    // ❌ composed 不可单独开启
-    error4: { detail: Boolean, options: { composed: true } },
-    // ❌ options 中非法字段名
-    error5: {
-      detail: String,
-      options: { bubbles: true, compose: true }, // compose 拼写错误
-    },
-  },
-});
-```
-
-#### 返回类型
-
-- `customEvents` 为 `{}` 或未定义时，返回类型中**不包含** `customEvents` 字段。
-- `customEvents` 非空时，返回类型中包含 `customEvents` 字段，值为以事件名为 key、detail 类型为 value 的对象。若配置了 `options`，value 还会联合对应的标签类型（`Bubbles`、`Capture` 等），用于生成子组件事件文档。
-
-```ts
-const rootDef = RootComponent()({
-  customEvents: {
-    str: String,
-    bubbles: {
-      detail: Number,
-      options: { bubbles: true },
-    },
-  },
-});
-// 返回类型中 customEvents 的值为：
-// {
-//   str: string;
-//   bubbles: number | Bubbles;
-// }
-
-// events 为 {} → 无 customEvents 字段
-const empty = RootComponent()({ customEvents: {} });
-// 无 customEvents 字段 → 无 customEvents 字段
-const noField = RootComponent()({});
-```
-
 ### watch
 
 **类型** `WatchOption` · **是否必填** 否
 
-监听所有数据字段（含 `properties`、`data`、`store`、`computed` 及注入数据）的变化。key的规则与observers相同，不同点在于`watch` 只在数据**真正变化**时触发，且回调参数`(newVal, oldVal)`加入了旧值 。
+监听所有数据字段（含 `properties`、`data`、`store`、`computed`）的变化。其中 `store` 包括组件自身定义的 store 和通过 `instanceConfig.setInjectInfo()` 全局注入的 store 字段。key的规则与observers相同，不同点在于`watch` 只在数据**真正变化**时触发，且回调参数`(newVal, oldVal)`加入了旧值。
 
-**类型** [WatchOption](https://github.com/missannil/annil/blob/main/src/api/RootComponent/Watch/WatchOption.ts)
+源码：[WatchOption](https://github.com/missannil/annil/blob/main/src/api/RootComponent/Watch/WatchOption.ts)
 
 #### 示例
 
@@ -636,7 +583,7 @@ RootComponent()({
     title(newVal, oldVal) {
       console.log("title changed:", newVal);
     },
-    // 监听 store 注入字段
+    // 监听 store 字段
     userName(newVal, oldVal) {
       console.log("userName changed:", newVal);
     },
@@ -672,6 +619,33 @@ RootComponent()({
     // 监听 user 对象及其所有子字段的变化
     "user.**"(newVal, oldVal) {
       console.log("user.** changed", newVal);
+    },
+  },
+});
+```
+
+##### 监听注入的 store 字段
+
+通过 `instanceConfig.setInjectInfo()` 全局注入的 store 字段同样可被 `watch` 监听：
+
+```ts
+import { instanceConfig } from "annil";
+import { observable } from "mobx";
+
+// 全局注入 store
+const themeStore = observable({ theme: "light" as "dark" | "light" });
+
+instanceConfig.setInjectInfo({
+  store: {
+    injectTheme: () => themeStore.theme,
+  },
+});
+
+RootComponent()({
+  watch: {
+    // 监听注入的 store 字段
+    injectTheme(newVal: "dark" | "light", oldVal: "dark" | "light") {
+      console.log("theme changed:", newVal, oldVal);
     },
   },
 });
@@ -752,15 +726,13 @@ RootComponent()({
 
 ### pageLifetimes
 
-**类型** `PageLifetimesOption` · **是否必填** 否
+**类型** [PageLifetimesOption](https://github.com/missannil/annil/blob/main/src/api/RootComponent/PageLifetimes/PageLifetimesOption.ts) · **是否必填** 否
 
 根据 `isPage` 的值有两种形态：
 
-**类型** [PageLifetimesOption](https://github.com/missannil/annil/blob/main/src/api/RootComponent/PageLifetimes/PageLifetimesOption.ts)
-
 #### 组件时（`isPage: false` / 未设置）
 
-对应原生 `pageLifetimes`，监听组件所在页面的生命周期。
+对应原生 `pageLifetimes`，监听组件所在页面的生命周期。仅允许 `show`、`hide`、`resize`。
 
 ```ts
 RootComponent()({
@@ -774,7 +746,11 @@ RootComponent()({
 
 #### 页面时（`isPage: true`）
 
-对应页面生命周期。`onLoad` 的参数类型为 `properties`字段类型。
+对应页面生命周期。`onLoad` 的参数类型为 `properties` 字段类型，返回值支持 `void` 或 `Promise<void>`。
+
+可用生命周期：`onLoad`、`onShow`、`onReady`、`onHide`、`onUnload`、`onPullDownRefresh`、`onReachBottom`、`onPageScroll`、`onShareAppMessage`、`onShareTimeline`、`onAddToFavorites`、`onTabItemTap`、`onResize`。
+
+> **说明**：微信原生要求将页面生命周期写在 `methods` 中，annil 将其统一移至 `pageLifetimes` 字段下。
 
 ```ts
 RootComponent()({
@@ -787,19 +763,23 @@ RootComponent()({
     },
   },
   pageLifetimes: {
-    // props 类型为 Required<PropertiesDoc>
+    // props 类型为 Required<PropertiesDoc>，返回值支持 void | Promise<void>
     onLoad(props) {
       props.id; // string
       props.title; // string
     },
     onShow() {},
+    onReady() {},
     onHide() {},
     onUnload() {},
     onPullDownRefresh() {},
     onReachBottom() {},
     onPageScroll(e) {},
     onShareAppMessage() {},
-    // ...其他页面生命周期
+    onShareTimeline() {},
+    onAddToFavorites() {},
+    onTabItemTap() {},
+    onResize() {},
   },
 });
 ```
@@ -829,11 +809,9 @@ RootComponent()({
 
 ### lifetimes
 
-**类型** `LifetimesConstraint` · **是否必填** 否
+新增 `beforeCreate` 周期用于调试。
 
-扩展了原生的组件生命周期，新增 `beforeCreate` 周期。
-
-**类型** [LifetimesConstraint](https://github.com/missannil/annil/blob/main/src/api/RootComponent/Lifetimes/LifetimesConstraint.ts)
+**类型** [LifetimesConstraint](https://github.com/missannil/annil/blob/main/src/api/RootComponent/Lifetimes/LifetimesConstraint.ts) · **是否必填** 否
 
 | 周期                    | 说明                                                    |
 | ----------------------- | ------------------------------------------------------- |
@@ -853,7 +831,7 @@ RootComponent()({
   lifetimes: {
     beforeCreate(options) {
       // this 为 undefined
-      // options 为最终配置对象，可在此时查看修改调试。
+      // options 为最终配置对象，可在此时查看和调试。
       console.log(options);
     },
     created() {
@@ -880,11 +858,11 @@ RootComponent()({
 
 ### methods
 
-**类型** `MethodsConstraint` · **是否必填** 否
-
-定义实例方法。`this` 指向完整实例类型，包含 `data`、`setData`、自定义事件触发方法等所有实例属性。
+**描述** 定义实例方法。`this` 指向完整实例类型，包含 `data`、`setData`、自定义事件触发方法、`disposer` 等所有实例属性。
 
 **类型** [MethodsConstraint](https://github.com/missannil/annil/blob/main/src/api/RootComponent/Methods/MethodsConstraint.ts)
+
+**是否必填** 否
 
 **特性**：
 
@@ -941,86 +919,9 @@ RootComponent()({
 
 **类型** [ObserversOption](https://github.com/missannil/annil/blob/main/src/api/RootComponent/Observers/ObserversOption.ts)
 
-## 原生兼容字段
+## 其他原生字段
 
-以下字段与微信原生 `Component` 完全一致，直接透传：
-
-| 字段              | 说明       |
-| ----------------- | ---------- |
-| `behaviors`       | 组件行为   |
-| `relations`       | 组件间关系 |
-| `externalClasses` | 外部样式类 |
-| `options`         | 组件选项   |
-| `export`          | 组件导出   |
-
----
-
-在 `methods`、`lifetimes`、`events` 等回调中，`this` 的类型为 `RootComponentInstance`，包含：
-
-| 属性/方法             | 说明                                                                  |
-| --------------------- | --------------------------------------------------------------------- |
-| `this.data`           | 所有字段的只读快照（`properties` + `data` + `store` + `computed`）    |
-| `this.setData(obj)`   | 类型安全的 setData，只允许设置 `data` 字段（不含 `store`/`computed`） |
-| `this.disposer`       | 每个 `store` 字段对应一个 `IReactionDisposer`，可手动取消监听         |
-| `this.事件名(detail)` | 由 `customEvents` 生成的触发方法                                      |
-| 原生实例方法          | `triggerEvent`、`selectComponent`、`createSelectorQuery` 等           |
-
----
-
-## 完整示例
-
-```ts
-import { DefineComponent, DetailedType, RootComponent } from "annil";
-import { userStore } from "../../stores/userStore";
-
-const rootComponent = RootComponent()({
-  isPage: true,
-  properties: {
-    userId: String,
-  },
-  data: {
-    title: "hello",
-  },
-  store: {
-    userName: () => userStore.name,
-    userInfo: (data) => userStore.users[data.userId],
-  },
-  computed: {
-    greeting() {
-      return `Hi, ${this.data.userName}`;
-    },
-  },
-  watch: {
-    userName(newVal, oldVal) {
-      console.log("userName changed:", newVal);
-    },
-  },
-  methods: {
-    onButtonTap() {
-      this.setData({ title: "world" });
-    },
-  },
-  pageLifetimes: {
-    onLoad(props) {
-      console.log(props.userId);
-    },
-  },
-  lifetimes: {
-    detached() {
-      this.disposer.userName();
-    },
-  },
-});
-
-export type Root = typeof rootComponent;
-
-DefineComponent({
-  path: "/pages/index/index",
-  rootComponent,
-});
-```
-
----
+微信原生的其他字段(behaviors、relations、externalClasses、options、export...)会直接透传至原生 `Component()` 构造器.
 
 ## 参考
 

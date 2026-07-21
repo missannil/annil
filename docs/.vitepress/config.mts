@@ -20,8 +20,7 @@ export default defineConfig({
         text: '快速开始',
         items: [
           { text: '安装与配置', link: '/guide/getting-started' },
-          { text: '设计理念', link: '/guide/design-idea' },
-          { text: '文档部署', link: '/guide/docs-deploy' }
+          { text: '设计理念', link: '/guide/design-idea' }
         ]
       },
       {

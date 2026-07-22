@@ -7,7 +7,7 @@ import type { PageLifetimesOption } from "../RootComponent/PageLifetimes/PageLif
 import type { ChunkComputedConstraint } from "./ChunkComputed/ChunkComputedConstraint";
 import type { ChunkStoreConstraint } from "./ChunkStore/ChunkStoreConstraint";
 
-export type SlotComponentReturnType = {
+export type ChunkComponentReturnType = {
   data?: DataConstraint;
   computed?: ChunkComputedConstraint;
   methods?: MethodsConstraint;
@@ -21,12 +21,3 @@ export type SlotComponentReturnType = {
     | PageLifetimesOption<false, object>["pageLifetimes"]
     | PageLifetimesOption<true, object>["pageLifetimes"];
 };
-
-// // 验证key是否合法
-// type _Validator<O, Doc, ErrKeys = Exclude<keyof O, keyof Doc>> = [ErrKeys] extends [never] ? Doc
-//   : `错误的字段${ErrKeys & string}`;
-
-// /**
-//  * SlotComponent Api 返回的类型
-//  */
-// export type SlotComponentReturnType<O extends _Validator<O, _SlotComponentReturnType> = _SlotComponentReturnType> = O;

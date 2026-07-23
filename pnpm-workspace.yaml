@@ -1,2 +1,4 @@
 allowBuilds:
   esbuild: true
+minimumReleaseAgeExclude:
+  - ts-jest@29.4.12

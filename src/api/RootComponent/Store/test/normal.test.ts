@@ -23,7 +23,7 @@ const storeDoc = RootComponent()({
     userName: () => user.name,
     // 2. 使用参数 datas
     userAge: (datas) => {
-      // 参数类型为Required<PropertiesDef> & DataDef & Omit<InjectData, keyof (PropertiesDef & DataDef).
+      // 参数类型为Required<PropertiesDef> & DataDef & Omit<InjectData, keyof (PropertiesDef & DataDef)..
       Checking<
         typeof datas,
         { condition: number; optional: number; injectStr: number; injectNum: number },

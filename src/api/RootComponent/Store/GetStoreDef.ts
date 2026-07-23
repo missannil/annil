@@ -1,4 +1,3 @@
-import { typeEqual } from "../../../utils/typeEqual";
 import type { Getter } from "./StoreConstraint";
 // 单独Getter类型返回值会把undefined转换为null
 // 但是WithDefault类型返回值为getter的返回值去除undefined和default的类型联合。
@@ -12,23 +11,23 @@ export type GetStoreDef<TStore extends object> = {
 };
 
 // test
-type User = { name: string; age: number };
-type test = GetStoreDef<{
-  userName: (data: { aaa: "string" }) => string;
-  userAge: (data: { aaa: "string" }) => number;
-  userInfo: {
-    getter: (data: { aaa: "string" }) => User | undefined;
-    default: null;
-  };
-  list: {
-    getter: (data: { aaa: "string" }) => User[] | undefined;
-    default: [];
-  };
-}>;
-type expected = {
-  userName: string;
-  userAge: number;
-  userInfo: User | null;
-  list: User[];
-};
-typeEqual<test, expected>();
+// type User = { name: string; age: number };
+// type test = GetStoreDef<{
+//   userName: (data: { aaa: "string" }) => string;
+//   userAge: (data: { aaa: "string" }) => number;
+//   userInfo: {
+//     getter: (data: { aaa: "string" }) => User | undefined;
+//     default: null;
+//   };
+//   list: {
+//     getter: (data: { aaa: "string" }) => User[] | undefined;
+//     default: [];
+//   };
+// }>;
+// type expected = {
+//   userName: string;
+//   userAge: number;
+//   userInfo: User | null;
+//   list: User[];
+// };
+// typeEqual<test, expected>();

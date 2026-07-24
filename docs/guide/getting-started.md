@@ -9,7 +9,7 @@ npm install annil
 typeScript 开发时：
 
 ```bash
-npm --save-dev typescript@^7.0.2 miniprogram-api-typings@^5.2.1
+npm --save-dev typescript@^6.0.3 miniprogram-api-typings@^5.2.1
 ```
 
 使用 `store` 能力时：
@@ -48,21 +48,29 @@ module.exports = require("./mobx.cjs.production.min.js");
 
 插件市场安装 搜索 `annil` 安装即可
 
-## tsconfig 推荐配置
+## tsconfig.json 注意事项
+
+ts 6.0 后默认开启严格模式(`strict: true`), 导致函数参数逆变, 使函数赋值错误
+
+```ts
+{
+  events: {
+    onClick: (e: Dataset<{ id: string }>){
+                  ^^^^^^ 报错
+      // ...
+    }
+  };
+}
+```
+
+关闭严格模式下的函数参数逆变 `strictFunctionTypes: false` 即可解决。
 
 ```json
 {
   "compilerOptions": {
-    "target": "es2022",
-    "module": "es2022",
-    "moduleResolution": "bundler",
-    "skipLibCheck": true,
-    "strictFunctionTypes": false,
-    "types": [
-      "mobx",
-      "miniprogram-api-typings"
-    ]
-  },
-  "include": ["**/*.ts"]
+    "strictFunctionTypes": false
+    // ...
+  }
+  // ...
 }
 ```

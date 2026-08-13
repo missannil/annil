@@ -22,8 +22,9 @@ Audit Annil release readiness and state from existing evidence. Do not execute t
 1. Read `docs/maintainers/release.md`; read `docs/maintainers/testing.md` when verification gates are relevant.
 2. Inspect package/build configuration, workflows, ship script, relevant CHANGELOG section and available command or workflow evidence.
 3. Identify the candidate version, branch, intended npm tag and the first failed or unverified stage.
-4. Read Contracts only when SemVer, dependency or public-contract classification is required.
-5. Mark credentialed or irreversible operations as human actions; never perform them.
+4. Read `docs/maintainers/contracts-and-compatibility.md` when SemVer, dependency or public-contract classification is required.
+5. Use source, tests and the matching release evidence to resolve conflicts; do not infer policy from agent instructions.
+6. Mark credentialed or irreversible operations as human actions; never perform them.
 
 ## Output
 

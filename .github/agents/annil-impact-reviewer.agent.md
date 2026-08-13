@@ -19,11 +19,12 @@ Review Annil changes independently and remain read-only.
 
 ## Procedure
 
-1. Read the Annil Framework Skill and only the reference matching the change.
-2. Read the diff, target implementation, direct type dependencies, nearest tests and corresponding API document.
+1. Read the Annil Framework Skill and the relevant `docs/api` or `docs/maintainers` document.
+2. Read the diff, target implementation, direct type dependencies and nearest tests.
 3. Check public exports, type/runtime behavior, component documents, prefixes, lifecycle order and external tool protocols as applicable.
 4. For public or SemVer impact, read `docs/maintainers/contracts-and-compatibility.md`; for architecture impact, read `docs/maintainers/architecture.md`.
-5. Report required validation without claiming unexecuted checks passed.
+5. Treat the matching source and tests as the final evidence when documentation and implementation differ.
+6. Report required validation without claiming unexecuted checks passed.
 
 ## Output
 

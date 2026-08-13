@@ -60,7 +60,8 @@ Root 和 SubComponents 的同名生命周期按收集顺序执行，不是覆盖
 
 store 必须先于 computed；computed 初始化完成前，watch 不能按普通更新处理。`detached` 负责释放 store reaction。
 
-详细源码入口由 Annil Framework Skill 的 Runtime Pipeline reference 提供。
+调整运行时管线时，直接检查 `src/api/DefineComponent/normalizeOptions/`、对应类型依赖
+和最近测试；验证范围以 [Testing](./testing.md) 为准。
 
 ## 6. 全局状态与内部协议
 

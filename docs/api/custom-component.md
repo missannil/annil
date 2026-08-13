@@ -55,6 +55,31 @@ function CustomComponent<
 | [lifetimes](#lifetimes)         | `CustomLifetimesOption`        | 否   |
 | 其他原生字段                    | `WMCompOtherOption` 的部分字段 | 否   |
 
+## WXML 约定
+
+当自定义组件需要使用 `wx:if`、`wx:for` 等 WXML 控制属性时，建议将控制属性放在外层
+`block`，再由 `block` 包裹自定义组件：
+
+```xml
+<block wx:for="{{items}}" wx:key="id">
+  <top-nav item="{{item}}" />
+</block>
+```
+
+组件属性引用循环变量时，变量必须来自包裹它的 `block wx:for` 作用域。对应的
+`CustomComponent` 配置可使用 `inherit: "wxml"`，表示该属性由 WXML 模板传值：
+
+```ts
+CustomComponent<Root, $TopNav>()({
+  inherit: {
+    topNav_item: "wxml",
+  },
+});
+```
+
+这种写法也便于 `vscode-annil` 根据明确的模板作用域进行字段检查；Annil 运行时不读取
+WXML 的 `id` 来建立该关系。
+
 ---
 
 ### inherit

@@ -6,7 +6,7 @@ import type { InnerFields } from "../../types/InnerData";
 import type { WMCompOtherOption } from "../../types/OfficialTypeAlias";
 import type { Replace } from "../../types/Replace";
 import type { ReplacePrefix } from "../../types/ReplacePrefix";
-import type { UnionToComma } from "../../types/UnionToComma.test";
+import type { UnionToComma } from "../../types/UnionToComma";
 import type { ComponentDoc } from "../DefineComponent/returnType/ComponentDoc";
 import type { IInjectStore } from "../InstanceInject/instanceConfig";
 import type { RootComponentDefinition } from "../RootComponent/returnType";

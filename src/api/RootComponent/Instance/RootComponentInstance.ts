@@ -5,8 +5,8 @@ import type { EmptyObject, Func } from "hry-types";
 import type { Assign } from "../../../types/Assign";
 
 import type { _SimplifyIntersection } from "hry-types";
-import type { ComputeObject } from "../../../types/ComputeObject";
 import type { WMComponentInstance, WMInstanceMethods, WMPageInstance } from "../../../types/OfficialTypeAlias";
+import type { Simplify } from "../../../types/Simplify";
 import type { OptionsInnerFields } from "../../DefineComponent/normalizeOptions";
 import type { IInjectAllData, IInjectMethods } from "../../InstanceInject/instanceConfig";
 import type { generateCustomEventMethods } from "./CustomEventMethods";
@@ -18,7 +18,7 @@ export type RootComponentInstance<
   AllData extends object,
   CustomEventsDef extends object,
   StoreDoc extends object,
-  instanceData = ComputeObject<Assign<IInjectAllData, _SimplifyIntersection<AllData>>>,
+  instanceData = Simplify<Assign<IInjectAllData, _SimplifyIntersection<AllData>>>,
 > =
   // 官方实例属性is  options  dataset等
   & IfExtends<false, TIsPage, WMComponentInstance, WMPageInstance>

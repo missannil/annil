@@ -27,7 +27,7 @@ export type IInjectAllData = IfEquals<
 >;
 
 export type IInjectStore = StoreConstraint extends IInjectInfo["store"] ? {}
-  : MapReturnType<IInjectInfo["store"]>;
+  : MapReturnType<NonNullable<IInjectInfo["store"]>>;
 
 export type IInjectMethods = MethodsConstraint extends IInjectInfo["methods"] ? {} : IInjectInfo["methods"];
 

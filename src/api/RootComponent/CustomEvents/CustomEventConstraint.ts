@@ -1,17 +1,19 @@
 import type { DetailedType } from "../../../types/DetailedType";
 
-type SimpleCustomeEvents = DetailedType | null | undefined;
+type SimpleCustomEvents = DetailedType | null | undefined;
 
-export type SimpleCustomeEventsList = SimpleCustomeEvents[];
+export type SimpleCustomEventsList = SimpleCustomEvents[];
 
-export type ShortCustomeEvents = SimpleCustomeEvents | SimpleCustomeEventsList;
+export type SimpleCustomeEventsList = SimpleCustomEventsList;
+
+export type ShortCustomEvents = SimpleCustomEvents | SimpleCustomEventsList;
 
 // options
 type BubblesConfig = { bubbles: true };
 
 type CaptureConfig = { capturePhase: true };
 
-type ComposedCongifg = { composed: true };
+type ComposedConfig = { composed: true };
 
 type NonBubblesConfig = { bubbles?: never };
 
@@ -25,11 +27,11 @@ export type CaptureOption = CaptureConfig & NonBubblesConfig & NonComposedConfig
 
 export type BubblesCaptureOption = BubblesConfig & CaptureConfig & NonComposedConfig;
 
-export type BubblesComposedOption = BubblesConfig & ComposedCongifg & NonCaptureConfig;
+export type BubblesComposedOption = BubblesConfig & ComposedConfig & NonCaptureConfig;
 
-export type CaptureComposedOption = CaptureConfig & ComposedCongifg & NonBubblesConfig;
+export type CaptureComposedOption = CaptureConfig & ComposedConfig & NonBubblesConfig;
 
-export type BubblesCaptureComposedOption = BubblesConfig & ComposedCongifg & CaptureConfig;
+export type BubblesCaptureComposedOption = BubblesConfig & ComposedConfig & CaptureConfig;
 
 export type OptionsFieldsConfigOfCustomEvents =
   | BubblesOption
@@ -43,35 +45,35 @@ export type OptionsFieldsConfigOfCustomEvents =
  * 带options的CustomEvents配置
  */
 export type FullCustomEventsOptions = {
-  detail: ShortCustomeEvents;
+  detail: ShortCustomEvents;
   options: OptionsFieldsConfigOfCustomEvents;
   debounce?: never;
   throttle?: never;
 };
 
 export type FullCustomEventsWithDebounce = {
-  detail: ShortCustomeEvents;
+  detail: ShortCustomEvents;
   options?: never;
   debounce: number;
   throttle?: never;
 };
 
 export type FullCustomEventsWithThrottle = {
-  detail: ShortCustomeEvents;
+  detail: ShortCustomEvents;
   options?: never;
   debounce?: never;
   throttle: number;
 };
 
 export type FullCustomEventsOptionsWithThrottle = {
-  detail: ShortCustomeEvents;
+  detail: ShortCustomEvents;
   options: OptionsFieldsConfigOfCustomEvents;
   debounce?: never;
   throttle: number;
 };
 
 export type FullCustomEventsOptionsWithDebounce = {
-  detail: ShortCustomeEvents;
+  detail: ShortCustomEvents;
   options: OptionsFieldsConfigOfCustomEvents;
   debounce: number;
   throttle?: never;
@@ -84,6 +86,6 @@ export type FullCustomEvents =
   | FullCustomEventsOptionsWithThrottle
   | FullCustomEventsOptionsWithDebounce;
 
-export type CustomEvents = FullCustomEvents | ShortCustomeEvents;
+export type CustomEvents = FullCustomEvents | ShortCustomEvents;
 
 export type CustomEventConstraint = Record<string, CustomEvents>;

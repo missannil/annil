@@ -41,7 +41,7 @@ export default defineConfig({
           text: '组件注入',
           'collapsed': false,
           items: [
-            { text: 'IInjectInfo', link: '/api/instance-api' },
+            { text: 'IInjectInfo', link: '/api/instance-config#typescript-类型增强' },
             { text: 'instanceConfig', link: '/api/instance-config' },
           ]
         },

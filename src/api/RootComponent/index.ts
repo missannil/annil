@@ -43,8 +43,8 @@ type RootComponentOptions<
   DataDef extends object,
   StoreDef extends object,
   ComputedDef extends object,
-  SelfAllDatas extends object,
-  ValidInjectDatas extends object,
+  OwnDataDoc extends object,
+  InjectableDataDoc extends object,
 > =
   & MethodsOption<TMethods, keyof (EventsDef & CustomEventsDef)>
   & PropertiesOption<TProperties>
@@ -80,7 +80,7 @@ type RootComponentOptions<
       TIsPage,
       TMethods & Omit<IInjectMethods, keyof TMethods>,
       DataDef,
-      SelfAllDatas & ValidInjectDatas,
+      OwnDataDoc & InjectableDataDoc,
       CustomEventsDef,
       StoreDef
     >
@@ -107,8 +107,8 @@ type RootComponentConstructor<TComponentDocList extends ComponentDoc[]> = <
   > extends TStore ? {}
     : GetStoreDef<TStore>,
   ComputedDef extends object = GetComputedDef<TComputed>,
-  SelfAllDatas extends object = Required<PropertiesDef> & DataDef & StoreDef & ComputedDef,
-  ValidInjectDatas extends object = Omit<IInjectAllData, keyof SelfAllDatas>,
+  OwnDataDoc extends object = Required<PropertiesDef> & DataDef & StoreDef & ComputedDef,
+  InjectableDataDoc extends object = Omit<IInjectAllData, keyof OwnDataDoc>,
 >(
   options: RootComponentOptions<
     TEvents,
@@ -125,8 +125,8 @@ type RootComponentConstructor<TComponentDocList extends ComponentDoc[]> = <
     DataDef,
     StoreDef,
     ComputedDef,
-    SelfAllDatas,
-    ValidInjectDatas
+    OwnDataDoc,
+    InjectableDataDoc
   >,
 ) => // 生成RootComponentDefinition
 _SimplifyIntersection<

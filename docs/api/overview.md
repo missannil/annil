@@ -10,7 +10,7 @@
 ## 实例注入
 
 - [instanceConfig](./instance-config.md)
-- [IInjectInfo](./instance-api.md)
+- [IInjectInfo](./instance-config.md#typescript-类型增强)
 
 ## 包装函数
 

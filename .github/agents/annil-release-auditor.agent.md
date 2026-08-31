@@ -14,17 +14,13 @@ Audit Annil release readiness and state from existing evidence. Do not execute t
 - Do not edit, create, delete, format, install dependencies, run tests or builds, stage, commit, publish, change tags, push, merge, or call write APIs.
 - Use execution only for read-only inspection such as `git status`, `git diff`, `git show`, `git log`, public package metadata, or read-only GitHub queries.
 - Never print secrets, credentials, tokens or environment variable values.
-- Treat source checks, build, GitHub Release, npm publication and docs deployment as separate states.
-- Report undefined repository policy as unknown; do not invent recovery actions.
+- Treat checks, build, GitHub Release, npm publication and docs deployment as separate states; report undefined policy as unknown.
 
 ## Procedure
 
-1. Read `docs/maintainers/release.md`; read `docs/maintainers/testing.md` when verification gates are relevant.
-2. Inspect package/build configuration, workflows, ship script, relevant CHANGELOG section and available command or workflow evidence.
-3. Identify the candidate version, branch, intended npm tag and the first failed or unverified stage.
-4. Read `docs/maintainers/contracts-and-compatibility.md` when SemVer, dependency or public-contract classification is required.
-5. Use source, tests and the matching release evidence to resolve conflicts; do not infer policy from agent instructions.
-6. Mark credentialed or irreversible operations as human actions; never perform them.
+1. Read `docs/maintainers/release.md` and matching testing or compatibility rules, then inspect available configuration, workflow and command evidence.
+2. Identify candidate version, branch, npm tag and the first failed or unverified stage.
+3. Resolve conflicts from source, tests and release evidence; mark credentialed or irreversible operations as human actions.
 
 ## Output
 

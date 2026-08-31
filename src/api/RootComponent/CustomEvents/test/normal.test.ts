@@ -3,7 +3,7 @@
 import { type DetailedType, RootComponent } from "../../../..";
 import { typeEqual } from "../../../../utils/typeEqual";
 import type { Mock_User } from "../../Properties/test/normalRequired.test";
-import type { CustomEventConstraint, FullCustomEvents, ShortCustomeEvents } from "../CustomEventConstraint";
+import type { CustomEventConstraint, FullCustomEvents, ShortCustomEvents } from "../CustomEventConstraint";
 import type {
   Bubbles,
   BubblesCapture,
@@ -23,7 +23,7 @@ export const mock_shortCustomEvents = {
   unionStr: String as DetailedType<"male" | "female">,
   union: [String, Number as DetailedType<0 | 1 | 2>, null],
   obj: Object as DetailedType<Mock_User>,
-} satisfies Record<string, ShortCustomeEvents>;
+} satisfies Record<string, ShortCustomEvents>;
 
 /**
  * customEvents字段带options配置

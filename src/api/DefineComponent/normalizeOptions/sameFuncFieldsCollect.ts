@@ -1,6 +1,6 @@
 import type { Func } from "hry-types";
 
-import type { ChunkComponentReturnType } from "../../ChunkComponent/ChunkComponentReturnType";
+import type { ChunkComponentDefinitionRuntime } from "../../ChunkComponent/ChunkComponentDefinitionRuntime";
 import type { CustomComponentDefinitionRuntime } from "../../CustomComponent/returnType";
 import type { RootComponentDefinitionRuntime } from "../../RootComponent/returnType";
 import type { SameFuncOptions } from ".";
@@ -9,7 +9,7 @@ import type { SameFuncOptions } from ".";
  * 把配置为函数的字段方法收集到funcOptions中
  */
 export function sameFuncFieldsCollect(
-  options: CustomComponentDefinitionRuntime | ChunkComponentReturnType | RootComponentDefinitionRuntime,
+  options: CustomComponentDefinitionRuntime | ChunkComponentDefinitionRuntime | RootComponentDefinitionRuntime,
   funcOptions: SameFuncOptions,
 ) {
   let key: keyof SameFuncOptions;

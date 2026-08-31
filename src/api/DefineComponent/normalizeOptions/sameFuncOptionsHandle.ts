@@ -33,4 +33,6 @@ export function sameFuncOptionsHandle(
   if (funcOptions.lifetimes) _sameFuncOptionsHandle(finalOptionsForComponent.lifetimes, funcOptions.lifetimes);
 
   if (funcOptions.watch) _sameFuncOptionsHandle(finalOptionsForComponent.watch, funcOptions.watch);
+
+  if (funcOptions.observers) _sameFuncOptionsHandle(finalOptionsForComponent.observers, funcOptions.observers);
 }

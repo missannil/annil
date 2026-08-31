@@ -29,7 +29,7 @@ function mergeOptions(
 
         default:
           // @ts-ignore
-          finalOptionsForComponent[renamedKey] = Object.assign(injectVal, originalVal);
+          finalOptionsForComponent[renamedKey] = Object.assign({}, injectVal, originalVal);
 
           break;
       }

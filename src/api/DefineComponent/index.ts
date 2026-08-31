@@ -1,5 +1,6 @@
 import type { IfExtends } from "../../types/IfExtends";
 
+import type { ChunkComponentDefinitionRuntime } from "../ChunkComponent/ChunkComponentDefinitionRuntime";
 import type { CustomComponentDefinition, CustomComponentDefinitionRuntime } from "../CustomComponent/returnType";
 import type { RootComponentDefinition, RootComponentDefinitionRuntime } from "../RootComponent/returnType";
 import type { NameOrPathOption } from "./NameOrPath/NameOrPathOption";
@@ -41,7 +42,7 @@ export type DefineComponentOptionRuntime = {
   name?: string;
   path?: string;
   rootComponent?: RootComponentDefinitionRuntime;
-  subComponents?: CustomComponentDefinitionRuntime[];
+  subComponents?: (CustomComponentDefinitionRuntime | ChunkComponentDefinitionRuntime)[];
 };
 
 /**

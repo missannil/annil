@@ -19,8 +19,8 @@ ChunkComponent<RootDoc, "chunkPrefix">()({/* options */});
 
 ```ts
 function ChunkComponent<
-  TRootComponentReturnType extends RootComponentDefinition,
-  TPrefix extends string = "",
+  TRootDoc extends RootComponentDefinition,
+  Prefix extends string = "",
 >(): (options: Options) => never;
 ```
 
@@ -32,10 +32,10 @@ function ChunkComponent<
 
 ## 泛型参数
 
-| 参数                       | 说明                                                                                                       |
-| -------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| `TRootComponentReturnType` | 宿主根组件类型，通常传入 `typeof rootComponent`。它让 Chunk 能访问并校验宿主的数据、方法、事件和生命周期。 |
-| `TPrefix`                  | 可选的字段前缀。建议为每个 Chunk 指定唯一前缀，以隔离多个 Chunk 的字段；默认为空字符串，不启用前缀校验。   |
+| 参数       | 说明                                                                                                       |
+| ---------- | ---------------------------------------------------------------------------------------------------------- |
+| `TRootDoc` | 宿主根组件类型，通常传入 `typeof rootComponent`。它让 Chunk 能访问并校验宿主的数据、方法、事件和生命周期。 |
+| `Prefix`   | 可选的字段前缀。建议为每个 Chunk 指定唯一前缀，以隔离多个 Chunk 的字段；默认为空字符串，不启用前缀校验。   |
 
 ## 快速示例
 
@@ -88,7 +88,7 @@ DefineComponent({
 每个 Chunk 在 WXML 中都应有一个对应的根节点，并且以下三个名称必须完全一致：
 
 1. TypeScript 中接收 `ChunkComponent` 返回值的变量名；
-2. `ChunkComponent` 的第二个泛型参数（`TPrefix`）；
+2. `ChunkComponent` 的第二个泛型参数（`Prefix`）；
 3. 对应 WXML 根节点的 `id` 值。
 
 例如，三个 `counter` 必须保持一致：
@@ -125,7 +125,7 @@ const counter = ChunkComponent<Root, "counter">()({
 
 ### data
 
-定义 Chunk 数据。启用 `TPrefix` 后，字段必须以 `${Prefix}_` 或 `_${Prefix}_` 开头；后者适合内部字段。
+定义 Chunk 数据。启用 `Prefix` 后，字段必须以 `${Prefix}_` 或 `_${Prefix}_` 开头；后者适合内部字段。
 
 `data` 字段不能与宿主组件的 `properties`、`data`、`store`、`computed` 字段重复，也不能与其他 Chunk 合并后的同名字段重复。
 
@@ -183,11 +183,11 @@ const toolbar = ChunkComponent<Root, "toolbar">()({
 <button bind:tap="toolbar_onTap">增加</button>
 ```
 
-启用 `TPrefix` 时，事件名必须以 `${Prefix}_` 开头。事件名不能与宿主的 `methods`、`events` 或其他 Chunk 的同名字段冲突。
+启用 `Prefix` 时，事件名必须以 `${Prefix}_` 开头。事件名不能与宿主的 `methods`、`events` 或其他 Chunk 的同名字段冲突。
 
 ### methods
 
-定义 Chunk 内可复用的方法，可由 `events`、生命周期和其他方法调用。启用 `TPrefix` 时，方法名必须以 `${Prefix}_` 开头，且不能与宿主方法、宿主事件或当前 Chunk 的事件重名。
+定义 Chunk 内可复用的方法，可由 `events`、生命周期和其他方法调用。启用 `Prefix` 时，方法名必须以 `${Prefix}_` 开头，且不能与宿主方法、宿主事件或当前 Chunk 的事件重名。
 
 ```ts
 const toolbar = ChunkComponent<Root, "toolbar">()({
@@ -235,7 +235,7 @@ const toolbar = ChunkComponent<Root, "toolbar">()({
 
 ## 命名与冲突规则
 
-为避免多个逻辑片段在同一个组件实例中产生字段冲突，建议始终传入 `TPrefix`：
+为避免多个逻辑片段在同一个组件实例中产生字段冲突，建议始终传入 `Prefix`：
 
 ```ts
 const filter = ChunkComponent<Root, "filter">()({
@@ -252,7 +252,7 @@ const filter = ChunkComponent<Root, "filter">()({
 });
 ```
 
-| 字段类别                    | 启用 `TPrefix = "filter"` 后允许的名称    |
+| 字段类别                    | 启用 `Prefix = "filter"` 后允许的名称     |
 | --------------------------- | ----------------------------------------- |
 | `data`、`store`、`computed` | `filter_${string}` 或 `_filter_${string}` |
 | `events`、`methods`         | `filter_${string}`                        |

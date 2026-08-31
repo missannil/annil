@@ -1,5 +1,5 @@
-import { Checking } from "hry-types";
 import { observable } from "mobx";
+import { typeEqual } from "../../../../utils/typeEqual";
 import { ChunkComponent } from "../..";
 import type { Mock_RootDoc } from "../../ChunkData/test/mock";
 
@@ -30,29 +30,29 @@ ChunkComponent<Mock_RootDoc, "zzz">()({
     // watch data字段
     zzz_num(newValue, oldValue) {
       void oldValue;
-      void Checking<number, typeof newValue, true>;
+      void typeEqual<number, typeof newValue>;
 
-      void Checking<number, typeof oldValue, true>;
+      void typeEqual<number, typeof oldValue>;
     },
     // watch store字段
     zzz_obj(newValue, oldValue) {
       void oldValue;
-      void Checking<Mock_user, typeof newValue, true>;
+      void typeEqual<Mock_user, typeof newValue>;
 
-      void Checking<Mock_user, typeof oldValue, true>;
+      void typeEqual<Mock_user, typeof oldValue>;
     },
     // watch computed字段
     zzz_computed(newValue: number, oldValue: number) {
       void oldValue;
-      void Checking<number, typeof newValue, true>;
-      void Checking<number, typeof oldValue, true>;
+      void typeEqual<number, typeof newValue>;
+      void typeEqual<number, typeof oldValue>;
     },
     // watch RootDoc字段
     optional_obj(newValue, oldValue) {
       void oldValue;
-      void Checking<object | null, typeof newValue, true>;
+      void typeEqual<object | null, typeof newValue>;
 
-      void Checking<object | null, typeof oldValue, true>;
+      void typeEqual<object | null, typeof oldValue>;
     },
   },
 });

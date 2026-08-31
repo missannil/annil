@@ -1,5 +1,5 @@
-import { Checking, type Test } from "hry-types";
 import { RootComponent } from "../../../../..";
+import { typeEqual } from "../../../../../utils/typeEqual";
 
 RootComponent()({
   methods: {
@@ -13,13 +13,13 @@ RootComponent()({
     },
 
     M2(str: string) {
-      Checking<typeof this.M1, () => 1, Test.Pass>();
+      typeEqual<typeof this.M1, () => 1>();
 
-      Checking<typeof this.M2, (str: string) => string, Test.Pass>();
+      typeEqual<typeof this.M2, (str: string) => string>();
 
-      Checking<typeof this.injectMethodA, (str: string) => string, Test.Pass>();
+      typeEqual<typeof this.injectMethodA, (str: string) => string>();
       // 自身方法会覆盖注入方法,所以类型为自身方法的类型
-      Checking<typeof this.injectMethodB, (num: string) => string, Test.Pass>();
+      typeEqual<typeof this.injectMethodB, (num: string) => string>();
 
       return str;
     },

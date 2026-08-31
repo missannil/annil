@@ -1,4 +1,4 @@
-import type { Func } from "hry-types/src/Misc/Func";
+import type { Func } from "hry-types";
 
 import type { ChunkComponentReturnType } from "../../ChunkComponent/ChunkComponentReturnType";
 import type { CustomComponentDefinitionRuntime } from "../../CustomComponent/returnType";

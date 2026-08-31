@@ -1,6 +1,6 @@
-import type { IsPureObject } from "hry-types/src/Any/IsPureObject";
+import type { _IsPlainObject } from "hry-types";
 
 /**
  * 为对象类型加入null类型。
  */
-export type AddNullForObject<O> = O extends unknown ? IsPureObject<O> extends true ? (O | null) : O : never;
+export type AddNullForObject<O> = _IsPlainObject<O> extends true ? (O | null) : O;

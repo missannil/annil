@@ -1,18 +1,20 @@
 # 安装与配置
 
-## 安装
+### 核心API
 
 ```bash
 npm install annil
+# pnpm add annil
 ```
 
-typeScript 开发时：
+### 类型依赖
 
 ```bash
-npm --save-dev typescript@^6.0.3 miniprogram-api-typings@^5.2.1
+npm install --save-dev typescript@^6.0.3 miniprogram-api-typings@^5.2.1
+# pnpm add -D typescript@^6.0.3 miniprogram-api-typings@^5.2.1
 ```
 
-使用 `store` 能力时：
+### 状态管理依赖
 
 ```bash
 npm install mobx@^6.9.0
@@ -23,7 +25,7 @@ npm install mobx@^6.9.0
 在微信开发者工具中执行：工具 → 构建 npm。
 
 ::: tip
-使用 mobx 时,为避免报错 ——`process is not defined`, 需要在npm打包前修改 `node_modules/mobx/dist/index.js`中的内容：
+使用 状态管理(mobx) 时,为避免报错 ——`process is not defined`, 需要在npm打包前修改 `node_modules/mobx/dist/index.js`中的内容：
 
 ```js
 // 更改前
@@ -50,13 +52,14 @@ module.exports = require("./mobx.cjs.production.min.js");
 
 ## tsconfig.json 注意事项
 
+::: tip
 ts 6.0 后默认开启严格模式(`strict: true`), 导致函数参数逆变, 使函数赋值错误
 
 ```ts
 {
   events: {
     onClick: (e: Dataset<{ id: string }>){
-                  ^^^^^^ 报错
+                  ^^^^^^ 
       // ...
     }
   };

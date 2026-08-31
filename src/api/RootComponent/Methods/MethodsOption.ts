@@ -1,4 +1,4 @@
-import type { G } from "hry-types";
+import type { DuplicateFieldValidator } from "../../../types/DuplicateFieldValidator";
 
 import type { MethodsConstraint } from "./MethodsConstraint";
 
@@ -11,5 +11,5 @@ export type MethodsOption<
    */
   methods?:
     & TMethods
-    & G.DuplicateFieldValidator<TMethods, DuplicateField>;
+    & DuplicateFieldValidator<TMethods, DuplicateField>;
 };

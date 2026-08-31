@@ -1,17 +1,15 @@
-import type { IfEquals } from "hry-types/src/Any/IfEquals";
-import type { IfExtends } from "hry-types/src/Any/IfExtends";
-import type { NoInfer } from "hry-types/src/Generic/NoInfer";
-import type { ComputeObject } from "../types/ComputeObject";
+import type { IfAllExtends, IfEquals } from "hry-types";
 import type { WMNavigateToOption } from "../types/OfficialTypeAlias";
 import type { RequiredKeys } from "../types/RequiredKeys";
+import type { Simplify } from "../types/Simplify";
 import { INNERMARKER } from "../utils/InnerMarker";
 import type { PageDoc } from "./DefineComponent/returnType/PageDoc";
 
-type NavigateToOption<T extends PageDoc> = ComputeObject<
+type NavigateToOption<T extends PageDoc> = Simplify<
   & {
     url: T["path"];
   }
-  & IfExtends<
+  & IfAllExtends<
     unknown,
     T["properties"],
     unknown,

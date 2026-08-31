@@ -1,4 +1,3 @@
-import { Checking, type Test } from "hry-types";
 import { observable } from "mobx";
 import { typeEqual } from "../../../../utils/_utils";
 import { RootComponent } from "../..";
@@ -24,10 +23,9 @@ const storeDoc = RootComponent()({
     // 2. 使用参数 datas
     userAge: (datas) => {
       // 参数类型为Required<PropertiesDef> & DataDef & Omit<InjectData, keyof (PropertiesDef & DataDef)..
-      Checking<
+      typeEqual<
         typeof datas,
-        { condition: number; optional: number; injectStr: number; injectNum: number },
-        Test.Pass
+        { condition: number; optional: number; injectStr: number; injectNum: number }
       >();
 
       if (datas.condition > 10) {

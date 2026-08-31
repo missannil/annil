@@ -1,4 +1,4 @@
-import { Checking, type Test } from "hry-types";
+import { typeEqual } from "../../../../utils/typeEqual";
 import { RootComponent } from "../..";
 
 /**
@@ -22,4 +22,4 @@ type RootDocExpected = {
   };
 };
 
-void Checking<typeof RootDoc, RootDocExpected, Test.Pass>;
+void typeEqual<typeof RootDoc, RootDocExpected>;

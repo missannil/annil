@@ -1,4 +1,4 @@
-import type { IfExtends } from "hry-types/src/Any/_api";
+import type { IfAllExtends } from "hry-types";
 import type { WMCompOtherOption } from "../../types/OfficialTypeAlias";
 import type { IInjectAllData, IInjectMethods, IInjectStore } from "../InstanceInject/instanceConfig";
 import type { GetComputedDef } from "../RootComponent/Computed/GetComputedDef";
@@ -34,14 +34,11 @@ type ChunkComponentOptions<
   EventsDoc extends object,
   PropertiesDoc extends object,
 > =
-
-  // // CustomEventsDoc extends object,
   & ChunkDataOption<TData, keyof (RootDatas & IInjectAllData), Prefix>
   & ChunkStoreOption<TStore, keyof (TData & RootDatas & IInjectAllData), Prefix>
   & ChunkComputedOption<
     TComputed,
     keyof (TData & StoreDoc & RootDatas & IInjectAllData),
-    // { data: ComputeObject<TData & StoreDoc & RootDatas & ComputedDoc & IInjectAllData> },
     Prefix
   >
   & ChunkEventsOption<
@@ -102,7 +99,7 @@ type ChunkComponentConstructor<
     : GetStoreDef<TStore>,
   TComputed extends ChunkComputedConstraint = {},
   ComputedDoc extends object = GetComputedDef<TComputed>,
-  EventsDoc extends object = IfExtends<ChunkEventsConstraint, TEvents, {}, TEvents>,
+  EventsDoc extends object = IfAllExtends<ChunkEventsConstraint, TEvents, {}, TEvents>,
   PropertiesDoc extends object = NonNullable<TRootComponentReturnType["properties"]>,
 >(
   options: ChunkComponentOptions<

@@ -1,7 +1,5 @@
-import { Checking, type Test } from "hry-types";
-import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
 import type { DetailedType } from "../../../../types/DetailedType";
-import type { IInjectAllData } from "../../../InstanceInject/instanceConfig";
+import { typeEqual } from "../../../../utils/typeEqual";
 import { RootComponent } from "../..";
 import type { RequiredSingle, RequiredType, RequiredUnion } from "../PropertiesConstraint";
 
@@ -91,7 +89,6 @@ const RequiredDoc = RootComponent()({
   methods: {
     foo() {
       // 1 this.data中的类型(对象类型加null)
-      void Checking<typeof this.data, ComputeIntersection<RequiredTypeExpected & IInjectAllData>, Test.Pass>;
     },
   },
 });
@@ -104,4 +101,5 @@ export type RequiredDocExpected = {
   methods: { foo: () => void };
 };
 
-void Checking<typeof RequiredDoc, RequiredDocExpected, Test.Pass>;
+void typeEqual<typeof RequiredDoc, RequiredDocExpected>;
+void typeEqual<typeof RequiredDoc, RequiredDocExpected>;

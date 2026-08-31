@@ -1,7 +1,5 @@
-import type { G } from "hry-types";
-import type { As } from "hry-types/src/Any/As";
-import type { IfContains } from "hry-types/src/Any/IfContains";
-import type { Func } from "hry-types/src/Misc/Func";
+import type { As, Func, IfSomeExtends } from "hry-types";
+import type { DuplicateFieldValidator } from "../../../types/DuplicateFieldValidator";
 import type { Validators } from "../../../types/Validators";
 import type { StoreConstraint } from "./StoreConstraint";
 
@@ -32,7 +30,7 @@ export type StoreOption<
   store?:
     & TStore
     & Validators<[
-      G.DuplicateFieldValidator<TStore, TDuplicateKeys, "字段重复">,
+      DuplicateFieldValidator<TStore, TDuplicateKeys, "字段重复">,
       // TypeValidator<TStore>,
     ]>;
 };
@@ -43,7 +41,7 @@ export type StoreOption<
 export type TypeValidator<
   TStore,
   Result = {
-    [k in keyof TStore]: IfContains<
+    [k in keyof TStore]: IfSomeExtends<
       ReturnType<As<TStore[k], Func>>,
       undefined,
       () => "⚠️返回类型中不可以包含undefined⚠️",

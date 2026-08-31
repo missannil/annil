@@ -1,4 +1,4 @@
-import { Checking, type Test } from "hry-types";
+import { typeEqual } from "../../../../utils/typeEqual";
 
 import { observable } from "mobx";
 import { RootComponent } from "../..";
@@ -24,32 +24,32 @@ RootComponent()({
   watch: {
     num(newValue, oldValue) {
       void oldValue;
-      void Checking<number, typeof newValue, Test.Pass>;
+      void typeEqual<number, typeof newValue>;
 
-      void Checking<number, typeof oldValue, Test.Pass>;
+      void typeEqual<number, typeof oldValue>;
     },
     obj(newValue, oldValue) {
       void oldValue;
-      void Checking<Mock_User, typeof newValue, Test.Pass>;
+      void typeEqual<Mock_User, typeof newValue>;
 
-      void Checking<Mock_User, typeof oldValue, Test.Pass>;
+      void typeEqual<Mock_User, typeof oldValue>;
     },
     reactiveNumber(newValue: number, oldValue) {
       void oldValue;
-      void Checking<number, typeof newValue, Test.Pass>;
-      void Checking<number, typeof oldValue, Test.Pass>;
+      void typeEqual<number, typeof newValue>;
+      void typeEqual<number, typeof oldValue>;
     },
     reactiveLiteral(newValue, oldValue) {
       void oldValue;
-      void Checking<"male" | "female", typeof newValue, Test.Pass>;
+      void typeEqual<"male" | "female", typeof newValue>;
 
-      void Checking<"male" | "female", typeof oldValue, Test.Pass>;
+      void typeEqual<"male" | "female", typeof oldValue>;
     },
     reactiveUser(newValue, oldValue) {
       void oldValue;
-      void Checking<Mock_User, typeof newValue, Test.Pass>;
+      void typeEqual<Mock_User, typeof newValue>;
 
-      void Checking<Mock_User, typeof oldValue, Test.Pass>;
+      void typeEqual<Mock_User, typeof oldValue>;
     },
   },
 });

@@ -1,5 +1,5 @@
-import type { Contains } from "hry-types/src/Any/Contains";
-import type { IfExtends } from "hry-types/src/Any/IfExtends";
+import type { IsSomeExtends } from "hry-types";
+import type { IfExtends } from "../../../types/IfExtends";
 import type { Detail, WMBaseEvent } from "../../../types/OfficialTypeAlias";
 import type { ComponentDoc } from "../../DefineComponent/returnType/ComponentDoc";
 import type { Bubbles, Capture, CustomEventsTags } from "../../RootComponent/CustomEvents/CustomEventsTag";
@@ -11,7 +11,7 @@ export type CustomEventsConstraint<
   CompDoc extends ComponentDoc,
 > = {
   [
-    k in keyof CompDoc["events"] as Contains<CompDoc["events"][k], Bubbles | Capture> extends true
+    k in keyof CompDoc["events"] as IsSomeExtends<CompDoc["events"][k], Bubbles | Capture> extends true
       ? (k | `${k & string}_catch`)
       : k
   ]?: (

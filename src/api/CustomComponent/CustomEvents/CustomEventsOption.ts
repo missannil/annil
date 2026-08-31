@@ -1,4 +1,5 @@
-import type { G } from "hry-types";
+import type { DuplicateFieldValidator } from "../../../types/DuplicateFieldValidator";
+import type { KeyValidator } from "../../../types/KeyValidator";
 
 export type CustomEventsOption<
   TCustomEvents extends object,
@@ -13,6 +14,6 @@ export type CustomEventsOption<
    */
   events?:
     & TCustomEvents
-    & G.IllegalFieldValidator<CustomEventsDoc, legalKeys>
-    & G.DuplicateFieldValidator<TCustomEvents, DuplicateKeys>;
+    & KeyValidator<CustomEventsDoc, legalKeys>
+    & DuplicateFieldValidator<TCustomEvents, DuplicateKeys>;
 };

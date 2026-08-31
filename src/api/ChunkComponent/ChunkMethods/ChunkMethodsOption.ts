@@ -1,5 +1,6 @@
-import type { G } from "hry-types";
-import type { IfExtends } from "hry-types/src/Any/_api";
+import type { IfAllExtends } from "hry-types";
+import type { DuplicateFieldValidator } from "../../../types/DuplicateFieldValidator";
+import type { KeyValidator } from "../../../types/KeyValidator";
 import type { Validators } from "../../../types/Validators";
 import type { MethodsConstraint } from "../../RootComponent/Methods/MethodsConstraint";
 
@@ -15,12 +16,12 @@ export type ChunkMethodsOption<
     & TMethods
     & Validators<
       [
-        G.DuplicateFieldValidator<TMethods, TDuplicateKeys, "字段重复">,
-        IfExtends<
+        DuplicateFieldValidator<TMethods, TDuplicateKeys, "字段重复">,
+        IfAllExtends<
           MethodsConstraint,
           TMethods,
           unknown,
-          IfExtends<Prefix, "", unknown, G.KeyValidator<TMethods, `${Prefix}_${string}`, "前缀错误">>
+          IfAllExtends<Prefix, "", unknown, KeyValidator<TMethods, `${Prefix}_${string}`, "前缀错误">>
         >,
       ]
     >;

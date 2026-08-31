@@ -1,4 +1,4 @@
-import type { Func } from "hry-types/src/Misc/Func";
+import type { Func } from "hry-types";
 import type { ComputedConstraint } from "../RootComponent/Computed/ComputedConstraint";
 import type { DataConstraint } from "../RootComponent/Data/DataConstraint";
 import type { EventsConstraint } from "../RootComponent/Events/EventsConstraint";

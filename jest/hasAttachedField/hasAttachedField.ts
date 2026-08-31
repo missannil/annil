@@ -1,4 +1,4 @@
-import type { EmptyObject } from "hry-types/src/Misc/EmptyObject";
+import type { EmptyObject } from "hry-types";
 import { DefineComponent, RootComponent, typeEqual } from "../../src";
 
 const rootComponent = RootComponent()({

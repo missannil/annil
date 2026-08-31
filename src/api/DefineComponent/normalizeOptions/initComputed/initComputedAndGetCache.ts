@@ -1,4 +1,4 @@
-import type { Func } from "hry-types/src/Misc/Func";
+import type { Func } from "hry-types";
 
 import type { Instance } from "../../../RootComponent/Instance/RootComponentInstance";
 

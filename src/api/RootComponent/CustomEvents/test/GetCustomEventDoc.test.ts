@@ -1,4 +1,4 @@
-import { Checking, type Test } from "hry-types";
+import { typeEqual } from "../../../../utils/typeEqual";
 import type { GetCustomEventsDef } from "../GetCustomEventDef";
 
 import {
@@ -35,4 +35,4 @@ export type Mock_CustomEventsDocExpected = {
   bubbles_capturePhase_composed: BubblesCapturePhaseComposedExpected;
 };
 
-void Checking<Mock_CustomEventsDoc, Mock_CustomEventsDocExpected, Test.Pass>;
+void typeEqual<Mock_CustomEventsDoc, Mock_CustomEventsDocExpected>;

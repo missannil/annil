@@ -1,4 +1,4 @@
-import type { IfExtends } from "hry-types/src/Any/IfExtends";
+import type { IfAllExtends } from "hry-types";
 import type { InferDetailedType } from "../../../types/InferDetailedType";
 import type { OptionalType } from "./PropertiesConstraint";
 
@@ -8,7 +8,7 @@ import type { OptionalType } from "./PropertiesConstraint";
 export type GetOptionalDef<
   TOptionalProperties extends Record<string, OptionalType>,
 > = {
-  -readonly [k in keyof TOptionalProperties]?: IfExtends<
+  -readonly [k in keyof TOptionalProperties]?: IfAllExtends<
     unknown,
     TOptionalProperties[k]["optionalTypes"],
     InferDetailedType<TOptionalProperties[k]["type"]>,

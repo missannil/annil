@@ -1,5 +1,6 @@
-import type { G } from "hry-types";
-import type { IfExtends } from "hry-types/src/Any/IfExtends";
+import type { IfAllExtends } from "hry-types";
+import type { DuplicateFieldValidator } from "../../../types/DuplicateFieldValidator";
+import type { KeyValidator } from "../../../types/KeyValidator";
 import type { Validators } from "../../../types/Validators";
 import type { ChunkEventsConstraint } from "./ChunkEventsConstraint";
 
@@ -15,12 +16,12 @@ export type ChunkEventsOption<
     & TEvents
     & Validators<
       [
-        G.DuplicateFieldValidator<TEvents, TDuplicateKeys, "字段重复">,
-        IfExtends<
+        DuplicateFieldValidator<TEvents, TDuplicateKeys, "字段重复">,
+        IfAllExtends<
           ChunkEventsConstraint,
           TEvents,
           unknown,
-          IfExtends<Prefix, "", unknown, G.KeyValidator<TEvents, `${Prefix}_${string}`, "前缀错误">>
+          IfAllExtends<Prefix, "", unknown, KeyValidator<TEvents, `${Prefix}_${string}`, "前缀错误">>
         >,
       ]
     >;

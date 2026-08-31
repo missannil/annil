@@ -1,4 +1,4 @@
-import type { IfExtends } from "hry-types/src/Any/IfExtends";
+import type { IfAllExtends } from "hry-types";
 import type { ComponentDoc } from "../api/DefineComponent/returnType/ComponentDoc";
 // import type { ComponentDoc } from "../api/DefineComponent/CreateDoc/ComponentDoc";
 
@@ -12,7 +12,7 @@ type _ReplacePrefix<O, TPrefix extends string> = {
  * @returns ComponentDoc
  */
 export type ReplacePrefix<TComponentDoc extends ComponentDoc, TPrefix extends string = ""> =
-  & IfExtends<
+  & IfAllExtends<
     unknown,
     TComponentDoc["properties"],
     {},
@@ -20,7 +20,7 @@ export type ReplacePrefix<TComponentDoc extends ComponentDoc, TPrefix extends st
       properties: _ReplacePrefix<TComponentDoc["properties"], TPrefix>;
     }
   >
-  & IfExtends<
+  & IfAllExtends<
     unknown,
     TComponentDoc["events"],
     {},
@@ -31,16 +31,16 @@ export type ReplacePrefix<TComponentDoc extends ComponentDoc, TPrefix extends st
 
 // type Test1Expect = { properties: { xxxDaa_name: string } };
 
-// Checking<Test1, Test1Expect, Test.Pass>;
+// typeEqual<Test1, Test1Expect>;
 
 // type Test2 = ReplacePrefix<{ events: { xxx_name: string } }, "xxxDaa">;
 
 // type Test2Expect = { events: { xxxDaa_name: string } };
 
-// Checking<Test2, Test2Expect, Test.Pass>;
+// typeEqual<Test2, Test2Expect>;
 
 // type Test3 = ReplacePrefix<{}, "xxxDaa">;
 
 // type Test3Expect = {};
 
-// Checking<Test3, Test3Expect, Test.Pass>;
+// typeEqual<Test3, Test3Expect>;

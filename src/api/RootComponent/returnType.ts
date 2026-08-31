@@ -1,4 +1,4 @@
-import type { Func } from "hry-types/src/Misc/Func";
+import type { Func } from "hry-types";
 import type { WMCompPageLifetimes, WMPageLifetimes } from "../../types/OfficialTypeAlias";
 import type { ComputedConstraint } from "./Computed/ComputedConstraint";
 import type { CustomEventConstraint } from "./CustomEvents/CustomEventConstraint";

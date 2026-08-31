@@ -1,5 +1,5 @@
-import type { IfExtends } from "hry-types/src/Any/IfExtends";
-import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
+import type { _SimplifyIntersection } from "hry-types";
+import type { IfExtends } from "../../../types/IfExtends";
 import type { CustomComponentDefinition } from "../../CustomComponent/returnType";
 import type { RootComponentDefinition } from "../../RootComponent/returnType";
 import type { GetCustomEventDocOfSubDoc } from "./GetCustomEventDocOfSubDoc";
@@ -24,7 +24,7 @@ export type GenerateComponentDoc<
     & GetCustomEventDocOfSubDoc<TSubComponentTuple[number]>,
   StopKeys extends string = GetStopKeys<TRootDoc["events"]>,
   FinalEventsDoc extends object = Omit<AllEventsDoc, StopKeys>,
-> = ComputeIntersection<
+> = _SimplifyIntersection<
   & IfExtends<
     unknown,
     AllPropertiesDoc,

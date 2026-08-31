@@ -1,4 +1,5 @@
-import type { IfEquals, IfExtends } from "hry-types/src/Any/_api";
+import type { IfEquals } from "hry-types";
+import type { IfExtends } from "../../../types/IfExtends";
 import type { Includes } from "../../../types/includes";
 
 /**

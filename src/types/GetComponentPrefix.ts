@@ -1,13 +1,12 @@
-// import { Checking, type Test } from "hry-types";
-import type { IfExtends } from "hry-types/src/Any/IfExtends";
-import type { EmptyObject } from "hry-types/src/Misc/EmptyObject";
+// import { typeEqual, type Test } from "hry-types";
+import type { EmptyObject, IfAllExtends } from "hry-types";
 import type { ComponentDoc } from "../api/DefineComponent/returnType/ComponentDoc";
 
 /**
  * 提取文档前缀名
  */
 export type GetComponentPrefix<TComponentDoc extends ComponentDoc> = EmptyObject extends TComponentDoc ? never
-  : keyof IfExtends<
+  : keyof IfAllExtends<
     unknown,
     TComponentDoc["properties"],
     TComponentDoc["events"],
@@ -19,13 +18,13 @@ export type GetComponentPrefix<TComponentDoc extends ComponentDoc> = EmptyObject
 
 // type Test1Expect = "xxx";
 
-// Checking<Test1, Test1Expect, Test.Pass>;
+// typeEqual<Test1, Test1Expect>;
 
 // type Test2 = GetComponentPrefix<{ events: { xxx_name: string } }>;
 
 // type Test2Expect = "xxx";
 
-// Checking<Test2, Test2Expect, Test.Pass>;
+// typeEqual<Test2, Test2Expect>;
 
 // type demo = never extends `${infer P}_${string}` ? P : ""; // => string why?
 
@@ -33,4 +32,4 @@ export type GetComponentPrefix<TComponentDoc extends ComponentDoc> = EmptyObject
 
 // type Test3Expect = never;
 
-// Checking<Test3, Test3Expect, Test.Pass>;
+// typeEqual<Test3, Test3Expect>;

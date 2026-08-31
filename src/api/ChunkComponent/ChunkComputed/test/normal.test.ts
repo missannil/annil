@@ -1,5 +1,5 @@
-import { Checking } from "hry-types";
-import type { ComputeObject } from "../../../../types/ComputeObject";
+import type { Simplify } from "../../../../types/Simplify";
+import { typeEqual } from "../../../../utils/typeEqual";
 import type { IInjectAllData } from "../../../InstanceInject/instanceConfig";
 import { ChunkComponent } from "../..";
 import type { Mock_RootDoc } from "./mock";
@@ -27,9 +27,9 @@ ChunkComponent<Mock_RootDoc, "slot">()({
     // 5. this.data
     slot_eee(): number {
       // 5 this.data
-      void Checking<
+      void typeEqual<
         typeof this.data,
-        ComputeObject<
+        Simplify<
           & {
             slot_a: number;
             slot_b: number;
@@ -43,8 +43,7 @@ ChunkComponent<Mock_RootDoc, "slot">()({
           & Mock_RootDoc["computed"]
           & Mock_RootDoc["store"]
           & IInjectAllData
-        >,
-        true
+        >
       >;
 
       return 123;

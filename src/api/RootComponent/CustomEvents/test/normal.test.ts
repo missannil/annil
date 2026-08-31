@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-import { Checking, type Test } from "hry-types";
 import { type DetailedType, RootComponent } from "../../../..";
+import { typeEqual } from "../../../../utils/typeEqual";
 import type { Mock_User } from "../../Properties/test/normalRequired.test";
 import type { CustomEventConstraint, FullCustomEvents, ShortCustomeEvents } from "../CustomEventConstraint";
 import type {
@@ -84,16 +84,16 @@ type RootDef = {
 };
 
 // 1 RootDef中customEventsDoc 类型为事件参数e的detail类型和事件标记的联合(冒泡|穿透|捕获)
-Checking<typeof rootDef, RootDef, Test.Pass>;
+typeEqual<typeof rootDef, RootDef>;
 
 const rootDefEmpty = RootComponent()({
   customEvents: {},
 });
 
 // 2. customEvents字段配置为`{}`时,Doc中无customEvents字段
-Checking<typeof rootDefEmpty, {}, Test.Pass>;
+typeEqual<typeof rootDefEmpty, {}>;
 
 const rootDefNoFields = RootComponent()({});
 
 // 3. 无customEvents字段时,Doc中无customEvents字段
-Checking<typeof rootDefNoFields, {}, Test.Pass>;
+typeEqual<typeof rootDefNoFields, {}>;

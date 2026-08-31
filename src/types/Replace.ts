@@ -1,6 +1,6 @@
-import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
+import type { _SimplifyIntersection } from "hry-types";
 
-type _Replace<Target, Source, DifferentKeys extends keyof Target, SameKey extends keyof Source> = ComputeIntersection<
+type _Replace<Target, Source, DifferentKeys extends keyof Target, SameKey extends keyof Source> = _SimplifyIntersection<
   & { [k in DifferentKeys]: Target[k] }
   & { [k in SameKey]: Source[k] }
 >;

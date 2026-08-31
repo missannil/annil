@@ -1,6 +1,4 @@
-import type { IfEquals } from "hry-types/src/Any/IfEquals";
-import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
-import type { ReturnTypeInObject } from "hry-types/src/Object/ReturnTypeInObject";
+import type { _SimplifyIntersection, IfEquals, MapReturnType } from "hry-types";
 import type { WMComponentOption } from "../../types/OfficialTypeAlias";
 import type { DataConstraint } from "../RootComponent/Data/DataConstraint";
 import type { MethodsConstraint } from "../RootComponent/Methods/MethodsConstraint";
@@ -25,11 +23,11 @@ export type IInjectAllData = IfEquals<
   {},
   InjectData & IInjectStore,
   {},
-  ComputeIntersection<InjectData & IInjectStore>
+  _SimplifyIntersection<InjectData & IInjectStore>
 >;
 
 export type IInjectStore = StoreConstraint extends IInjectInfo["store"] ? {}
-  : ReturnTypeInObject<IInjectInfo["store"]>;
+  : MapReturnType<IInjectInfo["store"]>;
 
 export type IInjectMethods = MethodsConstraint extends IInjectInfo["methods"] ? {} : IInjectInfo["methods"];
 

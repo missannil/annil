@@ -46,7 +46,7 @@
     "vitepress": "^1.6.4"
   },
   "peerDependencies": {
-    "hry-types": "^0.19.3",
+    "hry-types": "^0.20.1",
     "miniprogram-api-typings": "^5.2.1"
   },
   "files": [

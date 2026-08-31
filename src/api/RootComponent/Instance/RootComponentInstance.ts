@@ -1,10 +1,10 @@
-import type { IfExtends } from "hry-types/src/Any/IfExtends";
-import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
 import type { IReactionDisposer } from "mobx";
+import type { IfExtends } from "../../../types/IfExtends";
 
-import type { EmptyObject } from "hry-types/src/Misc/EmptyObject";
-import type { Func } from "hry-types/src/Misc/Func";
+import type { EmptyObject, Func } from "hry-types";
 import type { Assign } from "../../../types/Assign";
+
+import type { _SimplifyIntersection } from "hry-types";
 import type { ComputeObject } from "../../../types/ComputeObject";
 import type { WMComponentInstance, WMInstanceMethods, WMPageInstance } from "../../../types/OfficialTypeAlias";
 import type { OptionsInnerFields } from "../../DefineComponent/normalizeOptions";
@@ -18,7 +18,7 @@ export type RootComponentInstance<
   AllData extends object,
   CustomEventsDef extends object,
   StoreDoc extends object,
-  instanceData = ComputeObject<Assign<IInjectAllData, ComputeIntersection<AllData>>>,
+  instanceData = ComputeObject<Assign<IInjectAllData, _SimplifyIntersection<AllData>>>,
 > =
   // 官方实例属性is  options  dataset等
   & IfExtends<false, TIsPage, WMComponentInstance, WMPageInstance>

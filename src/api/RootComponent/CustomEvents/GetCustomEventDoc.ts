@@ -1,5 +1,5 @@
-import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { DetailedType } from "../../../types/DetailedType";
+import type { IfExtends } from "../../../types/IfExtends";
 import type { InferDetailedType } from "../../../types/InferDetailedType";
 import type {
   CustomEventConstraint,

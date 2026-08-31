@@ -1,4 +1,4 @@
-import type { Func } from "hry-types/src/Misc/_api";
+import type { Func } from "hry-types";
 import type { DataConstraint } from "../RootComponent/Data/DataConstraint";
 import type { EventsConstraint } from "../RootComponent/Events/EventsConstraint";
 import type { LifetimesConstraint } from "../RootComponent/Lifetimes/LifetimesConstraint";

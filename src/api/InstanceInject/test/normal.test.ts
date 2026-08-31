@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-import { Checking, type Test } from "hry-types";
+import { typeEqual } from "../../../utils/typeEqual";
 import { RootComponent } from "../../RootComponent";
 
 // 1. 注入字段无重复时
 RootComponent()({
   methods: {
     testInjectTypes() {
-      Checking<typeof this.data.injectStr, string, Test.Pass>;
+      typeEqual<typeof this.data.injectStr, string>;
 
-      Checking<typeof this.data.injectTheme, "dark" | "light" | undefined, Test.Pass>;
+      typeEqual<typeof this.data.injectTheme, "dark" | "light" | undefined>;
 
-      Checking<typeof this.injectMethodA, (data: string) => string, Test.Pass>;
+      typeEqual<typeof this.injectMethodA, (data: string) => string>;
     },
   },
 });
@@ -32,11 +32,11 @@ RootComponent()({
     },
     testInjectTypes() {
       // 覆盖注入的数据类型,注入的类型为string。
-      Checking<typeof this.data.injectStr, number, Test.Pass>;
+      typeEqual<typeof this.data.injectStr, number>;
       // 覆盖注入的数据类型,注入的类型为"dark" | "light" | undefined。
-      Checking<typeof this.data.injectTheme, string, Test.Pass>;
+      typeEqual<typeof this.data.injectTheme, string>;
 
-      Checking<typeof this.injectMethod, () => 123, Test.Pass>;
+      typeEqual<typeof this.injectMethod, () => 123>;
     },
   },
 });

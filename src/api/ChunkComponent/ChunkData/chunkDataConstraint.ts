@@ -1,6 +1,6 @@
-import type { IfExtends } from "hry-types/src/Any/IfExtends";
+import type { IfAllExtends } from "hry-types";
 
-export type ChunkDataConstraint<Prefix extends string> = IfExtends<
+export type ChunkDataConstraint<Prefix extends string> = IfAllExtends<
   "",
   Prefix,
   {},

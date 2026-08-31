@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { Checking, type Test } from "hry-types";
+import { typeEqual } from "../../../../utils/typeEqual";
 
 import type { CreateComponentDoc } from "../../../../types/CreateComponentDoc";
 import type {
@@ -43,7 +43,7 @@ type SubDocExpect = {
   // };
 };
 
-Checking<typeof SubDoc, SubDocExpect, Test.Pass>();
+typeEqual<typeof SubDoc, SubDocExpect>();
 // 去除已经声明的穿透事件
 const removeCatchedEvents = CustomComponent<{}, CompDoc>()({
   data: {
@@ -71,7 +71,7 @@ void removeCatchedEvents;
 //   };
 // };
 
-Checking<typeof removeCatchedEvents, never, Test.Pass>();
+typeEqual<typeof removeCatchedEvents, never>();
 // 去除有后缀时,已经声明的穿透事件
 const removeCatchedEventsOfSuffix = CustomComponent<{}, CompDoc, "aa">()({
   data: {
@@ -96,4 +96,4 @@ void removeCatchedEventsOfSuffix;
 //   };
 // };
 
-Checking<typeof removeCatchedEventsOfSuffix, never, Test.Pass>();
+typeEqual<typeof removeCatchedEventsOfSuffix, never>();

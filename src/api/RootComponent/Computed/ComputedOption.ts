@@ -1,5 +1,4 @@
-import type { DuplicateFieldValidator } from "hry-types/src/Generic/DuplicateFieldValidator";
-
+import type { DuplicateFieldValidator } from "../../../types/DuplicateFieldValidator";
 import type { ComputedConstraint } from "./ComputedConstraint";
 
 export type ComputedOption<

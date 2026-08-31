@@ -1,6 +1,6 @@
-import type { EmptyObject } from "hry-types/src/Misc/EmptyObject";
-import type { NonReadonly } from "hry-types/src/Object/NonReadonly";
+import type { EmptyObject } from "hry-types";
 import type { InferDetailedType } from "../../../types/InferDetailedType";
+import type { NonReadonly } from "../../../types/NonReadonly";
 
 /**
  * 验证properties的value类型是否正确

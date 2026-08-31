@@ -1,17 +1,17 @@
-import type { Select } from "hry-types/src/Object/Select";
+import type { _Select } from "hry-types";
 
-import type { ComputeIntersection } from "hry-types/src/Object/_api";
+import type { _SimplifyIntersection } from "hry-types";
 import type { GetOptionalDef } from "./GetOptionalDef";
 
-import type { As } from "hry-types/src/Any/As";
+import type { As } from "hry-types";
 import type { GetRequiredDef } from "./GetRequiredDef";
 import type { OptionalType, PropertiesConstraint, RequiredType } from "./PropertiesConstraint";
 
 type _GetPropertiesDef<
   TProperties extends PropertiesConstraint,
-  OptionalDef extends object = GetOptionalDef<As<Select<TProperties, OptionalType>, Record<string, OptionalType>>>,
+  OptionalDef extends object = GetOptionalDef<As<_Select<TProperties, OptionalType>, Record<string, OptionalType>>>,
   RequiredDef extends object = GetRequiredDef<As<Omit<TProperties, keyof OptionalDef>, Record<string, RequiredType>>>,
-> = ComputeIntersection<OptionalDef & RequiredDef>;
+> = _SimplifyIntersection<OptionalDef & RequiredDef>;
 
 /**
  * properties字段的文档类型

@@ -1,9 +1,7 @@
-import type { IfExtends } from "hry-types/src/Any/IfExtends";
-import type { EmptyObject } from "hry-types/src/Misc/EmptyObject";
-import type { Func } from "hry-types/src/Misc/Func";
-import type { ComputeIntersection } from "hry-types/src/Object/_api";
-import type { ComputeObject } from "../../types/ComputeObject";
+import type { _SimplifyIntersection, EmptyObject, Func } from "hry-types";
+import type { IfExtends } from "../../types/IfExtends";
 import type { WMCompOtherOption } from "../../types/OfficialTypeAlias";
+import type { Simplify } from "../../types/Simplify";
 import type { ComponentDoc } from "../DefineComponent/returnType/ComponentDoc";
 import type { IInjectAllData, IInjectMethods, IInjectStore, InjectData } from "../InstanceInject/instanceConfig";
 import type { ComputedConstraint } from "./Computed/ComputedConstraint";
@@ -91,7 +89,7 @@ type RootComponentOptions<
 type RootComponentConstructor<TComponentDocList extends ComponentDoc[]> = <
   TEvents extends EventsConstraint<TComponentDocList>,
   TStore extends StoreConstraint<
-    ComputeIntersection<Required<PropertiesDef> & DataDef & Omit<InjectData, keyof (PropertiesDef & DataDef)>>
+    _SimplifyIntersection<Required<PropertiesDef> & DataDef & Omit<InjectData, keyof (PropertiesDef & DataDef)>>
   >,
   TIsPage extends boolean = false,
   const TProperties extends PropertiesConstraint = {},
@@ -105,7 +103,7 @@ type RootComponentConstructor<TComponentDocList extends ComponentDoc[]> = <
   PropertiesDef extends object = GetPropertiesDef<TProperties>,
   DataDef extends object = TData,
   StoreDef extends object = StoreConstraint<
-    ComputeIntersection<Required<PropertiesDef> & DataDef & Omit<InjectData, keyof (PropertiesDef & DataDef)>>
+    _SimplifyIntersection<Required<PropertiesDef> & DataDef & Omit<InjectData, keyof (PropertiesDef & DataDef)>>
   > extends TStore ? {}
     : GetStoreDef<TStore>,
   ComputedDef extends object = GetComputedDef<TComputed>,
@@ -131,7 +129,7 @@ type RootComponentConstructor<TComponentDocList extends ComponentDoc[]> = <
     ValidInjectDatas
   >,
 ) => // 生成RootComponentDefinition
-ComputeIntersection<
+_SimplifyIntersection<
   & IfExtends<TIsPage, false, {}, { isPage: true }>
   & IfExtends<
     EmptyObject,
@@ -140,11 +138,11 @@ ComputeIntersection<
     { properties: IfExtends<false, TIsPage, PropertiesDef, PropertiesDef> }
   >
   & IfExtends<EmptyObject, DataDef, {}, { data: DataDef }>
-  & IfExtends<EmptyObject, StoreDef, {}, { store: ComputeObject<StoreDef> }>
+  & IfExtends<EmptyObject, StoreDef, {}, { store: Simplify<StoreDef> }>
   & IfExtends<EmptyObject, ComputedDef, {}, { computed: ComputedDef }>
   & IfExtends<EmptyObject, TMethods, {}, { methods: TMethods }>
   & IfExtends<EmptyObject, EventsDef, {}, { events: EventsDef }>
-  & IfExtends<EmptyObject, CustomEventsDef, {}, { customEvents: ComputeObject<CustomEventsDef> }>
+  & IfExtends<EmptyObject, CustomEventsDef, {}, { customEvents: Simplify<CustomEventsDef> }>
 >;
 /**
  * RootComponent API

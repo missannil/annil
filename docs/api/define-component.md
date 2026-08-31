@@ -1,6 +1,28 @@
 # DefineComponent
 
-`DefineComponent` 是组件构建入口函数，通常与 `RootComponent`、`CustomComponent` 搭配使用。
+`DefineComponent` 是组件构建核心函数，通常与 `RootComponent`、`CustomComponent` 搭配使用,返回类型为组件类型/页面类型.
+
+:::tip
+运行时 `DefineComponent` 会在内部调用原生小程序 `Component`,并将 `rootComponent`(根组件定义) 与 `subComponents`(子组件定义列表)字段整合后的定义作为参数传入。
+:::
+
+## 字段说明
+
+1. `rootComponent`
+
+- 类型 [RootComponentDefinition](https://github.com/missannil/annil/blob/main/src/api/RootComponent/returnType.ts)
+- **可选**。
+
+2. `path` / `name`
+
+- 类型 [NameOrPathOption](https://github.com/missannil/annil/blob/main/src/api/DefineComponent/NameOrPath/NameOrPathOption.ts)
+- 当 `rootComponent.isPage === true` 时，使用 `path`，类型为 `/${string}`。
+- 当 `rootComponent.isPage` 不存在或为 `false` 时，使用 `name`，类型为非空且不包含下划线和空格的字符串。
+
+3. `subComponents`
+
+- 类型为 `CustomComponent` 或 `ChunkComponent` 的配置数组。
+- **可选**。
 
 ## 示例 A：构建组件(CompA)
 
@@ -8,28 +30,29 @@
 import { DefineComponent, RootComponent, typeEqual } from "annil";
 
 const rootComponent = RootComponent()({
-  isPage: false, // 或不写 isPage
+  isPage: false, // 可省略，默认为 false
   properties: {
     num: Number,
   },
   // ...
 });
+// 定义组件 CompA
 const compA = DefineComponent({
   name: "compA",
   rootComponent,
   subComponents: [], // 无子组件可省略
 });
-// 定义组件类型
+// 预期的组件类型
 export type $CompA = {
   properties: {
     compA_num: number;
   };
 };
-// 验证组件类型
+// 验证实际类型是否与预期类型一致
 typeEqual<$CompA>()(compA);
 ```
 
-## 示例 B：构建页面(IndexPage)
+## 示例 B：构建页面(组件CompA作为子组件)
 
 ```ts
 import {
@@ -38,8 +61,8 @@ import {
   RootComponent,
   typeEqual,
 } from "annil";
-import type { $CompA } from "../components/compA";
-const customA = CustomComponent<Root, $CompA>()({
+import type { $CompA } from "path/compA";
+const compA = CustomComponent<Root, $CompA>()({
   computed: {
     compA_num() {
       return this.data.num + 1;
@@ -48,7 +71,7 @@ const customA = CustomComponent<Root, $CompA>()({
 });
 
 const rootComponent = RootComponent()({
-  isPage: true,
+  isPage: true, // true 表示这是一个页面组件
   properties: {
     num: {
       type: Number,
@@ -57,21 +80,25 @@ const rootComponent = RootComponent()({
   },
   // ...
 });
+// 根组件类型
 type Root = typeof rootComponent;
 
+// 定义页面组件 Index
 const index = DefineComponent({
   path: "/pages/index/index",
   rootComponent,
-  subComponents: [customA],
+  subComponents: [compA],
 });
 
+// 预期的页面组件类型
 export type $Index = {
   path: "/pages/index/index";
   properties: {
-    num?: number;
+    num?: number; // 选传属性
   };
 };
 
+// 验证实际类型是否与预期类型一致
 typeEqual<$Index>()(index);
 ```
 
@@ -95,24 +122,6 @@ typeEqual<$CompA>()(compA);
 ```
 
 `typeEqual` 的原理是当两个类型不匹配时产生**类型报错**，从而保证文档类型和实际组件返回值始终保持同步。结合代码片段支持，多出的几行不会带来额外负担。
-
-## 字段说明
-
-1. `rootComponent`
-
-- 类型 [RootComponentDefinition](https://github.com/missannil/annil/blob/main/src/api/RootComponent/returnType.ts)
-- **可选**。
-
-2. `path` / `name`
-
-- 类型 [NameOrPathOption](https://github.com/missannil/annil/blob/main/src/api/DefineComponent/NameOrPath/NameOrPathOption.ts)
-- 当 `rootComponent.isPage === true` 时，使用 `path`，类型为 `/${string}`。
-- 当 `rootComponent.isPage` 不存在或为 `false` 时，使用 `name`，类型为非空且不包含下划线和空格的字符串。
-
-3. `subComponents`
-
-- 类型为 `CustomComponent` 或 `ChunkComponent` 的配置数组。
-- **可选**。
 
 ## 返回类型
 

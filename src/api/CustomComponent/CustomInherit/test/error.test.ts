@@ -1,5 +1,5 @@
-import { Checking, type Test } from "hry-types";
 import type { CreateComponentDoc } from "../../../../types/CreateComponentDoc";
+import { typeNotEqual } from "../../../../utils/typeNotEqual";
 import { DefineComponent } from "../../../DefineComponent";
 import type { RootComponentDefinition } from "../../../RootComponent/returnType";
 import { CustomComponent } from "../..";
@@ -55,7 +55,7 @@ const customDoc = CustomComponent<Mock_RootDoc, Mock_CompDoc>()({
   },
 });
 
-void Checking<typeof customDoc, CustomComponentDefinition, Test.Fail>;
+void typeNotEqual<typeof customDoc, CustomComponentDefinition>;
 
 DefineComponent({
   name: "xxx",

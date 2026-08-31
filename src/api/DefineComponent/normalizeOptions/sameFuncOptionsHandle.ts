@@ -1,4 +1,4 @@
-import type { Func } from "hry-types/src/Misc/_api";
+import type { Func } from "hry-types";
 import { isEmptyObject } from "../../../utils/isEmptyObject";
 import type { FinalOptionsOfComponent, SameFuncOptions } from ".";
 /**

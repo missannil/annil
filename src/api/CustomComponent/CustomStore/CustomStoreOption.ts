@@ -1,5 +1,4 @@
-import type { G } from "hry-types";
-import type { Validators } from "../../../types/Validators";
+import type { KeyValidator } from "../../../types/KeyValidator";
 
 export type CustomStoreOption<TStore extends object, legalKeys extends PropertyKey> = {
   /**
@@ -18,15 +17,9 @@ export type CustomStoreOption<TStore extends object, legalKeys extends PropertyK
    */
   store?:
     & TStore
-    & Validators<
-      [
-        G.IllegalFieldValidator<
-          TStore,
-          legalKeys,
-          0,
-          "",
-          "与inherit和data字段重复或前缀错误"
-        >,
-      ]
+    & KeyValidator<
+      TStore,
+      legalKeys,
+      "与inherit和data字段重复或前缀错误"
     >;
 };

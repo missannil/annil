@@ -1,6 +1,6 @@
-import { Checking, type Test } from "hry-types";
+import { typeEqual } from "../../../../utils/typeEqual";
 
-import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
+import type { _SimplifyIntersection } from "hry-types";
 import type { CreateComponentDoc } from "../../../../types/CreateComponentDoc";
 import type { IInjectAllData } from "../../../InstanceInject/instanceConfig";
 import type { Mock_User } from "../../../RootComponent/Properties/test/normalRequired.test";
@@ -57,9 +57,9 @@ CustomComponent<RootDoc, CompDoc>()({
   lifetimes: {
     created() {
       // this.data
-      void Checking<
+      void typeEqual<
         typeof this.data,
-        ComputeIntersection<
+        _SimplifyIntersection<
           {
             // RootData
             Pstr: string;
@@ -70,16 +70,15 @@ CustomComponent<RootDoc, CompDoc>()({
             // 自身Data类型与CompDoc类型相同
             aaa_str: string;
           } & IInjectAllData
-        >,
-        Test.Pass
+        >
       >;
 
       // this.Methods 可调用自身和RootDoc中的methods方法,其他不可以
-      void Checking<typeof this.RootM, () => number, Test.Pass>;
+      void typeEqual<typeof this.RootM, () => number>;
 
-      void Checking<typeof this.RootCus, (detail: string) => void, Test.Pass>;
+      void typeEqual<typeof this.RootCus, (detail: string) => void>;
 
-      void Checking<typeof this.aaa_SubM, () => void, Test.Pass>;
+      void typeEqual<typeof this.aaa_SubM, () => void>;
 
       // 其他官方字段 ...
     },

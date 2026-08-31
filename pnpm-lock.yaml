@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       hry-types:
-        specifier: ^0.20.1
-        version: 0.20.1
+        specifier: ^0.20.3
+        version: 0.20.3
       miniprogram-api-typings:
         specifier: ^5.2.1
         version: 5.2.1
@@ -1846,8 +1846,8 @@ packages:
     resolution: {integrity: sha512-kyCuEOWjJqZuDbRHzL8V93NzQhwIB71oFWSyzVo+KPZI+pnQPPxucdkrOZvkLRnrf5URsQM+IJ09Dw29cRALIA==}
     engines: {node: '>=10'}
 
-  hry-types@0.20.1:
-    resolution: {integrity: sha512-Jjb49/VQI8sI4q2Pf2RuLXJTJT/2KUQ+Fjt3U99lqc8/E+KE/jcrbf96Ol7bX7CVWSmV6J2IEtd0f/dOVlvVdA==}
+  hry-types@0.20.3:
+    resolution: {integrity: sha512-aRt3LDaBqlzplQhiHIzgo1g+14xEeFmMsYX1lbYoSXXdhIp32tors22XiOZNxtg+LqBvaFq+/2kjmwGYKSAEFw==}
 
   html-encoding-sniffer@3.0.0:
     resolution: {integrity: sha512-oWv4T4yJ52iKrufjnyZPkrN0CH3QnrUqdB6In1g5Fe1mia8GmF36gnfNySxoZtxD5+NmYw1EElVXiBk93UeskA==}
@@ -5148,7 +5148,7 @@ snapshots:
     dependencies:
       lru-cache: 6.0.0
 
-  hry-types@0.20.1: {}
+  hry-types@0.20.3: {}
 
   html-encoding-sniffer@3.0.0:
     dependencies:

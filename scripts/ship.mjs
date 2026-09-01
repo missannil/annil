@@ -61,7 +61,7 @@ function parseArgs(argv) {
 function run(command, args, { capture = false, allowFailure = false, input } = {}) {
   const result = spawnSync(command, args, {
     encoding: "utf8",
-    stdio: capture ? ["ignore", "pipe", "pipe"] : "inherit",
+    stdio: capture ? [input === undefined ? "ignore" : "pipe", "pipe", "pipe"] : "inherit",
     input,
   });
   if (result.error) throw result.error;
@@ -114,6 +114,7 @@ function parseRemoteUrl(remoteUrl) {
 
 async function githubRequest(method, path, body) {
   const args = ["api", path, "--method", method, "--hostname", "github.com"];
+  if (body) args.push("--input", "-");
   const result = run("gh", args, {
     capture: true,
     input: body ? JSON.stringify(body) : undefined,

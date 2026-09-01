@@ -35,13 +35,15 @@ GitHub release、npm 包和文档部署是三个独立状态，任何一个成�
 
 ## 4. ship 脚本
 
-`npm run ship -- "type: message"` 会确认当前为 `miss` 分支、暂存并提交全部修改、触发 Husky 检查（格式化导致的失败会自动重试一次），然后推送 `origin/miss`。它不会创建、等待或自动合并 PR；PR 审核和合并由人工完成，合并到 `main` 后再由 Release Please 创建 release PR。
+`npm run ship -- "type: message"` 会执行 `git pull origin main --rebase`，确认当前为 `miss` 分支，暂存并提交全部修改，触发 Husky 检查（格式化导致的失败会自动重试一次），然后推送 `origin/miss`。它会自动创建或复用并合并 `miss -> main` PR，删除远程 `miss`，等待并合并 Release Please PR，删除其远程分支，最后等待发布 workflow 完成。
 
 边界：
 
 - 只允许在 `miss` 分支执行；
-- 脚本不调用 GitHub API，不需要 `GH_TOKEN` 或 `GITHUB_TOKEN`；
-- 它不执行 npm 发布，也不替代 GitHub Actions 的完整测试、coverage 和 build；
+- 需要 GitHub CLI `gh` 登录，且当前账号必须有仓库写权限；
+- 脚本通过 GitHub API 创建、合并 PR 和删除远程分支；
+- 它不在本地执行 npm 发布，最终发布由 GitHub Actions 完成；
+- 不替代 GitHub Actions 的完整测试、coverage 和 build；
 - secret 只在安全环境配置，不写入仓库或 AI 知识文件。
 
 ## 5. 失败状态

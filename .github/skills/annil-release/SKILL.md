@@ -1,6 +1,6 @@
 ---
 name: annil-release
-description: "发布 Annil 项目时使用：运行 pnpm check、提交符合 commitlint 的变更、推送 miss 分支，并指导 GitHub PR、Release Please 和 npm 发布流程。"
+description: "发布 Annil 项目时使用：同步 main、提交并推送 miss、自动合并业务 PR 和 Release Please PR、清理远程分支并等待 npm 发布工作流。"
 argument-hint: "可选：提交信息，例如 deps: upgrade hry-types"
 user-invocable: true
 disable-model-invocation: false
@@ -8,14 +8,14 @@ disable-model-invocation: false
 
 # Annil 发布流程
 
-当用户说“发布”或明确调用此 Skill 时，按以下流程执行。发布是有不可逆影响的操作，任何 GitHub 登录、审批、合并、Release Please 确认和 npm 发布都必须由用户在 GitHub/npm 页面完成。
+当用户说“发布”或明确调用此 Skill 时，按以下流程执行。默认允许自动登录后的 GitHub API 操作、PR 合并和远程分支删除；不要等待用户点击。只有凭据、权限、Action、测试、构建或 npm 发布失败时停止并报告。
 
 ## 开始前检查
 
 1. 阅读 `docs/maintainers/release.md`，确认当前变更的版本影响和文档要求。
 2. 检查 `git status --short --branch`，必须位于 `miss` 分支；不要切换或覆盖用户未提交的修改。
-3. 确认提交信息符合 commitlint，格式为 `type: message`。允许的 type：`build`、`chore`、`ci`、`docs`、`deps`、`feat`、`fix`、`perf`、`refactor`、`revert`、`style`、`test`。
-4. 若用户未提供提交信息，先询问，不猜测版本或提交类型。
+3. 执行 `gh auth status --hostname github.com` 检查登录状态；未登录时执行 `gh auth login --hostname github.com --web`，再检查当前账号对仓库的 push 权限。不要读取或打印 token 值。
+4. 确认提交信息符合 commitlint，格式为 `type: message`。若用户未提供，先询问，不猜测版本或提交类型。
 
 ## 自动执行
 
@@ -25,20 +25,18 @@ disable-model-invocation: false
 npm run ship -- "type: message"
 ```
 
-该命令会执行 `git add .`、提交并触发 Husky。若 pre-commit 因 dprint 格式化而失败，脚本会自动再次暂存并提交；若是 lint、类型检查或测试失败，则停止并报告原始错误。最后只推送 `origin/miss`，不会创建、审批或合并 PR，也不会调用 GitHub API，不需要 token。
+该命令会先执行 `git pull origin main --rebase`，再执行 `git add .`、提交并触发 Husky。若 pre-commit 因 dprint 格式化而失败，脚本会自动再次暂存并提交；若是 lint、类型检查或测试失败，则停止并报告原始错误。之后推送 `origin/miss`，自动创建或复用 `miss -> main` PR，等待 GitHub Actions，通过后合并并删除远程 `miss` 分支。
 
-如果脚本因当前分支或未解决的检查失败而停止，修复问题后重新运行同一命令。不要自行修改版本号、CHANGELOG 或 `dist`。
+如果脚本因未登录、权限不足、当前分支、rebase 冲突或未解决的检查失败而停止，完成登录或修复问题后从失败阶段继续。不要自行修改版本号、CHANGELOG 或 `dist`。
 
-## 用户确认步骤
+## 自动完成的 GitHub 步骤
 
-推送成功后，提示用户按顺序完成：
+1. 合并 `miss -> main` 后删除远程 `miss` 分支；远程分支已被 GitHub 自动删除时视为成功。
+2. 等待 `release-please` 创建或更新以 `release-please--branches--main` 开头的 PR。
+3. 自动合并 Release Please PR，并删除它创建的远程分支。
+4. 等待 `build-and-publish` 完成，确认 build、coverage、Codecov 和 npm publish 成功。
+5. 发布工作流成功后，报告 GitHub Release、npm 包和目标 dist-tag 的状态。
 
-1. 登录 GitHub，打开 `miss -> main` 的 PR，等待 `.github/workflows/test.yml` 通过。
-2. 完成管理员 review 要求；仓库所有者可按仓库权限选择直接合并，但不要代替用户作出该审批决定。
-3. 合并到 `main` 后，等待 `release-please` 创建或更新 release PR。
-4. 用户进入 release PR 并点击确认/合并，触发 `build-and-publish`，由 workflow 执行 build、coverage、Codecov 和 npm publish。
-5. 用户确认 GitHub Release、npm 包及目标 dist-tag 状态；它们是独立结果，不能用其中一个推断另外两个成功。
+## 停止条件
 
-## 失败处理
-
-只根据终端输出、GitHub Actions、GitHub Release 和 npm 页面报告状态。不要删除 release、修改 tag、重发 npm 包、强推或合并；这些动作需要用户明确指示和相应恢复策略。
+只根据终端输出和 GitHub Actions 报告状态。遇到 gh 登录失败、GitHub 权限不足、PR 无法合并、Action 版本或配置错误、测试/构建失败、npm publish 失败时停止；可以先修复仓库中的 Action 配置或代码问题，再从失败阶段继续，但不要猜测或打印凭据，也不要删除 release、修改 tag 或重复发布 npm 包。

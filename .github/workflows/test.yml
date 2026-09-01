@@ -10,6 +10,7 @@ on:
       
 jobs:
   test:
+    if: ${{ !startsWith(github.head_ref, 'release-please--branches--') }}
     runs-on: ubuntu-latest
     # timeout-minutes: 120  # 设置超时时间为 120 分钟
     steps:

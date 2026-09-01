@@ -37,6 +37,8 @@ GitHub release、npm 包和文档部署是三个独立状态，任何一个成�
 
 `npm run ship -- "type: message"` 会执行 `git pull origin main --rebase`，确认当前为 `miss` 分支，暂存并提交全部修改，触发 Husky 检查（格式化导致的失败会自动重试一次），然后推送 `origin/miss`。它会自动创建或复用并合并 `miss -> main` PR，删除远程 `miss`，等待并合并 Release Please PR，删除其远程分支，最后等待发布 workflow 完成。
 
+业务 PR 会执行完整测试；Release Please 临时 PR 跳过重复的 `Test PR` workflow，发布 workflow 仍会执行构建和 coverage。
+
 边界：
 
 - 只允许在 `miss` 分支执行；

@@ -4,6 +4,16 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.18.3](https://github.com/missannil/annil/compare/v1.18.2...v1.18.3) (2026-09-01)
+
+
+### Bug Fixes
+
+* support hry-types 0.20.3 and align README ([e561006](https://github.com/missannil/annil/commit/e5610066b919d78d996ff006b1f98bae5c57a507))
+* support hry-types 0.20.3 and align README ([27769e8](https://github.com/missannil/annil/commit/27769e8bd347f601235d9e6c62989e70cfad647a))
+* support hry-types 0.20.3 and align README ([ebaff86](https://github.com/missannil/annil/commit/ebaff86a4f22ff435579b7d99d4467ebe42d2127))
+* support hry-types 0.20.3 and align README ([#306](https://github.com/missannil/annil/issues/306)) ([39633cf](https://github.com/missannil/annil/commit/39633cfd3eb245b3e0e6fc7a46cb9b7eb7dc7cad))
+
 ## [1.18.2](https://github.com/missannil/annil/compare/v1.18.1...v1.18.2) (2026-07-23)
 
 

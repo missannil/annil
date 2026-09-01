@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/* global console, fetch, process, URL, URLSearchParams */
+/* global console, process, URL, URLSearchParams */
 
 import { spawnSync } from "node:child_process";
 import { setTimeout as delay } from "node:timers/promises";
@@ -58,10 +58,11 @@ function parseArgs(argv) {
   return options;
 }
 
-function run(command, args, { capture = false, allowFailure = false } = {}) {
+function run(command, args, { capture = false, allowFailure = false, input } = {}) {
   const result = spawnSync(command, args, {
     encoding: "utf8",
-    stdio: capture ? ["ignore", "pipe", "pipe"] : "inherit",
+    stdio: capture ? [input === undefined ? "ignore" : "pipe", "pipe", "pipe"] : "inherit",
+    input,
   });
   if (result.error) throw result.error;
   if (!allowFailure && result.status !== 0) {
@@ -77,7 +78,7 @@ function git(args, options) {
   return run("git", args, options).stdout;
 }
 
-function getGhToken() {
+function checkGhAuth() {
   const authStatus = run("gh", ["auth", "status", "--hostname", "github.com"], {
     capture: true,
     allowFailure: true,
@@ -86,10 +87,6 @@ function getGhToken() {
     console.log("GitHub CLI is not logged in. Opening browser login...");
     run("gh", ["auth", "login", "--hostname", "github.com", "--web"]);
   }
-
-  const token = run("gh", ["auth", "token", "--hostname", "github.com"], { capture: true });
-  if (!token) fail("GitHub CLI did not return an authentication token.");
-  return token;
 }
 
 function checkPushPermission(owner, repo) {
@@ -115,32 +112,24 @@ function parseRemoteUrl(remoteUrl) {
   }
 }
 
-async function githubRequest(token, method, path, body) {
-  const response = await fetch(`https://api.github.com${path}`, {
-    method,
-    headers: {
-      Accept: "application/vnd.github+json",
-      Authorization: `Bearer ${token}`,
-      "X-GitHub-Api-Version": "2022-11-28",
-      "User-Agent": "annil-ship-script",
-    },
-    body: body ? JSON.stringify(body) : undefined,
+async function githubRequest(method, path, body) {
+  const args = ["api", path, "--method", method, "--hostname", "github.com"];
+  if (body) args.push("--input", "-");
+  const result = run("gh", args, {
+    capture: true,
+    input: body ? JSON.stringify(body) : undefined,
   });
-  if (!response.ok) {
-    const text = await response.text();
-    fail(`GitHub API ${method} ${path} failed: ${response.status} ${response.statusText}${text ? `\n${text}` : ""}`);
-  }
-  return response.status === 204 ? null : response.json();
+  return result.stdout ? JSON.parse(result.stdout) : null;
 }
 
-async function findPullRequest(token, owner, repo, head, base) {
+async function findPullRequest(owner, repo, head, base) {
   const params = new URLSearchParams({ state: "open", head: `${owner}:${head}`, base, per_page: "100" });
-  const pullRequests = await githubRequest(token, "GET", `/repos/${owner}/${repo}/pulls?${params}`);
+  const pullRequests = await githubRequest("GET", `/repos/${owner}/${repo}/pulls?${params}`);
   return pullRequests[0] ?? null;
 }
 
-async function createPullRequest(token, owner, repo, head, base, title) {
-  return githubRequest(token, "POST", `/repos/${owner}/${repo}/pulls`, {
+async function createPullRequest(owner, repo, head, base, title) {
+  return githubRequest("POST", `/repos/${owner}/${repo}/pulls`, {
     title,
     head,
     base,
@@ -153,12 +142,12 @@ function isPassingConclusion(conclusion) {
   return ["success", "neutral", "skipped"].includes(conclusion);
 }
 
-async function waitForChecks(token, owner, repo, pullRequest, { requireChecks = true } = {}) {
+async function waitForChecks(owner, repo, pullRequest, { requireChecks = true } = {}) {
   const startedAt = Date.now();
   while (Date.now() - startedAt < CHECK_TIMEOUT_MS) {
     const [details, checks] = await Promise.all([
-      githubRequest(token, "GET", `/repos/${owner}/${repo}/pulls/${pullRequest.number}`),
-      githubRequest(token, "GET", `/repos/${owner}/${repo}/commits/${pullRequest.head.sha}/check-runs?per_page=100`),
+      githubRequest("GET", `/repos/${owner}/${repo}/pulls/${pullRequest.number}`),
+      githubRequest("GET", `/repos/${owner}/${repo}/commits/${pullRequest.head.sha}/check-runs?per_page=100`),
     ]);
     const actionRuns = checks.check_runs.filter((run) => run.app?.slug === "github-actions");
     const pending = actionRuns.some((run) => run.status !== "completed");
@@ -175,18 +164,18 @@ async function waitForChecks(token, owner, repo, pullRequest, { requireChecks = 
   fail(`Timed out waiting for checks on PR #${pullRequest.number}.`);
 }
 
-async function mergePullRequest(token, owner, repo, pullRequest) {
+async function mergePullRequest(owner, repo, pullRequest) {
   if (pullRequest.merged) return pullRequest;
-  const result = await githubRequest(token, "PUT", `/repos/${owner}/${repo}/pulls/${pullRequest.number}/merge`, {
+  const result = await githubRequest("PUT", `/repos/${owner}/${repo}/pulls/${pullRequest.number}/merge`, {
     merge_method: "merge",
   });
   if (!result.merged) fail(`PR #${pullRequest.number} was not merged: ${result.message ?? "unknown reason"}.`);
   return result;
 }
 
-async function deleteRemoteBranch(token, owner, repo, branch) {
+async function deleteRemoteBranch(owner, repo, branch) {
   try {
-    await githubRequest(token, "DELETE", `/repos/${owner}/${repo}/git/refs/heads/${encodeURIComponent(branch)}`);
+    await githubRequest("DELETE", `/repos/${owner}/${repo}/git/refs/heads/${encodeURIComponent(branch)}`);
     console.log(`Deleted remote branch ${branch}.`);
   } catch (error) {
     if (error instanceof Error && error.message.includes(" 404 ")) {
@@ -197,11 +186,10 @@ async function deleteRemoteBranch(token, owner, repo, branch) {
   }
 }
 
-async function waitForReleasePullRequest(token, owner, repo, base) {
+async function waitForReleasePullRequest(owner, repo, base) {
   const startedAt = Date.now();
   while (Date.now() - startedAt < CHECK_TIMEOUT_MS) {
     const pullRequests = await githubRequest(
-      token,
       "GET",
       `/repos/${owner}/${repo}/pulls?state=open&base=${encodeURIComponent(base)}&per_page=100`,
     );
@@ -216,11 +204,10 @@ async function waitForReleasePullRequest(token, owner, repo, base) {
   fail("Timed out waiting for the Release Please pull request.");
 }
 
-async function waitForWorkflow(token, owner, repo, mergeTime) {
+async function waitForWorkflow(owner, repo, mergeTime) {
   const startedAt = Date.now();
   while (Date.now() - startedAt < CHECK_TIMEOUT_MS) {
     const runs = await githubRequest(
-      token,
       "GET",
       `/repos/${owner}/${repo}/actions/workflows/release-please.yml/runs?per_page=20`,
     );
@@ -259,7 +246,7 @@ async function main() {
   }
   const remoteUrl = git(["remote", "get-url", options.remote], { capture: true });
   const { owner, repo } = parseRemoteUrl(remoteUrl);
-  const token = getGhToken();
+  checkGhAuth();
   checkPushPermission(owner, repo);
 
   const hasWorkingTreeChanges = Boolean(git(["status", "--porcelain"], { capture: true }));
@@ -288,22 +275,22 @@ async function main() {
   }
   git(["push", "--set-upstream", options.remote, options.branch]);
 
-  let pullRequest = await findPullRequest(token, owner, repo, options.branch, options.base);
+  let pullRequest = await findPullRequest(owner, repo, options.branch, options.base);
   if (!pullRequest) {
-    pullRequest = await createPullRequest(token, owner, repo, options.branch, options.base, options.commitMessage);
+    pullRequest = await createPullRequest(owner, repo, options.branch, options.base, options.commitMessage);
   }
   console.log(`Release PR: #${pullRequest.number} ${pullRequest.html_url}`);
-  await waitForChecks(token, owner, repo, pullRequest);
-  await mergePullRequest(token, owner, repo, pullRequest);
-  await deleteRemoteBranch(token, owner, repo, options.branch);
+  await waitForChecks(owner, repo, pullRequest);
+  await mergePullRequest(owner, repo, pullRequest);
+  await deleteRemoteBranch(owner, repo, options.branch);
 
-  const releasePullRequest = await waitForReleasePullRequest(token, owner, repo, options.base);
+  const releasePullRequest = await waitForReleasePullRequest(owner, repo, options.base);
   console.log(`Release Please PR: #${releasePullRequest.number} ${releasePullRequest.html_url}`);
-  await waitForChecks(token, owner, repo, releasePullRequest, { requireChecks: false });
+  await waitForChecks(owner, repo, releasePullRequest, { requireChecks: false });
   const mergeTime = Date.now();
-  await mergePullRequest(token, owner, repo, releasePullRequest);
-  await deleteRemoteBranch(token, owner, repo, releasePullRequest.head.ref);
-  await waitForWorkflow(token, owner, repo, mergeTime);
+  await mergePullRequest(owner, repo, releasePullRequest);
+  await deleteRemoteBranch(owner, repo, releasePullRequest.head.ref);
+  await waitForWorkflow(owner, repo, mergeTime);
   console.log("Release completed successfully.");
 }
 

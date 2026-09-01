@@ -20,7 +20,7 @@
 
 ## 简介
 
-Annil（安奈儿）是面向微信小程序原生开发的 TypeScript 插件，提供类型安全的组件构建方式、响应式能力和类型化导航 API，帮助提升开发体验与代码质量。
+Annil（安奈儿）是面向微信小程序原生开发的 TypeScript 框架，基于原生小程序能力提供一套更清晰、更易维护的开发范式。它补充了原生 API 的类型安全、组件构建、响应式数据和类型化导航能力，也让组件文件和 AI Agent 更容易维护。
 
 ## 快速开始
 
@@ -34,9 +34,9 @@ Annil（安奈儿）是面向微信小程序原生开发的 TypeScript 插件，
 
 ## 特点
 
-- **更强大的组件构建 API**
+- **增强原生组件能力**
 
-  新的组件构建 API 提供 [computed](./docs/examples/computed.md)、[watch](./docs/examples/watch.md)、[store](./docs/examples/store.md)（基于 MobX 的全局响应式数据）等能力。
+  在保留原生开发方式的基础上，提供 [computed](./docs/examples/computed.md)、[watch](./docs/examples/watch.md) 和 [store](./docs/examples/store.md)（基于 MobX 的全局响应式数据）等能力。
 
 - **结构清晰的组件构建方式**
 
@@ -44,23 +44,27 @@ Annil（安奈儿）是面向微信小程序原生开发的 TypeScript 插件，
 
 - **极致的类型安全**
 
-  `DefineComponent` 可以定义组件和页面，并通过组件文档类型配合 `typeEqual` 校验；`CustomComponent` / `ChunkComponent` 会提供属性、事件和页面路径的类型提示与检查。
+  `DefineComponent` 可以定义组件和页面，并通过组件文档类型配合 `typeEqual` 校验；`CustomComponent` / `ChunkComponent` 会提供属性、事件和页面路径的类型提示与检查，同时支持 `hry-types@0.20.3` 及兼容版本。
 
 - **轻量、无侵入**
 
-  Annil 提供的 API 是原生 API 的语法糖，不强制改变项目结构，适合在现有小程序项目中渐进式引入。
+  Annil 基于原生 API，不强制改变项目结构，适合在新项目和现有小程序项目中渐进式引入。
 
-- **官方类型补充**
+- **补充原生类型与组件文件检查**
 
-  Annil 提供了对微信小程序官方类型的补充，并通过 ES 模块导出，不污染全局类型。
+  Annil 补充微信小程序官方类型，通过 ES 模块导出，不污染全局类型，并配合 `vscode-annil` 检查组件的 WXML、JSON 和 TypeScript 文件。
 
 - **第三方组件类型支持**
 
   可以使用 `CreateComponentDoc` 根据组件文档定义第三方组件类型。Annil 也导出了原生组件类型 `Wm` 和 Vant 组件类型 `Vant`。
 
+- **AI Agent 适配**
+
+  Annil 提供项目级的 instructions、skills 等配置，减少重复知识，让 AI Agent 更容易理解和维护小程序项目。
+
 - **VS Code 插件 `vscode-annil`**
 
-  在插件市场搜索 `annil` 并安装，可获得 WXML 和 JSON 检查及相关辅助能力。
+  在插件市场搜索 `annil` 并安装，可获得代码补全、类型检查、组件模板生成以及 WXML 和 JSON 检查等辅助能力。
 
 ## 更新日志
 

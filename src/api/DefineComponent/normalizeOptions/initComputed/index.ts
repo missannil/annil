@@ -1,4 +1,4 @@
-import type { Func } from "hry-types/src/Misc/Func";
+import type { Func } from "hry-types";
 import { deepClone } from "../../../../utils/deepClone";
 import { isEmptyObject } from "../../../../utils/isEmptyObject";
 import { nonNullable } from "../../../../utils/nonNullable";

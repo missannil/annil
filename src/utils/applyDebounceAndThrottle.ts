@@ -1,4 +1,4 @@
-import type { Func } from "hry-types/src/Misc/Func";
+import type { Func } from "hry-types";
 import { debounce } from "./debounce";
 import { throttle } from "./throttle";
 

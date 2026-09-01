@@ -1,4 +1,4 @@
-import { Checking, type Test } from "hry-types";
+import { typeEqual } from "../../../../utils/typeEqual";
 
 import type { CreateComponentDoc } from "../../../../types/CreateComponentDoc";
 import type { Mock_User } from "../../../RootComponent/Properties/test/normalRequired.test";
@@ -50,72 +50,72 @@ CustomComponent<RootDoc, CompDoc>()({
 
     num(newValue, oldValue) {
       void oldValue;
-      void Checking<number, typeof newValue, Test.Pass>;
+      void typeEqual<number, typeof newValue>;
 
-      void Checking<number, typeof oldValue, Test.Pass>;
+      void typeEqual<number, typeof oldValue>;
     },
     literal_num(newValue, oldValue) {
       void oldValue;
-      void Checking<123 | 456, typeof newValue, Test.Pass>;
+      void typeEqual<123 | 456, typeof newValue>;
 
-      void Checking<123 | 456, typeof oldValue, Test.Pass>;
+      void typeEqual<123 | 456, typeof oldValue>;
     },
     unionStrNum(newValue, oldValue) {
       void oldValue;
-      void Checking<string | number, typeof newValue, Test.Pass>;
+      void typeEqual<string | number, typeof newValue>;
 
-      void Checking<string | number, typeof oldValue, Test.Pass>;
+      void typeEqual<string | number, typeof oldValue>;
     },
     required_obj(newValue, oldValue) {
       void oldValue;
-      void Checking<Mock_User | null, typeof newValue, Test.Pass>;
+      void typeEqual<Mock_User | null, typeof newValue>;
 
-      void Checking<Mock_User | null, typeof oldValue, Test.Pass>;
+      void typeEqual<Mock_User | null, typeof oldValue>;
     },
     optional_obj(newValue, oldValue) {
       void oldValue;
-      void Checking<TestObj, typeof newValue, Test.Pass>;
+      void typeEqual<TestObj, typeof newValue>;
 
-      void Checking<TestObj, typeof oldValue, Test.Pass>;
+      void typeEqual<TestObj, typeof oldValue>;
     },
     "optional_obj.**"(newValue, oldValue) {
       void oldValue;
-      void Checking<TestObj, typeof newValue, Test.Pass>;
+      void typeEqual<TestObj, typeof newValue>;
 
-      void Checking<TestObj, typeof oldValue, Test.Pass>;
+      void typeEqual<TestObj, typeof oldValue>;
     },
     "optional_obj.subObj"(newValue, oldValue) {
       void oldValue;
-      void Checking<Mock_User, typeof newValue, Test.Pass>;
+      void typeEqual<Mock_User, typeof newValue>;
 
-      void Checking<Mock_User, typeof oldValue, Test.Pass>;
+      void typeEqual<Mock_User, typeof oldValue>;
     },
 
     // data 字段
     str(newValue, oldValue) {
       void oldValue;
-      void Checking<string, typeof newValue, Test.Pass>;
+      void typeEqual<string, typeof newValue>;
 
-      void Checking<string, typeof oldValue, Test.Pass>;
+      void typeEqual<string, typeof oldValue>;
     },
     arr(newValue, oldValue) {
       void oldValue;
-      void Checking<string[], typeof newValue, Test.Pass>;
+      void typeEqual<string[], typeof newValue>;
 
-      void Checking<string[], typeof oldValue, Test.Pass>;
+      void typeEqual<string[], typeof oldValue>;
     },
 
     literal_str(newValue, oldValue) {
       void oldValue;
-      void Checking<"a" | "b", typeof newValue, Test.Pass>;
+      void typeEqual<"a" | "b", typeof newValue>;
 
-      void Checking<"a" | "b", typeof oldValue, Test.Pass>;
+      void typeEqual<"a" | "b", typeof oldValue>;
     },
     // 计算字段
     Cuinon(newValue, oldValue) {
       void oldValue;
-      void Checking<string | boolean, typeof newValue, Test.Pass>;
-      void Checking<string | boolean, typeof oldValue, Test.Pass>;
+      void typeEqual<string | boolean, typeof newValue>;
+      void typeEqual<string | boolean, typeof oldValue>;
     },
   },
 });

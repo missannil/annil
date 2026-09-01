@@ -1,4 +1,4 @@
-import type { SelectKeys } from "hry-types/src/Object/_api";
+import type { _ExtractKeys } from "hry-types";
 import type { RemoveInnerData } from "../../../types/RemoveInnerData";
 import type { ComponentDoc } from "../../DefineComponent/returnType/ComponentDoc";
 
@@ -12,6 +12,6 @@ type unionAddList<Keys extends string> = Keys | Keys[];
  */
 export type CustomInheritConstraint<AllRootData extends object, TComponentDoc extends ComponentDoc> = {
   [k in keyof TComponentDoc["properties"]]?:
-    | unionAddList<RemoveInnerData<SelectKeys<AllRootData, TComponentDoc["properties"][k]> & string>>
+    | unionAddList<RemoveInnerData<_ExtractKeys<AllRootData, TComponentDoc["properties"][k]> & string>>
     | WXMLSign;
 };

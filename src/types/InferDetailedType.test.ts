@@ -1,13 +1,13 @@
-import { Checking, type Test } from "hry-types";
+import { typeEqual } from "../utils/typeEqual";
 
 import type { DetailedType } from "./DetailedType";
 import type { InferDetailedType } from "./InferDetailedType";
 
-void Checking<InferDetailedType<StringConstructor>, string, Test.Pass>;
+typeEqual<InferDetailedType<StringConstructor>, string>();
 
-void Checking<InferDetailedType<NumberConstructor>, number, Test.Pass>;
-void void Checking<InferDetailedType<BooleanConstructor>, boolean, Test.Pass>;
-void void Checking<InferDetailedType<ArrayConstructor>, unknown[], Test.Pass>;
-void void Checking<InferDetailedType<ObjectConstructor>, object, Test.Pass>;
-void Checking<InferDetailedType<DetailedType<"a" | "b">>, "a" | "b", Test.Pass>;
-void Checking<InferDetailedType<DetailedType<[string, number, boolean]>>, [string, number, boolean], Test.Pass>;
+typeEqual<InferDetailedType<NumberConstructor>, number>();
+typeEqual<InferDetailedType<BooleanConstructor>, boolean>();
+typeEqual<InferDetailedType<ArrayConstructor>, unknown[]>();
+typeEqual<InferDetailedType<ObjectConstructor>, object>();
+typeEqual<InferDetailedType<DetailedType<"a" | "b">>, "a" | "b">();
+typeEqual<InferDetailedType<DetailedType<[string, number, boolean]>>, [string, number, boolean]>();

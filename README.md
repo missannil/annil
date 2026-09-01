@@ -36,7 +36,7 @@ Annil（安奈儿）是面向微信小程序原生开发的 TypeScript 插件，
 
 - **更强大的组件构建 API**
 
-  新的组件构建 API 提供 [computed](./docs/demo/computed.md)、[watch](./docs/demo/watch.md)、[store](./docs/demo/store.md)（基于 MobX 的全局响应式数据）等能力。
+  新的组件构建 API 提供 [computed](./docs/examples/computed.md)、[watch](./docs/examples/watch.md)、[store](./docs/examples/store.md)（基于 MobX 的全局响应式数据）等能力。
 
 - **结构清晰的组件构建方式**
 

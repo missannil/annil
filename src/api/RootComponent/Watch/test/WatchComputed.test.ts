@@ -1,4 +1,4 @@
-import { Checking, type Test } from "hry-types";
+import { typeEqual } from "../../../../utils/typeEqual";
 
 import type { DetailedType } from "../../../../types/DetailedType";
 import { RootComponent } from "../..";
@@ -26,15 +26,15 @@ RootComponent()({
   watch: {
     CNum(newValue: number, oldValue: number) {
       void oldValue;
-      void Checking<number, typeof newValue, Test.Pass>;
+      void typeEqual<number, typeof newValue>;
 
-      void Checking<number, typeof oldValue, Test.Pass>;
+      void typeEqual<number, typeof oldValue>;
     },
     Cobj(newValue: Mock_User, oldValue: Mock_User | null) {
       void oldValue;
-      void Checking<Mock_User, typeof newValue, Test.Pass>;
+      void typeEqual<Mock_User, typeof newValue>;
 
-      void Checking<Mock_User | null, typeof oldValue, Test.Pass>;
+      void typeEqual<Mock_User | null, typeof oldValue>;
     },
   },
 });

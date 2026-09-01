@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-import { Checking, type Test } from "hry-types";
+import { typeEqual } from "../../../../utils/typeEqual";
 import type {
   Bubbles,
   BubblesCapture,
@@ -17,35 +17,35 @@ type bubblesResult = GetFullCustomEventsDoc<typeof mock_fullCustomEvents["bubble
 
 export type bubblesExpected = string | Bubbles;
 
-Checking<bubblesResult, bubblesExpected, Test.Pass>;
+typeEqual<bubblesResult, bubblesExpected>;
 
 // CapturePhase
 type CapturePhaseResult = GetFullCustomEventsDoc<typeof mock_fullCustomEvents["capturePhase"]>;
 
 export type CapturePhaseExpected = Capture | null;
 
-Checking<CapturePhaseResult, CapturePhaseExpected, Test.Pass>;
+typeEqual<CapturePhaseResult, CapturePhaseExpected>;
 
 // bubbles_capturePhase
 type BubblesCapturePhaseResult = GetFullCustomEventsDoc<typeof mock_fullCustomEvents["bubbles_capturePhase"]>;
 
 export type BubblesCapturePhaseExpected = string | number | BubblesCapture;
 
-Checking<BubblesCapturePhaseResult, BubblesCapturePhaseExpected, Test.Pass>;
+typeEqual<BubblesCapturePhaseResult, BubblesCapturePhaseExpected>;
 
 // bubbles_composed
 type BubblesComposedResult = GetFullCustomEventsDoc<typeof mock_fullCustomEvents["bubbles_composed"]>;
 
 export type BubblesComposedExpected = "male" | "female" | BubblesComposed;
 
-Checking<BubblesComposedResult, BubblesComposedExpected, Test.Pass>;
+typeEqual<BubblesComposedResult, BubblesComposedExpected>;
 
 // capturePhase_composed
 type CapturePhaseComposedResult = GetFullCustomEventsDoc<typeof mock_fullCustomEvents["capturePhase_composed"]>;
 
 export type CapturePhaseComposedExpected = string | 0 | 1 | 2 | null | CaptureComposed;
 
-Checking<CapturePhaseComposedResult, CapturePhaseComposedExpected, Test.Pass>;
+typeEqual<CapturePhaseComposedResult, CapturePhaseComposedExpected>;
 
 // bubbles_capturePhase_composed
 type BubblesCapturePhaseComposedResult = GetFullCustomEventsDoc<
@@ -54,4 +54,4 @@ type BubblesCapturePhaseComposedResult = GetFullCustomEventsDoc<
 
 export type BubblesCapturePhaseComposedExpected = boolean | BubblesCaptureComposed;
 
-Checking<BubblesCapturePhaseComposedResult, BubblesCapturePhaseComposedExpected, Test.Pass>;
+typeEqual<BubblesCapturePhaseComposedResult, BubblesCapturePhaseComposedExpected>;

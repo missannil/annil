@@ -1,5 +1,5 @@
-import type { IfEquals, IfExtends } from "hry-types/src/Any/_api";
-import type { Includes } from "../../../types/includes";
+import type { HasSubstring, IfEquals } from "hry-types";
+import type { IfExtends } from "../../../types/IfExtends";
 
 /**
  * 根据IsPage,生成name或path字段
@@ -26,6 +26,6 @@ export type NameOrPathOption<
         TName,
         "",
         () => "⚠️组件名不可为空⚠️",
-        IfEquals<Includes<TName, "_" | " ">, true, () => "⚠️组件名不可包含下划线或空格⚠️", unknown>
+        IfEquals<HasSubstring<TName, "_" | " ">, true, () => "⚠️组件名不可包含下划线或空格⚠️", unknown>
       >;
   };

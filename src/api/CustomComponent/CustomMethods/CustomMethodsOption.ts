@@ -1,4 +1,5 @@
-import type { G } from "hry-types";
+import type { DuplicateFieldValidator } from "../../../types/DuplicateFieldValidator";
+import type { KeyValidator } from "../../../types/KeyValidator";
 
 import type { CustomMethodsConstraint } from "./CustomMethodsConstraint";
 
@@ -12,6 +13,6 @@ export type CustomMethodsOption<
    */
   methods?:
     & TMethods
-    & G.KeyValidator<TMethods, `${TPrefix}_${string}`>
-    & G.DuplicateFieldValidator<TMethods, ExcludedKeys>;
+    & KeyValidator<TMethods, `${TPrefix}_${string}`>
+    & DuplicateFieldValidator<TMethods, ExcludedKeys>;
 };

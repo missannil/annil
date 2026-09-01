@@ -1,4 +1,4 @@
-import { Checking, type Test } from "hry-types";
+import { typeEqual } from "../../../../utils/typeEqual";
 
 import type { GetDataDef } from "../GetDataDef";
 
@@ -22,11 +22,11 @@ type Test1Expected = {
   str: string;
 };
 
-void Checking<Test1, Test1Expected, Test.Pass>;
+void typeEqual<Test1, Test1Expected>;
 
 // 测试空对象
 type Test4 = GetDataDef<{}>;
 
 type Test4Expected = {};
 
-void Checking<Test4, Test4Expected, Test.Pass>;
+void typeEqual<Test4, Test4Expected>;

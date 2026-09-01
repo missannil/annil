@@ -1,4 +1,4 @@
-import { Checking, type Test } from "hry-types";
+import { typeEqual } from "../../../../utils/typeEqual";
 
 import { RootComponent } from "../..";
 type User = {
@@ -12,19 +12,19 @@ RootComponent()({
   observers: {
     obj(a) {
       void a;
-      void Checking<typeof a, User | null, Test.Pass>;
+      void typeEqual<typeof a, User | null>;
     },
     "obj.**"(a) {
       void a;
-      void Checking<typeof a, User | null, Test.Pass>;
+      void typeEqual<typeof a, User | null>;
     },
     "obj.age"(a) {
       void a;
-      void Checking<typeof a, number, Test.Pass>;
+      void typeEqual<typeof a, number>;
     },
     "obj.name"(a) {
       void a;
-      void Checking<typeof a, string, Test.Pass>;
+      void typeEqual<typeof a, string>;
     },
   },
 });

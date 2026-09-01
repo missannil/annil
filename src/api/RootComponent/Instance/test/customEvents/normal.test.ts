@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-import { Checking, type Test } from "hry-types";
 import type { DetailedType } from "../../../../..";
+import { typeEqual } from "../../../../../utils/typeEqual";
 import { RootComponent } from "../../..";
 
 RootComponent()({
@@ -47,25 +47,25 @@ RootComponent()({
   },
   methods: {
     M1() {
-      Checking<(detail: string) => void, typeof this.str, Test.Pass>;
+      typeEqual<(detail: string) => void, typeof this.str>;
 
-      Checking<(detail: 1 | 2) => void, typeof this.num, Test.Pass>;
+      typeEqual<(detail: 1 | 2) => void, typeof this.num>;
 
-      Checking<(detail: "male" | "femal" | number) => void, typeof this.union, Test.Pass>;
+      typeEqual<(detail: "male" | "femal" | number) => void, typeof this.union>;
 
-      Checking<(detail: null) => void, typeof this.null, Test.Pass>;
+      typeEqual<(detail: null) => void, typeof this.null>;
 
-      Checking<() => void, typeof this.undefined, Test.Pass>;
+      typeEqual<() => void, typeof this.undefined>;
 
-      Checking<(detail: string) => void, typeof this.str, Test.Pass>;
+      typeEqual<(detail: string) => void, typeof this.str>;
 
-      Checking<(detail: number) => void, typeof this.capturePhase, Test.Pass>;
+      typeEqual<(detail: number) => void, typeof this.capturePhase>;
 
-      Checking<(detail: number) => void, typeof this.bubblesComposed, Test.Pass>;
+      typeEqual<(detail: number) => void, typeof this.bubblesComposed>;
 
-      Checking<(detail: number) => void, typeof this.capturePhaseComposed, Test.Pass>;
+      typeEqual<(detail: number) => void, typeof this.capturePhaseComposed>;
 
-      Checking<(detail: null) => void, typeof this.bubblesCapturePhaseComposed, Test.Pass>;
+      typeEqual<(detail: null) => void, typeof this.bubblesCapturePhaseComposed>;
     },
   },
 });

@@ -1,4 +1,4 @@
-import type { G } from "hry-types";
+import type { DuplicateFieldValidator } from "../../../types/DuplicateFieldValidator";
 
 export type DataOption<
   TData extends object,
@@ -21,5 +21,5 @@ export type DataOption<
    */
   data?:
     & TData
-    & G.DuplicateFieldValidator<TData, PropertiesKeys, errMsg>;
+    & DuplicateFieldValidator<TData, PropertiesKeys, errMsg>;
 };

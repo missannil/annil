@@ -2,3 +2,5 @@ allowBuilds:
   esbuild: true
 minimumReleaseAgeExclude:
   - ts-jest@29.4.12
+  - hry-types@0.20.0
+  - hry-types@0.20.1

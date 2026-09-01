@@ -1,6 +1,6 @@
-import { Checking, type Test } from "hry-types";
+import { typeEqual } from "../../../../utils/typeEqual";
 
-import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
+import type { _SimplifyIntersection } from "hry-types";
 import type { CreateComponentDoc } from "../../../../types/CreateComponentDoc";
 import type { IInjectAllData } from "../../../InstanceInject/instanceConfig";
 import type { Mock_User } from "../../../RootComponent/Properties/test/normalRequired.test";
@@ -80,9 +80,9 @@ CustomComponent<Root, OnlyPropsCompDoc>()({
     },
     onlyProps_obj(): Mock_User | null {
       // 5 this.data
-      void Checking<
+      void typeEqual<
         typeof this.data,
-        ComputeIntersection<
+        _SimplifyIntersection<
           {
             num: number;
             user: User | null;
@@ -94,8 +94,7 @@ CustomComponent<Root, OnlyPropsCompDoc>()({
             onlyProps_str: "a" | "b";
             onlyProps_obj: Mock_User | null;
           } & IInjectAllData
-        >,
-        Test.Pass
+        >
       >;
 
       return {} as Mock_User;
@@ -104,9 +103,9 @@ CustomComponent<Root, OnlyPropsCompDoc>()({
   lifetimes: {
     attached() {
       // 5 this.data 深度只读
-      void Checking<
+      void typeEqual<
         typeof this.data,
-        ComputeIntersection<
+        _SimplifyIntersection<
           {
             num: number;
             user: User | null;
@@ -118,8 +117,7 @@ CustomComponent<Root, OnlyPropsCompDoc>()({
             onlyProps_str: "a" | "b";
             onlyProps_obj: Mock_User | null;
           } & IInjectAllData
-        >,
-        Test.Pass
+        >
       >;
     },
   },

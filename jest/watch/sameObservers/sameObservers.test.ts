@@ -21,6 +21,8 @@ describe("watch-computed", () => {
 
     expect(comp.data.observersUser).toStrictEqual([newUser]);
 
+    expect(comp.data.observersSameUser).toStrictEqual([newUser]);
+
     expect(comp.data.watchUser).toStrictEqual([newUser, oldUser]);
     // 子组件 observers 和 watch
 

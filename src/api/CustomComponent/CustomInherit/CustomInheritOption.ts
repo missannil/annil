@@ -1,4 +1,4 @@
-import type { G } from "hry-types";
+import type { KeyValidator } from "../../../types/KeyValidator";
 
 export type CustomInheritOption<TInherit extends object, legalKeys extends PropertyKey> = {
   /**
@@ -8,7 +8,7 @@ export type CustomInheritOption<TInherit extends object, legalKeys extends Prope
    */
   inherit?:
     & TInherit
-    & G.IllegalFieldValidator<
+    & KeyValidator<
       TInherit,
       legalKeys
     >;

@@ -1,5 +1,5 @@
-import { Checking, type Test } from "hry-types";
 import { type DetailedType, RootComponent } from "../../../../..";
+import { typeEqual } from "../../../../../utils/typeEqual";
 
 // 组件时
 RootComponent()({
@@ -23,7 +23,7 @@ RootComponent()({
   lifetimes: {
     attached() {
       // 组件实例对象格外添加null类型
-      Checking<
+      typeEqual<
         typeof this.data,
         {
           optionalObj: {
@@ -35,8 +35,7 @@ RootComponent()({
           injectTheme: "dark" | "light" | undefined;
           injectStr: number; // 相同字段覆盖注入类型 injectStr: string -> number
           injectNum: number;
-        },
-        Test.Pass
+        }
       >();
     },
   },

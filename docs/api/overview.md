@@ -1,7 +1,5 @@
 # API 总览
 
-Annil 的公开 API 以 `src/index.ts` 导出为准，建议按“组件构建 + 实例注入 + 导航能力 + 类型工具”理解。
-
 ## 组件构建
 
 - [DefineComponent](./define-component.md)
@@ -12,13 +10,37 @@ Annil 的公开 API 以 `src/index.ts` 导出为准，建议按“组件构建 +
 ## 实例注入
 
 - [instanceConfig](./instance-config.md)
+- [IInjectInfo](./instance-config.md#typescript-类型增强)
 
-## 常用能力
+## 包装函数
 
-- [导航 API（navigateTo / navigateBack / redirectTo）](./navigation.md)
+- [navigateTo](./navigation.md)
+- [navigateBack](./navigation.md)
+- [redirectTo](./navigation.md)
 
-## 类型与第三方组件
+## 内部工具函数
 
-- `CreateComponentType`
+- `debounce`
+- `deepClone`
+- `deepEqual`
+- `isEmptyObject`
+- `nonNullable`
+- `throttle`
+- `typeEqual`
+
+## 类型
+
+### 与第三方组件
+
+- `CreateComponentDoc`
+- `DetailedType`
+- `IInjectInfo`
 - `ExtendComponentType`
 - `Vant / Wm`
+  CurrentTargetDataset,
+  Dataset,
+  Detail,
+  Mark,
+  TargetDataset,
+  WMBaseEvent,
+  WMCustomEvent,

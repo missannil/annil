@@ -1,4 +1,4 @@
-import type { G } from "hry-types";
+import type { KeyValidator } from "../../../types/KeyValidator";
 export type CustomComputedOption<
   TComputed extends object,
   legal extends PropertyKey,
@@ -7,5 +7,5 @@ export type CustomComputedOption<
   computed?:
     & TComputed
     // & ThisType<Instance>
-    & G.IllegalFieldValidator<TComputed, legal, 0, "", "重复或无效的字段">;
+    & KeyValidator<TComputed, legal, "重复或无效的字段">;
 };

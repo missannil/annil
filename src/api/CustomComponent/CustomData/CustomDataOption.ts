@@ -1,4 +1,4 @@
-import type { G } from "hry-types";
+import type { KeyValidator } from "../../../types/KeyValidator";
 
 export type CustomDataOption<TData extends object, legalKeys extends PropertyKey, errMsg extends string> = {
   /**
@@ -7,11 +7,9 @@ export type CustomDataOption<TData extends object, legalKeys extends PropertyKey
    */
   data?:
     & TData
-    & G.IllegalFieldValidator<
+    & KeyValidator<
       TData,
       legalKeys,
-      0,
-      "",
       errMsg
     >;
 };

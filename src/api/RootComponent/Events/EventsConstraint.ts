@@ -1,6 +1,5 @@
-// import type { IfExtends } from "hry-types/src/Any/IfExtends";
-import type { IfExtends } from "hry-types/src/Any/_api";
-import type { Select } from "hry-types/src/Object/_api";
+import type { _Select } from "hry-types";
+import type { IfExtends } from "../../../types/IfExtends";
 import type { Detail, WMBaseEvent } from "../../../types/OfficialTypeAlias";
 import type { ComponentDoc } from "../../DefineComponent/returnType/ComponentDoc";
 import type { CustomEventsDoc } from "../CustomEvents/CustomEventsDoc";
@@ -52,7 +51,7 @@ type GetAllSubCustomEvents<TComponentDocList extends ComponentDoc[], Result exte
       Result & Head["events"]
     >
     : Result;
-type GetBubblesOrCaptureEvents<T extends object> = Select<T, Bubbles | Capture, "contains->">;
+type GetBubblesOrCaptureEvents<T extends object> = _Select<T, Bubbles | Capture, "someExtends->">;
 
 // 所有子组件自定义事件(过滤掉非冒泡或捕获)的key加入后缀并把值(detail)转换为函数类型
 type GetSubCustomEvents<

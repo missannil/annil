@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-import { Checking } from "hry-types";
+import { typeEqual } from "../../../../utils/typeEqual";
 import { ChunkComponent } from "../..";
 import type { Mock_RootDoc } from "../../ChunkData/test/mock";
 
@@ -15,7 +15,7 @@ ChunkComponent<Mock_RootDoc, "ddd">()({
 ChunkComponent<Mock_RootDoc, "ddd">()({
   methods: {
     ddd_xxx() {
-      Checking<ReturnType<typeof this.xxx_test>, void, true>;
+      typeEqual<ReturnType<typeof this.xxx_test>, void>;
     },
   },
 });

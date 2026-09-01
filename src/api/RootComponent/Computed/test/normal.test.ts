@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Checking, type Test } from "hry-types";
-import type { ComputeIntersection } from "hry-types/src/Object/_api";
+import type { _SimplifyIntersection } from "hry-types";
+import { typeEqual } from "../../../../utils/typeEqual";
 
 import type { IInjectAllData } from "../../../InstanceInject/instanceConfig";
 import { RootComponent } from "../..";
@@ -36,9 +36,9 @@ const RootDoc = RootComponent()({
     },
     readOnly() {
       // 3 this.data 类型是深度只读的
-      Checking<
+      typeEqual<
         typeof this.data,
-        ComputeIntersection<
+        _SimplifyIntersection<
           {
             firstName: string;
             lastName: string;
@@ -49,8 +49,7 @@ const RootDoc = RootComponent()({
             id_fullName: string;
             readOnly: "str";
           } & IInjectAllData
-        >,
-        Test.Pass
+        >
       >;
 
       // @ts-expect-error  深度只读 不可赋值
@@ -69,7 +68,7 @@ type ComputedDocExpected = {
   readOnly: "str";
 };
 
-Checking<typeof RootDoc["computed"], ComputedDocExpected, Test.Pass>;
+typeEqual<typeof RootDoc["computed"], ComputedDocExpected>;
 
 /**
  *  5 无计算属性字段时,返回文档中无computed字段
@@ -78,12 +77,12 @@ const noComputedFieldDoc = RootComponent()({
   methods: {
     M1() {
       // 5.1 无computed,this.data中为{}
-      Checking<typeof this.data, IInjectAllData, Test.Pass>;
+      typeEqual<typeof this.data, IInjectAllData>;
     },
   },
 });
 
-Checking<typeof noComputedFieldDoc, { methods: { M1: () => void } }, Test.Pass>;
+typeEqual<typeof noComputedFieldDoc, { methods: { M1: () => void } }>;
 
 /**
  *  6 计算属性字段为空对象时,返回文档中无computed字段
@@ -93,12 +92,12 @@ const EmptyComputedFieldDoc = RootComponent()({
   methods: {
     M1() {
       // 6.1 computed为{},this.data中为{}
-      Checking<typeof this.data, IInjectAllData, Test.Pass>;
+      typeEqual<typeof this.data, IInjectAllData>;
     },
   },
 });
 
-Checking<typeof EmptyComputedFieldDoc, { methods: { M1: () => void } }, Test.Pass>;
+typeEqual<typeof EmptyComputedFieldDoc, { methods: { M1: () => void } }>;
 
 type Custom = { type: "custom"; xxx: string };
 type Chunk = { type: "chunk"; yyy: number };

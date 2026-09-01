@@ -1,4 +1,4 @@
-import type { Func } from "hry-types/src/Misc/_api";
+import type { Func } from "hry-types";
 import { BBeforeCreate } from "../../../behaviors/BbeforeCreated";
 import { BthrottleDebounce } from "../../../behaviors/BthrottleDebounce";
 import { applyDebounceAndThrottle } from "../../../utils/applyDebounceAndThrottle";

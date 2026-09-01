@@ -1,5 +1,4 @@
-import type { IfExtends } from "hry-types/src/Any/_api";
-import type { ComputeIntersection } from "hry-types/src/Object/_api";
+import type { _SimplifyIntersection, IfAllExtends } from "hry-types";
 import type { ComponentDoc } from "../api/DefineComponent/returnType/ComponentDoc";
 import type { AddPrefix } from "./AddPrefix";
 type ErrMsg = "{ properties?: Record<string, unknown>; events?: Record<string, unknown>; }";
@@ -28,8 +27,8 @@ type Validator<T> = keyof T extends "properties" | "events" ? ComponentDoc
  * ```
  */
 export type CreateComponentDoc<TName extends string, T extends Validator<T>> = T extends ComponentDoc
-  ? ComputeIntersection<
-    & IfExtends<
+  ? _SimplifyIntersection<
+    & IfAllExtends<
       unknown,
       T["properties"],
       {},
@@ -37,6 +36,6 @@ export type CreateComponentDoc<TName extends string, T extends Validator<T>> = T
         properties: AddPrefix<T["properties"] & {}, TName>;
       }
     >
-    & IfExtends<unknown, T["events"], {}, { events: AddPrefix<T["events"] & {}, TName> }>
+    & IfAllExtends<unknown, T["events"], {}, { events: AddPrefix<T["events"] & {}, TName> }>
   >
   : ErrMsg;

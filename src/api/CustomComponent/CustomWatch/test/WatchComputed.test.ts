@@ -1,5 +1,5 @@
-import { Checking, type Test } from "hry-types";
 import type { CreateComponentDoc } from "../../../../types/CreateComponentDoc";
+import { typeEqual } from "../../../../utils/typeEqual";
 import type { Mock_User } from "../../../RootComponent/Properties/test/normalRequired.test";
 import type { RootComponentDefinition } from "../../../RootComponent/returnType";
 import { CustomComponent } from "../..";
@@ -46,45 +46,45 @@ CustomComponent<RootDoc, CompDoc>()({
   watch: {
     aaa_num(newValue: number, oldValue: number) {
       void oldValue;
-      Checking<number, typeof newValue, Test.Pass>();
+      typeEqual<number, typeof newValue>();
 
-      Checking<number, typeof oldValue, Test.Pass>();
+      typeEqual<number, typeof oldValue>();
     },
     aaa_str(newValue: string, oldValue: string) {
       void oldValue;
-      Checking<string, typeof newValue, Test.Pass>();
+      typeEqual<string, typeof newValue>();
 
-      Checking<string, typeof oldValue, Test.Pass>();
+      typeEqual<string, typeof oldValue>();
     },
     aaa_bool(newValue: boolean, oldValue: boolean) {
       void oldValue;
-      Checking<boolean, typeof newValue, Test.Pass>();
+      typeEqual<boolean, typeof newValue>();
 
-      Checking<boolean, typeof oldValue, Test.Pass>();
+      typeEqual<boolean, typeof oldValue>();
     },
     aaa_obj(newValue: Mock_User, oldValue: Mock_User | null) {
       void oldValue;
-      Checking<Mock_User, typeof newValue, Test.Pass>();
+      typeEqual<Mock_User, typeof newValue>();
 
-      Checking<Mock_User | null, typeof oldValue, Test.Pass>();
+      typeEqual<Mock_User | null, typeof oldValue>();
     },
     "aaa_obj.**"(newValue: Mock_User, oldValue: Mock_User | null) {
       void oldValue;
-      Checking<Mock_User, typeof newValue, Test.Pass>();
+      typeEqual<Mock_User, typeof newValue>();
 
-      Checking<Mock_User | null, typeof oldValue, Test.Pass>();
+      typeEqual<Mock_User | null, typeof oldValue>();
     },
     "aaa_obj.id"(newValue: string, oldValue: string) {
       void oldValue;
-      Checking<string, typeof newValue, Test.Pass>();
+      typeEqual<string, typeof newValue>();
 
-      Checking<string, typeof oldValue, Test.Pass>();
+      typeEqual<string, typeof oldValue>();
     },
     "aaa_obj.age"(newValue: number, oldValue: number) {
       void oldValue;
-      Checking<number, typeof newValue, Test.Pass>();
+      typeEqual<number, typeof newValue>();
 
-      Checking<number, typeof oldValue, Test.Pass>();
+      typeEqual<number, typeof oldValue>();
     },
   },
 });

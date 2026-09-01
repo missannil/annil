@@ -1,4 +1,5 @@
-import type { G } from "hry-types";
+import type { DuplicateFieldValidator } from "../../../types/DuplicateFieldValidator";
+import type { IllegalFieldValidator } from "../../../types/IllegalFieldValidator";
 import type { CustomEventConstraint } from "./CustomEventConstraint";
 
 export type CustomEventsOption<
@@ -36,6 +37,6 @@ export type CustomEventsOption<
    */
   customEvents?:
     & TCustomEvents
-    & G.IllegalFieldValidator<TCustomEvents, "bubbles" | "composed" | "capturePhase", 1, "options">
-    & G.DuplicateFieldValidator<TCustomEvents, DuplicateFields, "字段重复">;
+    & IllegalFieldValidator<TCustomEvents, "bubbles" | "composed" | "capturePhase", 1, "options">
+    & DuplicateFieldValidator<TCustomEvents, DuplicateFields, "字段重复">;
 };

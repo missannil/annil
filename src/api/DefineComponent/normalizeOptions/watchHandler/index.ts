@@ -1,4 +1,4 @@
-import type { Func } from "hry-types/src/Misc/Func";
+import type { Func } from "hry-types";
 import { deepClone, deepEqual, isEmptyObject, nonNullable } from "../../../../utils/_utils";
 import type { Instance } from "../../../RootComponent/Instance/RootComponentInstance";
 import type { FinalOptionsOfComponent, WatchOldValue } from "..";

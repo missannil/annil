@@ -22,7 +22,7 @@ type OnlyPropsCompDoc = CreateComponentDoc<"onlyProps", {
   };
 }>;
 
-// 2 去除inhrit和data字段后无组件字段约束时,只可写内部字段
+// 2 去除inherit和data字段后无组件字段约束时,只可写内部字段
 CustomComponent<{}, OnlyPropsCompDoc>()({
   inherit: {
     onlyProps_str: "wxml",

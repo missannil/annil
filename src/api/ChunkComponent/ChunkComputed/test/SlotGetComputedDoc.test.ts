@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-import { Checking, type Test } from "hry-types";
+import { typeEqual } from "../../../../utils/typeEqual";
 import type { GetChunkComputedDoc } from "../GetChunkComputedDoc";
 
 // test1 非空对象字段
@@ -16,10 +16,10 @@ type Test1Expected = {
   c: "male" | "femal";
 };
 
-Checking<Test1, Test1Expected, Test.Pass>;
+typeEqual<Test1, Test1Expected>;
 
 // test2 空对象字段 返回空
 
 type Test2 = GetChunkComputedDoc<{}>;
 
-Checking<Test2, {}, Test.Pass>;
+typeEqual<Test2, {}>;

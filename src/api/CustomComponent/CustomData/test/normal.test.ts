@@ -1,6 +1,6 @@
-import { Checking, type Test } from "hry-types";
+import { typeEqual } from "../../../../utils/typeEqual";
 
-import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
+import type { _SimplifyIntersection } from "hry-types";
 import type { CreateComponentDoc } from "../../../../types/CreateComponentDoc";
 import type { IInjectAllData } from "../../../InstanceInject/instanceConfig";
 import type { Mock_User } from "../../../RootComponent/Properties/test/normalRequired.test";
@@ -49,17 +49,16 @@ CustomComponent<{}, CompDoc>()({
   methods: {
     aaa_1() {
       // 4 this.data中的data配置数据类型应该与文档类型一致,比如aaa_str的类型为"a" | "b"而非string
-      void Checking<
+      void typeEqual<
         typeof this.data,
-        ComputeIntersection<
+        _SimplifyIntersection<
           {
-            _aaa_str: string;
+            _aaa_str: "str";
             aaa_str: "a" | "b";
             aaa_num: number;
             aaa_obj: Mock_User | null;
           } & IInjectAllData
-        >,
-        Test.Pass
+        >
       >;
     },
   },
@@ -75,7 +74,7 @@ CustomComponent<{ data: { _num: number } }, CompDoc>()({
   lifetimes: {
     attached() {
       // 实例中的aaa_obj类型为文档中定义的类型 Mock_User | null 而非data配置中的类型 null
-      void Checking<typeof this.data.aaa_obj, Mock_User | null, Test.Pass>;
+      void typeEqual<typeof this.data.aaa_obj, Mock_User | null>;
       // setData中aaa_str类型为文档中定义的类型 "a" | "b" 而非data配置中的类型 "a"
       this.setData({
         aaa_str: "b",

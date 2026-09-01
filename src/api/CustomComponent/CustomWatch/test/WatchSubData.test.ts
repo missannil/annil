@@ -1,5 +1,5 @@
-import { Checking, type Test } from "hry-types";
 import type { CreateComponentDoc } from "../../../../types/CreateComponentDoc";
+import { typeEqual } from "../../../../utils/typeEqual";
 import { CustomComponent } from "../..";
 
 type CompDoc = CreateComponentDoc<"aaa", {
@@ -29,21 +29,21 @@ CustomComponent<{}, CompDoc>()({
   watch: {
     aaa_str(newValue, oldValue) {
       void oldValue;
-      void Checking<"123", typeof newValue, Test.Pass>;
+      void typeEqual<"123", typeof newValue>;
 
-      void Checking<"123", typeof oldValue, Test.Pass>;
+      void typeEqual<"123", typeof oldValue>;
     },
     aaa_num(newValue, oldValue) {
       void oldValue;
-      void Checking<number, typeof newValue, Test.Pass>;
+      void typeEqual<number, typeof newValue>;
 
-      void Checking<number, typeof oldValue, Test.Pass>;
+      void typeEqual<number, typeof oldValue>;
     },
     _aaa_other(newValue, oldValue) {
       void oldValue;
-      void Checking<number, typeof newValue, Test.Pass>;
+      void typeEqual<number, typeof newValue>;
 
-      void Checking<number, typeof oldValue, Test.Pass>;
+      void typeEqual<number, typeof oldValue>;
     },
   },
 });

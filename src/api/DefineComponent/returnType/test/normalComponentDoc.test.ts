@@ -9,7 +9,7 @@ import type {
   Composed,
 } from "../../../RootComponent/CustomEvents/CustomEventsTag";
 
-import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
+import type { _SimplifyIntersection } from "hry-types";
 import type { CustomComponentDefinition } from "../../../CustomComponent/returnType";
 import type { CustomEventConstraint } from "../../../RootComponent/CustomEvents/CustomEventConstraint";
 import type { PropertiesConstraint } from "../../../RootComponent/Properties/PropertiesConstraint";
@@ -116,7 +116,7 @@ const compDoc = DefineComponent({
   rootComponent,
 });
 
-typeEqual<ComputeIntersection<CompOnlyCustomEventsExpected & OnlyPropertiesExpected>>()(compDoc);
+typeEqual<_SimplifyIntersection<CompOnlyCustomEventsExpected & OnlyPropertiesExpected>>()(compDoc);
 
 type SubA = CustomComponentDefinition<{
   composedEvents: {

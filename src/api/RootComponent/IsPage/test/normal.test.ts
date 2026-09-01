@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-import { Checking, type Test } from "hry-types";
+import { typeEqual } from "../../../../utils/typeEqual";
 import { RootComponent } from "../..";
 
 /**
@@ -8,7 +8,7 @@ import { RootComponent } from "../..";
  */
 const noIsPage = RootComponent()({});
 
-Checking<typeof noIsPage, {}, Test.Pass>;
+typeEqual<typeof noIsPage, {}>;
 
 /**
  * 2. isPage字段为false时,返回Doc中无isPage字段
@@ -17,7 +17,7 @@ const isPageIsfalse = RootComponent()({
   isPage: false,
 });
 
-Checking<typeof isPageIsfalse, {}, Test.Pass>;
+typeEqual<typeof isPageIsfalse, {}>;
 
 /**
  * 3. isPage字段为true时,返回Doc中isPage为true
@@ -26,4 +26,4 @@ const isPageIsTrue = RootComponent()({
   isPage: true,
 });
 
-Checking<typeof isPageIsTrue, { isPage: true }, Test.Pass>;
+typeEqual<typeof isPageIsTrue, { isPage: true }>;

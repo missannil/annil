@@ -1,5 +1,5 @@
-import { Checking, type Test } from "hry-types";
 import { type DetailedType, RootComponent } from "../../../..";
+import { typeEqual } from "../../../../utils/typeEqual";
 
 import type { Mock_User } from "../../Properties/test/normalRequired.test";
 
@@ -13,7 +13,7 @@ RootComponent()({
     },
     resize(size) {
       void size;
-      void Checking<typeof size, WechatMiniprogram.Page.IResizeOption, Test.Pass>;
+      void typeEqual<typeof size, WechatMiniprogram.Page.IResizeOption>;
     },
     show() {
       void 0;
@@ -43,15 +43,14 @@ RootComponent()({
     // 3 重写onLoad周期参数props的类型(同页面properties定义类型).
     onLoad(props) {
       void props;
-      void Checking<
+      void typeEqual<
         typeof props,
         {
           union: Mock_User;
           optionalObject: Mock_User | null;
           str: string;
           obj: object;
-        },
-        Test.Pass
+        }
       >;
     },
     onHide() {

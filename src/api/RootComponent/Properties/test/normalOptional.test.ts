@@ -1,6 +1,6 @@
-import { Checking, type Test } from "hry-types";
-import type { ComputeIntersection } from "hry-types/src/Object/_api";
+import type { _SimplifyIntersection } from "hry-types";
 import type { DetailedType } from "../../../../types/DetailedType";
+import { typeEqual } from "../../../../utils/typeEqual";
 import type { IInjectAllData } from "../../../InstanceInject/instanceConfig";
 import { RootComponent } from "../..";
 import { type Mock_User } from "./normalRequired.test";
@@ -46,9 +46,9 @@ const OptionalDoc = RootComponent()({
   methods: {
     foo() {
       // 1. 内部this.data中的类型(去除可选)
-      void Checking<
+      void typeEqual<
         typeof this.data,
-        ComputeIntersection<
+        _SimplifyIntersection<
           {
             optional_num: number;
             optional_gender: "male" | "female";
@@ -58,8 +58,7 @@ const OptionalDoc = RootComponent()({
             optional_union: string | number;
             optional_arr: string[];
           } & IInjectAllData
-        >,
-        Test.Pass
+        >
       >;
     },
   },
@@ -81,7 +80,7 @@ type OptionalDocExpected = {
   };
 };
 
-void Checking<typeof OptionalDoc, OptionalDocExpected, Test.Pass>;
+void typeEqual<typeof OptionalDoc, OptionalDocExpected>;
 
 // properties 使用DetailedType时,接受interface类型
 interface Foo {

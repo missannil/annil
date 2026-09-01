@@ -1,4 +1,4 @@
-// import { Checking, type Test } from "hry-types";
+// import { typeEqual, type Test } from "hry-types";
 
 export type Validators<L extends unknown[]> = L extends [infer Head, ...infer Tail extends unknown[]]
   ? unknown extends Head ? Validators<Tail> : Head
@@ -10,8 +10,8 @@ export type Validators<L extends unknown[]> = L extends [infer Head, ...infer Ta
 
 // type lll = Validators<list>;
 
-// Checking<lll, 1, Test.Pass>;
+// typeEqual<lll, 1>;
 
 // type lll2 = Validators<list2>;
 
-// Checking<lll2, 1, Test.Pass>;
+// typeEqual<lll2, 1>;

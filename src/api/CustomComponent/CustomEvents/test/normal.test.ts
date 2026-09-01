@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
-import { Checking, type Test } from "hry-types";
 import type { Wm } from "../../../../thirdLib";
+import { typeEqual } from "../../../../utils/typeEqual";
 
 import type { CreateComponentDoc, Detail, Mark, WMBaseEvent } from "../../../..";
 import type {
@@ -31,25 +31,25 @@ type CompDoc = CreateComponentDoc<"aaa", {
 const custom1 = CustomComponent<{}, CompDoc>()({
   events: {
     aaa_str(e) {
-      Checking<typeof e.detail, string, Test.Pass>;
+      typeEqual<typeof e.detail, string>;
     },
     aaa_bubbles(e) {
-      Checking<typeof e.detail, string, Test.Pass>;
+      typeEqual<typeof e.detail, string>;
     },
     aaa_CapturePhase(e) {
-      Checking<typeof e.detail, string, Test.Pass>;
+      typeEqual<typeof e.detail, string>;
     },
     aaa_BubblesCapturePhase(e) {
-      Checking<typeof e.detail, null, Test.Pass>;
+      typeEqual<typeof e.detail, null>;
     },
     aaa_BubblesComposed(e) {
-      Checking<typeof e.detail, string, Test.Pass>;
+      typeEqual<typeof e.detail, string>;
     },
     aaa_CapturePhaseComposed(e) {
-      Checking<typeof e.detail, string, Test.Pass>;
+      typeEqual<typeof e.detail, string>;
     },
     aaa_BubblesCapturePhaseComposed(e) {
-      Checking<typeof e.detail, string, Test.Pass>;
+      typeEqual<typeof e.detail, string>;
     },
   },
 });
@@ -72,22 +72,22 @@ type custom1Expected = {
 };
 
 // 1.2 Composed事件会被返回
-Checking<typeof custom1, custom1Expected, Test.Pass>;
+typeEqual<typeof custom1, custom1Expected>;
 
 // 2.1 key可写入后缀字段(_catch,表示阻止冒泡和捕获事件)。
 const custom2 = CustomComponent<{}, CompDoc>()({
   events: {
     aaa_BubblesComposed_catch(e) {
-      Checking<typeof e.detail, string, Test.Pass>;
+      typeEqual<typeof e.detail, string>;
     },
     aaa_CapturePhaseComposed_catch(e) {
-      Checking<typeof e.detail, string, Test.Pass>;
+      typeEqual<typeof e.detail, string>;
     },
   },
 });
 
 // 2.2 返回没有被加后最(_catch)的Composed事件
-Checking<typeof custom2, {
+typeEqual<typeof custom2, {
   composedEvents: {
     BubblesCapturePhaseComposed: string | BubblesCaptureComposed;
   };
@@ -95,33 +95,33 @@ Checking<typeof custom2, {
   //   aaa_BubblesComposed_catch(e: Detail<string>): void;
   //   aaa_CapturePhaseComposed_catch(e: Detail<string>): void;
   // };
-}, Test.Pass>;
+}>;
 
 const custom3 = CustomComponent<{}, CompDoc>()({
   events: {
     aaa_BubblesComposed_catch(e) {
-      Checking<typeof e.detail, string, Test.Pass>;
+      typeEqual<typeof e.detail, string>;
     },
     aaa_CapturePhaseComposed_catch(e) {
-      Checking<typeof e.detail, string, Test.Pass>;
+      typeEqual<typeof e.detail, string>;
     },
     aaa_BubblesCapturePhaseComposed_catch(e) {
-      Checking<typeof e.detail, string, Test.Pass>;
+      typeEqual<typeof e.detail, string>;
     },
   },
 });
 
 // 2.4 若Composed事件都被阻止则返回never
-Checking<typeof custom3, never, Test.Pass>;
+typeEqual<typeof custom3, never>;
 
 // 3.1 基础组件基本事件参数为WMBaseEvent
 CustomComponent<{}, Wm.View>()({
   events: {
     view_tap(e) {
-      Checking<typeof e, WMBaseEvent, Test.Pass>;
+      typeEqual<typeof e, WMBaseEvent>;
     },
     view_longtap(e) {
-      Checking<typeof e, WMBaseEvent, Test.Pass>;
+      typeEqual<typeof e, WMBaseEvent>;
     },
     // ...
   },
@@ -131,7 +131,7 @@ CustomComponent<{}, Wm.View>()({
 CustomComponent<{}, Wm.ScrollView>()({
   events: {
     scrollView_bindscroll(e) {
-      Checking<
+      typeEqual<
         typeof e,
         Detail<{
           scrollLeft: number;
@@ -140,8 +140,7 @@ CustomComponent<{}, Wm.ScrollView>()({
           scrollWidth: number;
           deltaX: number;
           deltaY: number;
-        }>,
-        Test.Pass
+        }>
       >;
     },
     // ...
@@ -152,10 +151,10 @@ CustomComponent<{}, Wm.ScrollView>()({
 CustomComponent<{}, Wm.View>()({
   events: {
     view_tap(e: Detail<number>) {
-      Checking<typeof e.detail, number, Test.Pass>;
+      typeEqual<typeof e.detail, number>;
     },
     view_longtap(e: Mark<Mock_User>) {
-      Checking<typeof e.mark, Mock_User, Test.Pass>;
+      typeEqual<typeof e.mark, Mock_User>;
     },
     // ...
   },
@@ -165,10 +164,10 @@ CustomComponent<{}, Wm.View>()({
 CustomComponent<{}, Wm.View>()({
   events: {
     view_tap(e: Detail<number>) {
-      Checking<typeof e.detail, number, Test.Pass>;
+      typeEqual<typeof e.detail, number>;
     },
     view_longtap(e: Mark<Mock_User>) {
-      Checking<typeof e.mark, Mock_User, Test.Pass>;
+      typeEqual<typeof e.mark, Mock_User>;
     },
     // ...
   },
@@ -184,7 +183,7 @@ CustomComponent<{ methods: { aaa: () => string } }, Wm.View>()({
   events: {
     view_tap(e: Detail<number>) {
       this.view_xxx();
-      Checking<typeof e.detail, number, Test.Pass>;
+      typeEqual<typeof e.detail, number>;
     },
   },
 });
@@ -198,11 +197,11 @@ CustomComponent<{ methods: { aaa: () => string } }, Wm.Map>()({
   events: {
     map_poitap(e) {
       this.map_xxx();
-      Checking<typeof e.detail, {
+      typeEqual<typeof e.detail, {
         name: string;
         longitude: number;
         latitude: number;
-      }, Test.Pass>;
+      }>;
     },
   },
 });

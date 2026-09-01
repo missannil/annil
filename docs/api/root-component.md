@@ -44,6 +44,23 @@ function RootComponent<
 | [observers](#observers)         | —                                | 否   |
 | [其他原生字段](#其他原生字段)   | —                                | 否   |
 
+## 内置状态
+
+Annil 会为每个由 `RootComponent` 构建的组件和页面提供内置布尔状态 `attached`，不需要在 TS 配置中声明即可在 WXML 中使用：
+
+```wxml
+<block wx:if="{{attached}}">
+  <view>组件已挂载</view>
+</block>
+```
+
+`attached` 的行为如下：
+
+- 组件完成 `attached` 生命周期后为 `true`。
+- 如果用户在 `data` 中显式声明 `attached`，Annil 尊重用户声明，不覆盖该字段。
+- `attached` 是 RootComponent 的隐式有效数据，因此也属于可用于 `wx:if` / `wx:elif` 的布尔数据。
+- 该字段不是 `RootComponent` 配置表中必须书写的字段；组件代码分析工具应将其作为框架内置字段处理。
+
 ### isPage
 
 **描述** 声明组件类型：页面或组件。该字段会影响组件的入口字段、生命周期函数和事件配置。

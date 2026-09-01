@@ -1,4 +1,4 @@
-import { Checking, type Test } from "hry-types";
+import { typeEqual } from "../../../../utils/typeEqual";
 import { CustomComponent } from "../..";
 
 /**
@@ -7,9 +7,9 @@ import { CustomComponent } from "../..";
 CustomComponent<{}, { properties: { aaa_num: number } }>()({
   watch: {
     injectTheme(newValue, oldValue) {
-      void Checking<"dark" | "light" | undefined, typeof newValue, Test.Pass>;
+      void typeEqual<"dark" | "light" | undefined, typeof newValue>;
 
-      void Checking<"dark" | "light" | undefined, typeof oldValue, Test.Pass>;
+      void typeEqual<"dark" | "light" | undefined, typeof oldValue>;
       void oldValue;
     },
   },

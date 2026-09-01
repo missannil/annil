@@ -1,7 +1,4 @@
-import type { IfExtends } from "hry-types/src/Any/IfExtends";
-import type { IsPureObject } from "hry-types/src/Any/IsPureObject";
-import type { NoInfer } from "hry-types/src/Generic/NoInfer";
-import type { EmptyObject } from "hry-types/src/Misc/EmptyObject";
+import type { EmptyObject, IfAllExtends, IsPlainObject } from "hry-types";
 
 type getFirstKeys<T extends string> = T extends `${infer F}.${string}` ? F : never;
 
@@ -12,14 +9,14 @@ type AddFieldsOfObject<
   TWatchData extends object,
   _WatchKeys extends keyof TWatchData,
   secondKeys extends string = {
-    [k in _WatchKeys]: IsPureObject<TWatchData[k]> extends true
+    [k in _WatchKeys]: IsPlainObject<TWatchData[k]> extends true
       ? `${k & string}.${(keyof TWatchData[k]) & string}` | `${k & string}.**`
       : never;
   }[_WatchKeys],
 > = {
   [k in secondKeys]?: (
     // @ts-ignore
-    newValue: IfExtends<
+    newValue: IfAllExtends<
       getLastKeys<k>,
       "**",
       // @ts-ignore
@@ -27,7 +24,7 @@ type AddFieldsOfObject<
       // @ts-ignore
       NonNullable<(Exclude<TWatchData[getFirstKeys<k>], null>)[getLastKeys<k>]>
     >,
-    oldValue: IfExtends<
+    oldValue: IfAllExtends<
       getLastKeys<k>,
       "**",
       // @ts-ignore
@@ -43,7 +40,7 @@ export type WatchOption<TWatchData extends object, _WatchKeys extends keyof TWat
    * 监控所有data字段,值变化时(JSON.stringify判断)运行watch函数,一参为最新值,二参为变化前值。
    * 对象数据可通过`obj.xxx:`监控具体字段(只加入了一级字段类型提示)
    */
-  watch?: IfExtends<
+  watch?: IfAllExtends<
     {},
     TWatchData,
     EmptyObject,

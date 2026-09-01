@@ -1,9 +1,9 @@
-import type { ChunkComponentReturnType } from "../../ChunkComponent/ChunkComponentReturnType";
+import type { ChunkComponentDefinitionRuntime } from "../../ChunkComponent/ChunkComponentDefinitionRuntime";
 import type { CustomComponentDefinitionRuntime } from "../../CustomComponent/returnType";
 import type { RootComponentDefinitionRuntime } from "../../RootComponent/returnType";
 
 export function __throttleDebounce__FieldCheck(
-  config: RootComponentDefinitionRuntime | CustomComponentDefinitionRuntime[] | ChunkComponentReturnType[],
+  config: RootComponentDefinitionRuntime | CustomComponentDefinitionRuntime[] | ChunkComponentDefinitionRuntime[],
 ) {
   if (Array.isArray(config)) {
     for (const subComponent of config) {

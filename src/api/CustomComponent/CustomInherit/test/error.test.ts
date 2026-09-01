@@ -1,5 +1,5 @@
-import { Checking, type Test } from "hry-types";
 import type { CreateComponentDoc } from "../../../../types/CreateComponentDoc";
+import { typeNotEqual } from "../../../../utils/typeNotEqual";
 import { DefineComponent } from "../../../DefineComponent";
 import type { RootComponentDefinition } from "../../../RootComponent/returnType";
 import { CustomComponent } from "../..";
@@ -48,14 +48,14 @@ CustomComponent<Mock_RootDoc, Mock_CompDoc>()({
   },
 });
 
-// 2 inherit字段最终不会在组件配置中,意义在于通过声明继承字段便于类型判断,配置是否满足子组件文档的需求。下面示例中,配置不满足组件需求,Mock_CompDoc需要一些必传字段没有配置,即使这些字段存在在于根组件(或wmxl).而返回的字符串(错误),无法通过DefinedComponent Api 类型检测。
+// 2 inherit字段最终不会在组件配置中,意义在于通过声明继承字段便于类型判断,配置是否满足子组件文档的需求。下面示例中,配置不满足组件需求,Mock_CompDoc需要一些必传字段没有配置,即使这些字段存在在于根组件(或wxml).而返回的字符串(错误),无法通过DefineComponent Api 类型检测。
 const customDoc = CustomComponent<Mock_RootDoc, Mock_CompDoc>()({
   data: {
     aaa_num: 123,
   },
 });
 
-void Checking<typeof customDoc, CustomComponentDefinition, Test.Fail>;
+void typeNotEqual<typeof customDoc, CustomComponentDefinition>;
 
 DefineComponent({
   name: "xxx",

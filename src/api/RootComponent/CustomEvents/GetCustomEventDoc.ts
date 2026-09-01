@@ -1,18 +1,18 @@
-import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type { DetailedType } from "../../../types/DetailedType";
+import type { IfExtends } from "../../../types/IfExtends";
 import type { InferDetailedType } from "../../../types/InferDetailedType";
 import type {
   CustomEventConstraint,
   FullCustomEvents,
-  ShortCustomeEvents,
-  SimpleCustomeEventsList,
+  ShortCustomEvents,
+  SimpleCustomEventsList,
 } from "./CustomEventConstraint";
 import type { AddTagForCustomEventsDef } from "./CustomEventsTag";
 
-export type GetShortCustomEventsDoc<T extends ShortCustomeEvents> = T extends DetailedType ? InferDetailedType<T>
+export type GetShortCustomEventsDoc<T extends ShortCustomEvents> = T extends DetailedType ? InferDetailedType<T>
   : T extends null ? null
   : T extends undefined ? undefined
-  : T extends SimpleCustomeEventsList ? GetShortCustomEventsDoc<T[number]>
+  : T extends SimpleCustomEventsList ? GetShortCustomEventsDoc<T[number]>
   : never;
 
 export type GetFullCustomEventsDoc<T extends FullCustomEvents> =
@@ -35,7 +35,7 @@ export type GetFullCustomEventsDoc<T extends FullCustomEvents> =
 // @dprint-ignore
 export type GetCustomEventDoc<T extends CustomEventConstraint> = 
   {
-    [k in keyof T]: T[k] extends ShortCustomeEvents ? GetShortCustomEventsDoc<T[k]>  
+    [k in keyof T]: T[k] extends ShortCustomEvents ? GetShortCustomEventsDoc<T[k]>
     // 应该写GetFullCustomEventsDoc<T[k]>带鼠标悬停时不是计算结果。所以代码重复了。
       : // @ts-ignore T[k] 一定为 FullCustomEvents 类型
         | GetShortCustomEventsDoc<T[k]["detail"]>

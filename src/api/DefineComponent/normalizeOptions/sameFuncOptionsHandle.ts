@@ -1,4 +1,4 @@
-import type { Func } from "hry-types/src/Misc/_api";
+import type { Func } from "hry-types";
 import { isEmptyObject } from "../../../utils/isEmptyObject";
 import type { FinalOptionsOfComponent, SameFuncOptions } from ".";
 /**
@@ -33,4 +33,6 @@ export function sameFuncOptionsHandle(
   if (funcOptions.lifetimes) _sameFuncOptionsHandle(finalOptionsForComponent.lifetimes, funcOptions.lifetimes);
 
   if (funcOptions.watch) _sameFuncOptionsHandle(finalOptionsForComponent.watch, funcOptions.watch);
+
+  if (funcOptions.observers) _sameFuncOptionsHandle(finalOptionsForComponent.observers, funcOptions.observers);
 }

@@ -1,5 +1,4 @@
-import type { IfExtends } from "hry-types/src/Any/IfExtends";
-import type { ComputeIntersectionDeep } from "hry-types/src/Object/ComputeIntersectionDeep";
+import type { _SimplifyIntersectionDeep, IfAllExtends } from "hry-types";
 import type { ComponentDoc } from "../api/DefineComponent/returnType/ComponentDoc";
 import type { GetComponentPrefix } from "./GetComponentPrefix";
 
@@ -11,10 +10,10 @@ type Validator<
   DuplicateKeys extends PropertyKey =
     | Extract<keyof TExtensionType["properties"], keyof TOriginalComponentType["properties"]>
     | Extract<keyof TExtensionType["events"], keyof TOriginalComponentType["events"]>,
-> = IfExtends<
+> = IfAllExtends<
   TOriginalPrefix,
   TExtenstionPrefix,
-  IfExtends<DuplicateKeys, never, ComponentDoc, `${DuplicateKeys & string}字段重复`>,
+  IfAllExtends<DuplicateKeys, never, ComponentDoc, `${DuplicateKeys & string}字段重复`>,
   `前缀错误,应为${TOriginalPrefix & string}`
 >;
 
@@ -49,7 +48,7 @@ export type ExtendComponentType<
   TOriginalComponentType extends ComponentDoc,
   // @ts-ignore
   TExtensionType extends Validator<TOriginalComponentType, TExtensionType>,
-> = ComputeIntersectionDeep<TOriginalComponentType & TExtensionType>;
+> = _SimplifyIntersectionDeep<TOriginalComponentType & TExtensionType>;
 
 // type test0 = ExtendComponentType<{ properties: { aaa_xxx: string } }, { properties: { aaa_xxx: string } }>; // => "aaa_xxx字段重复"
 

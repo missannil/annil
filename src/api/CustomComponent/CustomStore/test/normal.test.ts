@@ -12,6 +12,7 @@ type DocA = CreateComponentDoc<"aaa", {
   properties: {
     str: string;
     num: number;
+    obj: { id: string };
   };
 }>;
 
@@ -20,6 +21,8 @@ CustomComponent<{}, DocA>()({
     // 1 可写文档字段
     aaa_str: () => user.name,
     aaa_num: () => user.age,
+    // 对象类型允许异步初始化为 null
+    aaa_obj: () => null,
   },
 });
 

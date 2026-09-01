@@ -1,13 +1,12 @@
-import type { IfExtends } from "hry-types/src/Any/IfExtends";
-import type { EmptyObject } from "hry-types/src/Misc/EmptyObject";
-import type { RequiredKeys } from "hry-types/src/Object/RequiredKeys";
+import type { _RequiredKeys, EmptyObject } from "hry-types";
 import type { Extra } from "../../types/Extra";
 import type { GetComponentPrefix } from "../../types/GetComponentPrefix";
+import type { IfExtends } from "../../types/IfExtends";
 import type { InnerFields } from "../../types/InnerData";
 import type { WMCompOtherOption } from "../../types/OfficialTypeAlias";
 import type { Replace } from "../../types/Replace";
 import type { ReplacePrefix } from "../../types/ReplacePrefix";
-import type { UnionToComma } from "../../types/UnionToComma.test";
+import type { UnionToComma } from "../../types/UnionToComma";
 import type { ComponentDoc } from "../DefineComponent/returnType/ComponentDoc";
 import type { IInjectStore } from "../InstanceInject/instanceConfig";
 import type { RootComponentDefinition } from "../RootComponent/returnType";
@@ -228,7 +227,7 @@ type CustomComponentConstructor<
   MethodsDoc extends object = TMethods,
   // 缺失的必传字段(配置中inhrit,data,computed的字段不包含的必传字段)
   MissingRequiredField extends PropertyKey = Exclude<
-    RequiredKeys<NonNullable<CurrentCompDoc["properties"]>>,
+    _RequiredKeys<NonNullable<CurrentCompDoc["properties"]>>,
     keyof (
       & InheritDoc
       & DataDoc

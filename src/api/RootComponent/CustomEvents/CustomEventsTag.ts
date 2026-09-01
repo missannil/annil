@@ -1,4 +1,3 @@
-import type { IfExtends } from "hry-types/src/Any/IfExtends";
 import type {
   BubblesCaptureComposedOption,
   BubblesCaptureOption,
@@ -31,29 +30,11 @@ export type CustomEventsTags =
   | CaptureComposed
   | BubblesCaptureComposed;
 
-export type AddTagForCustomEventsDef<Options extends OptionsFieldsConfigOfCustomEvents> = IfExtends<
-  BubblesOption,
-  Options,
-  Bubbles,
-  IfExtends<
-    CaptureOption,
-    Options,
-    Capture,
-    IfExtends<
-      BubblesCaptureOption,
-      Options,
-      BubblesCapture,
-      IfExtends<
-        BubblesComposedOption,
-        Options,
-        BubblesComposed,
-        IfExtends<
-          CaptureComposedOption,
-          Options,
-          CaptureComposed,
-          IfExtends<BubblesCaptureComposedOption, Options, BubblesCaptureComposed>
-        >
-      >
-    >
-  >
->;
+export type AddTagForCustomEventsDef<Options extends OptionsFieldsConfigOfCustomEvents> = [BubblesOption] extends
+  [Options] ? Bubbles
+  : [CaptureOption] extends [Options] ? Capture
+  : [BubblesCaptureOption] extends [Options] ? BubblesCapture
+  : [BubblesComposedOption] extends [Options] ? BubblesComposed
+  : [CaptureComposedOption] extends [Options] ? CaptureComposed
+  : [BubblesCaptureComposedOption] extends [Options] ? BubblesCaptureComposed
+  : BubblesCaptureComposedOption;

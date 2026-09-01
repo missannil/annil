@@ -1,4 +1,4 @@
-import type { IfContains } from "hry-types/src/Any/IfContains";
+import type { IfSomeExtends } from "hry-types";
 
 /**
  * 使用此函数代替!断言
@@ -8,7 +8,7 @@ import type { IfContains } from "hry-types/src/Any/IfContains";
  * @returns 去除 null 和 undefined 后的类型
  */
 export function nonNullable<T>(
-  value: IfContains<T, null | undefined, T, "参数类型必须包含 null 或 undefined">,
+  value: IfSomeExtends<T, null | undefined, T, "参数类型必须包含 null 或 undefined">,
   message?: string,
 ): NonNullable<T> {
   /* istanbul ignore next  */

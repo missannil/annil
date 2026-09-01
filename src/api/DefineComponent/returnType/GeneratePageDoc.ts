@@ -1,5 +1,5 @@
-import type { IfExtends } from "hry-types/src/Any/IfExtends";
-import type { ComputeIntersection } from "hry-types/src/Object/ComputeIntersection";
+import type { _SimplifyIntersection } from "hry-types";
+import type { IfExtends } from "../../../types/IfExtends";
 import type { RootComponentDefinition } from "../../RootComponent/returnType";
 
 /**
@@ -9,7 +9,7 @@ import type { RootComponentDefinition } from "../../RootComponent/returnType";
 export type GeneratePageDoc<
   TRootDoc extends RootComponentDefinition,
   TPath extends string,
-> = ComputeIntersection<
+> = _SimplifyIntersection<
   & { path: TPath }
   & IfExtends<
     unknown,

@@ -13,6 +13,10 @@ const sub = CustomComponent<Root, { properties: { sub_user: User | null } }>()({
     },
   },
   observers: {
+    user(a: User) {
+      // @ts-ignore
+      this.data.observersSameUser = [a];
+    },
     // 注意修改user.age时会引起计算属性重新计算导致这里被触发
     sub_user(a: User) {
       // @ts-ignore
@@ -41,6 +45,7 @@ const rootComponent = RootComponent()({
   data: {
     user: oldUser as User,
     observersUser: [],
+    observersSameUser: [],
     "observersUser.**": [],
     watchUser: [],
     "watchUser.**": [],

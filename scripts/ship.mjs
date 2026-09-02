@@ -21,9 +21,9 @@ Options:
   --remote <name>    Git remote (default: ${DEFAULT_REMOTE})
   --help             Show this help message
 
-The command synchronizes main, commits and pushes the release branch, merges
-its GitHub PR, removes that remote branch, merges the Release Please PR,
-removes its generated branch, and waits for the publish workflow to finish.
+The command synchronizes main, rejects stale Release Please commits, commits
+and pushes the working branch, merges its GitHub PR, and removes that remote
+branch. Release Please and the publish workflow are handled when applicable.
 GitHub CLI (gh) login with repository write access is required.
 `);
 }
@@ -96,6 +96,26 @@ function checkPushPermission(owner, repo) {
   });
   if (!permission.ok) fail("Unable to check GitHub repository permissions. Run `gh auth status` and try again.");
   if (permission.stdout !== "true") fail(`GitHub account does not have push permission for ${owner}/${repo}.`);
+}
+
+function checkForUnexpectedReleaseCommits(remote, base) {
+  const releaseCommits = git(
+    [
+      "log",
+      `${remote}/${base}..HEAD`,
+      "--format=%H%x09%s",
+      "--grep=release-as:",
+      "--grep=^chore.*release",
+      "--regexp-ignore-case",
+    ],
+    { capture: true },
+  );
+  if (releaseCommits) {
+    fail(
+      `Found release commit(s) that must not be pushed with this branch:\n${releaseCommits}\n`
+        + `Start ${remote}/${base} from a clean base and keep old Release Please commits out of ${remote}/${base}.`,
+    );
+  }
 }
 
 function parseRemoteUrl(remoteUrl) {
@@ -262,6 +282,7 @@ async function main() {
   } else {
     git(["pull", options.remote, options.base, "--rebase"]);
   }
+  checkForUnexpectedReleaseCommits(options.remote, options.base);
   git(["add", "."]);
   const diffBeforeCommit = git(["diff", "--binary", "HEAD"], { capture: true });
   const commitResult = run("git", ["commit", "-m", options.commitMessage], { allowFailure: true });

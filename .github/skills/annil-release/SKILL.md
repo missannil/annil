@@ -25,7 +25,7 @@ disable-model-invocation: false
 npm run ship -- "type: message"
 ```
 
-该命令会先执行 `git pull origin main --rebase`，确保推送前基于远程最新 `main`，再执行 `git add .`、提交并触发 Husky。若 pre-commit 因 dprint 格式化而失败，脚本会自动再次暂存并提交；若是 lint、类型检查或测试失败，则停止并报告原始错误。之后推送 `origin/miss`，自动创建或复用 `miss -> main` PR，等待 GitHub Actions，通过后合并并删除远程 `miss` 分支。远程 `main` 更新后，应再次同步本地 `main`，再继续 Release Please 和发布状态检查。
+该命令会先执行 `git pull origin main --rebase`，确保推送前基于远程最新 `main`，再检查是否误带历史 Release Please 提交，然后执行 `git add .`、提交并触发 Husky。若 pre-commit 因 dprint 格式化而失败，脚本会自动再次暂存并提交；若是 lint、类型检查、测试或历史 release 提交检查失败，则停止并报告原始错误。之后推送 `origin/miss`，自动创建或复用 `miss -> main` PR，等待 GitHub Actions，通过后合并并删除远程 `miss` 分支。远程 `main` 更新后，应再次同步本地 `main`，再按需继续 Release Please 和发布状态检查。
 
 如果脚本因未登录、权限不足、当前分支、rebase 冲突或未解决的检查失败而停止，完成登录或修复问题后从失败阶段继续。不要自行修改版本号、CHANGELOG 或 `dist`。
 

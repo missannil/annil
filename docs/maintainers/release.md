@@ -39,6 +39,8 @@ GitHub release、npm 包和文档部署是三个独立状态，任何一个成�
 
 同步原则：向远程推送或依赖远程状态前，先将当前工作基线 rebase 到 `origin/main`；远程仓库发生合并、发布提交或其他更新后，再拉取最新 `main`，避免本地状态落后或停留在已删除的工作分支。
 
+推送前，`ship` 脚本还会检查当前分支相对 `origin/main` 的提交。如果发现 `release-as:` 或旧的 `chore... release` 提交，脚本会停止，避免把历史 Release Please 提交重新带入 `main`。本地 `main` 若存在不需要保留的旧提交，应先确认工作区没有待保留内容，再用 `git fetch origin` 和 `git reset --hard origin/main` 清理基线，然后从最新 `main` 创建 `miss`。
+
 业务 PR 会执行完整测试；Release Please 临时 PR 跳过重复的 `Test PR` workflow，发布 workflow 仍会执行构建和 coverage。
 
 边界：

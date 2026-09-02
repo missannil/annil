@@ -1,3 +1,5 @@
+// annil disable unusedData
+// annil disable suggestInternalData
 import { CustomComponent, DefineComponent, RootComponent } from "../../../src";
 import { type CompDoc } from "../../common";
 import { obj, obj1 } from "./methodsOfPrototype.test";

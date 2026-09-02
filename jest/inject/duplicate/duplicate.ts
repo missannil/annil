@@ -1,3 +1,5 @@
+// annil disable unusedData
+// annil disable suggestInternalData
 import { observable } from "mobx";
 import { DefineComponent, RootComponent } from "../../../src";
 import { checkData } from "./duplicate.test";

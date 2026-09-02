@@ -1,3 +1,5 @@
+// annil disable unusedData
+// annil disable suggestInternalData
 import "miniprogram-simulate";
 
 import { type IInjectInfo, instanceConfig, RootComponent } from "../../src";

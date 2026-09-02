@@ -1,3 +1,5 @@
+// annil disable unusedData
+// annil disable suggestInternalData
 import { type CreateComponentDoc, CustomComponent, DefineComponent, RootComponent } from "../../../src";
 import { type CompDoc } from "../../common";
 import { store } from "./InitializationOnAttached.test";

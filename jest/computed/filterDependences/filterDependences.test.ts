@@ -1,3 +1,5 @@
+// annil disable unusedData
+// annil disable suggestInternalData
 import { load, render, sleep } from "miniprogram-simulate";
 import path from "path";
 

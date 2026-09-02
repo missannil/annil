@@ -1,3 +1,5 @@
+// annil disable unusedData
+// annil disable suggestInternalData
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { load, render } from "miniprogram-simulate";
 import path from "path";

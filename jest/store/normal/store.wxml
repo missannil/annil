@@ -1,2 +1,2 @@
-<view id="chunk" age="{{chunk_age}}"></view>
-<view id="custom" age="{{custom_age}}"></view>
+<view id="chunk"></view>
+<view id="custom"></view>

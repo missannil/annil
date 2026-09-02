@@ -1,3 +1,5 @@
+// annil disable unusedData
+// annil disable suggestInternalData
 import { load, render } from "miniprogram-simulate";
 import path from "path";
 export const mock_beforeCreate = {

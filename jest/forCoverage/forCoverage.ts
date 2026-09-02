@@ -1,3 +1,5 @@
+// annil disable unusedData
+// annil disable suggestInternalData
 import { DefineComponent, RootComponent } from "../../src";
 const rootComponent = RootComponent()({
   // 为了覆盖率 忽略它

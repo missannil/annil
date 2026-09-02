@@ -1,3 +1,5 @@
+// annil disable unusedData
+// annil disable suggestInternalData
 import { DefineComponent, RootComponent } from "../../src";
 
 const rootComponent = RootComponent()({
@@ -5,6 +7,7 @@ const rootComponent = RootComponent()({
     num: 123,
   },
   computed: {
+    // annil disable unusedData
     test() {
       return this.data.num;
     },

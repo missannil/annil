@@ -1,3 +1,5 @@
+// annil disable unusedData
+// annil disable suggestInternalData
 import { ChunkComponent, DefineComponent, RootComponent } from "../../../../src";
 import { user } from "./whenIsComponent.test";
 

@@ -1,9 +1,4 @@
 {
   "component": true,
-  "usingComponents": {
-    "subA": "../common"
-  },
-  "componentPlaceholder": {
-    "subA": "view"
-  }
+  "usingComponents": {}
 }

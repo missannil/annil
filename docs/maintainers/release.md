@@ -35,7 +35,9 @@ GitHub release、npm 包和文档部署是三个独立状态，任何一个成�
 
 ## 4. ship 脚本
 
-`npm run ship -- "type: message"` 会执行 `git pull origin main --rebase`，确认当前为 `miss` 分支，暂存并提交全部修改，触发 Husky 检查（格式化导致的失败会自动重试一次），然后推送 `origin/miss`。它会自动创建或复用并合并 `miss -> main` PR，删除远程 `miss`，等待并合并 Release Please PR，删除其远程分支，最后等待发布 workflow 完成。
+`npm run ship -- "type: message"` 会先执行 `git pull origin main --rebase`，确保推送前基于远程最新 `main`，确认当前为 `miss` 分支，暂存并提交全部修改，触发 Husky 检查（格式化导致的失败会自动重试一次），然后推送 `origin/miss`。脚本会自动创建或复用并合并 `miss -> main` PR，删除远程 `miss`；业务 PR 合并后，发布操作应先切换到 `main` 并执行 `git pull origin main --rebase`，再等待并合并 Release Please PR，删除其远程分支。Release Please 合并并更新远程仓库后，再次同步本地 `main`，最后等待发布 workflow 完成。
+
+同步原则：向远程推送或依赖远程状态前，先将当前工作基线 rebase 到 `origin/main`；远程仓库发生合并、发布提交或其他更新后，再拉取最新 `main`，避免本地状态落后或停留在已删除的工作分支。
 
 业务 PR 会执行完整测试；Release Please 临时 PR 跳过重复的 `Test PR` workflow，发布 workflow 仍会执行构建和 coverage。
 

@@ -25,17 +25,19 @@ disable-model-invocation: false
 npm run ship -- "type: message"
 ```
 
-该命令会先执行 `git pull origin main --rebase`，再执行 `git add .`、提交并触发 Husky。若 pre-commit 因 dprint 格式化而失败，脚本会自动再次暂存并提交；若是 lint、类型检查或测试失败，则停止并报告原始错误。之后推送 `origin/miss`，自动创建或复用 `miss -> main` PR，等待 GitHub Actions，通过后合并并删除远程 `miss` 分支。
+该命令会先执行 `git pull origin main --rebase`，确保推送前基于远程最新 `main`，再执行 `git add .`、提交并触发 Husky。若 pre-commit 因 dprint 格式化而失败，脚本会自动再次暂存并提交；若是 lint、类型检查或测试失败，则停止并报告原始错误。之后推送 `origin/miss`，自动创建或复用 `miss -> main` PR，等待 GitHub Actions，通过后合并并删除远程 `miss` 分支。远程 `main` 更新后，应再次同步本地 `main`，再继续 Release Please 和发布状态检查。
 
 如果脚本因未登录、权限不足、当前分支、rebase 冲突或未解决的检查失败而停止，完成登录或修复问题后从失败阶段继续。不要自行修改版本号、CHANGELOG 或 `dist`。
 
 ## 自动完成的 GitHub 步骤
 
 1. 合并 `miss -> main` 后删除远程 `miss` 分支；远程分支已被 GitHub 自动删除时视为成功。
-2. 等待 `release-please` 创建或更新以 `release-please--branches--main` 开头的 PR。
-3. 自动合并 Release Please PR，并删除它创建的远程分支。
-4. 等待 `build-and-publish` 完成，确认 build、coverage、Codecov 和 npm publish 成功。
-5. 发布工作流成功后，报告 GitHub Release、npm 包和目标 dist-tag 的状态。
+2. 将本地分支同步到远程最新 `main`（`git pull origin main --rebase`）；若当前仍在 `miss`，先切换到 `main`，再执行同步。
+3. 等待 `release-please` 创建或更新以 `release-please--branches--main` 开头的 PR。
+4. 自动合并 Release Please PR，并删除它创建的远程分支。
+5. 远程发布提交更新后，再次同步本地 `main`，确认本地与远程仓库一致。
+6. 等待 `build-and-publish` 完成，确认 build、coverage、Codecov 和 npm publish 成功。
+7. 发布工作流成功后，报告 GitHub Release、npm 包和目标 dist-tag 的状态。
 
 ## 停止条件
 

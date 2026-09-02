@@ -1,3 +1,5 @@
+// annil disable unusedData
+// annil disable suggestInternalData
 import simulate from "miniprogram-simulate";
 import path from "path";
 export const tempObj = { result: false };

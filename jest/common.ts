@@ -1,3 +1,5 @@
+// annil disable unusedData
+// annil disable suggestInternalData
 import type { CreateComponentDoc } from "../src/index";
 
 export interface User {

@@ -1,3 +1,5 @@
+// annil disable unusedData
+// annil disable suggestInternalData
 import { CustomComponent, DefineComponent } from "../../src";
 
 const subA = CustomComponent<{}, { properties: { aaa_num: number } }>()({

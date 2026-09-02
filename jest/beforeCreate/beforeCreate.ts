@@ -1,3 +1,5 @@
+// annil disable unusedData
+// annil disable suggestInternalData
 import { CustomComponent, DefineComponent, RootComponent } from "../../src";
 import { mock_beforeCreate } from "./beforeCreate.test";
 

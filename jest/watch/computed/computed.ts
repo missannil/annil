@@ -1,3 +1,5 @@
+// annil disable unusedData
+// annil disable suggestInternalData
 import { CustomComponent, DefineComponent, type DetailedType, RootComponent } from "../../../src";
 
 interface User {

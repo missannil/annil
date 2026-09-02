@@ -1,3 +1,5 @@
+// annil disable unusedData
+// annil disable suggestInternalData
 import type { EmptyObject } from "hry-types";
 import { DefineComponent, RootComponent, typeEqual } from "../../src";
 

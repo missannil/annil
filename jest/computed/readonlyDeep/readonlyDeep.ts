@@ -1,3 +1,5 @@
+// annil disable unusedData
+// annil disable suggestInternalData
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { DefineComponent, RootComponent } from "../../../src";
 

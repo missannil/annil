@@ -1,3 +1,5 @@
+// annil disable unusedData
+// annil disable suggestInternalData
 import simulate from "miniprogram-simulate";
 import { observable } from "mobx";
 import path from "path";

@@ -1,3 +1,5 @@
+// annil disable unusedData
+// annil disable suggestInternalData
 import { observable } from "mobx";
 import { CustomComponent, DefineComponent, RootComponent } from "../../../src";
 import { type CompDoc } from "../../common";
@@ -18,6 +20,7 @@ const subA = CustomComponent<Root, CompDoc>()({
     _compA_listMap() {
       return this.data.storeList.map((item) => item + 2);
     },
+
     _compA_xxx() {
       return this.data.storeList.length;
     },

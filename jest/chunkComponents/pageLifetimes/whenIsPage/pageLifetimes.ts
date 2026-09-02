@@ -1,3 +1,5 @@
+// annil disable unusedData
+// annil disable suggestInternalData
 import { ChunkComponent, DefineComponent, type DetailedType, RootComponent } from "../../../../src";
 const slot = ChunkComponent<Root, "slot">()({
   lifetimes: {

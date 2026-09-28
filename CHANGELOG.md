@@ -4,6 +4,19 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.12.3](https://github.com/missannil/annil/compare/v1.18.3...v1.12.3) (2026-09-28)
+
+
+### Bug Fixes
+
+* preserve root custom events when catching sub-events ([67107dc](https://github.com/missannil/annil/commit/67107dc4c9d2b32dfd29f17bbf2e62bf30ed4a9d))
+* preserve root custom events when catching sub-events ([#314](https://github.com/missannil/annil/issues/314)) ([5da8500](https://github.com/missannil/annil/commit/5da8500bba450e81845ec8e38dd1b8915266f5ea))
+
+
+### Miscellaneous Chores
+
+* release 1.12.3 ([a99e2f7](https://github.com/missannil/annil/commit/a99e2f734b5a00b665a7bd8ef100dcfea277458d))
+
 ## [1.18.3](https://github.com/missannil/annil/compare/v1.18.2...v1.18.3) (2026-09-01)
 
 

@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 /* global console, process, URL, URLSearchParams */
 
+import { Buffer } from "node:buffer";
 import { spawnSync } from "node:child_process";
 import { setTimeout as delay } from "node:timers/promises";
 
@@ -19,6 +20,7 @@ Options:
   --base <branch>    Base branch (default: ${DEFAULT_BASE})
   --branch <branch>  Release branch (default: ${DEFAULT_BRANCH})
   --remote <name>    Git remote (default: ${DEFAULT_REMOTE})
+  --release-version <version>  Require this Release Please version and add Release-As footer
   --help             Show this help message
 
 The command synchronizes main, rejects stale Release Please commits, commits
@@ -32,11 +34,17 @@ function fail(message) {
   throw new Error(message);
 }
 
+function isReleasePleaseBranch(ref, base) {
+  const prefix = `${RELEASE_BRANCH_PREFIX}${base}`;
+  return ref === prefix || ref.startsWith(`${prefix}--`);
+}
+
 function parseArgs(argv) {
   const options = {
     base: DEFAULT_BASE,
     branch: DEFAULT_BRANCH,
     remote: DEFAULT_REMOTE,
+    releaseVersion: "",
     help: false,
     commitMessage: "",
   };
@@ -46,14 +54,23 @@ function parseArgs(argv) {
       options.help = true;
       continue;
     }
-    if (["--base", "--branch", "--remote"].includes(value)) {
+    if (["--base", "--branch", "--remote", "--release-version"].includes(value)) {
       const nextValue = argv[index + 1];
       if (!nextValue) fail(`Missing value after ${value}.`);
-      options[value.slice(2)] = nextValue;
+      const optionName = value === "--release-version" ? "releaseVersion" : value.slice(2);
+      options[optionName] = nextValue;
       index += 1;
       continue;
     }
     options.commitMessage = options.commitMessage ? `${options.commitMessage} ${value}` : value;
+  }
+  if (options.releaseVersion) {
+    if (!/^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/u.test(options.releaseVersion)) {
+      fail(`Invalid release version: ${options.releaseVersion}. Expected a semantic version such as 1.18.4.`);
+    }
+    if (!/^Release-As:\s*\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?\s*$/imu.test(options.commitMessage)) {
+      options.commitMessage = `${options.commitMessage}\n\nRelease-As: ${options.releaseVersion}`;
+    }
   }
   return options;
 }
@@ -142,6 +159,76 @@ async function githubRequest(method, path, body) {
   return result.stdout ? JSON.parse(result.stdout) : null;
 }
 
+async function readPackageVersion(owner, repo, ref) {
+  const query = new URLSearchParams({ ref });
+  const file = await githubRequest("GET", `/repos/${owner}/${repo}/contents/package.json?${query}`);
+  if (file.encoding !== "base64" || !file.content) fail(`Cannot read package.json at ${ref}.`);
+  const packageJson = JSON.parse(Buffer.from(file.content, "base64").toString("utf8"));
+  if (typeof packageJson.version !== "string") fail(`package.json at ${ref} has no version.`);
+  return packageJson.version;
+}
+
+function compareVersions(left, right) {
+  const parse = (version) => {
+    const match = version.match(/^(\d+)\.(\d+)\.(\d+)(?:-([0-9A-Za-z.-]+))?(?:\+[0-9A-Za-z.-]+)?$/u);
+    if (!match) fail(`Cannot compare non-semver version: ${version}.`);
+    return { numbers: match.slice(1, 4).map(Number), prerelease: match[4]?.split(".") };
+  };
+  const a = parse(left);
+  const b = parse(right);
+  for (let index = 0; index < 3; index += 1) {
+    if (a.numbers[index] !== b.numbers[index]) return a.numbers[index] > b.numbers[index] ? 1 : -1;
+  }
+  if (!a.prerelease && !b.prerelease) return 0;
+  if (!a.prerelease) return 1;
+  if (!b.prerelease) return -1;
+  const length = Math.max(a.prerelease.length, b.prerelease.length);
+  for (let index = 0; index < length; index += 1) {
+    const leftPart = a.prerelease[index];
+    const rightPart = b.prerelease[index];
+    if (leftPart === undefined) return -1;
+    if (rightPart === undefined) return 1;
+    if (leftPart === rightPart) continue;
+    const leftNumeric = /^\d+$/u.test(leftPart);
+    const rightNumeric = /^\d+$/u.test(rightPart);
+    if (leftNumeric && rightNumeric) return Number(leftPart) > Number(rightPart) ? 1 : -1;
+    if (leftNumeric !== rightNumeric) return leftNumeric ? -1 : 1;
+    return leftPart > rightPart ? 1 : -1;
+  }
+  return 0;
+}
+
+async function validateReleasePullRequest(owner, repo, base, pullRequest, expectedVersion) {
+  if (!isReleasePleaseBranch(pullRequest.head.ref, base)) {
+    fail(`Refusing to merge PR #${pullRequest.number}: branch ${pullRequest.head.ref} is not a Release Please branch.`);
+  }
+  const [baseVersion, releaseVersion] = await Promise.all([
+    readPackageVersion(owner, repo, base),
+    readPackageVersion(owner, repo, pullRequest.head.sha),
+  ]);
+  if (expectedVersion && releaseVersion !== expectedVersion) {
+    fail(
+      `Refusing to merge Release Please PR #${pullRequest.number}: it proposes ${releaseVersion}, `
+        + `but ${expectedVersion} was requested.`,
+    );
+  }
+  if (compareVersions(releaseVersion, baseVersion) <= 0) {
+    fail(
+      `Refusing to merge Release Please PR #${pullRequest.number}: version ${releaseVersion} `
+        + `must be newer than main's ${baseVersion}.`,
+    );
+  }
+  const tagName = `v${releaseVersion}`;
+  const tags = await githubRequest(
+    "GET",
+    `/repos/${owner}/${repo}/git/matching-refs/tags/${encodeURIComponent(tagName)}`,
+  );
+  if (tags.some((tag) => tag.ref === `refs/tags/${tagName}`)) {
+    fail(`Refusing to merge Release Please PR #${pullRequest.number}: tag ${tagName} already exists.`);
+  }
+  console.log(`Validated Release Please PR #${pullRequest.number}: ${baseVersion} -> ${releaseVersion}.`);
+}
+
 async function findPullRequest(owner, repo, head, base) {
   const params = new URLSearchParams({ state: "open", head: `${owner}:${head}`, base, per_page: "100" });
   const pullRequests = await githubRequest("GET", `/repos/${owner}/${repo}/pulls?${params}`);
@@ -206,18 +293,22 @@ async function deleteRemoteBranch(owner, repo, branch) {
   }
 }
 
-async function waitForReleasePullRequest(owner, repo, base) {
+async function waitForReleasePullRequest(owner, repo, base, expectedVersion) {
   const startedAt = Date.now();
   while (Date.now() - startedAt < CHECK_TIMEOUT_MS) {
     const pullRequests = await githubRequest(
       "GET",
       `/repos/${owner}/${repo}/pulls?state=open&base=${encodeURIComponent(base)}&per_page=100`,
     );
-    const releasePullRequest = pullRequests.find((pullRequest) =>
-      pullRequest.head.ref.startsWith(`${RELEASE_BRANCH_PREFIX}${base}`)
-      || pullRequest.title.toLowerCase().includes("release")
-    );
-    if (releasePullRequest) return releasePullRequest;
+    const releasePullRequests = pullRequests.filter((pullRequest) => isReleasePleaseBranch(pullRequest.head.ref, base));
+    if (releasePullRequests.length > 1) {
+      fail(`Found multiple Release Please PRs for ${base}; refusing to choose automatically.`);
+    }
+    const releasePullRequest = releasePullRequests[0];
+    if (releasePullRequest) {
+      await validateReleasePullRequest(owner, repo, base, releasePullRequest, expectedVersion);
+      return releasePullRequest;
+    }
     console.log("Waiting for Release Please to create its pull request...");
     await delay(CHECK_INTERVAL_MS);
   }
@@ -241,6 +332,14 @@ async function waitForWorkflow(owner, repo, mergeTime) {
       if (run.conclusion !== "success") {
         fail(
           `Release workflow #${run.run_number} failed with ${run.conclusion}. Check npm token, permissions, or workflow errors.`,
+        );
+      }
+      const jobs = await githubRequest("GET", `/repos/${owner}/${repo}/actions/runs/${run.id}/jobs?per_page=100`);
+      const publishJob = jobs.jobs.find((job) => job.name === "build-and-publish");
+      if (!publishJob || publishJob.conclusion !== "success") {
+        fail(
+          `Release workflow #${run.run_number} did not complete build-and-publish successfully `
+            + `(conclusion: ${publishJob?.conclusion ?? "missing"}).`,
         );
       }
       console.log(`Release workflow #${run.run_number} completed successfully.`);
@@ -298,16 +397,28 @@ async function main() {
 
   let pullRequest = await findPullRequest(owner, repo, options.branch, options.base);
   if (!pullRequest) {
-    pullRequest = await createPullRequest(owner, repo, options.branch, options.base, options.commitMessage);
+    pullRequest = await createPullRequest(
+      owner,
+      repo,
+      options.branch,
+      options.base,
+      options.commitMessage.split("\n", 1)[0],
+    );
   }
   console.log(`Release PR: #${pullRequest.number} ${pullRequest.html_url}`);
   await waitForChecks(owner, repo, pullRequest);
   await mergePullRequest(owner, repo, pullRequest);
   await deleteRemoteBranch(owner, repo, options.branch);
 
-  const releasePullRequest = await waitForReleasePullRequest(owner, repo, options.base);
+  const releasePullRequest = await waitForReleasePullRequest(
+    owner,
+    repo,
+    options.base,
+    options.releaseVersion,
+  );
   console.log(`Release Please PR: #${releasePullRequest.number} ${releasePullRequest.html_url}`);
   await waitForChecks(owner, repo, releasePullRequest, { requireChecks: false });
+  await validateReleasePullRequest(owner, repo, options.base, releasePullRequest, options.releaseVersion);
   const mergeTime = Date.now();
   await mergePullRequest(owner, repo, releasePullRequest);
   await deleteRemoteBranch(owner, repo, releasePullRequest.head.ref);

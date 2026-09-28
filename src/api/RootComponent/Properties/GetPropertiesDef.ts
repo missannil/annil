@@ -3,14 +3,17 @@ import type { _Select } from "hry-types";
 import type { _SimplifyIntersection } from "hry-types";
 import type { GetOptionalDef } from "./GetOptionalDef";
 
-import type { As } from "hry-types";
 import type { GetRequiredDef } from "./GetRequiredDef";
 import type { OptionalType, PropertiesConstraint, RequiredType } from "./PropertiesConstraint";
 
 type _GetPropertiesDef<
   TProperties extends PropertiesConstraint,
-  OptionalDef extends object = GetOptionalDef<As<_Select<TProperties, OptionalType>, Record<string, OptionalType>>>,
-  RequiredDef extends object = GetRequiredDef<As<Omit<TProperties, keyof OptionalDef>, Record<string, RequiredType>>>,
+  OptionalDef extends object = GetOptionalDef<
+    Extract<_Select<TProperties, OptionalType>, Record<string, OptionalType>>
+  >,
+  RequiredDef extends object = GetRequiredDef<
+    Extract<Omit<TProperties, keyof OptionalDef>, Record<string, RequiredType>>
+  >,
 > = _SimplifyIntersection<OptionalDef & RequiredDef>;
 
 /**

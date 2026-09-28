@@ -111,17 +111,20 @@ typeEqual<$Index>()(index);
 ```ts
 const compA = DefineComponent({ name: "compA", rootComponent /*...*/ });
 
-// ❌ 不推荐：typeof 在组件层数过深或递归时会导致编译极慢甚至报错
+// 组件结构简单时，可以直接使用 typeof 获取文档类型
 export type $CompA = typeof compA;
+```
 
-// ✅ 推荐：手动声明清晰可读的文档类型，再用 typeEqual 验证
+当组件嵌套较深、类型递归导致编译变慢时，可改为手动声明文档类型，再用 `typeEqual` 验证：
+
+```ts
 export type $CompA = {
   properties: { compA_num: number };
 };
 typeEqual<$CompA>()(compA);
 ```
 
-`typeEqual` 的原理是当两个类型不匹配时产生**类型报错**，从而保证文档类型和实际组件返回值始终保持同步。结合代码片段支持，多出的几行不会带来额外负担。
+`typeEqual` 会在两个类型不匹配时产生**类型报错**，从而保证手动声明的文档类型和实际组件返回值保持同步。简单组件可直接导出 `typeof` 结果；对外维护稳定文档类型或遇到深层组件图的类型性能问题时，可手动声明并用 `typeEqual` 校验。两种写法二选一即可。
 
 ## 返回类型
 
@@ -157,11 +160,11 @@ type ComponentDoc = {
 
 ### composed 事件自动排除
 
-该行为仅适用于子组件的 **composed（穿透）** 事件。只有带 `Composed` 标签的子组件事件（如 `BubblesComposed`、`CaptureComposed`），父组件的 `events` 才会生成 `_catch` 后缀的处理器名。
+子组件的 **composed（穿透）** 事件会根据传播方向生成带后缀的 `events` 字段。对于带冒泡阶段的 composed 事件（`BubblesComposed`、`BubblesCaptureComposed`），父组件可在 `events` 中使用 `_bubbles_catch` 或 `_bubblesCapture_catch` 字段捕获事件并阻止它继续向上冒泡。纯捕获事件 `CaptureComposed` 则使用 `_capture_catch` 字段；捕获方向是从父级向下，因此它不会触发下述“从组件文档中排除”的规则。
 
-当父组件在 `events` 中声明了 `_catch` 后缀的处理器后，`DefineComponent` 生成返回类型时会**自动排除**对应的非 catch 事件，使其不再对外暴露。
+**类型层面的排除规则**：当父组件声明了冒泡阶段的 catch 字段（`_bubbles_catch` 或 `_bubblesCapture_catch`）后，`DefineComponent` 生成的组件文档会排除对应的 composed 事件，避免该事件类型继续向上层组件传播。纯捕获阶段的 `_capture_catch` 不会排除事件类型。这里的“排除”仅指生成的组件文档类型，不表示删除父组件 `events` 配置中的事件字段。
 
-例如，子组件 `compA` 有一个 `BubblesComposed` 类型的 `tap` 事件：
+例如，子组件 `compA` 有一个 `BubblesComposed` 类型的 `tap` 事件。父组件使用 `compA_tap_bubbles_catch` 字段后，生成的父组件文档不再包含 `tap` 事件；若使用普通的 `compA_tap_bubbles` 字段，则事件类型继续对外暴露：
 
 ```ts
 // 子组件 compA: tap 事件带有 Bubbles | Composed 标签
@@ -175,36 +178,67 @@ RootComponent()({
 });
 ```
 
-父组件声明了 `_catch` 处理器后，`tap` 从输出的 `events` 中移除；不加 `_catch` 则保留：
-
 ```ts
 // 父组件
 RootComponent<[typeof compADoc]>()({
   events: {
-    compA_tap_bubbles: handler, // ✅ 不加 catch，tap 继续对外暴露
-    compA_tap_bubbles_catch: handler, // 加了 catch → tap 从 events 输出中排除
+    compA_tap_bubbles_catch(e) {}, // tap 不再出现在生成的组件文档中
+  },
+});
+```
+
+不使用 catch 字段时，事件类型会继续对外暴露：
+
+```ts
+RootComponent<[typeof compADoc]>()({
+  events: {
+    compA_tap_bubbles(e) {}, // tap 继续出现在生成的组件文档中
   },
 });
 ```
 
 ::: tip 注意
 
-- 纯冒泡事件（`Bubbles`，无 `Composed`）**不会**生成 `_catch` 后缀，因此不受此排除逻辑影响。
-- 本组件自身的 `customEvents` 不受影响，仅影响子组件的 composed 事件。
+- 纯冒泡事件（`Bubbles`，无 `Composed`）**不会**生成 catch 字段，因此不受此排除规则影响。
+- `CaptureComposed` 对应的 `_capture_catch` 不会排除事件类型；`BubblesCaptureComposed` 的 `_bubblesCapture_catch` 包含冒泡阶段，会排除对应事件类型。
+- catch 排除仅应用于子组件的 `composedEvents`；即使本组件的 `customEvents` 与被 catch 的子组件事件同名，本组件事件仍保留在生成文档中。
   :::
 
-原理：`GetStopKeys` 从 `TRootDoc["events"]` 中提取 `_catch` 后缀 key 的事件基名（如 `compA_tap_bubbles_catch` → `tap`），再通过 `Omit` 将基名从 `AllEventsDoc`（`customEvents` + 子组件 `composedEvents` 的合并结果）中移除。
+实现上，`GetStopKeys` 从 `TRootDoc["events"]` 中提取冒泡阶段 catch 字段对应的事件名（如 `compA_tap_bubbles_catch` → `tap`），并仅从子组件 `composedEvents` 中移除该事件；之后再与本组件 `customEvents` 合并。纯 `_capture_catch` 字段不参与提取。
 
 ### PageDoc（页面文档）
 
+页面文档是否包含 `properties`，由根组件是否声明 `properties` 决定：声明时，生成的页面文档要求 `properties` 对象存在；未声明时，生成文档不包含该字段。`properties` 对象内部的字段是否可选，则仍由各属性自身的定义决定。
+
 ```ts
-type PageDoc = {
+// rootComponent 声明了 properties 时
+type PageDocWithProperties<TProperties> = {
   path: `/${string}`;
-  properties?: TRootDoc["properties"]; // rootComponent 的 properties（无前缀）
+  properties: TProperties; // 对象本身必需，内部属性仍可按定义选传
+};
+
+// rootComponent 未声明 properties 时
+type PageDocWithoutProperties = {
+  path: `/${string}`;
 };
 ```
 
-页面文档不包含 `events`，`properties` 不带前缀（页面不需要被其他组件引用）。
+与组件文档不同，页面文档只描述页面路径和页面接收的 `properties`，不会生成供父组件引用的 `events` 文档。页面的 `properties` 字段名沿用根组件中的名称，不会像组件文档那样加上组件名前缀。
+
+这里的 `properties` 是页面文档类型中描述“页面接收哪些参数”的字段，不代表调用 `navigateTo` 时一定要传 `data`。例如，页面的 `num` 属性设置了默认值，生成的页面文档会是 `{ properties: { num?: number } }`：文档包含 `properties`，但没有必传属性，因此跳转时可以不传 `data`；若传入 `data`，其中的 `num` 也可以省略。
+
+```ts
+import { navigateTo } from "annil";
+import type { $Index } from "path/to/index";
+
+// $Index 对应上面的页面文档类型
+navigateTo<$Index>({ url: "/pages/index/index" });
+
+navigateTo<$Index>({
+  url: "/pages/index/index",
+  data: {}, // num 有默认值，可以省略
+});
+```
 
 ## 运行时行为
 

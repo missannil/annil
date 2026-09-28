@@ -127,7 +127,7 @@ const counter = ChunkComponent<Root, "counter">()({
 
 定义 Chunk 数据。启用 `Prefix` 后，字段必须以 `${Prefix}_` 或 `_${Prefix}_` 开头；后者适合内部字段。
 
-`data` 字段不能与宿主组件的 `properties`、`data`、`store`、`computed` 字段重复，也不能与其他 Chunk 合并后的同名字段重复。
+`data` 字段不能与宿主组件的 `properties`、`data`、`store`、`computed` 字段重复；这些冲突会由类型约束检查。不同 Chunk 之间没有通用的跨 Chunk 重名检查，因此应使用不同前缀并确保生成的完整字段名不重复。
 
 ```ts
 const toolbar = ChunkComponent<Root, "toolbar">()({
@@ -235,7 +235,7 @@ const toolbar = ChunkComponent<Root, "toolbar">()({
 
 ## 命名与冲突规则
 
-为避免多个逻辑片段在同一个组件实例中产生字段冲突，建议始终传入 `Prefix`：
+`Prefix` 用于约束 Chunk 字段的命名空间，不会自动根据变量名推导。为减少多个逻辑片段之间的字段冲突，建议每个 Chunk 显式使用不同前缀，并确保最终字段名不重叠。注意，前缀不同本身并不保证字段名绝不重叠：例如 `"filter"` 的内部字段 `_filter_cache` 与 `"_filter"` 的普通字段 `_filter_cache` 会重名。
 
 ```ts
 const filter = ChunkComponent<Root, "filter">()({
@@ -257,7 +257,7 @@ const filter = ChunkComponent<Root, "filter">()({
 | `data`、`store`、`computed` | `filter_${string}` 或 `_filter_${string}` |
 | `events`、`methods`         | `filter_${string}`                        |
 
-所有 Chunk 最终与根组件合并，因此同名数据、计算字段、事件或方法会在类型检查阶段报错。
+类型约束会检查 Chunk 字段与宿主字段的冲突，以及单个 Chunk 内受约束字段之间的冲突；但不会统一检查不同 Chunk 之间的所有重名字段。多个 Chunk 最终会合并到同一个组件配置中，重名字段可能相互覆盖或造成行为冲突，因此应在不同 Chunk 间保持完整字段名唯一。
 
 此外，`filter` 变量名、`"filter"` 泛型参数与 WXML 根节点 `id` 必须保持一致：
 

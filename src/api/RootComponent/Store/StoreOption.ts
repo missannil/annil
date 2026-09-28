@@ -1,4 +1,4 @@
-import type { As, Func, IfSomeExtends } from "hry-types";
+import type { Func, IfSomeExtends } from "hry-types";
 import type { DuplicateFieldValidator } from "../../../types/DuplicateFieldValidator";
 import type { Validators } from "../../../types/Validators";
 import type { StoreConstraint } from "./StoreConstraint";
@@ -42,7 +42,7 @@ export type TypeValidator<
   TStore,
   Result = {
     [k in keyof TStore]: IfSomeExtends<
-      ReturnType<As<TStore[k], Func>>,
+      ReturnType<Extract<TStore[k], Func>>,
       undefined,
       () => "⚠️返回类型中不可以包含undefined⚠️",
       unknown

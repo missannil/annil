@@ -214,6 +214,44 @@ type whenRootDocCaptureCatchExpect = {
 
 typeEqual<whenRootDocCaptureCatchExpect>()(whenRootDocCaptureCatch);
 
+// 6.2 子组件的 catch 只移除子组件事件，不影响同名的根组件 customEvents
+type SameNameSubDoc = {
+  events: {
+    aaa_str: string | Bubbles | Composed;
+  };
+};
+type SameNameSub = CustomComponentDefinition<{
+  composedEvents: {
+    str: string | Bubbles | Composed;
+  };
+}>;
+
+const rootDocWithSameNameCustomEvent = RootComponent<[SameNameSubDoc]>()({
+  customEvents: {
+    str: String,
+  },
+  events: {
+    aaa_str_bubbles_catch() {
+      console.log("catch sub event");
+    },
+  },
+});
+
+const sameNameSub = {} as SameNameSub;
+const whenCatchPreservesSameNameRootEvent = DefineComponent({
+  name: "test",
+  rootComponent: rootDocWithSameNameCustomEvent,
+  subComponents: [sameNameSub],
+});
+
+// 子组件 composedEvents.str 被 catch；根组件 customEvents.str 仍保留在文档类型中
+type WhenCatchPreservesSameNameRootEventExpected = {
+  events: {
+    test_str: string;
+  };
+};
+typeEqual<WhenCatchPreservesSameNameRootEventExpected>()(whenCatchPreservesSameNameRootEvent);
+
 // 7 根组件和子组件都没有事件和properties时 返回组件类型为 {}
 const ComponetDoc = DefineComponent({
   name: "test",

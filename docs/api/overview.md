@@ -18,7 +18,9 @@
 - [navigateBack](./navigation.md)
 - [redirectTo](./navigation.md)
 
-## 内部工具函数
+## 工具函数
+
+以下工具函数也通过 `annil` 公共入口导出：
 
 - `debounce`
 - `deepClone`
@@ -36,11 +38,14 @@
 - `DetailedType`
 - `IInjectInfo`
 - `ExtendComponentType`
-- `Vant / Wm`
-  CurrentTargetDataset,
-  Dataset,
-  Detail,
-  Mark,
-  TargetDataset,
-  WMBaseEvent,
-  WMCustomEvent,
+- `Vant` / `Wm`
+
+### 事件类型
+
+- `CurrentTargetDataset`
+- `Dataset`
+- `Detail`
+- `Mark`
+- `TargetDataset`
+- `WMBaseEvent`
+- `WMCustomEvent`

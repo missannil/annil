@@ -4,6 +4,56 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.18.4](https://github.com/missannil/annil/compare/v1.12.3...v1.18.4) (2026-09-28)
+
+
+### Features
+
+* api 调整和readme ([bdfc24a](https://github.com/missannil/annil/commit/bdfc24a884978a04814fc3a7679f04a6c5fc2af3))
+* store加入为依赖验证和返回值为undefined时的警告 ([8c19098](https://github.com/missannil/annil/commit/8c1909805db762607549c59e4d5ae5b7040debf5))
+* 去除store的对象写法 ([9f2d50c](https://github.com/missannil/annil/commit/9f2d50c68fadda1ef166fcbedb2890461650c687))
+* 更新action符合node.js 24 ([f16712e](https://github.com/missannil/annil/commit/f16712e239071d0c65a7803247ce36fc05b079b5))
+* 注入配置完善组件覆盖逻辑 ([17b75c4](https://github.com/missannil/annil/commit/17b75c445dc46c39cd30b56ffeece992f88aa722))
+* 统一子组件API SubComponent ([646e1e7](https://github.com/missannil/annil/commit/646e1e72de41a22441cb38028fd3b719554b14fa))
+* 自动化合并 ([cfad291](https://github.com/missannil/annil/commit/cfad291e3c238147419b2e467cc7598e8153f1d4))
+* 自动化合并 ([277e295](https://github.com/missannil/annil/commit/277e295927fcf7a5240394a508736a59802dc1e9))
+* 自动化合并3 ([5de49b0](https://github.com/missannil/annil/commit/5de49b03b115c19d420c18af97b27910e2fe59b5))
+* 自动化合并3 ([#284](https://github.com/missannil/annil/issues/284)) ([77515c7](https://github.com/missannil/annil/commit/77515c70b2e3c14ceca232fd0c80135061a625a9))
+
+
+### Bug Fixes
+
+* 1.18.0版本npm构建错误 ([58862be](https://github.com/missannil/annil/commit/58862be376db6d2fd4f2d00d8ebf269d01fd341e))
+* nonNullable.ts 增加第二个错误信息参数,第三方库和wm库类型中customEvents字段变为events ([a38e8c5](https://github.com/missannil/annil/commit/a38e8c5f14237884c338d57bb11fcee1538b57fe))
+* preserve root custom events when catching sub-events ([67107dc](https://github.com/missannil/annil/commit/67107dc4c9d2b32dfd29f17bbf2e62bf30ed4a9d))
+* preserve root custom events when catching sub-events ([#314](https://github.com/missannil/annil/issues/314)) ([5da8500](https://github.com/missannil/annil/commit/5da8500bba450e81845ec8e38dd1b8915266f5ea))
+* release-please-action@v4-[@v5](https://github.com/v5) ([ecf54a2](https://github.com/missannil/annil/commit/ecf54a2dc0c082adbc9d2a876667c09195ba081d))
+* restore release baseline ([3f7b046](https://github.com/missannil/annil/commit/3f7b0462095cb3439983b8380880a30ae27dd1d1))
+* restore release baseline ([#316](https://github.com/missannil/annil/issues/316)) ([7be27b7](https://github.com/missannil/annil/commit/7be27b70f5ddbcf07915cdaabc49c8c60e41f1e9))
+* root事件无法与子事件共存的问题 ([13ceb70](https://github.com/missannil/annil/commit/13ceb704add0e31c75dbff65a5818f9b5e13e0da))
+* support hry-types 0.20.3 and align README ([e561006](https://github.com/missannil/annil/commit/e5610066b919d78d996ff006b1f98bae5c57a507))
+* support hry-types 0.20.3 and align README ([27769e8](https://github.com/missannil/annil/commit/27769e8bd347f601235d9e6c62989e70cfad647a))
+* support hry-types 0.20.3 and align README ([ebaff86](https://github.com/missannil/annil/commit/ebaff86a4f22ff435579b7d99d4467ebe42d2127))
+* support hry-types 0.20.3 and align README ([#306](https://github.com/missannil/annil/issues/306)) ([39633cf](https://github.com/missannil/annil/commit/39633cfd3eb245b3e0e6fc7a46cb9b7eb7dc7cad))
+* trigger release action ([acac3f6](https://github.com/missannil/annil/commit/acac3f6264341fa463b7662519b2c0c775f4b159))
+* ts6.xxx要去显示的声明rootDir字段 ([f400d04](https://github.com/missannil/annil/commit/f400d04373b513e9cbe60e8f5783d44727fdb2ec))
+* ts6.xxx要去显示的声明rootDir字段  ([#286](https://github.com/missannil/annil/issues/286)) ([7b0300f](https://github.com/missannil/annil/commit/7b0300f374f691b502a270fc3ff40a45391466f1))
+* typeEqual 和_CustomComponentDefinition ([9914cc5](https://github.com/missannil/annil/commit/9914cc59d063a1dce2427b33fd27c18d233636d1))
+* typeEqual增加参数验证方式 ([08e4cf6](https://github.com/missannil/annil/commit/08e4cf634c919018bd7aab4279637016a40b2274))
+* 使用Replace泛型解决实例和setData中使用data字段推导类型为字面量的问题 ([9a2cf3d](https://github.com/missannil/annil/commit/9a2cf3da30d2b0a5ade1e22800f34df97cce7896))
+* 去除api类型 ParamsEqual ([a57b0ac](https://github.com/missannil/annil/commit/a57b0acc0199c1e022bb3784f35e1fc95733d52b))
+* 去除组件load声明周期 ([241c89a](https://github.com/missannil/annil/commit/241c89a76ade24ab2dfa70c25d0c54679edcb739))
+
+
+### Miscellaneous Chores
+
+* release 1.12.3 ([a99e2f7](https://github.com/missannil/annil/commit/a99e2f734b5a00b665a7bd8ef100dcfea277458d))
+* release 1.12.5 ([9463fd6](https://github.com/missannil/annil/commit/9463fd652b2c9fd591e413fa13e08f001421a2aa))
+* release-1.12.4 test ([2d79094](https://github.com/missannil/annil/commit/2d79094de3807bfe12ecad4ff76b45b48f255d51))
+* release:1.12.4 ([ae33dc7](https://github.com/missannil/annil/commit/ae33dc7d6582d2ecfac24ae144b460ea723f4e9f))
+* release:1.12.6 ([bf01bb3](https://github.com/missannil/annil/commit/bf01bb3187febc2cb0462bf3ad50a63597beda7c))
+* release:1.12.7 ([0dee775](https://github.com/missannil/annil/commit/0dee775d7914f7317be70668e7801752f425ffa3))
+
 ## [1.18.3](https://github.com/missannil/annil/compare/v1.18.2...v1.18.3) (2026-09-01)
 
 

@@ -19,11 +19,11 @@ export type GenerateComponentDoc<
   TSubComponentTuple extends CustomComponentDefinition[],
   // 获取RootDoc和SubComponent[]中所有的properties字段类型
   AllPropertiesDoc extends unknown | object = TRootDoc["properties"],
-  AllEventsDoc extends unknown | object =
-    & TRootDoc["customEvents"]
-    & GetCustomEventDocOfSubDoc<TSubComponentTuple[number]>,
+  AllSubComponentEventsDoc extends unknown | object = GetCustomEventDocOfSubDoc<TSubComponentTuple[number]>,
   StopKeys extends string = GetStopKeys<TRootDoc["events"]>,
-  FinalEventsDoc extends object = Omit<AllEventsDoc, StopKeys>,
+  FilteredSubComponentEventsDoc extends object = Omit<Extract<AllSubComponentEventsDoc, object>, StopKeys>,
+  AllEventsDoc extends unknown | object = TRootDoc["customEvents"] & FilteredSubComponentEventsDoc,
+  FinalEventsDoc extends object = Extract<AllEventsDoc, object>,
 > = _SimplifyIntersection<
   & IfExtends<
     unknown,

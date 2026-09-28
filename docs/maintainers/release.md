@@ -37,6 +37,10 @@ GitHub release、npm 包和文档部署是三个独立状态，任何一个成�
 
 `npm run ship -- "type: message"` 会先执行 `git pull origin main --rebase`，确保推送前基于远程最新 `main`，确认当前为 `miss` 分支，暂存并提交全部修改，触发 Husky 检查（格式化导致的失败会自动重试一次），然后推送 `origin/miss`。脚本会自动创建或复用并合并 `miss -> main` PR，删除远程 `miss`；业务 PR 合并后，发布操作应先切换到 `main` 并执行 `git pull origin main --rebase`。如果这次推送没有产生 Release Please PR，同步完成后即可结束；只有产生 Release Please PR 时，才继续合并该 PR 并等待发布 workflow。
 
+如需固定本次 Release Please 版本，可使用 `--release-version <version>`，例如 `npm run ship -- --release-version 1.18.4 "fix: restore release baseline"`。脚本会为提交添加 `Release-As` footer，并在合并发布 PR 前校验其分支名、目标版本高于 main 当前版本、与指定版本一致且 GitHub tag 尚不存在；失败时停止，不会自动合并。Release Please PR 只能通过 `release-please--branches--<base>` 分支识别，不能仅凭标题中包含 `release` 来判断。
+
+曾发生历史 Release Please 提交携带 `release-as:1.12.3`，导致错误版本 PR 被识别并合并。若版本文件、changelog 与最新 tag 不一致，应先修复并确认发布基线，再执行 `ship`；不得合并已有 tag、版本回退或版本不匹配的 Release Please PR。
+
 同步原则：向远程推送或依赖远程状态前，先将当前工作基线 rebase 到 `origin/main`；远程仓库发生合并、发布提交或其他更新后，再拉取最新 `main`，避免本地状态落后或停留在已删除的工作分支。
 
 推送前，`ship` 脚本还会检查当前分支相对 `origin/main` 的提交。如果发现 `release-as:` 或旧的 `chore... release` 提交，脚本会停止，避免把历史 Release Please 提交重新带入 `main`。本地 `main` 若存在不需要保留的旧提交，应先确认工作区没有待保留内容，再用 `git fetch origin` 和 `git reset --hard origin/main` 清理基线，然后从最新 `main` 创建 `miss`。

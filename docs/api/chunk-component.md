@@ -85,13 +85,13 @@ DefineComponent({
 ```
 
 ::: warning WXML 根节点 id 必填
-每个 Chunk 在 WXML 中都应有一个对应的根节点，并且以下三个名称必须完全一致：
+每个 Chunk 在 WXML 中都应有一个对应的节点 `id`，并且它必须能对应到以下名称：
 
 1. TypeScript 中接收 `ChunkComponent` 返回值的变量名；
 2. `ChunkComponent` 的第二个泛型参数（`Prefix`）；
-3. 对应 WXML 根节点的 `id` 值。
+3. 对应 WXML 节点 `id` 中稳定的名称部分。
 
-例如，三个 `counter` 必须保持一致：
+静态 `id` 直接写名称；动态 `id` 将 WXML 动态变量放在前面，并保留 `_名称` 后缀。静态和动态写法例如：
 
 ```ts
 const counter = ChunkComponent<Root, "counter">()({
@@ -100,12 +100,18 @@ const counter = ChunkComponent<Root, "counter">()({
 ```
 
 ```xml
+<!-- 静态 id：id 名称与 Chunk 变量名、Prefix 一致 -->
 <view id="counter">
+  <!-- 使用 counter_ 前缀的数据和事件 -->
+</view>
+
+<!-- 动态 id：动态变量后保留 _counter，稳定后缀仍与 Chunk 对应 -->
+<view id="${{index}}_counter">
   <!-- 使用 counter_ 前缀的数据和事件 -->
 </view>
 ```
 
-`vscode-annil` 插件会根据该 `id` 定位同名的 Chunk 变量及其 TypeScript 配置，并校验 WXML 中使用的数据字段和事件是否已定义。三者任一缺失或不一致时，插件无法正确完成这项校验。
+动态形式中的 `${{index}}` 表示动态值，`_counter` 是稳定名称后缀；例如列表中每个 `customBtn` Chunk 可写为 `id="${{index}}_customBtn"`。不要把动态表达式放到稳定名称后缀之后，也不要省略后缀。`vscode-annil` 等静态分析工具可据此定位 Chunk 配置并检查 WXML 字段和事件；具体识别能力以所用工具版本为准。`id` 不会被 Annil 运行时读取，此命名规则是 Chunk 的 WXML 编写与工具识别约定。
 :::
 
 ## 配置字段
@@ -261,10 +267,15 @@ const filter = ChunkComponent<Root, "filter">()({
 
 类型约束会检查 Chunk 字段与宿主字段的冲突，以及单个 Chunk 内受约束字段之间的冲突；但不会统一检查不同 Chunk 之间的所有重名字段。多个 Chunk 最终会合并到同一个组件配置中，重名字段可能相互覆盖或造成行为冲突，因此应在不同 Chunk 间保持完整字段名唯一。
 
-此外，`filter` 变量名、`"filter"` 泛型参数与 WXML 根节点 `id` 必须保持一致：
+此外，`filter` 变量名、`"filter"` 泛型参数与 WXML 节点 `id` 的稳定名称部分必须保持一致：
 
 ```xml
 <view id="filter">
+  <input value="{{filter_keyword}}" bind:input="filter_onInput" />
+</view>
+
+<!-- 动态节点也保留 _filter 后缀 -->
+<view id="${{index}}_filter">
   <input value="{{filter_keyword}}" bind:input="filter_onInput" />
 </view>
 ```

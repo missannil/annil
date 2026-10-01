@@ -83,6 +83,7 @@ Annil 的源码和运行时不读取所有外部工具约定。以下信息仍�
 - `vscode-annil` 对组件调用 AST、组件文档形状和字段前缀的解析；
 - `ComponentDoc`、`PageDoc` 的属性和事件命名；
 - `ChunkComponent` 返回值的变量名、泛型前缀与 WXML 根节点 `id` 的对应关系；
+- Chunk WXML 动态 `id` 以动态值开头、以 `_<Chunk 名称>` 结尾的识别约定；
 - 外部工具根据这些信息提供的 WXML 作用域、字段和事件检查。
 
 这些协议不等同于 Annil 运行时 API，但改变它们同样可能破坏消费项目。涉及组件文档、

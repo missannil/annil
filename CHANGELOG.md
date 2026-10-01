@@ -4,6 +4,14 @@
 
 * 解决DetailedType不接收接口类型的错误 ([ae8acbf](https://github.com/missannil/annil/commit/ae8acbfc2e62f99db565c448ad9253aa549e78bb))
 
+## [1.19.0](https://github.com/missannil/annil/compare/v1.18.4...v1.19.0) (2026-10-01)
+
+
+### Features
+
+* allow Chunk events to call root custom events ([17fa183](https://github.com/missannil/annil/commit/17fa1830f9fefe9485c3f735d71c492168694136))
+* allow Chunk events to call root custom events ([#318](https://github.com/missannil/annil/issues/318)) ([6ce18df](https://github.com/missannil/annil/commit/6ce18df7a0524b2f434b54c1f2f2112f40960fd9))
+
 ## [1.18.4](https://github.com/missannil/annil/compare/v1.12.3...v1.18.4) (2026-09-28)
 
 

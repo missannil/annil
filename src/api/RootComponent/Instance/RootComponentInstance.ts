@@ -9,7 +9,7 @@ import type { WMComponentInstance, WMInstanceMethods, WMPageInstance } from "../
 import type { Simplify } from "../../../types/Simplify";
 import type { OptionsInnerFields } from "../../DefineComponent/normalizeOptions";
 import type { IInjectAllData, IInjectMethods } from "../../InstanceInject/instanceConfig";
-import type { generateCustomEventMethods } from "./CustomEventMethods";
+import type { GenerateCustomEventMethods } from "./CustomEventMethods";
 import type { CustomSetData } from "./CustomSetData";
 export type RootComponentInstance<
   TIsPage extends boolean,
@@ -30,7 +30,7 @@ export type RootComponentInstance<
     disposer: { [k in keyof StoreDoc]: IReactionDisposer };
   }>
   // 自身methods覆盖注入的methods
-  & Assign<IInjectMethods, TMethods & generateCustomEventMethods<CustomEventsDef>>
+  & Assign<IInjectMethods, TMethods & GenerateCustomEventMethods<CustomEventsDef>>
   & { data: instanceData };
 
 export type ComponentInstance = RootComponentInstance<false, {}, {}, {}, {}, {}>;

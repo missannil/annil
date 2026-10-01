@@ -179,6 +179,8 @@ const toolbar = ChunkComponent<Root, "toolbar">()({
 });
 ```
 
+Chunk 的 `events` 中可以调用根组件 `methods` 和 `customEvents` 对应的方法；根组件原生 `events` 仍不能通过 `this` 调用。
+
 ```xml
 <button bind:tap="toolbar_onTap">增加</button>
 ```

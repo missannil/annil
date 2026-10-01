@@ -2,6 +2,7 @@ import type { IfAllExtends } from "hry-types";
 import type { WMCompOtherOption } from "../../types/OfficialTypeAlias";
 import type { IInjectAllData, IInjectMethods, IInjectStore } from "../InstanceInject/instanceConfig";
 import type { GetComputedDef } from "../RootComponent/Computed/GetComputedDef";
+import type { GenerateCustomEventMethods } from "../RootComponent/Instance/CustomEventMethods";
 import type { RootComponentInstance } from "../RootComponent/Instance/RootComponentInstance";
 import type { LifetimesOption } from "../RootComponent/Lifetimes/LifetimesOption";
 import type { MethodsConstraint } from "../RootComponent/Methods/MethodsConstraint";
@@ -18,6 +19,7 @@ import type { ChunkEventsOption } from "./ChunkEvents/ChunkEventsOption";
 import type { ChunkMethodsOption } from "./ChunkMethods/ChunkMethodsOption";
 import type { ChunkStoreConstraint } from "./ChunkStore/ChunkStoreConstraint";
 import type { ChunkStoreOption } from "./ChunkStore/ChunkStoreOption";
+
 type ChunkComponentOptions<
   TIsPage extends boolean,
   Prefix extends string,
@@ -33,6 +35,7 @@ type ChunkComponentOptions<
   TMethods extends MethodsConstraint,
   ChunkEventsDoc extends object,
   RootPropertiesDoc extends object,
+  RootCustomEventsDoc extends object,
 > =
   & ChunkDataOption<TData, keyof (RootDataDoc & IInjectAllData), Prefix>
   & ChunkStoreOption<TStore, keyof (TData & RootDataDoc & IInjectAllData), Prefix>
@@ -43,7 +46,7 @@ type ChunkComponentOptions<
   >
   & ChunkEventsOption<
     TEvents,
-    keyof (RootMethods & RootEvents & IInjectMethods),
+    keyof (RootMethods & RootEvents & IInjectMethods & RootCustomEventsDoc),
     Prefix
   >
   & ChunkMethodsOption<
@@ -54,7 +57,7 @@ type ChunkComponentOptions<
   & ThisType<
     RootComponentInstance<
       TIsPage,
-      TMethods & RootMethods,
+      TMethods & RootMethods & GenerateCustomEventMethods<RootCustomEventsDoc>,
       TData,
       TData & ChunkStoreDoc & ChunkComputedDoc & RootDataDoc & IInjectAllData,
       {},
@@ -90,6 +93,7 @@ type ChunkComponentConstructor<
     & TRootDoc["store"],
   RootMethods extends object = TRootDoc["methods"] & {},
   RootEvents extends object = TRootDoc["events"] & {},
+  RootCustomEventsDoc extends object = TRootDoc["customEvents"] & {},
 > = <
   TEvents extends ChunkEventsConstraint,
   TStore extends ChunkStoreConstraint<Required<TRootDoc["properties"]>>,
@@ -116,7 +120,8 @@ type ChunkComponentConstructor<
     RootEvents,
     TMethods,
     ChunkEventsDoc,
-    RootPropertiesDoc
+    RootPropertiesDoc,
+    RootCustomEventsDoc
   >,
 ) => never;
 

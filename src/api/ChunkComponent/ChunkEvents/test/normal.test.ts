@@ -1,26 +1,38 @@
+import { RootComponent } from "../../../../";
 import { ChunkComponent } from "../..";
-import type { Mock_RootDoc } from "../../ChunkData/test/mock";
 
-ChunkComponent<Mock_RootDoc, "xxx">()({
+const rootComponent = RootComponent()({
+  customEvents: {
+    rootCustomEvent: String,
+    rootBubbleComposed: {
+      detail: String,
+      options: {
+        bubbles: true,
+        composed: true,
+      },
+    },
+  },
   events: {
-    xxx_ddd() {
+    rootEvent() {
+      void 0;
+    },
+  },
+  methods: {
+    rootMethod() {
       void 0;
     },
   },
 });
-ChunkComponent<{}>()({
-  data: {
-    ddd_src: "string",
-    ddd_arr: [1, 2, 3],
-  },
-  methods: {
-    ddffa() {
-      void 0;
-    },
-  },
+void rootComponent;
+
+ChunkComponent<typeof rootComponent, "actual">()({
   events: {
-    ddd_aaa(e) {
-      console.log(e);
+    actual_test() {
+      // 可以调用根组件的方法
+      this.rootMethod();
+      // 可以调用根组件自定义事件
+      this.rootCustomEvent("detail");
+      this.rootBubbleComposed("detail");
     },
   },
 });

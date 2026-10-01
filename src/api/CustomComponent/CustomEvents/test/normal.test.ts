@@ -3,7 +3,7 @@
 import type { Wm } from "../../../../thirdLib";
 import { typeEqual } from "../../../../utils/typeEqual";
 
-import type { CreateComponentDoc, Detail, Mark, WMBaseEvent } from "../../../..";
+import { type CreateComponentDoc, type Detail, type Mark, RootComponent, type WMBaseEvent } from "../../../..";
 import type {
   Bubbles,
   BubblesCapture,
@@ -202,6 +202,42 @@ CustomComponent<{ methods: { aaa: () => string } }, Wm.Map>()({
         longitude: number;
         latitude: number;
       }>;
+    },
+  },
+});
+
+const rootComponent = RootComponent()({
+  customEvents: {
+    rootCustomEvent: String,
+    rootBubbleComposed: {
+      detail: String,
+      options: {
+        bubbles: true,
+        composed: true,
+      },
+    },
+  },
+  events: {
+    rootEvent() {
+      void 0;
+    },
+  },
+  methods: {
+    rootMethod() {
+      void 0;
+    },
+  },
+});
+void rootComponent;
+// 6 可以调用根组件方法和自定义事件的调用
+CustomComponent<typeof rootComponent, Wm.Map>()({
+  events: {
+    map_poitap() {
+      // 可以调用根组件的方法
+      this.rootMethod();
+      // 可以调用根组件自定义事件
+      this.rootCustomEvent("detail");
+      this.rootBubbleComposed("detail");
     },
   },
 });
